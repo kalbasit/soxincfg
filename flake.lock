@@ -1,0 +1,119 @@
+{
+  "nodes": {
+    "futils": {
+      "locked": {
+        "lastModified": 1605370193,
+        "narHash": "sha256-YyMTf3URDL/otKdKgtoMChu4vfVL3vCMkRqpGifhUn0=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "5021eac20303a61fafe17224c087f5519baed54d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "futils_2": {
+      "locked": {
+        "lastModified": 1605370193,
+        "narHash": "sha256-YyMTf3URDL/otKdKgtoMChu4vfVL3vCMkRqpGifhUn0=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "5021eac20303a61fafe17224c087f5519baed54d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "home-manager": {
+      "inputs": {
+        "nixpkgs": [
+          "nixos"
+        ]
+      },
+      "locked": {
+        "lastModified": 1606860459,
+        "narHash": "sha256-Y3PtSmLjVMxky7NbmGg30f7ZKx1oNdPTsksEG37gLKU=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "06543644266edcf845ac912002868246b58d19e6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "master": {
+      "locked": {
+        "lastModified": 1606958824,
+        "narHash": "sha256-vra1q1nWWEw8uOyKnGH1w4JxK/s4ZQBy6vm+TNNTJgw=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "2fde2721107d8ed967f17d3faee2afe7611fcc06",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "master",
+        "type": "indirect"
+      }
+    },
+    "nixos": {
+      "locked": {
+        "lastModified": 1606789930,
+        "narHash": "sha256-fIDdUZHX6OnErpv+ZXEM/479z8WKNyNX9ALsHQpjoeA=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "2fbcd0b9df95306199407e36a038d2cc3aa24786",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "nixos-20.09",
+        "type": "indirect"
+      }
+    },
+    "root": {
+      "inputs": {
+        "futils": "futils",
+        "home-manager": "home-manager",
+        "master": "master",
+        "nixos": "nixos",
+        "soxin": "soxin"
+      }
+    },
+    "soxin": {
+      "inputs": {
+        "futils": "futils_2",
+        "home-manager": [
+          "home-manager"
+        ],
+        "nixpkgs": [
+          "nixos"
+        ]
+      },
+      "locked": {
+        "lastModified": 1606682109,
+        "narHash": "sha256-BKsVA4AUKk+p9foppf8YbliFzsNDBL9EbbHbZERVBE0=",
+        "owner": "SoxinOS",
+        "repo": "soxin",
+        "rev": "2e2143de51285c670131e379d7a0277569226323",
+        "type": "github"
+      },
+      "original": {
+        "owner": "SoxinOS",
+        "repo": "soxin",
+        "type": "github"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
