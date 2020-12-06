@@ -85,9 +85,11 @@ let
         ];
     };
 
-  hosts = lib.genAttrs [
-    "example"
-  ]
-    config;
+  hosts =
+    let
+      hostNames =
+        builtins.attrNames (lib.attrsets.filterAttrs (n: v: v == "directory") (builtins.readDir ./.));
+    in
+    lib.genAttrs hostNames config;
 in
 hosts
