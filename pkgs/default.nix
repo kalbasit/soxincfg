@@ -1,4 +1,4 @@
 # Custom packages
 final: prev: {
-  helloSh = final.callPackage ./hello-sh { };
+  # define packages here using final.callPackage
 }

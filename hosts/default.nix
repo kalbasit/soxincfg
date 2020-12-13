@@ -7,6 +7,8 @@
 , home-manager
 , soxin
 , futils
+, nixos-hardware
+, nur
 }:
 let
   config = path:
@@ -19,13 +21,14 @@ let
       inherit system;
 
       specialArgs = {
+        inherit nixos-hardware;
+        inherit (pkgset) master;
         soxincfg = self;
-        nixpkgs = pkgset.master;
       };
 
       modules =
         let
-          core = self.nixosModules.profiles.core;
+          inherit (self.nixosModules.profiles) core;
 
           global = {
             networking.hostName = hostName;
@@ -59,7 +62,7 @@ let
                   "${pkg.pname}" = pkg;
                 };
               in
-              (map overlay override);
+              lib.concat [ nur.overlay ] (map overlay override);
           };
 
           local = import "${toString ./.}/${path}/configuration.nix";

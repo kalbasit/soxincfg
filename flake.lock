@@ -81,12 +81,42 @@
         "type": "indirect"
       }
     },
+    "nixos-hardware": {
+      "locked": {
+        "lastModified": 1607254103,
+        "narHash": "sha256-oU+aVtY3vIY0hGNUJM5RKdhx6ipuFDdn3farszfys/0=",
+        "owner": "NixOS",
+        "repo": "nixos-hardware",
+        "rev": "87522b29a276a4cab5718e5309aa7d74bc7de75a",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixos-hardware",
+        "type": "indirect"
+      }
+    },
+    "nur": {
+      "locked": {
+        "lastModified": 1607925061,
+        "narHash": "sha256-lZ5YgN3DlbbHbB7Zf34aZawZaDVb+yHO5t1PMvrvc4Q=",
+        "owner": "nix-community",
+        "repo": "NUR",
+        "rev": "215c429446a14a471f350dbee68cdf6e60bb7bd1",
+        "type": "github"
+      },
+      "original": {
+        "id": "nur",
+        "type": "indirect"
+      }
+    },
     "root": {
       "inputs": {
         "futils": "futils",
         "home-manager": "home-manager",
         "master": "master",
         "nixos": "nixos",
+        "nixos-hardware": "nixos-hardware",
+        "nur": "nur",
         "soxin": "soxin"
       }
     },

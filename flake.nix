@@ -16,9 +16,11 @@
       };
     };
     futils.url = "github:numtide/flake-utils";
+    nixos-hardware.url = "nixos-hardware";
+    nur.url = "nur";
   };
 
-  outputs = { self, nixos, master, home-manager, soxin, futils } @ inputs:
+  outputs = { self, nixos, master, home-manager, soxin, futils, nixos-hardware, nur } @ inputs:
     let
       inherit (nixos) lib;
       inherit (nixos.lib) recursiveUpdate;
@@ -58,10 +60,15 @@
       outputs = {
         overlay = self.overlays.packages;
 
+        vars = import ./vars;
+
         overlays = import ./overlays;
 
         nixosModules = recursiveUpdate (import ./modules) {
           profiles = import ./profiles;
+          soxin = import ./soxin/soxin.nix;
+          # TODO: Do I need this?
+          # soxincfg = import ./modules/soxincfg.nix;
         };
 
         nixosConfigurations =

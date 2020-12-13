@@ -1,4 +1,4 @@
-# home-manager configuration for user `nick`
+# home-manager configuration for user `yl`
 { soxincfg }:
 { pkgs, ... }:
 
@@ -11,13 +11,9 @@
     settings = {
       keyboard = {
         layouts = [
-          { x11 = { layout = "us"; variant = "intl"; }; }
+          { x11 = { layout = "us"; variant = "colemak"; }; }
         ];
       };
     };
   };
-
-  home.packages = with pkgs; [
-    helloSh
-  ];
 }
