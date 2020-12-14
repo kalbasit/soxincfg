@@ -1,3 +1,3 @@
 {
-  bogus = ./services/bogus.nix;
+  git = ./programs/git.nix;
 }
