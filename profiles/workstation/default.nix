@@ -5,6 +5,10 @@
     hardware = {
       bluetooth.enable = true;
     };
+
+    programs = {
+      neovim.enable = true;
+    };
   };
 
   soxincfg = {

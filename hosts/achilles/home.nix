@@ -16,6 +16,4 @@
       };
     };
   };
-
-  soxin.programs.neovim.enable = true;
 }
