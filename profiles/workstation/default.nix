@@ -7,6 +7,7 @@
     };
 
     programs = {
+      fzf.enable = true;
       neovim.enable = true;
     };
   };
