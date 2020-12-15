@@ -15,6 +15,7 @@
   soxincfg = {
     programs = {
       brave.enable = true;
+      chromium = { enable = true; surfingkeys.enable = true; };
       git.enable = true;
     };
 
