@@ -13,6 +13,7 @@
 
   soxincfg = {
     programs = {
+      brave.enable = true;
       git.enable = true;
     };
 
