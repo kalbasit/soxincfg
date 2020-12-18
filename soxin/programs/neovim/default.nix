@@ -39,7 +39,7 @@ in
     {
       soxin.programs.neovim.neovimConfig = (import ./config.nix {
         inherit (cfg) extraRC extraKnownPlugins extraPluginDictionaries;
-        inherit pkgs;
+        inherit config pkgs;
       });
     }
 

@@ -16,6 +16,7 @@
   rofi = ./programs/rofi;
   ssh = ./programs/ssh.nix;
   starship = ./programs/starship.nix;
+  termite = ./programs/termite.nix;
   tmux = ./programs/tmux;
   urxvt = ./programs/urxvt.nix;
   zsh = ./programs/zsh;

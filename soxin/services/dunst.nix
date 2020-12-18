@@ -7,7 +7,7 @@ in
 {
   options = {
     soxin.services.dunst = {
-      enable = mkEnableOption "Whether to enable dunst.";
+      enable = mkEnableOption "dunst, the notification daemon";
     };
   };
 

@@ -20,11 +20,7 @@ let
     soxin.lib.nixosSystem {
       inherit system;
 
-      specialArgs = {
-        inherit nixos-hardware;
-        inherit (pkgset) master;
-        soxincfg = self;
-      };
+      specialArgs.soxincfg = self;
 
       modules =
         let
@@ -76,15 +72,22 @@ let
           overrides
           local
 
+          {
+            _module.args = {
+              inherit nixos-hardware home-manager;
+              inherit (pkgset) master;
+            };
+          }
+
           # This allows us to use our flake modules in NixOS and home-manager
           # configurations.
-          ({ config, ... }: {
+          {
             options.home-manager.users = lib.mkOption {
               type = lib.types.attrsOf (lib.types.submoduleWith {
                 modules = flakeModules;
               });
             };
-          })
+          }
         ];
     };
 

@@ -1,4 +1,4 @@
-{ mode, config, pkgs, lib, ... }:
+{ mode, config, pkgs, lib, master, ... }:
 
 with lib;
 let
@@ -17,7 +17,7 @@ in
         enable = true;
 
         windowManager = {
-          i3 = import ./i3-config.lib.nix { inherit pkgs lib; };
+          i3 = import ./i3-config.lib.nix { inherit config pkgs lib master; };
         };
 
         initExtra = ''

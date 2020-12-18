@@ -7,7 +7,7 @@ in
 {
   options = {
     soxin.settings.gtk = {
-      enable = mkEnableOption "Whether to enable GTK.";
+      enable = mkEnableOption "GTK";
     };
   };
 

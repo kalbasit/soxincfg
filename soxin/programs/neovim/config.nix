@@ -1,4 +1,5 @@
-{ extraRC ? ""
+{ config
+, extraRC ? ""
 , extraKnownPlugins ? { }
 , extraPluginDictionaries ? [ ]
 , pkgs
@@ -28,8 +29,19 @@ with pkgs.lib;
         xsel_bin = "${getBin pkgs.xsel}/bin/xsel";
       }))
 
-      # TODO: handle new keyboard options
-      # (builtins.readFile (./keyboard_layouts + "/${keyboardLayout}.vim"))
+      # TODO: Do this better!
+      (
+        let
+          dl = config.soxin.settings.keyboard.defaultLayout.x11;
+          ln =
+            if dl.variant == "colemak" then "colemak"
+            else if dl.layout == "fw" && dl.variant == "befo" then "bepo"
+            else if dl.layout == "us" && dl.variant == "intl" then "qwerty_intl"
+            else if dl.layout == "us" && dl.variant == "" then "qwerty"
+            else throw "I'm not sure what to do with the keyboard layout ${dl}";
+        in
+        builtins.readFile (./keyboard_layouts + "/${ln}.vim")
+      )
 
       extraRC
     ];

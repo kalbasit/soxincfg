@@ -21,35 +21,30 @@ in
         autoRepeatDelay = 200;
         autoRepeatInterval = 30;
 
-        # TODO: move this to keyboard
         xkbOptions = concatStringsSep "," [
-          "grp:alt_caps_toggle"
-          "caps:swapescape"
+          "ctrl:nocaps"
         ];
 
-        libinput = {
-          enable = true;
-        };
+        libinput.enable = true;
+        libinput.naturalScrolling = true;
 
         displayManager = {
           defaultSession = "none+i3";
-          lightdm = {
+          lightdm.enable = true;
+          autoLogin = {
             enable = true;
-            autoLogin = {
-              enable = true;
-              user = "risson";
-            };
+            user = "yl";
           };
         };
 
-        videoDrivers = [
-          "radeon"
-          "cirrus"
-          "vesa"
-          "vmware"
-          "modesetting"
-          "intel"
-        ];
+        # videoDrivers = [
+        #   "radeon"
+        #   "cirrus"
+        #   "vesa"
+        #   "vmware"
+        #   "modesetting"
+        #   "intel"
+        # ];
 
         windowManager = {
           i3.enable = true;

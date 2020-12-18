@@ -153,8 +153,7 @@ if [[ -o interactive ]]; then
 	setopt zle
 fi
 
-# Direnv shit not working
-eval "$(direnv hook zsh)"
+# TODO: setup the colors to be better visible
 
 #####################################################################
 # exports
@@ -174,6 +173,30 @@ if [[ "$OSTYPE" = linux* ]]; then
 	# use chromium as the karma's driver
 	export CHROME_BIN="$(which chromium)"
 fi
+
+if [[ "$OSTYPE" = darwin* ]]; then
+	# export system-wide defined PATH
+	eval "$(/usr/libexec/path_helper -s)"
+
+	# Export Github's token if it's readable.
+	if [[ -o interactive ]] && [[ -r "@home_path@/.github_token" ]]; then
+		export HOMEBREW_GITHUB_API_TOKEN="$(head -1 "@home_path@/.github_token")"
+	fi
+fi
+
+# opsgenie
+if [[ -o interactive ]]; then
+	export LAMP_CONF_PATH="@home_path@/.config/lamp/opsgenie-integration.conf"
+fi
+
+# use nvim as VMAIL editor
+export VMAIL_VIM=nvim
+
+# Set the system and the global GOPATH
+export GOPATH="${XDG_CACHE_HOME:-${HOME}/.cache}/go/path"
+export GOCACHE="${XDG_CACHE_HOME:-${HOME}/.cache}/go/cache"
+export SYSTEM_GOPATH="@home_path@/.filesystem"
+pathprepend PATH "${SYSTEM_GOPATH}/bin"
 
 # Set MYFS to my filesystem
 export MYFS="@home_path@/.local"
@@ -201,6 +224,8 @@ if [[ -d "${MYFS}" ]]; then
 		for dir in ${MYFS}/opt/*/bin; do
 			pathappend PATH "${dir}"
 		done
+
+		pathappend PATH "${MYFS}/opt/go_appengine"
 	fi
 
 	# Make LD can find our files.
@@ -403,9 +428,6 @@ if [[ -o interactive ]]; then
 		bindkey "${terminfo[kend]}"  end-of-line            # [End] - Go to end of line
 	fi
 
-	bindkey '^A' beginning-of-line                        # [Ctrl-A] - Go to beginning of line
-	bindkey '^E' end-of-line                              # [Ctrl-E] - Go to end of line
-
 	bindkey ' ' magic-space                               # [Space] - do history expansion
 
 	bindkey '^[[1;5C' forward-word                        # [Ctrl-RightArrow] - move forward one word
@@ -427,7 +449,189 @@ if [[ -o interactive ]]; then
 	# Edit the current command line in $EDITOR
 	autoload -U edit-command-line
 	zle -N edit-command-line
-	bindkey -M vicmd 'e' edit-command-line
+	bindkey -M vicmd 'j' edit-command-line
+
+	#####################################################################
+	# Colemak key bindings
+	#####################################################################
+
+	# Credit: https://bazaar.launchpad.net/~akiva/colemak.vim/trunk/view/head:/.zshrc
+
+	# vi-backward-char (unbound) (^H h ^?) (ESC-[D)
+	#   Move backward one character, without changing lines.
+	bindkey -M vicmd 'n' vi-backward-char
+	bindkey -M vicmd '^[n' vi-backward-char
+	bindkey -M visual 'n' vi-backward-char
+
+	# vi-forward-char (unbound) (space l) (ESC-[C)
+	#   Move forward one character.
+	bindkey -M vicmd 'o' vi-forward-char
+	bindkey -M vicmd '^[o' vi-forward-char
+	bindkey -M visual 'o' vi-forward-char
+
+	# up-line (unbound) (unbound) (unbound)
+	#   Move up a line in the buffer.
+	bindkey -M vicmd 'i' up-line-or-history
+	bindkey -M vicmd '^[i' history-substring-search-up
+	bindkey -M visual 'i' up-line-or-history
+
+	# down-line (unbound) (unbound) (unbound)
+	#   Move down a line in the buffer.
+	bindkey -M vicmd 'e' down-line-or-history
+	bindkey -M vicmd '^[e' history-substring-search-down
+	bindkey -M visual 'e' down-line-or-history
+
+	# vi-backward-blank-word (unbound) (B) (unbound)
+	#   Move backward one word, where a word is defined as a series of non-blank
+	#   characters.
+	bindkey -M vicmd 'l' vi-backward-blank-word
+	bindkey -M vicmd '^[l' vi-backward-blank-word
+	bindkey -M visual 'l' vi-backward-blank-word
+
+	# vi-forward-blank-word (unbound) (B) (unbound)
+	#   Move forward one word, where a word is defined as a series of non-blank
+	#   characters.
+	bindkey -M vicmd 'w' vi-forward-blank-word
+	bindkey -M vicmd '^[w' vi-forward-blank-word
+	bindkey -M visual 'w' vi-forward-blank-word
+
+	# vi-backward-blank-word-end (unbound) (gE) (unbound)
+	#   Move to the end of the previous word, where a word is defined as a series
+	#   of non-blank characters.
+	bindkey -M vicmd 'L' vi-backward-blank-word-end
+	bindkey -M vicmd '^[L' vi-backward-blank-word-end
+	bindkey -M visual 'L' vi-backward-blank-word-end
+
+	# vi-forward-blank-word-end (unbound) (E) (unbound)
+	#   Move to the end of the current word, or, if at the end of the current word,
+	#   to the end of the next word, where a word is defined as a series of
+	#   non-blank characters.
+	bindkey -M vicmd 'Y' vi-forward-blank-word-end
+	bindkey -M vicmd '^[Y' vi-forward-blank-word-end
+	bindkey -M visual 'Y' vi-forward-blank-word-end
+
+	# vi-repeat-search (unbound) (n) (unbound)
+	#   Repeat the last vi history search.
+	bindkey -M vicmd 'k' vi-repeat-search
+	bindkey -M vicmd '^[k' vi-repeat-search
+	bindkey -M isearch '^[k' vi-repeat-search
+	bindkey -M isearch '^[u' vi-repeat-search
+
+	# vi-rev-repeat-search (unbound) (N) (unbound)
+	#   Repeat the last vi history search, but in reverse.
+	bindkey -M vicmd 'K' vi-rev-repeat-search
+	bindkey -M vicmd '^[K' vi-rev-repeat-search
+	bindkey -M isearch '^[K' vi-rev-repeat-search
+	bindkey -M isearch '^[e' vi-rev-repeat-search
+
+	# vi-pound-insert
+	#   If there is no # character at the beginning of the buffer, add one to the
+	#   beginning of each line. If there is one, remove a # from each line that
+	#   has one. In either case, accept the current line. The INTERACTIVE_COMMENTS
+	#   option must be set for this to have any usefulness.
+	bindkey -M vicmd '#' vi-pound-insert
+	bindkey -M vicmd '^[#' vi-pound-insert
+	bindkey -M visual '#' vi-pound-insert
+
+	# vi-add-next (unbound) (a) (unbound)
+	#   Enter insert mode after the current cursor position, without changing lines.
+	bindkey -M vicmd 't' vi-add-next
+	bindkey -M vicmd '^[t' vi-add-next
+	bindkey -M visual 't' vi-add-next
+
+	# vi-add-eol (unbound) (A) (unbound)
+	#   Move to the end of the line and enter insert mode.
+	bindkey -M vicmd 'T' vi-add-eol
+	bindkey -M vicmd '^[T' vi-add-eol
+	bindkey -M visual 'T' vi-add-eol
+
+	# vi-change (unbound) (c) (unbound)
+	#   Read a movement command from the keyboard, and kill from the cursor
+	#   position to the endpoint of the movement. Then enter insert mode. If the
+	#   command is vi-change, change the current line. For compatibility with vi,
+	#   if the command is vi-forward-word or vi-forward-blank-word, the whitespace
+	#   after the word is not included. If you prefer the more consistent behaviour
+	#   with the whitespace included use the following key binding:
+	#     bindkey -a -s cw dwi
+	bindkey -M vicmd 'w' vi-change
+	bindkey -M vicmd '^[w' vi-change
+	bindkey -M visual 'w' vi-change
+
+	# vi-change-eol (unbound) (C) (unbound)
+	#  Kill to the end of the line and enter insert mode.
+	bindkey -M vicmd 'W' vi-change-eol
+	bindkey -M vicmd '^[W' vi-change-eol
+	bindkey -M visual 'W' vi-change-eol
+
+	# vi-change-whole-line (unbound) (S) (unbound)
+	#  Kill the current line and enter insert mode.
+	bindkey -M vicmd 'ww' vi-change-whole-line
+	bindkey -M vicmd '^[w^[w' vi-change-whole-line
+	bindkey -M visual 'ww' vi-change-whole-line
+
+	# vi-insert (unbound) (i) (unbound)
+	#   Enter insert mode.
+	bindkey -M vicmd 's' vi-insert
+	bindkey -M vicmd '^[s' vi-insert
+	bindkey -M visual 's' vi-insert
+
+	# vi-insert-bol (unbound) (I) (unbound)
+	#   Move to the first non-blank character on the line and enter insert mode.
+	bindkey -M vicmd 'S' vi-insert-bol
+	bindkey -M vicmd '^[S' vi-insert-bol
+	bindkey -M visual 'S' vi-insert-bol
+
+	# vi-open-line-above (unbound) (H) (unbound)
+	#   Open a line above the cursor and enter insert mode.
+	bindkey -M vicmd 'H' vi-open-line-above
+	bindkey -M vicmd '^[H' vi-open-line-above
+	bindkey -M visual 'H' vi-open-line-above
+
+	# vi-open-line-below (unbound) (h) (unbound)
+	#   Open a line below the cursor and enter insert mode.
+	bindkey -M vicmd 'h' vi-open-line-below
+	bindkey -M vicmd '^[h' vi-open-line-below
+	bindkey -M visual 'h' vi-open-line-below
+
+	# vi-yank (unbound) (y) (unbound)
+	#   Read a movement command from the keyboard, and copy the region from the
+	#   cursor position to the endpoint of the movement into the kill buffer. If
+	#   the command is vi-yank, copy the current line.
+	bindkey -M vicmd 'c' vi-yank
+	bindkey -M vicmd '^[c' vi-yank
+	bindkey -M visual 'c' vi-yank
+
+	# vi-yank-whole-line (unbound) (Y) (unbound)
+	#   Copy the current line into the kill buffer.
+	bindkey -M vicmd 'C' vi-yank-whole-line
+	bindkey -M vicmd '^[C' vi-yank-whole-line
+	bindkey -M visual 'C' vi-yank-whole-line
+
+	# vi-put-before (unbound) (P) (unbound)
+	#   Insert the contents of the kill buffer before the cursor. If the kill
+	#   buffer contains a sequence of lines (as opposed to characters), paste
+	#   it above the current line.
+	bindkey -M vicmd 'V' vi-put-before
+
+	# vi-put-after (unbound) (p) (unbound)
+	#  Insert the contents of the kill buffer after the cursor. If the kill buffer
+	#  contains a sequence of lines (as opposed to characters), paste it below the
+	#  current line.
+	bindkey -M vicmd 'v' vi-put-after
+
+	# visual-mode (unbound) (v) (unbound)
+	#  Toggle vim-style visual selection mode. If line-wise visual mode is
+	#  currently enabled then it is changed to being character-wise. If used
+	#  following an operator, it forces the subsequent movement command to be
+	#  treated as a character-wise movement.
+	bindkey -M vicmd 'a' visual-mode
+
+	# visual-line-mode (unbound) (V) (unbound)
+	#  Toggle vim-style line-wise visual selection mode. If character-wise visual
+	#  mode is currently enabled then it is changed to being line-wise. If used
+	#  following an operator, it forces the subsequent movement command to be
+	#  treated as a line-wise movement.
+	bindkey -M vicmd 'A' visual-line-mode
 
 	#####################################################################
 	# misc
@@ -442,19 +646,48 @@ if [[ -o interactive ]]; then
 fi
 
 #####################################################################
+# Externals
+#####################################################################
+
+if [[ -o interactive ]]; then
+	# Mac only externals
+	if [[ "$OSTYPE" = darwin* ]]; then
+		if have brew; then
+			# Load autojump
+			autojump_path="$(brew --prefix)/etc/profile.d/autojump.sh"
+			[[ -r "${autojump_path}" ]] && source "${autojump_path}"
+			unset autojump_path
+
+			# Export CFLAGS and LDFLAGS
+			export CGO_CFLAGS="-I/usr/local/include"
+			export CGO_CPPFLAGS="${CGO_CFLAGS}"
+			export CGO_CXXFLAGS="${CGO_CFLAGS}"
+			export CGO_LDFLAGS="-L/usr/local/lib"
+		fi
+
+		# Load iterm2 shell integration
+		[[ -r "@home_path@/.iterm2_shell_integration.zsh" ]] && source "@home_path@/.iterm2_shell_integration.zsh"
+	fi
+fi
+
+#####################################################################
 # Profile support
 #####################################################################
 
 # TODO: create a Derivation for the profile support. Make it optional and have
 # ZSH work with or without it.
 
-if [[ -z "${ACTIVE_PROFILE}" || -z "${ACTIVE_STORY}" ]]; then
+if [[ -z "${ZSH_PROFILE}" || -z "${SWM_STORY_NAME}" ]]; then
 	if [[ -n "${DISPLAY}" ]] && have i3-msg; then
 		active_workspace="$(i3-msg -t get_workspaces 2>/dev/null | @jq_bin@ -r '.[] | if .focused == true then .name else empty end')"
 
 		if [[ "${active_workspace}" =~ '.*@.*' ]]; then
-			[[ -z "${ACTIVE_PROFILE}" ]] && export ACTIVE_PROFILE="$(echo "${active_workspace}" | cut -d@ -f1)"
-			[[ -z "${ACTIVE_STORY}" ]] && export ACTIVE_STORY="$(echo "${active_workspace}" | cut -d@ -f2)"
+			[[ -z "${ZSH_PROFILE}" ]] && export ZSH_PROFILE="$(echo "${active_workspace}" | cut -d@ -f1)"
+			[[ -z "${SWM_STORY_NAME}" ]] && export SWM_STORY_NAME="$(echo "${active_workspace}" | tr @ /)"
+		fi
+
+		if [[ -z "${ZSH_PROFILE}" ]] && [[ -r "@home_path@/.zsh/profiles/${active_workspace}.zsh" ]]; then
+			 export ZSH_PROFILE="${active_workspace}"
 		fi
 
 		unset active_workspace
@@ -462,8 +695,8 @@ if [[ -z "${ACTIVE_PROFILE}" || -z "${ACTIVE_STORY}" ]]; then
 fi
 
 # load the active profile only if one is available
-if [[ -n "${ACTIVE_PROFILE}" ]] && [[ -r "@home_path@/.zsh/profiles/${ACTIVE_PROFILE}.zsh" ]]; then
-	sp "${ACTIVE_PROFILE}"
+if [[ -n "${ZSH_PROFILE}" ]] && [[ -r "@home_path@/.zsh/profiles/${ZSH_PROFILE}.zsh" ]]; then
+	sp "${ZSH_PROFILE}"
 fi
 
 #####################################################################
