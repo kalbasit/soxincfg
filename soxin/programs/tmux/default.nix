@@ -3,12 +3,22 @@
 with lib;
 let
   cfg = config.soxin.programs.tmux;
+
+  keyboardLayout =
+    if config.soxin.settings.keyboard.defaultLayout.x11.layout == "us"
+      && config.soxin.settings.keyboard.defaultLayout.x11.variant == "colemak"
+    then "colemak"
+    else if config.soxin.settings.keyboard.defaultLayout.x11.layout == "us"
+      && config.soxin.settings.keyboard.defaultLayout.x11.variant == ""
+    then "querty"
+    else throw "Keyboard layout ${config.soxin.settings.keyboard.defaultLayout.x11} is not known.";
+
 in
 {
   options = recursiveUpdate
     {
       soxin.programs.tmux = {
-        enable = mkEnableOption "Whether to enable tmux.";
+        enable = mkEnableOption "programs.tmux";
 
         extraConfig = mkOption {
           type = types.lines;
@@ -39,7 +49,7 @@ in
       };
     });
 
-  config = {
+  config = mkIf cfg.enable {
     soxin.programs.tmux = {
       tmuxConfig =
         let
@@ -52,6 +62,64 @@ in
             bind-key -n M-e if-shell "$is_vim" "send-keys M-e"  "select-pane -D"
             bind-key -n M-i if-shell "$is_vim" "send-keys M-i"  "select-pane -U"
             bind-key -n M-o if-shell "$is_vim" "send-keys M-o"  "select-pane -R"
+          '';
+
+          colemakBindings = ''
+            #
+            # Colemak binding
+            #
+
+            # cursor movement
+            bind-key -r -T copy-mode-vi n send -X cursor-left
+            bind-key -r -T copy-mode-vi e send -X cursor-down
+            bind-key -r -T copy-mode-vi i send -X cursor-up
+            bind-key -r -T copy-mode-vi o send -X cursor-right
+
+            # word movement
+            bind-key -r -T copy-mode-vi u send -X next-word-end
+            bind-key -r -T copy-mode-vi U send -X next-space-end
+            bind-key -r -T copy-mode-vi y send -X next-word
+            bind-key -r -T copy-mode-vi Y send -X next-space
+            bind-key -r -T copy-mode-vi l send -X previous-word
+            bind-key -r -T copy-mode-vi L send -X previous-space
+
+            # search
+            bind-key -r -T copy-mode-vi k send -X search-again
+            bind-key -r -T copy-mode-vi K send -X search-reverse
+
+            # visual mode
+            bind-key -r -T copy-mode-vi a send -X begin-selection
+
+            # yank
+            bind-key -r -T copy-mode-vi c send -X copy-selection-and-cancel
+            bind-key -r -T copy-mode-vi C send -X copy-selection
+
+            # char search
+            bind-key -r -T copy-mode-vi p command-prompt -1 -p "jump to forward" "send -X jump-to-forward \"%%%\""
+            bind-key -r -T copy-mode-vi P command-prompt -1 -p "jump to backward" "send -X jump-to-backward \"%%%\""
+
+            # Change window move behavior
+            bind . command-prompt "swap-window -t '%%'"
+            bind > command-prompt "move-window -t '%%'"
+
+            # More straight forward key bindings for splitting
+            unbind %
+            bind h split-window -h
+            unbind '"'
+            bind v split-window -v
+
+            # The shortcut is set to <t> which overrides the default mapping for clock mode
+            bind T clock-mode
+
+            # Bind pane selection and pane resize for Vim Bindings in Colemak!
+            bind n select-pane -L
+            bind e select-pane -D
+            bind i select-pane -U
+            bind o select-pane -R
+            bind -r N resize-pane -L 5
+            bind -r E resize-pane -D 5
+            bind -r I resize-pane -U 5
+            bind -r O resize-pane -R 5
           '';
 
           copyPaste =
@@ -70,11 +138,10 @@ in
             logging
             prefix-highlight
             fzf-tmux-url
-            resurrect
           ];
 
           clock24 = true;
-          customPaneNavigationAndResize = true;
+          customPaneNavigationAndResize = ! (keyboardLayout == "colemak");
           escapeTime = 0;
           historyLimit = 10000;
           keyMode = "vi";
@@ -124,13 +191,21 @@ in
             bind C-o switch-client -n
 
             ${copyPaste}
+          ''
+          + optionalString (keyboardLayout == "colemak") colemakBindings
+          + optionalString pkgs.stdenv.isLinux ''
+            set  -g default-terminal "tmux-256color"
 
-            ${optionalString pkgs.stdenv.isLinux ''set  -g default-terminal "tmux-256color"''}
+            # fuzzy client selection
+            bind s split-window -p 20 -v ${pkgs.nur.repos.kalbasit.swm}/bin/swm tmux switch-client --kill-pane
+          ''
+          + optionalString pkgs.stdenv.isDarwin ''
+            set  -g default-terminal "xterm-256color"
 
-            ${cfg.extraConfig}
-
-            set -g @resurrect-capture-pane-contents 'on'
-          '';
+            # fuzzy client selection
+            bind s split-window -p 20 -v ${pkgs.nur.repos.kalbasit.swm}/bin/swm --ignore-pattern ".Spotlight-V100|.Trashes|.fseventsd" tmux switch-client --kill-pane
+          ''
+          + cfg.extraConfig;
         };
     };
 
