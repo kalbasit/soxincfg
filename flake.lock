@@ -95,6 +95,22 @@
         "type": "indirect"
       }
     },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1604350474,
+        "narHash": "sha256-zz0g0YmgJJqSd9032LWJAjHUeEIgvbXVoN2y8SCBQ9I=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "0da76dab4c2acce5ebf404c400d38ad95c52b152",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nur": {
       "locked": {
         "lastModified": 1608264880,
@@ -117,7 +133,26 @@
         "nixos": "nixos",
         "nixos-hardware": "nixos-hardware",
         "nur": "nur",
+        "sops-nix": "sops-nix",
         "soxin": "soxin"
+      }
+    },
+    "sops-nix": {
+      "inputs": {
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1608002285,
+        "narHash": "sha256-NRTuYRlVUFMyCGQK3CGxzyvIiZY6PnnKAG5B/QLK8M4=",
+        "owner": "Mic92",
+        "repo": "sops-nix",
+        "rev": "797e7552776441a018e0a7299b5ba647aed40ffe",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Mic92",
+        "repo": "sops-nix",
+        "type": "github"
       }
     },
     "soxin": {

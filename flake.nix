@@ -18,9 +18,10 @@
     futils.url = "github:numtide/flake-utils";
     nixos-hardware.url = "nixos-hardware";
     nur.url = "nur";
+    sops-nix.url = "github:Mic92/sops-nix";
   };
 
-  outputs = { self, nixos, master, home-manager, soxin, futils, nixos-hardware, nur } @ inputs:
+  outputs = { self, nixos, master, soxin, futils, sops-nix, ... } @ inputs:
     let
       inherit (nixos) lib;
       inherit (nixos.lib) recursiveUpdate;
@@ -46,6 +47,15 @@
         in
         {
           devShell = pkgs.mkShell {
+            sopsPGPKeyDirs = [
+              "./vars/sops-keys/hosts"
+              "./vars/sops-keys/users"
+            ];
+
+            nativeBuildInputs = [
+              sops-nix.packages.${system}.sops-pgp-hook
+            ];
+
             buildInputs = with pkgs; [
               git
               nixpkgs-fmt
