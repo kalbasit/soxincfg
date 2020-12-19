@@ -58,6 +58,8 @@
 
             buildInputs = with pkgs; [
               git
+              sops
+              sops-nix.packages.${system}.ssh-to-pgp
               nixpkgs-fmt
               pre-commit
             ];
