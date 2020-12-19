@@ -1,14 +1,15 @@
-{ lib
-, system
-, pkgset
-, self
-, nixos
-, master
+{ futils
 , home-manager
-, soxin
-, futils
+, lib
+, master
+, nixos
 , nixos-hardware
 , nur
+, pkgset
+, self
+, sops-nix
+, soxin
+, system
 }:
 let
   config = path:

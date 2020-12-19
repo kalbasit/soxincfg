@@ -1,4 +1,4 @@
-{ soxincfg, ... }:
+{ config, soxincfg, ... }:
 let
   nasreddineCA = builtins.readFile (builtins.fetchurl {
     url = "https://s3-us-west-1.amazonaws.com/nasreddine-infra/ca.crt";
@@ -11,6 +11,8 @@ in
 
     ./hardware-configuration.nix
   ];
+
+  sops.defaultSopsFile = ./secrets.yaml;
 
   # Set the ssh authorized keys for the root user
   users.users.root.openssh.authorizedKeys.keys = soxincfg.vars.users.yl.sshKeys;
@@ -98,8 +100,39 @@ in
 
   environment.homeBinInPath = true;
 
-  security.pki.certificates = [
-    nasreddineCA
+  security.pki.certificates = [ nasreddineCA ];
+
+  sops.secrets.ssh_key_zeus = { };
+  sops.secrets.ssh_key_kore = { };
+  nix.buildMachines = [
+    {
+      hostName = "zeus.admin.nasreddine.com";
+      sshUser = "builder";
+      sshKey = builtins.toString config.sops.secrets.ssh_key_zeus.path;
+      system = "x86_64-linux";
+      maxJobs = 8;
+      speedFactor = 2;
+      supportedFeatures = [ ];
+      mandatoryFeatures = [ ];
+    }
+
+    # {
+    #   hostName = "aarch64.nixos.community";
+    #   maxJobs = 64;
+    #   sshKey = builtins.toString ./../../../../keys/aarch64-build-box;
+    #   sshUser = "kalbasit";
+    #   system = "aarch64-linux";
+    #   supportedFeatures = [ "big-parallel" ];
+    # }
+
+    {
+      hostName = "kore.admin.nasreddine.com";
+      maxJobs = 4;
+      sshKey = builtins.toString config.sops.secrets.ssh_key_kore.path;
+      sshUser = "builder";
+      system = "aarch64-linux";
+      supportedFeatures = [ ];
+    }
   ];
 
   system.stateVersion = "20.09"; # Did you read the comment?
