@@ -62,11 +62,11 @@
               sops-nix.packages.${system}.ssh-to-pgp
               nixpkgs-fmt
               pre-commit
-              (writeScriptBin "sopsdiffer" ''
-                #!${runtimeShell}
-                ${sops}/bin/sops -d "$@"
-              '')
             ];
+
+            shellHook = ''
+              git config diff.sopsdiffer.textconv "sops -d"
+            '';
           };
 
           packages = soxin.lib.overlaysToPkgs self.overlays pkgs;
