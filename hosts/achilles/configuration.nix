@@ -34,6 +34,7 @@ in
       autorandr.enable = true;
       git.enable = true;
       htop.enable = true;
+      keybase.enable = true;
       mosh.enable = true;
       ssh.enable = true;
       starship.enable = true;

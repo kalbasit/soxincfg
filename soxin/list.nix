@@ -11,6 +11,7 @@
   git = ./programs/git.nix;
   htop = ./programs/htop.nix;
   keybase = ./programs/keybase.nix;
+  less = ./programs/less.nix;
   mosh = ./programs/mosh.nix;
   neovim = ./programs/neovim;
   rofi = ./programs/rofi;

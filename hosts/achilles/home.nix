@@ -1,6 +1,8 @@
 # home-manager configuration for user `yl`
 { soxincfg }:
-{ config, pkgs, home-manager, ... }:
+{ config, pkgs, home-manager, lib, ... }:
+
+with lib;
 
 {
   imports = [
@@ -50,6 +52,7 @@
       autorandr.enable = true;
       htop.enable = true;
       keybase.enable = true;
+      less.enable = true;
       mosh.enable = true;
       rofi.enable = true;
       ssh.enable = true;
@@ -133,6 +136,8 @@
          trimSpaceFromSelection = True
         }
       '';
+
+      ".npmrc".text = "prefix=${config.home.homeDirectory}/.filesystem";
     };
 
   home.packages = with pkgs; [
@@ -145,7 +150,63 @@
     xsel
 
     # zoom for meetings
-    # TODO: it's not building
-    # zoom-us
-  ];
+    zoom-us
+
+    amazon-ecr-credential-helper
+    docker-credential-gcr
+
+    browsh
+
+    gist
+
+    gnupg
+
+    go
+
+    jq
+
+    jrnl
+
+    killall
+
+    lastpass-cli
+
+    mercurial
+
+    mosh
+
+    nur.repos.kalbasit.nixify
+
+    nix-index
+
+    nixops
+
+    # curses-based file manager
+    lf
+
+    nur.repos.kalbasit.swm
+
+    corgi
+    vgo2nix
+
+    unzip
+
+    nix-zsh-completions
+  ] ++ (optionals stdenv.isLinux [
+    #
+    # Linux applications
+    #
+
+    # XXX: Failing to compile on Darwin
+    gotop
+
+    jetbrains.idea-community
+
+    keybase
+
+    slack
+
+    # Games
+    _2048-in-terminal
+  ]);
 }
