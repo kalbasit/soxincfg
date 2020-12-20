@@ -65,6 +65,7 @@
             ];
 
             shellHook = ''
+              sopsPGPHook
               git config diff.sopsdiffer.textconv "sops -d"
             '';
           };
