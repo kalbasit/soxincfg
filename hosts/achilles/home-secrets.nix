@@ -21,4 +21,10 @@ in
   sops.secrets._github_token = { inherit owner sopsFile; path = "${yl_home}/.github_token"; };
   sops.secrets._jrnl_config = { inherit owner sopsFile; path = "${yl_home}/.jrnl_config"; };
   sops.secrets._local_share_remmina_my_network_vnc_poseidon_poseidon_general_nasreddine_com_remmina = { inherit owner sopsFile; path = "${yl_home}/.local/share/remmina/my-network_vnc_poseidon_poseidon-general-nasreddine-com.remmina"; };
+  sops.secrets._netrc = { inherit owner sopsFile; path = "${yl_home}/.netrc"; };
+  sops.secrets._zsh_profiles_keeptruckin_admin_zsh = { inherit owner sopsFile; path = "${yl_home}/.zsh/profiles/keeptruckin.admin.zsh"; };
+  sops.secrets._zsh_profiles_keeptruckin_playground_zsh = { inherit owner sopsFile; path = "${yl_home}/.zsh/profiles/keeptruckin.playground.zsh"; };
+  sops.secrets._zsh_profiles_keeptruckin_zsh = { inherit owner sopsFile; path = "${yl_home}/.zsh/profiles/keeptruckin.zsh"; };
+  sops.secrets._zsh_profiles_opensource_zsh = { inherit owner sopsFile; path = "${yl_home}/.zsh/profiles/opensource.zsh"; };
+  sops.secrets._zsh_profiles_personal_zsh = { inherit owner sopsFile; path = "${yl_home}/.zsh/profiles/personal.zsh"; };
 }
