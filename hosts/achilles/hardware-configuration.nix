@@ -3,7 +3,8 @@
 with lib;
 
 {
-  # imports = [ "${pkgs.path}/nixos/modules/installer/scan/not-detected.nix" ];
+  # Common firmware, i.e. for wifi cards
+  hardware.enableRedistributableFirmware = lib.mkDefault true;
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" "sdhci_pci" ];
   boot.kernelModules = [ "kvm-intel" ];
