@@ -54,6 +54,7 @@ with lib;
       keybase.enable = true;
       less.enable = true;
       mosh.enable = true;
+      pet.enable = true;
       rofi.enable = true;
       ssh.enable = true;
       starship.enable = true;
