@@ -41,11 +41,6 @@ with lib;
         ];
       };
 
-      # HiDPI
-      xserver.windowManager.bar = {
-        dpi = 196;
-        height = 43;
-      };
     };
 
     programs = {
@@ -55,7 +50,6 @@ with lib;
       less.enable = true;
       mosh.enable = true;
       pet.enable = true;
-      rofi.dpi = 196;
       rofi.enable = true;
       ssh.enable = true;
       starship.enable = true;
@@ -63,6 +57,18 @@ with lib;
       urxvt.enable = true;
       zsh.enable = true;
     };
+  };
+
+  # HiDPI
+  soxin.programs.rofi.dpi = 196;
+  xsession.pointerCursor = {
+    package = pkgs.vanilla-dmz;
+    name = "Vanilla-DMZ";
+    size = 128;
+  };
+  soxin.services.xserver.windowManager.bar = {
+    dpi = 196;
+    height = 43;
   };
 
   programs.bat.enable = true;
