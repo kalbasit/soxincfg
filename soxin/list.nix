@@ -46,4 +46,5 @@
   # virtualisation
   docker = ./virtualisation/docker.nix;
   libvirtd = ./virtualisation/libvirtd.nix;
+  virtualbox = ./virtualisation/virtualbox.nix;
 }

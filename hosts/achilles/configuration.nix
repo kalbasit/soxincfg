@@ -76,6 +76,8 @@ in
     virtualisation = {
       docker.enable = true;
       libvirtd.enable = true;
+      # virtualbox is currently marked as broken upstream with kernel > 5.9
+      # virtualbox.enable = true;
     };
   };
 
