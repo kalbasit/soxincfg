@@ -7,25 +7,16 @@ in
 {
   options = {
     soxincfg.programs.starship = {
-      enable = mkEnableOption "Whether to enable starship prompt.";
+      enable = mkEnableOption "starship prompt";
     };
   };
 
   config = mkIf cfg.enable (mkMerge [
-    (optionalAttrs (mode == "NixOS") {
-      programs.zsh.shellInit = mkAfter ''
-        if [ -z "$INSIDE_EMACS" ]; then
-          eval "$(${pkgs.starship}/bin/starship init zsh)"
-        fi
-      '';
-    })
+    { soxin.programs.starship.enable = true; }
 
     (optionalAttrs (mode == "home-manager") {
       programs.starship = {
-        enable = true;
-        enableZshIntegration = true;
         settings = {
-          add_newline = false;
           battery.display = [
             { threshold = 100; style = "bold green"; }
             { threshold = 30; style = "yellow"; }

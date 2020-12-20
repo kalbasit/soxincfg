@@ -7,7 +7,7 @@ in
 {
   options = {
     soxin.programs.starship = {
-      enable = mkEnableOption "Whether to enable starship prompt.";
+      enable = mkEnableOption "starship prompt";
     };
   };
 
