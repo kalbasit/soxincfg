@@ -12,7 +12,17 @@
 }:
 
 with pkgs.lib;
-
+let
+  keyboardLayout =
+    let
+      dl = config.soxin.settings.keyboard.defaultLayout.x11;
+    in
+    if dl.variant == "colemak" then "colemak"
+    else if dl.layout == "fw" && dl.variant == "befo" then "bepo"
+    else if dl.layout == "us" && dl.variant == "intl" then "qwerty_intl"
+    else if dl.layout == "us" && dl.variant == "" then "qwerty"
+    else throw "I'm not sure what to do with the keyboard layout ${dl}";
+in
 {
   inherit viAlias vimAlias withNodeJs withPython withPython3 withRuby;
 
@@ -20,31 +30,21 @@ with pkgs.lib;
   extraPython3Packages = ps: with ps; [ pynvim ];
 
   configure = {
-    customRC = builtins.concatStringsSep " " [
-      (builtins.readFile (pkgs.substituteAll {
-        src = ./init.vim;
+    customRC =
+      builtins.concatStringsSep " " [
+        (builtins.readFile (pkgs.substituteAll {
+          src = ./init.vim;
 
-        ag_bin = "${getBin pkgs.ag}/bin/ag";
-        gocode_bin = "${getBin pkgs.nur.repos.kalbasit.gocode}/bin/gocode";
-        xsel_bin = "${getBin pkgs.xsel}/bin/xsel";
-      }))
+          ag_bin = "${getBin pkgs.ag}/bin/ag";
+          gocode_bin = "${getBin pkgs.nur.repos.kalbasit.gocode}/bin/gocode";
+          xsel_bin = "${getBin pkgs.xsel}/bin/xsel";
+        }))
 
-      # TODO: Do this better!
-      (
-        let
-          dl = config.soxin.settings.keyboard.defaultLayout.x11;
-          ln =
-            if dl.variant == "colemak" then "colemak"
-            else if dl.layout == "fw" && dl.variant == "befo" then "bepo"
-            else if dl.layout == "us" && dl.variant == "intl" then "qwerty_intl"
-            else if dl.layout == "us" && dl.variant == "" then "qwerty"
-            else throw "I'm not sure what to do with the keyboard layout ${dl}";
-        in
-        builtins.readFile (./keyboard_layouts + "/${ln}.vim")
-      )
+        # TODO: Do this better!
+        (builtins.readFile (./keyboard_layouts + "/${keyboardLayout}.vim"))
 
-      extraRC
-    ];
+        extraRC
+      ];
 
     vam.knownPlugins = pkgs.vimPlugins // extraKnownPlugins;
     vam.pluginDictionaries = extraPluginDictionaries ++ [
@@ -109,7 +109,8 @@ with pkgs.lib;
             # Typescript support
             # "vim-typescript"    # TODO: https://github.com/kalbasit/dotfiles/issues/15
             "yats-vim"
-          ];
+          ]
+          ++ (optionals (keyboardLayout == "colemak") [ "vim-colemak" ]);
       }
     ];
   };
