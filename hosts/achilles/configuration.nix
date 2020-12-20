@@ -10,6 +10,9 @@ in
     soxincfg.nixosModules.profiles.workstation
 
     ./hardware-configuration.nix
+
+    # place home secrets
+    ./home-secrets.nix
   ];
 
   sops.defaultSopsFile = ./secrets.sops.yaml;
@@ -64,6 +67,9 @@ in
         ];
       };
     };
+
+    # allow my user to access secrets
+    users.groups = [ "keys" ];
 
     users.users = {
       yl = {
