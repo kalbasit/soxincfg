@@ -9,6 +9,12 @@ with lib;
     soxincfg.nixosModules.profiles.workstation
   ];
 
+  soxincfg = {
+    programs = {
+      starship.enable = true;
+    };
+  };
+
   soxin = {
     hardware.bluetooth.enable = true;
 
@@ -53,7 +59,6 @@ with lib;
       pet.enable = true;
       rofi.enable = true;
       ssh.enable = true;
-      starship.enable = true;
       termite.enable = true;
       urxvt.enable = true;
       zsh.enable = true;

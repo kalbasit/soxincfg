@@ -23,6 +23,12 @@ in
   # load yl's home-manager configuration
   home-manager.users.yl = import ./home.nix { inherit soxincfg; };
 
+  soxincfg = {
+    programs = {
+      starship.enable = true;
+    };
+  };
+
   soxin = {
     hardware.bluetooth.enable = true;
 
@@ -40,7 +46,6 @@ in
       keybase.enable = true;
       mosh.enable = true;
       ssh.enable = true;
-      starship.enable = true;
       zsh.enable = true;
     };
 
