@@ -47,6 +47,7 @@ with lib;
       autorandr.enable = true;
       htop.enable = true;
       keybase.enable = true;
+      keybase.enableFs = true;
       less.enable = true;
       mosh.enable = true;
       pet.enable = true;
@@ -146,6 +147,7 @@ with lib;
       '';
 
       ".npmrc".text = "prefix=${config.home.homeDirectory}/.filesystem";
+
       ".gnupg/gpg.conf".text = ''
         # NOTE: https://github.com/jclement/dotfiles/blob/master/other/gpg.conf
         #
