@@ -55,6 +55,7 @@ with lib;
       less.enable = true;
       mosh.enable = true;
       pet.enable = true;
+      rofi.dpi = 196;
       rofi.enable = true;
       ssh.enable = true;
       starship.enable = true;
