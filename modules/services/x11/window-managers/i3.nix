@@ -39,7 +39,7 @@ in
           ram.enable = true;
           network = {
             enable = true;
-            wlan = [ "wlp2s0" ];
+            wlan = [ "wlp82s0" ];
           };
           volume.enable = true;
           temperature.enable = true;
