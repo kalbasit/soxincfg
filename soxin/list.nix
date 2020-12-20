@@ -34,11 +34,12 @@
   gpgAgent = ./services/gpg-agent.nix;
   i3 = ./services/x11/window-managers/i3;
   locker = ./services/locker.nix;
+  networkmanager = ./services/networking/networkmanager.nix;
   polybar = ./services/x11/window-managers/bar;
   printing = ./services/printing.nix;
   sshd = ./services/networking/ssh/sshd.nix;
-  xserver = ./services/x11/xserver.nix;
   weechat = ./services/weechat.nix;
+  xserver = ./services/x11/xserver.nix;
 
   # virtualisation
   docker = ./virtualisation/docker.nix;

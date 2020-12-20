@@ -59,7 +59,7 @@ in
 
         groups = {
           builders = { gid = 1999; };
-          mine = { gid = 1000; };
+          mine = { gid = 2000; };
         };
 
         users = mapAttrs' makeUser config.soxin.users.users;

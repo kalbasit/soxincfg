@@ -43,6 +43,7 @@ in
     services = {
       gpgAgent.enable = true;
       openssh.enable = true;
+      networkmanager.enable = true;
       printing = {
         enable = true;
         brands = [ "epson" ];
@@ -134,6 +135,15 @@ in
       supportedFeatures = [ ];
     }
   ];
+
+  # TODO: fix this!
+  system.extraSystemBuilderCmds = ''ln -sfn /yl/.surfingkeys.js $out/.surfingkeys.js'';
+
+  # L2TP VPN does not connect without the presence of this file!
+  # https://github.com/NixOS/nixpkgs/issues/64965
+  system.activationScripts.ipsec-secrets = ''
+    touch $out/etc/ipsec.secrets
+  '';
 
   system.stateVersion = "20.09"; # Did you read the comment?
 }
