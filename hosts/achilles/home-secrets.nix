@@ -7,4 +7,18 @@ in
 {
   sops.secrets._aws_config = { inherit owner sopsFile; path = "${yl_home}/.aws/config"; };
   sops.secrets._aws_credentials = { inherit owner sopsFile; path = "${yl_home}/.aws/credentials"; };
+  sops.secrets._config_ktmr_ansible_vault_passwd = { inherit owner sopsFile; path = "${yl_home}/.config/ktmr/ansible-vault.passwd"; };
+  sops.secrets._config_ktmr_config_nix = { inherit owner sopsFile; path = "${yl_home}/.config/ktmr/config.nix"; };
+  sops.secrets._config_pet_config_toml = { inherit owner sopsFile; path = "${yl_home}/.config/pet/config.toml"; };
+  sops.secrets._config_pet_snippet_toml = { inherit owner sopsFile; path = "${yl_home}/.config/pet/snippet.toml"; };
+  sops.secrets._config_remmina_remmina_pref = { inherit owner sopsFile; path = "${yl_home}/.config/remmina/remmina.pref"; };
+  sops.secrets._config_swm_config_yaml = { inherit owner sopsFile; path = "${yl_home}/.config/swm/config.yaml"; };
+  sops.secrets._config_tiny_config_yml = { inherit owner sopsFile; path = "${yl_home}/.config/tiny/config.yml"; };
+  sops.secrets._docker_config_json = { inherit owner sopsFile; path = "${yl_home}/.docker/config.json"; };
+  sops.secrets._gist = { inherit owner sopsFile; path = "${yl_home}/.gist"; };
+  sops.secrets._gist_vim = { inherit owner sopsFile; path = "${yl_home}/.gist-vim"; };
+  sops.secrets._gitconfig_secrets = { inherit owner sopsFile; path = "${yl_home}/.gitconfig.secrets"; };
+  sops.secrets._github_token = { inherit owner sopsFile; path = "${yl_home}/.github_token"; };
+  sops.secrets._jrnl_config = { inherit owner sopsFile; path = "${yl_home}/.jrnl_config"; };
+  sops.secrets._local_share_remmina_my_network_vnc_poseidon_poseidon_general_nasreddine_com_remmina = { inherit owner sopsFile; path = "${yl_home}/.local/share/remmina/my-network_vnc_poseidon_poseidon-general-nasreddine-com.remmina"; };
 }
