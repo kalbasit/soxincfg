@@ -23,9 +23,6 @@ let
 
       specialArgs.soxincfg = self;
 
-      # TODO: without this I'm getting infinite recursion sometimes in hardware-configuration
-      # specialArgs.pkgs = pkgset.nixos;
-
       modules =
         let
           inherit (self.nixosModules.profiles) core;
