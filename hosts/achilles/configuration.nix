@@ -12,7 +12,7 @@ in
     ./hardware-configuration.nix
   ];
 
-  sops.defaultSopsFile = ./secrets.yaml;
+  sops.defaultSopsFile = ./secrets.sops.yaml;
 
   # Set the ssh authorized keys for the root user
   users.users.root.openssh.authorizedKeys.keys = soxincfg.vars.users.yl.sshKeys;
