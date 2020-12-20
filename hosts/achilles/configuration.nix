@@ -79,6 +79,8 @@ in
     };
   };
 
+  programs.nm-applet.enable = true;
+
   boot.tmpOnTmpfs = true;
 
   # set the default locale and the timeZone
