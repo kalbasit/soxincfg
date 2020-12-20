@@ -91,6 +91,19 @@ in
   services.xserver.libinput.enable = true;
   services.xserver.libinput.accelSpeed = "0.5";
 
+  services.gnome3.gnome-keyring.enable = true;
+
+  # Redshift
+  location.latitude = 34.42;
+  location.longitude = -122.11;
+  services.redshift = {
+    brightness.day = "1.0";
+    brightness.night = "0.6";
+    enable = true;
+    temperature.day = 5900;
+    temperature.night = 3700;
+  };
+
   hardware.pulseaudio.zeroconf.discovery.enable = true;
 
   services.logind = {
