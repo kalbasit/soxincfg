@@ -36,7 +36,9 @@ let
               [
                 "nixos=${nixos}"
                 "nixpkgs=${master}"
-                "nixpkgs-overlays=${path}/overlays"
+
+                # TODO: overlays are not working. Marc will propose a different approach.
+                # "nixpkgs-overlays=${path}/overlays"
               ];
 
             nixpkgs = { pkgs = pkgset.nixos; };
