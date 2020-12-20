@@ -62,6 +62,10 @@
               sops-nix.packages.${system}.ssh-to-pgp
               nixpkgs-fmt
               pre-commit
+              (writeScriptBin "sopsdiffer" ''
+                #!${runtimeShell}
+                ${sops}/bin/sops -d "$@"
+              '')
             ];
           };
 
