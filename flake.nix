@@ -22,9 +22,13 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    deploy-rs = {
+      url = "github:serokell/deploy-rs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-master, soxin, futils, sops-nix, ... } @ inputs:
+  outputs = { self, nixpkgs, nixpkgs-master, soxin, futils, sops-nix, deploy-rs, ... } @ inputs:
     let
       inherit (nixpkgs) lib;
       inherit (nixpkgs.lib) recursiveUpdate;
@@ -60,11 +64,12 @@
             ];
 
             buildInputs = with pkgs; [
+              deploy-rs.packages.${system}.deploy-rs
               git
-              sops
-              sops-nix.packages.${system}.ssh-to-pgp
               nixpkgs-fmt
               pre-commit
+              sops
+              sops-nix.packages.${system}.ssh-to-pgp
             ];
 
             shellHook = ''
@@ -102,6 +107,19 @@
               pkgset = pkgset';
             }
           );
+
+        deploy.nodes = {
+          zeus = {
+            hostname = "zeus.admin.nasreddine.com";
+            profiles.system = {
+              sshUser = "root";
+              user = "root";
+              path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.zeus;
+            };
+          };
+        };
+
+        checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
       };
     in
     recursiveUpdate multiSystemOutputs outputs;
