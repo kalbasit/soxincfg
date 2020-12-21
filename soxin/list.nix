@@ -24,12 +24,12 @@
   zsh = ./programs/zsh;
 
   # hardware
-  fwupd = ./services/hardware/fwupd.nix;
-  intelBacklight = ./services/hardware/intel-backlight.nix;
-  lowbatt = ./services/hardware/lowbatt.nix;
-  serial_console = ./services/hardware/serial_console.nix;
-  sound = ./services/hardware/sound.nix;
-  yubikey = ./services/hardware/yubikey.nix;
+  fwupd = ./hardware/fwupd.nix;
+  intelBacklight = ./hardware/intel-backlight.nix;
+  lowbatt = ./hardware/lowbatt.nix;
+  serial_console = ./hardware/serial_console.nix;
+  sound = ./hardware/sound.nix;
+  yubikey = ./hardware/yubikey.nix;
 
   # services
   caffeine = ./services/caffeine.nix;
