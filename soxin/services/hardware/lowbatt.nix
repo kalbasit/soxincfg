@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, mode, ... }:
 
 with lib;
 let
@@ -68,32 +68,34 @@ in
     };
   };
 
-  config = mkIf cfg.enable {
-    systemd.user.timers."lowbatt" = {
-      Unit = {
-        Description = "check battery level";
+  config = mkIf cfg.enable (mkMerge [
+    (optionalAttrs (mode == "home-manager") {
+      systemd.user.timers."lowbatt" = {
+        Unit = {
+          Description = "check battery level";
+        };
+
+        Timer = {
+          OnBootSec = "1m";
+          OnUnitInactiveSec = "1m";
+          Unit = "lowbatt.service";
+        };
+
+        Install = {
+          WantedBy = [ "timers.target" ];
+        };
       };
 
-      Timer = {
-        OnBootSec = "1m";
-        OnUnitInactiveSec = "1m";
-        Unit = "lowbatt.service";
-      };
+      systemd.user.services."lowbatt" = {
+        Unit = {
+          Description = "battery level notifier";
+        };
 
-      Install = {
-        WantedBy = [ "timers.target" ];
+        Service = {
+          PassEnvironment = "DISPLAY";
+          ExecStart = "${script}/bin/lowbatt";
+        };
       };
-    };
-
-    systemd.user.services."lowbatt" = {
-      Unit = {
-        Description = "battery level notifier";
-      };
-
-      Service = {
-        PassEnvironment = "DISPLAY";
-        ExecStart = "${script}/bin/lowbatt";
-      };
-    };
-  };
+    })
+  ]);
 }

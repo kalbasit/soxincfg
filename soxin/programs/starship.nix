@@ -7,7 +7,7 @@ in
 {
   options = {
     soxin.programs.starship = {
-      enable = mkEnableOption "Whether to enable starship prompt.";
+      enable = mkEnableOption "starship prompt";
     };
   };
 
@@ -24,12 +24,6 @@ in
       programs.starship = {
         enable = true;
         enableZshIntegration = true;
-        settings = {
-          add_newline = false;
-          kubernetes = {
-            disabled = false;
-          };
-        };
       };
     })
   ]);

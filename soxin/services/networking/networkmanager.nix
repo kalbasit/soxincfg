@@ -20,6 +20,8 @@ in
         dns = "dnsmasq";
       };
 
+      programs.nm-applet.enable = true;
+
       soxin.users.groups = [ "networkmanager" ];
     })
   ]);

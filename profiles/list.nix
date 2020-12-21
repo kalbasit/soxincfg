@@ -1,7 +1,6 @@
 {
   core = ./core;
+  myself = ./myself;
+  work = ./work;
   workstation = ./workstation;
-  work = {
-    employer = ./work/employer.nix;
-  };
 }
