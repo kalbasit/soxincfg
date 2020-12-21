@@ -1,9 +1,10 @@
-{ futils
+{ deploy-rs
+, futils
 , home-manager
 , lib
-, nixpkgs-master
-, nixpkgs
 , nixos-hardware
+, nixpkgs
+, nixpkgs-master
 , nur
 , pkgset
 , self
