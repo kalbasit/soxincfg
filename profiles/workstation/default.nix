@@ -28,6 +28,7 @@ mkMerge [
         pet.enable = true;
         rbrowser = {
           enable = true;
+          setMimeList = true;
           browsers = {
             brave.enable = false;
             chromium.enable = true;
