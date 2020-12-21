@@ -1,0 +1,3 @@
+{
+  keeptruckin = ./keeptruckin.nix;
+}
