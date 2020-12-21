@@ -12,9 +12,5 @@
 
   soxin.hardware.intelBacklight.enable = true;
 
-  # speed up the trackpad
-  services.xserver.libinput.enable = true;
-  services.xserver.libinput.accelSpeed = "0.5";
-
   system.stateVersion = "20.09";
 }
