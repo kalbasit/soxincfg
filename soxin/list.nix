@@ -27,6 +27,7 @@
   fwupd = ./services/hardware/fwupd.nix;
   intelBacklight = ./services/hardware/intel-backlight.nix;
   lowbatt = ./services/hardware/lowbatt.nix;
+  serial_console = ./services/hardware/serial_console.nix;
   sound = ./services/hardware/sound.nix;
   yubikey = ./services/hardware/yubikey.nix;
 
