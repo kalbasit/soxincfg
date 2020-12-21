@@ -1,5 +1,4 @@
 { config, pkgs, soxincfg, ... }:
-
 let
   nasreddineCA = builtins.readFile (builtins.fetchurl {
     url = "https://s3-us-west-1.amazonaws.com/nasreddine-infra/ca.crt";
