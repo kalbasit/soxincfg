@@ -21,7 +21,10 @@ let
     soxin.lib.nixosSystem {
       inherit system;
 
-      specialArgs.soxincfg = self;
+      specialArgs = {
+        inherit nixos-hardware;
+        soxincfg = self;
+      };
 
       modules =
         let
@@ -79,7 +82,7 @@ let
 
           {
             _module.args = {
-              inherit nixos-hardware home-manager;
+              inherit home-manager;
               inherit (pkgset) master;
             };
           }
