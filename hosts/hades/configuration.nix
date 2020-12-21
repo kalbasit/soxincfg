@@ -1,8 +1,9 @@
 { config, soxincfg, ... }:
 {
   imports = [
-    soxincfg.nixosModules.profiles.workstation
     soxincfg.nixosModules.profiles.myself
+    soxincfg.nixosModules.profiles.work.keeptruckin
+    soxincfg.nixosModules.profiles.workstation
 
     ./hardware-configuration.nix
   ];

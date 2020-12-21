@@ -1,8 +1,6 @@
 {
   core = ./core;
   myself = ./myself;
+  work = ./work;
   workstation = ./workstation;
-  work = {
-    keeptruckin = ./work/keeptruckin.nix;
-  };
 }
