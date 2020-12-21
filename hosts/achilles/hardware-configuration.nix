@@ -4,7 +4,7 @@ with lib;
 
 {
   # Common firmware, i.e. for wifi cards
-  hardware.enableRedistributableFirmware = lib.mkDefault true;
+  hardware.enableRedistributableFirmware = true;
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usb_storage" "sd_mod" "sdhci_pci" ];
   boot.kernelModules = [ "kvm-intel" ];
