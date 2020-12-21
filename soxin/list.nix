@@ -24,7 +24,7 @@
   zsh = ./programs/zsh;
 
   # hardware
-  hardware = ./services/hardware/default.nix;
+  fwupd = ./services/hardware/fwupd.nix;
   intelBacklight = ./services/hardware/intel-backlight.nix;
   lowbatt = ./services/hardware/lowbatt.nix;
   sound = ./services/hardware/sound.nix;
