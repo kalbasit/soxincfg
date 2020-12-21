@@ -33,7 +33,7 @@
     "home-manager": {
       "inputs": {
         "nixpkgs": [
-          "nixos"
+          "nixpkgs"
         ]
       },
       "locked": {
@@ -49,36 +49,6 @@
         "ref": "release-20.09",
         "repo": "home-manager",
         "type": "github"
-      }
-    },
-    "master": {
-      "locked": {
-        "lastModified": 1608276010,
-        "narHash": "sha256-cXftgg9ydTC0pBgphefM+HlH9z9wmJrzPZYjwDL28k8=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "66c0fc3609a31ee090a925264f2c76c0d2af8ac0",
-        "type": "github"
-      },
-      "original": {
-        "id": "nixpkgs",
-        "ref": "master",
-        "type": "indirect"
-      }
-    },
-    "nixos": {
-      "locked": {
-        "lastModified": 1608062904,
-        "narHash": "sha256-QVaxOnGwZoBtNTlnAV0aeC30ASeJpo583wjotmhpOtg=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "647cc06986c1ae4a2bb05298e0cf598723e42970",
-        "type": "github"
-      },
-      "original": {
-        "id": "nixpkgs",
-        "ref": "nixos-20.09",
-        "type": "indirect"
       }
     },
     "nixos-hardware": {
@@ -97,18 +67,32 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1604350474,
-        "narHash": "sha256-zz0g0YmgJJqSd9032LWJAjHUeEIgvbXVoN2y8SCBQ9I=",
+        "lastModified": 1608062904,
+        "narHash": "sha256-QVaxOnGwZoBtNTlnAV0aeC30ASeJpo583wjotmhpOtg=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "0da76dab4c2acce5ebf404c400d38ad95c52b152",
+        "rev": "647cc06986c1ae4a2bb05298e0cf598723e42970",
         "type": "github"
       },
       "original": {
+        "id": "nixpkgs",
+        "ref": "release-20.09",
+        "type": "indirect"
+      }
+    },
+    "nixpkgs-master": {
+      "locked": {
+        "lastModified": 1608587299,
+        "narHash": "sha256-ViM/r8uoSHZCLfYK4kv7vWbdJB8MJ/m/yP0l29yXTWs=",
         "owner": "NixOS",
-        "ref": "nixpkgs-unstable",
         "repo": "nixpkgs",
+        "rev": "583470209f9d51f1c6884e0afb5a9949ac988bcd",
         "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "master",
+        "type": "indirect"
       }
     },
     "nur": {
@@ -129,9 +113,9 @@
       "inputs": {
         "futils": "futils",
         "home-manager": "home-manager",
-        "master": "master",
-        "nixos": "nixos",
         "nixos-hardware": "nixos-hardware",
+        "nixpkgs": "nixpkgs",
+        "nixpkgs-master": "nixpkgs-master",
         "nur": "nur",
         "sops-nix": "sops-nix",
         "soxin": "soxin"
@@ -139,7 +123,9 @@
     },
     "sops-nix": {
       "inputs": {
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": [
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 1608002285,
@@ -162,7 +148,7 @@
           "home-manager"
         ],
         "nixpkgs": [
-          "nixos"
+          "nixpkgs"
         ]
       },
       "locked": {

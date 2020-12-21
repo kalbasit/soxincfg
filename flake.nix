@@ -2,29 +2,32 @@
   description = "Soxin template flake";
 
   inputs = {
-    nixos.url = "nixpkgs/nixos-20.09";
-    master.url = "nixpkgs/master";
+    nixpkgs.url = "nixpkgs/release-20.09";
+    nixpkgs-master.url = "nixpkgs/master";
     home-manager = {
       url = "github:nix-community/home-manager/release-20.09";
-      inputs.nixpkgs.follows = "nixos";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     soxin = {
       url = "github:SoxinOS/soxin";
       inputs = {
-        nixpkgs.follows = "nixos";
+        nixpkgs.follows = "nixpkgs";
         home-manager.follows = "home-manager";
       };
     };
     futils.url = "github:numtide/flake-utils";
     nixos-hardware.url = "nixos-hardware";
     nur.url = "nur";
-    sops-nix.url = "github:Mic92/sops-nix";
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixos, master, soxin, futils, sops-nix, ... } @ inputs:
+  outputs = { self, nixpkgs, nixpkgs-master, soxin, futils, sops-nix, ... } @ inputs:
     let
-      inherit (nixos) lib;
-      inherit (nixos.lib) recursiveUpdate;
+      inherit (nixpkgs) lib;
+      inherit (nixpkgs.lib) recursiveUpdate;
       inherit (futils.lib) eachDefaultSystem;
 
       pkgImport = pkgs: system:
@@ -35,15 +38,15 @@
         };
 
       pkgset = system: {
-        nixos = pkgImport nixos system;
-        master = pkgImport master system;
+        nixpkgs = pkgImport nixpkgs system;
+        nixpkgs-master = pkgImport nixpkgs-master system;
       };
 
       multiSystemOutputs = eachDefaultSystem (system:
         let
           pkgset' = pkgset system;
-          osPkgs = pkgset'.nixos;
-          pkgs = pkgset'.master;
+          osPkgs = pkgset'.nixpkgs;
+          pkgs = pkgset'.nixpkgs-master;
         in
         {
           devShell = pkgs.mkShell {
