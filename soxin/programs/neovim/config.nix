@@ -36,7 +36,7 @@ in
           src = ./init.vim;
 
           ag_bin = "${getBin pkgs.ag}/bin/ag";
-          gocode_bin = "${getBin pkgs.nur.repos.kalbasit.gocode}/bin/gocode";
+          gocode_bin = "${getBin pkgs.gocode}/bin/gocode";
           xsel_bin = "${getBin pkgs.xsel}/bin/xsel";
         }))
 
