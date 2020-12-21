@@ -144,7 +144,7 @@ in
       "${defaultModifier}+${secondModifier}+q" = "kill";
 
       # rbrowser
-      "${defaultModifier}+b" = "exec ${pkgs.nur.repos.kalbasit.rbrowser}/bin/rbrowser";
+      "${defaultModifier}+b" = "exec rbrowser";
 
       # rofi run
       "${defaultModifier}+r" = "exec ${pkgs.rofi}/bin/rofi -show run";

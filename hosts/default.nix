@@ -61,7 +61,7 @@ let
                   "${pkg.pname}" = pkg;
                 };
               in
-              lib.concat [ nur.overlay ] (map overlay override);
+              lib.concat [ nur.overlay soxin.overlay ] (map overlay override);
           };
 
           local = import "${toString ./.}/${path}/configuration.nix";
