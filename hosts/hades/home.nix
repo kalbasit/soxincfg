@@ -14,6 +14,18 @@ with lib;
   # Setup the name of the wireless interface in Polybar
   soxin.services.xserver.windowManager.bar.modules.network.wlan = singleton "wlp110s0";
 
+  # Setup autorandr postswitch
+  soxincfg.programs.autorandr.postswitch.move-workspaces-to-main = ''
+    # Move the Slack workspace to the internal screen
+    ${getBin pkgs.i3}/bin/i3-msg "workspace slack; move workspace to output eDP-1"
+
+    # Move the TV workspace to the internal screen
+    ${getBin pkgs.i3}/bin/i3-msg "workspace tv; move workspace to output DP-3"
+
+    # Go to my personal workspace
+    ${getBin pkgs.i3}/bin/i3-msg "workspace personal"
+  '';
+
   programs.autorandr.profiles = {
     "default" = {
       fingerprint = {

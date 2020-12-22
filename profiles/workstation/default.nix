@@ -14,7 +14,6 @@ mkMerge [
       };
 
       programs = {
-        autorandr.enable = true;
         fzf.enable = true;
         git.enable = true;
         htop.enable = true;
@@ -88,6 +87,7 @@ mkMerge [
 
     soxincfg = {
       programs = {
+        autorandr.enable = true;
         brave.enable = true;
         chromium = { enable = true; surfingkeys.enable = true; };
         git.enable = true;

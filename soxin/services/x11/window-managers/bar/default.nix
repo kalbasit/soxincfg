@@ -205,6 +205,10 @@ in
       services.polybar = recursiveUpdate
         (import ./polybar.lib.nix { inherit config pkgs lib; })
         { enable = true; };
+
+      programs.autorandr.hooks.postswitch.restart-polybar = ''
+        systemctl --user restart polybar.service
+      '';
     })
   ]);
 }
