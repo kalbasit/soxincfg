@@ -46,6 +46,10 @@ mkMerge [
         ssh.enable = true;
         starship.enable = true;
       };
+
+      settings = {
+        nix.distributed-builds.enable = true;
+      };
     };
   }
 
