@@ -6,6 +6,7 @@ with lib;
 
 {
   imports = [
+    soxincfg.nixosModules.profiles.myself
     soxincfg.nixosModules.profiles.workstation
     soxincfg.nixosModules.profiles.work.keeptruckin
   ];
