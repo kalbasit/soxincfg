@@ -1,4 +1,4 @@
-{ config, soxincfg, lib, nixos-hardware, pkgs, ... }:
+{ config, soxincfg, lib, nixos-hardware, pkgs, sops-nix, ... }:
 with lib;
 let
   nasIP = "192.168.53.2";
@@ -70,6 +70,8 @@ in
 
     nixos-hardware.nixosModules.common-cpu-intel
     nixos-hardware.nixosModules.common-pc-ssd
+
+    sops-nix.nixosModules.sops
 
     ./hardware-configuration.nix
   ];

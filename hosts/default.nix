@@ -23,7 +23,7 @@ let
       inherit system;
 
       specialArgs = {
-        inherit nixos-hardware;
+        inherit nixos-hardware sops-nix;
         soxincfg = self;
       };
 
@@ -78,8 +78,6 @@ let
           global
           overrides
           local
-
-          sops-nix.nixosModules.sops
 
           {
             _module.args = {
