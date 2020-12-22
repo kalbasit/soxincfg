@@ -1,8 +1,12 @@
-{ config, soxincfg, ... }:
+{ config, soxincfg, nixos-hardware, ... }:
 {
   imports = [
     soxincfg.nixosModules.profiles.workstation
     soxincfg.nixosModules.profiles.myself
+
+    nixos-hardware.nixosModules.common-cpu-intel
+    nixos-hardware.nixosModules.common-pc-laptop
+    nixos-hardware.nixosModules.common-pc-ssd
 
     ./hardware-configuration.nix
   ];
