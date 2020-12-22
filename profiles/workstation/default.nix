@@ -98,6 +98,10 @@ mkMerge [
       services = {
         xserver.windowManager.i3.enable = true;
       };
+
+      settings = {
+        nix.distributed-builds.enable = true;
+      };
     };
   }
 
