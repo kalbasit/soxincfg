@@ -1,4 +1,4 @@
-{ config, soxincfg, nixos-hardware, ... }:
+{ config, soxincfg, nixos-hardware, sops-nix, ... }:
 {
   imports = [
     soxincfg.nixosModules.profiles.workstation
@@ -7,6 +7,8 @@
     nixos-hardware.nixosModules.common-cpu-intel
     nixos-hardware.nixosModules.common-pc-laptop
     nixos-hardware.nixosModules.common-pc-ssd
+
+    sops-nix.nixosModules.sops
 
     ./hardware-configuration.nix
   ];

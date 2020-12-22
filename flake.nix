@@ -92,17 +92,31 @@
 
         nixosConfigurations =
           let
-            system = "x86_64-linux";
-            pkgset' = pkgset system;
+            hostsForSystem = system:
+              let
+                pkgset' = pkgset system;
+              in
+              import ./hosts (
+                recursiveUpdate inputs {
+                  inherit lib system;
+                  pkgset = pkgset';
+                }
+              );
           in
-          import ./hosts (
-            recursiveUpdate inputs {
-              inherit lib system;
-              pkgset = pkgset';
-            }
-          );
+          (hostsForSystem "x86_64-linux")
+          //
+          (hostsForSystem "aarch64-linux");
 
         deploy.nodes = {
+          kore = {
+            hostname = "kore.admin.nasreddine.com";
+            profiles.system = {
+              sshUser = "root";
+              user = "root";
+              path = deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.kore;
+            };
+          };
+
           zeus = {
             hostname = "zeus.admin.nasreddine.com";
             profiles.system = {

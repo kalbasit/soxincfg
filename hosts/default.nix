@@ -23,7 +23,7 @@ let
       inherit system;
 
       specialArgs = {
-        inherit nixos-hardware;
+        inherit nixos-hardware sops-nix;
         soxincfg = self;
       };
 
@@ -79,8 +79,6 @@ let
           overrides
           local
 
-          sops-nix.nixosModules.sops
-
           {
             _module.args = {
               inherit home-manager;
@@ -101,10 +99,10 @@ let
     };
 
   hosts =
-    let
-      hostNames =
-        builtins.attrNames (lib.attrsets.filterAttrs (n: v: v == "directory") (builtins.readDir ./.));
-    in
-    lib.genAttrs hostNames config;
+    if system == "x86_64-linux" then
+      lib.genAttrs [ "achilles" "hades" "zeus" ] config
+    else if system == "aarch64-linux" then
+      lib.genAttrs [ "kore" ] config
+    else throw "I don't have any hosts buildable for the system ${system}";
 in
 hosts
