@@ -17,7 +17,7 @@ with lib;
         '';
 
         nix = {
-          binaryCaches = [ "https://nix-cache.corp.ktdev.io" ];
+          binaryCaches = [ "http://cache.nixos.org" "https://nix-cache.corp.ktdev.io" ];
           binaryCachePublicKeys = [ "nix-cache.corp.ktdev.io:/xiDfugzrYzUtdUEIvdYBHy48O0169WYHYb/zMdWgLA=" ];
         };
 
