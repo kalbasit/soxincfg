@@ -12,7 +12,6 @@ in
 
     (optionalAttrs (mode == "home-manager") {
       programs.ssh = {
-        enable = true;
         compression = true;
         serverAliveInterval = 20;
         controlMaster = "auto";
