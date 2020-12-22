@@ -3,12 +3,6 @@
 with lib;
 let
   cfg = config.soxincfg.programs.ssh;
-
-  swmSupportSendEnv = [
-    "ZSH_PROFILE"
-    "SWM_STORY_NAME"
-    "SWM_STORY_BRANCH_NAME"
-  ];
 in
 {
   options.soxincfg.programs.ssh.enable = mkEnableOption "Configure SSH";
