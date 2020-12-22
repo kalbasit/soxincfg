@@ -36,7 +36,6 @@ mkMerge [
           };
         };
         rofi.enable = true;
-        ssh.enable = true;
         termite.enable = true;
         tmux.enable = true;
         urxvt.enable = true;
@@ -92,6 +91,7 @@ mkMerge [
         brave.enable = true;
         chromium = { enable = true; surfingkeys.enable = true; };
         git.enable = true;
+        ssh.enable = true;
         starship.enable = true;
       };
 

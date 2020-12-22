@@ -5,7 +5,10 @@
 with lib;
 
 {
-  imports = [ soxincfg.nixosModules.profiles.workstation ];
+  imports = [
+    soxincfg.nixosModules.profiles.workstation
+    soxincfg.nixosModules.profiles.work.keeptruckin
+  ];
 
   programs.autorandr.profiles = {
     "default" = {
