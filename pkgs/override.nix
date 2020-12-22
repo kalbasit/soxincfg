@@ -6,4 +6,5 @@ pkgs:
 with pkgs;
 [
   nixpkgs-fmt
+  starship
 ]
