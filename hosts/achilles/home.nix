@@ -10,6 +10,9 @@ with lib;
     soxincfg.nixosModules.profiles.workstation
   ];
 
+  # Setup the name of the wireless interface in Polybar
+  soxin.services.xserver.windowManager.bar.modules.network.wlan = singleton "wlp82s0";
+
   # HiDPI
   soxin.programs.rofi.dpi = 196;
   xsession.pointerCursor = {

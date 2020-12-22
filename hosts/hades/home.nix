@@ -11,6 +11,9 @@ with lib;
     soxincfg.nixosModules.profiles.workstation
   ];
 
+  # Setup the name of the wireless interface in Polybar
+  soxin.services.xserver.windowManager.bar.modules.network.wlan = singleton "wlp110s0";
+
   programs.autorandr.profiles = {
     "default" = {
       fingerprint = {
