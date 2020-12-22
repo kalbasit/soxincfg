@@ -82,6 +82,7 @@ in
   soxin.hardware.intelBacklight.enable = true;
 
   # Setup the builder account
+  nix.trustedUsers = [ "root" "@wheel" "@builders" ];
   users.users = {
     builder = {
       extraGroups = [ "builders" ];

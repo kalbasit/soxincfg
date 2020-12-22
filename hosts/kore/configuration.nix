@@ -37,8 +37,6 @@ in
     ./hardware-configuration.nix
   ];
 
-  nix.trustedUsers = [ "root" "@wheel" "@builders" ];
-
   # enable unifi and open the remote port
   networking.firewall.allowedTCPPorts = [ 8443 ];
   services.unifi = {
@@ -65,6 +63,8 @@ in
     };
   };
 
+  # Setup the builder account
+  nix.trustedUsers = [ "root" "@wheel" "@builders" ];
   users.users = {
     builder = {
       extraGroups = ["builders"];
