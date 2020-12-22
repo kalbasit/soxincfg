@@ -99,10 +99,10 @@ let
     };
 
   hosts =
-    let
-      hostNames =
-        builtins.attrNames (lib.attrsets.filterAttrs (n: v: v == "directory") (builtins.readDir ./.));
-    in
-    lib.genAttrs hostNames config;
+    if system == "x86_64-linux" then
+      lib.genAttrs [ "achilles" "hades" "zeus" ] config
+    else if system == "aarch64-linux" then
+      lib.genAttrs [ ] config
+    else throw "I don't have any hosts buildable for the system ${system}";
 in
 hosts
