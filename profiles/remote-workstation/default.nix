@@ -5,16 +5,9 @@ with lib;
 mkMerge [
   {
     soxin = {
-      hardware = {
-        bluetooth.enable = true;
-        fwupd.enable = true;
-        lowbatt.enable = true;
-        sound.enable = true;
-        yubikey.enable = true;
-      };
+      hardware = { fwupd.enable = true; };
 
       programs = {
-        autorandr.enable = true;
         fzf.enable = true;
         git.enable = true;
         htop.enable = true;
@@ -26,55 +19,17 @@ mkMerge [
         mosh.enable = true;
         neovim.enable = true;
         pet.enable = true;
-        rbrowser = {
-          enable = true;
-          setMimeList = true;
-          browsers = {
-            brave.enable = false;
-            chromium.enable = true;
-            firefox.enable = true;
-          };
-        };
-        rofi.enable = true;
         ssh.enable = true;
-        termite.enable = true;
         tmux.enable = true;
-        urxvt.enable = true;
         zsh.enable = true;
       };
 
-      services = {
-        caffeine.enable = true;
-        dunst.enable = true;
-        gpgAgent.enable = true;
-        locker = {
-          enable = true;
-          color = "ffa500";
-          extraArgs = [
-            "--clock"
-            "--show-failed-attempts"
-            "--bar-indicator"
-            "--datestr='%A %Y-%m-%d'"
-          ];
-        };
-        networkmanager.enable = true;
-        openssh.enable = true;
-        printing = {
-          enable = true;
-          brands = [ "epson" ];
-        };
-        xserver.enable = true;
-      };
+      services = { openssh.enable = true; };
 
       settings = {
-        fonts.enable = true;
-        gtk.enable = true;
         keyboard = {
           layouts = [
-            {
-              x11 = { layout = "us"; variant = "colemak"; };
-              console = { keyMap = "colemak"; };
-            }
+            { console = { keyMap = "colemak"; }; }
           ];
         };
       };
@@ -82,52 +37,19 @@ mkMerge [
       virtualisation = {
         docker.enable = true;
         libvirtd.enable = true;
-        # virtualbox is currently marked as broken upstream with kernel > 5.9
-        # virtualbox.enable = true;
       };
     };
 
     soxincfg = {
       programs = {
-        brave.enable = true;
-        chromium = { enable = true; surfingkeys.enable = true; };
         git.enable = true;
         starship.enable = true;
-      };
-
-      services = {
-        xserver.windowManager.i3.enable = true;
       };
     };
   }
 
   (optionalAttrs (mode == "NixOS") {
     environment.homeBinInPath = true;
-
-    services.gnome3.gnome-keyring.enable = true;
-
-    services.logind = {
-      lidSwitch = "hybrid-sleep";
-      lidSwitchDocked = "ignore";
-      lidSwitchExternalPower = "hybrid-sleep";
-      extraConfig = ''
-        HandlePowerKey=suspend
-      '';
-    };
-
-    # Redshift
-    location.latitude = 34.42;
-    location.longitude = -122.11;
-    services.redshift = {
-      brightness.day = "1.0";
-      brightness.night = "0.6";
-      enable = true;
-      temperature.day = 5900;
-      temperature.night = 3700;
-    };
-
-    # TODO: fix this!
-    system.extraSystemBuilderCmds = ''ln -sfn /yl/.surfingkeys.js $out/.surfingkeys.js'';
 
     # L2TP VPN does not connect without the presence of this file!
     # https://github.com/NixOS/nixpkgs/issues/64965
@@ -139,21 +61,8 @@ mkMerge [
   (optionalAttrs (mode == "home-manager") {
     programs.bat.enable = true;
     programs.direnv.enable = true;
-    services.flameshot.enable = true;
 
     home.file = {
-      ".config/greenclip.cfg".text = ''
-        Config {
-         maxHistoryLength = 250,
-         historyPath = "~/.cache/greenclip.history",
-         staticHistoryPath = "~/.cache/greenclip.staticHistory",
-         imageCachePath = "/tmp/",
-         usePrimarySelectionAsInput = False,
-         blacklistedApps = [],
-         trimSpaceFromSelection = True
-        }
-      '';
-
       ".npmrc".text = "prefix=${config.home.homeDirectory}/.filesystem";
 
       ".gnupg/gpg.conf".text = ''
@@ -234,14 +143,7 @@ mkMerge [
     };
 
     home.packages = with pkgs; [
-      remmina
-
       weechat
-
-      xsel
-
-      # zoom for meetings
-      zoom-us
 
       amazon-ecr-credential-helper
       docker-credential-gcr
@@ -253,8 +155,6 @@ mkMerge [
       go
 
       jq
-
-      jrnl
 
       killall
 
@@ -287,8 +187,6 @@ mkMerge [
 
       # XXX: Failing to compile on Darwin
       gotop
-
-      jetbrains.idea-community
 
       slack
 

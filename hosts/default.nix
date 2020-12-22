@@ -1,9 +1,10 @@
-{ futils
+{ deploy-rs
+, futils
 , home-manager
 , lib
-, master
-, nixos
 , nixos-hardware
+, nixpkgs
+, nixpkgs-master
 , nur
 , pkgset
 , self
@@ -21,7 +22,10 @@ let
     soxin.lib.nixosSystem {
       inherit system;
 
-      specialArgs.soxincfg = self;
+      specialArgs = {
+        inherit nixos-hardware;
+        soxincfg = self;
+      };
 
       modules =
         let
@@ -34,18 +38,18 @@ let
                 path = toString ../.;
               in
               [
-                "nixos=${nixos}"
-                "nixpkgs=${master}"
+                "nixpkgs=${nixpkgs}"
+                "nixpkgs-master=${nixpkgs-master}"
 
                 # TODO: overlays are not working. Marc will propose a different approach.
                 # "nixpkgs-overlays=${path}/overlays"
               ];
 
-            nixpkgs = { pkgs = pkgset.nixos; };
+            nixpkgs = { pkgs = pkgset.nixpkgs; };
 
             nix.registry = {
-              nixos.flake = nixos;
-              nixpkgs.flake = master;
+              nixpkgs.flake = nixpkgs;
+              nixpkgs-master.flake = nixpkgs-master;
               soxincfg.flake = self;
             };
 
@@ -55,7 +59,7 @@ let
           overrides = {
             nixpkgs.overlays =
               let
-                override = import ../pkgs/override.nix pkgset.master;
+                override = import ../pkgs/override.nix pkgset.nixpkgs-master;
 
                 overlay = pkg: _: _: {
                   "${pkg.pname}" = pkg;
@@ -79,8 +83,8 @@ let
 
           {
             _module.args = {
-              inherit nixos-hardware home-manager;
-              inherit (pkgset) master;
+              inherit home-manager;
+              inherit (pkgset) nixpkgs-master;
             };
           }
 
