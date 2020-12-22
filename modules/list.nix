@@ -1,5 +1,6 @@
 {
   # programs
+  autorandr = ./programs/autorandr.nix;
   brave = ./programs/brave.nix;
   chromium = ./programs/chromium;
   git = ./programs/git.nix;
