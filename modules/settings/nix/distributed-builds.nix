@@ -10,7 +10,7 @@ in
   config = mkIf cfg.enable (mkMerge [
     # We only need to setup sops if sops was enabled.
     # TODO: Consider an assertion
-    (optionalAttrs (mode == "NixOS" && options ? sops) {
+    (optionalAttrs (mode == "NixOS") {
       nix = {
         distributedBuilds = true;
         buildMachines = [
