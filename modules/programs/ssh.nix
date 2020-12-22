@@ -23,6 +23,19 @@ in
         serverAliveInterval = 20;
         controlMaster = "auto";
         controlPersist = "yes";
+
+        matchBlocks = {
+          # special host so ssh into the VM started with nixos-start-vm
+          # See soxin/programs/zsh/plugins/functions/nixos-start-vm
+          hvm = {
+            hostname = "localhost";
+            port = 2222;
+            forwardAgent = true;
+            extraOptions = {
+              StrictHostKeyChecking = "no";
+            };
+          };
+        };
       };
     })
   ]);
