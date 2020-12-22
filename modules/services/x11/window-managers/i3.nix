@@ -37,10 +37,7 @@ in
           };
           filesystems.enable = true;
           ram.enable = true;
-          network = {
-            enable = true;
-            wlan = [ "wlp82s0" ];
-          };
+          network.enable = true;
           volume.enable = true;
           temperature.enable = true;
         };
