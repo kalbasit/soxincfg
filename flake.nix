@@ -18,14 +18,8 @@
     futils.url = "github:numtide/flake-utils";
     nixos-hardware.url = "nixos-hardware";
     nur.url = "nur";
-    sops-nix = {
-      url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    deploy-rs = {
-      url = "github:serokell/deploy-rs";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    sops-nix.url = "github:Mic92/sops-nix";
+    deploy-rs.url = "github:serokell/deploy-rs";
   };
 
   outputs = { self, nixpkgs, nixpkgs-master, soxin, futils, sops-nix, deploy-rs, ... } @ inputs:
