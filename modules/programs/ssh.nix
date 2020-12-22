@@ -23,43 +23,6 @@ in
         serverAliveInterval = 20;
         controlMaster = "auto";
         controlPersist = "yes";
-
-        matchBlocks = {
-          zeus = {
-            hostname = "zeus.admin.nasreddine.com";
-            sendEnv = swmSupportSendEnv;
-            user = "root";
-          };
-
-          kore = {
-            hostname = "kore.admin.nasreddine.com";
-            user = "root";
-          };
-
-          apollo = {
-            hostname = "apollo.nasreddine.com";
-            user = "root";
-            port = 54502;
-          };
-
-          serial = {
-            hostname = "serial.general.nasreddine.com";
-          };
-
-          vpn = {
-            hostname = "vpn.nasreddine.com";
-            user = "root";
-          };
-
-          hvm = {
-            hostname = "localhost";
-            port = 2222;
-            forwardAgent = true;
-            extraOptions = {
-              StrictHostKeyChecking = "no";
-            };
-          };
-        };
       };
     })
   ]);
