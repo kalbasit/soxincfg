@@ -52,8 +52,8 @@ in
 
   security.pki.certificates = [ nasreddineCA ];
 
-  sops.secrets.ssh_key_zeus.sopsFile = ./secrets.yaml;
-  sops.secrets.ssh_key_kore.sopsFile = ./secrets.yaml;
+  sops.secrets.ssh_key_zeus.sopsFile = ./secrets.sops.yaml;
+  sops.secrets.ssh_key_kore.sopsFile = ./secrets.sops.yaml;
 
   # Set the ssh authorized keys for the root user
   users.users.root.openssh.authorizedKeys.keys = soxincfg.vars.users.yl.sshKeys;
