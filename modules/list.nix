@@ -9,4 +9,7 @@
 
   # services
   i3 = ./services/x11/window-managers/i3.nix;
+
+  # settings
+  nix = ./settings/nix;
 }

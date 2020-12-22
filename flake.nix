@@ -92,17 +92,31 @@
 
         nixosConfigurations =
           let
-            system = "x86_64-linux";
-            pkgset' = pkgset system;
+            hostsForSystem = system:
+              let
+                pkgset' = pkgset system;
+              in
+              import ./hosts (
+                recursiveUpdate inputs {
+                  inherit lib system;
+                  pkgset = pkgset';
+                }
+              );
           in
-          import ./hosts (
-            recursiveUpdate inputs {
-              inherit lib system;
-              pkgset = pkgset';
-            }
-          );
+          (hostsForSystem "x86_64-linux")
+          //
+          (hostsForSystem "aarch64-linux");
 
         deploy.nodes = {
+          redacted-host = {
+            hostname = "host.invalid";
+            profiles.system = {
+              sshUser = "root";
+              user = "root";
+              path = deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.redacted-host;
+            };
+          };
+
           redacted-host = {
             hostname = "host.invalid";
             profiles.system = {
