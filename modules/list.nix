@@ -3,6 +3,7 @@
   brave = ./programs/brave.nix;
   chromium = ./programs/chromium;
   git = ./programs/git.nix;
+  ssh = ./programs/ssh.nix;
   starship = ./programs/starship.nix;
 
   # services

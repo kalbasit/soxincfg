@@ -43,6 +43,7 @@ mkMerge [
     soxincfg = {
       programs = {
         git.enable = true;
+        ssh.enable = true;
         starship.enable = true;
       };
     };
