@@ -5,5 +5,9 @@
 with lib;
 
 {
-  imports = [ soxincfg.nixosModules.profiles.remote-workstation ];
+  imports = [
+    soxincfg.nixosModules.profiles.myself
+    soxincfg.nixosModules.profiles.remote-workstation
+    soxincfg.nixosModules.profiles.work.keeptruckin
+  ];
 }

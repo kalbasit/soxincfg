@@ -82,7 +82,7 @@ in
   # Setup the builder account
   users.users = {
     builder = {
-      extraGroups = ["builders"];
+      extraGroups = [ "builders" ];
       openssh.authorizedKeys.keys = [
         "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCuo827opqwiOj526m5OjuPa0QnrfWeaQC5aJsXt8O3sonep0o2gA/2gez8AlzD9MNwwqXV/bxDbo97Fo1VKf2emQrIOXBGleYKud5jBr3/X6AInmK7wHhPphclygFctmY509ueQpUeBHsCrfZ24XzSfoAoaTT1HkYYsW804iXz2/ka0h4CYErhYI0XpFfaHDyh6hDif5zYNmHj9Z9t4f9oQErv3ZguGo9/PdaQ/TVIHcGVaCXaheAxhRmxWmTgIyFhLfFLL605bJcOFgN6GxprUq2t2Mo+zkP/XBkYEJXRN0SBwEHGEkwnzHoM4Rzug8IitEf2UwWZQS5skJTC9Rrqtz8lbht+s9jmsXTyETQk3siTQxgEWUcU8fzWsNFzrikx18rGAIR4INzlXcHPUVrdf8m1/5aU6OoTPqFY1XcVS7jzPhqwttE5PoaG3DmPuZMwzgK1gwHG3J/n965fo8LwSyX0nd75K/WGCy+D5XvuhAVdvvpv/a3cM1aJFNxd/pO4Tv+bFKzDEMwW8SbWuPDu6UsIzvKHKh31kiJFyMrv+R1W4ESE8PxVlqGrcTM4utEwQeIdLIAhzxmuU0immWS8kbevohCX3E4t6vhbXfiUQVaB3LEeLt+7i7nDcEWZflZfbKB70+TWRpffFKLNYJ5AqwqY9k0aLsbFWzWR7fv4Ow== Zeus Builder"
       ];
