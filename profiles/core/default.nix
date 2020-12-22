@@ -16,6 +16,7 @@ in
       experimental-features = nix-command flakes ca-references
     '';
 
+    distributedBuilds = true;
     buildMachines = [
       {
         hostName = "host.invalid";
