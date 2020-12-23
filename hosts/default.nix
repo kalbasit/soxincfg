@@ -24,6 +24,7 @@ let
 
       specialArgs = {
         inherit nixos-hardware;
+        inherit (pkgset) nixpkgs-master;
         soxincfg = self;
       };
 
@@ -81,20 +82,11 @@ let
 
           sops-nix.nixosModules.sops
 
-          {
-            _module.args = {
-              inherit home-manager;
-              inherit (pkgset) nixpkgs-master;
-            };
-          }
-
           # This allows us to use our flake modules in NixOS and home-manager
           # configurations.
           {
             options.home-manager.users = lib.mkOption {
-              type = lib.types.attrsOf (lib.types.submoduleWith {
-                modules = flakeModules;
-              });
+              type = lib.types.attrsOf (lib.types.submoduleWith { modules = flakeModules; });
             };
           }
         ];
