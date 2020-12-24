@@ -20,7 +20,6 @@ in
             sshKey = builtins.toString config.sops.secrets.ssh_key_zeus.path;
             system = "x86_64-linux";
             maxJobs = 8;
-            speedFactor = 2;
             supportedFeatures = [ ];
             mandatoryFeatures = [ ];
           }
@@ -34,10 +33,19 @@ in
           #   supportedFeatures = [ "big-parallel" ];
           # }
 
+          # {
+          #   hostName = "kore.admin.nasreddine.com";
+          #   maxJobs = 2;
+          #   sshKey = builtins.toString config.sops.secrets.ssh_key_kore.path;
+          #   sshUser = "builder";
+          #   system = "aarch64-linux";
+          #   supportedFeatures = [ ];
+          # }
+
           {
-            hostName = "kore.admin.nasreddine.com";
-            maxJobs = 2;
-            sshKey = builtins.toString config.sops.secrets.ssh_key_kore.path;
+            hostName = "aarch64-linux-0.yl.ktdev.io";
+            maxJobs = 6;
+            sshKey = builtins.toString config.sops.secrets.ssh_key_aarch64-linux-0.path;
             sshUser = "builder";
             system = "aarch64-linux";
             supportedFeatures = [ ];
@@ -45,8 +53,9 @@ in
         ];
       };
 
-      sops.secrets.ssh_key_zeus.sopsFile = ./secrets.sops.yaml;
+      sops.secrets.ssh_key_aarch64-linux-0.sopsFile = ./secrets.sops.yaml;
       sops.secrets.ssh_key_kore.sopsFile = ./secrets.sops.yaml;
+      sops.secrets.ssh_key_zeus.sopsFile = ./secrets.sops.yaml;
     })
   ]);
 }
