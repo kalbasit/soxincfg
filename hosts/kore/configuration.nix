@@ -4,29 +4,7 @@ with lib;
 let
   unifi_config_gateway =
     let
-      hole_ip = "0.0.0.0";
-      apollo_ip = "192.168.52.2";
-      zeus_ip = "192.168.52.3";
-      config = {
-        system = {
-          static-host-mapping = {
-            host-name = {
-              "apollo.nasreddine.com" = { inet = [ apollo_ip ]; };
-              "cache.nixos.org" = { inet = [ apollo_ip ]; };
-              "nix-cache.corp.ktdev.io" = { inet = [ apollo_ip ]; };
-              "plex.nasreddine.com" = { inet = [ apollo_ip ]; };
-              "risson.cachix.org" = { inet = [ apollo_ip ]; };
-              "unifi.nasreddine.com" = { inet = [ apollo_ip ]; };
-              "yl.cachix.org" = { inet = [ apollo_ip ]; };
-
-              # DNS Hole
-              "roblox.com" = { inet = [ hole_ip ]; };
-              "www.roblox.com" = { inet = [ hole_ip ]; };
-              "api.roblox.com" = { inet = [ hole_ip ]; };
-            };
-          };
-        };
-      };
+      config = { };
     in
     pkgs.writeText "config.gateway.json" (builtins.toJSON config);
 in
@@ -36,6 +14,40 @@ in
 
     ./hardware-configuration.nix
   ];
+
+  soxincfg.services.dnsmasq = {
+    enable = true;
+    blockAds = true;
+  };
+
+  services.dnsmasq = {
+    servers = [ "192.168.2.1" ];
+    extraConfig =
+      let
+        apollo_ip = "192.168.52.2";
+        apollo_hosts = [
+          "apollo.nasreddine.com"
+          "nix-cache.corp.ktdev.io"
+          "plex.nasreddine.com"
+          "soxincfg.nix-binary-cache.nasreddine.com"
+          "unifi.nasreddine.com"
+
+          # "cache.nixos.org"
+          # "risson.cachix.org"
+          # "yl.cachix.org"
+        ];
+
+        zeus_ip = "192.168.52.3";
+        zeus_hosts = [ ];
+
+        hole_ip = "0.0.0.0";
+        hole_hosts = [ "roblox.com" ];
+      in
+      builtins.concatStringsSep "\n"
+        ((map (host: "address=/${host}/${apollo_ip}") apollo_hosts)
+          ++ (map (host: "address=/${host}/${zeus_ip}") zeus_hosts)
+          ++ (map (host: "address=/${host}/${hole_ip}") hole_hosts));
+  };
 
   # enable unifi and open the remote port
   networking.firewall.allowedTCPPorts = [ 8443 ];
