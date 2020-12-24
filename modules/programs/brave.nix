@@ -9,7 +9,6 @@ in
 
   config = mkIf cfg.enable (mkMerge [
     (optionalAttrs (mode == "home-manager") {
-      home.file.".config/brave/profiles/personal/.keep".text = "";
       home.packages = with pkgs; [ brave ];
     })
   ]);
