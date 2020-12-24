@@ -108,6 +108,15 @@
           (hostsForSystem "aarch64-linux");
 
         deploy.nodes = {
+          aarch64-linux-0 = {
+            hostname = "aarch64-linux-0.yl.ktdev.io";
+            profiles.system = {
+              sshUser = "root";
+              user = "root";
+              path = deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.aarch64-linux-0;
+            };
+          };
+
           kore = {
             hostname = "kore.admin.nasreddine.com";
             profiles.system = {
