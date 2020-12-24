@@ -97,11 +97,22 @@ in
       id = 2;
       interface = "eth0";
     };
+
+    # The GUEST0 interface
+    ifcguest0 = {
+      id = 11;
+      interface = "eth0";
+    };
   };
 
   networking.interfaces = {
     # The ADMIN interface
     ifcadmin = {
+      useDHCP = true;
+    };
+
+    # The GUEST0 interface
+    ifcguest0 = {
       useDHCP = true;
     };
   };
