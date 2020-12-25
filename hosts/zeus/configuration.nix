@@ -1,7 +1,7 @@
 { config, soxincfg, lib, nixos-hardware, pkgs, ... }:
 with lib;
 let
-  nasIP = "192.168.53.2";
+  nasIP = "192.168.50.2";
 
   buildWindows10 = env:
     let
@@ -183,10 +183,6 @@ in
   # connect via SSH.
   networking.firewall.enable = mkForce false;
 
-  # disable the networkmanager on Zeus as it is really not needed since the
-  # network does never change.
-  networking.networkmanager.enable = false;
-
   networking.vlans = {
     # The ADMIN interface
     ifcadmin = {
@@ -195,37 +191,31 @@ in
     };
 
     # SN0 interface
-    ifcns0 = {
+    ifcsn0 = {
       id = 50;
-      interface = "enp2s0f0";
+      interface = "ifcbond0";
     };
+  };
 
-    # SN1 interface
-    ifcns1 = {
-      id = 51;
-      interface = "enp2s0f1";
-    };
-
-    # SN2 interface
-    ifcns2 = {
-      id = 52;
-      interface = "enp4s0f0";
-    };
-
-    # SN3 interface
-    ifcns3 = {
-      id = 53;
-      interface = "enp4s0f1";
+  networking.bonds = {
+    ifcbond0 = {
+      interfaces = [ "enp2s0f0" "enp2s0f1" "enp4s0f0" "enp4s0f1" ];
+      driverOptions = {
+        mode = "802.3ad";
+        miimon = "100";
+      };
     };
   };
 
   networking.interfaces = {
     # turn off DHCP on all real interfaces, I use virtual networks.
+    # used by the admin interface
+    enp0s31f6 = { useDHCP = false; };
+    # below are use for the bond interface
     enp2s0f0 = { useDHCP = false; };
     enp2s0f1 = { useDHCP = false; };
     enp4s0f0 = { useDHCP = false; };
     enp4s0f1 = { useDHCP = false; };
-    enp0s31f6 = { useDHCP = false; };
 
     # The ADMIN interface
     ifcadmin = {
@@ -233,22 +223,7 @@ in
     };
 
     # SN0 address
-    ifcns0 = {
-      useDHCP = true;
-    };
-
-    # SN1 address
-    ifcns1 = {
-      useDHCP = true;
-    };
-
-    # SN2 address
-    ifcns2 = {
-      useDHCP = true;
-    };
-
-    # SN3 address
-    ifcns3 = {
+    ifcsn0 = {
       useDHCP = true;
     };
   };
