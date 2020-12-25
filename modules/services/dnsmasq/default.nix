@@ -51,15 +51,15 @@ in
           };
         };
 
-          systemd.timers.update-notracking-hosts-blocklists = {
-            description = "Update the notracking hosts blocklists once a day";
-            wantedBy = [ "timers.target" ];
-            timerConfig = {
-              Unit = "update-notracking-hosts-blocklists.service";
-              OnCalendar = "*-*-* 23:00:00";
-              OnBootSec = "15min";
-            };
+        systemd.timers.update-notracking-hosts-blocklists = {
+          description = "Update the notracking hosts blocklists once a day";
+          wantedBy = [ "timers.target" ];
+          timerConfig = {
+            Unit = "update-notracking-hosts-blocklists.service";
+            OnCalendar = "*-*-* 23:00:00";
+            OnBootSec = "15min";
           };
+        };
       }))
   ]);
 }
