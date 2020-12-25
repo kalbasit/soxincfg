@@ -61,6 +61,25 @@ mkMerge [
     system.activationScripts.ipsec-secrets = ''
       touch $out/etc/ipsec.secrets
     '';
+
+    # While creating the user runtime directories, create the gnupg directories
+    # as well if the user is YL.
+    # This is meant to solve this ssh issue:
+    #
+    #  > ssh zeus
+    #  Error: remote port forwarding failed for listen path /run/user/2000/gnupg/S.gpg-agent
+    systemd.services."user-runtime-dir@".serviceConfig.ExecStartPost = with pkgs;
+      let
+        script = writeScript "create-yl-run-gnupg.sh" ''
+          #!${runtimeShell}
+          set -euo pipefail
+                if [[ "$1" != "${builtins.toString config.users.users.yl.uid}" ]]; then exit 0; fi
+
+                mkdir -m 700 /run/user/$1/gnupg
+                chown $1 /run/user/$1/gnupg
+        '';
+      in
+      "${script} %i";
   })
 
   (optionalAttrs (mode == "home-manager") {
