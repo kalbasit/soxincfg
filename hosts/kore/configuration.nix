@@ -24,7 +24,7 @@ in
     servers = [ "192.168.2.1" ];
     extraConfig =
       let
-        apollo_ip = "192.168.52.2";
+        apollo_ip = "192.168.50.2";
         apollo_hosts = [
           "apollo.nasreddine.com"
           "nix-cache.corp.ktdev.io"
@@ -37,7 +37,7 @@ in
           # "yl.cachix.org"
         ];
 
-        zeus_ip = "192.168.52.3";
+        zeus_ip = "192.168.50.3";
         zeus_hosts = [ ];
 
         hole_ip = "0.0.0.0";
