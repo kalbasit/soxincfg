@@ -109,11 +109,13 @@ in
     # The ADMIN interface
     ifcadmin = {
       useDHCP = true;
+      macAddress = "b8:27:eb:a8:5e:02";
     };
 
     # The GUEST0 interface
     ifcguest0 = {
       useDHCP = true;
+      macAddress = "b8:27:eb:a8:5e:0b";
     };
   };
 
