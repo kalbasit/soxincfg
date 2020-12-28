@@ -21,7 +21,7 @@ in
   };
 
   services.dnsmasq = {
-    servers = [ "192.168.2.1" ];
+    servers = [ "192.168.2.1" "192.168.10.1" "192.168.11.1" ];
     extraConfig =
       let
         apollo_ip = "192.168.50.2";
