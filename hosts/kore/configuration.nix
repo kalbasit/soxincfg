@@ -50,7 +50,6 @@ in
   };
 
   # enable unifi and open the remote port
-  networking.firewall.allowedTCPPorts = [ 8443 ];
   services.unifi = {
     enable = true;
     jrePackage = pkgs.jre8_headless;
@@ -65,15 +64,18 @@ in
   nixpkgs.system = "aarch64-linux";
 
   # configure OpenSSH server to listen on the ADMIN interface
-  networking.firewall.enable = mkForce false; # TODO: Why do I have to disable firewall for the ifcadmin interface to work with port 22?
-  services.openssh.listenAddresses = [{ addr = "192.168.2.6"; port = 22; }];
-  systemd.services.sshd = {
-    after = [ "network-addresses-ifcadmin.service" ];
-    requires = [ "network-addresses-ifcadmin.service" ];
-    serviceConfig = {
-      RestartSec = "5";
-    };
+  services.openssh = {
+    listenAddresses = [ { addr = "192.168.2.5"; port = 22; } ];
+    openFirewall = false;
   };
+  systemd.services.sshd = { after = [ "network-interfaces.target" ]; serviceConfig.RestartSec = "5"; };
+
+  # Allow unifi/ssh on the admin interface only
+  networking.firewall.interfaces.ifcadmin.allowedTCPPorts = [ 22 8443 ];
+
+  # TODO(high): For some reason, when the firewall is enabled, I can't seem to connect via SSH or unifi
+  # THIS WORKS ON ZEUS BUT NOT HERE!
+  networking.firewall.enable = mkForce false;
 
   # Setup the builder account
   nix.trustedUsers = [ "root" "@wheel" "@builders" ];
