@@ -5,7 +5,7 @@ let
 
   buildVM = pkgs.callPackage ./build-vm.nix { };
 
-  buildWindows10 = env:
+  buildWin10VM = env:
     let
       vmName =
         if env == "prod" then "win10"
@@ -33,6 +33,6 @@ let
     buildVM { inherit vmName xml; };
 in
 {
-  systemd.services.libvirtd-guest-win10 = buildWindows10 "prod";
+  systemd.services.libvirtd-guest-win10 = buildWin10VM "prod";
   # systemd.services.libvirtd-guest-win10-staging = buildWindows10 "staging";
 }

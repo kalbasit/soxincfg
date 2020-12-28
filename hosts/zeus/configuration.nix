@@ -9,8 +9,9 @@ with lib;
     nixos-hardware.nixosModules.common-cpu-intel
     nixos-hardware.nixosModules.common-pc-ssd
 
-    ./win10.nix
     ./iscsi.nix
+    ./win10.nix
+    ./k8s.nix
 
     ./hardware-configuration.nix
   ];

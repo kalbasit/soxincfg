@@ -13,4 +13,7 @@
 
   # settings
   nix = ./settings/nix;
+
+  # virtualisation
+  virtualisation = ./virtualisation/libvirtd;
 }
