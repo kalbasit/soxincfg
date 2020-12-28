@@ -42,22 +42,16 @@ with lib;
   ];
 
   # configure OpenSSH server to listen on the ADMIN interface
-  services.openssh.listenAddresses = [{ addr = "192.168.2.3"; port = 22; }];
-  systemd.services.sshd = {
-    after = [ "network-addresses-ifcadmin.service" ];
-    requires = [ "network-addresses-ifcadmin.service" ];
-    serviceConfig = {
-      RestartSec = "5";
-    };
+  services.openssh = {
+    listenAddresses = [{ addr = "192.168.2.3"; port = 22; }];
+    openFirewall = false;
   };
+  networking.firewall.interfaces.ifcadmin.allowedTCPPorts = singleton 22;
+  systemd.services.sshd = { after = [ "network-interfaces.target" ]; serviceConfig.RestartSec = "5"; };
 
   #
   # Network
   #
-
-  # TODO(high): For some reason, when the firewall is enabled, I can't seem to
-  # connect via SSH.
-  networking.firewall.enable = mkForce false;
 
   networking.vlans = {
     # The ADMIN interface
