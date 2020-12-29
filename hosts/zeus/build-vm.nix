@@ -25,7 +25,7 @@
         # ${libvirt}/bin/virsh vol-create-as guest_local_images '${vmName}-root.qcow2' '${builtins.toString baseDisk.diskSize}GiB'
         ${qemu}/bin/qemu-img convert -f qcow2 -O qcow2 -o preallocation=metadata ${baseDisk.image} '/srv/vms/guest_local_images/${vmName}-root.qcow2'
         ${libvirt}/bin/virsh pool-refresh guest_local_images
-        ${libvirt}/bin/virsh vol-resize '${vmName}-root.qcow2' ${builtins.toString baseDisk.diskSize} --pool guest_local_images
+        ${libvirt}/bin/virsh vol-resize '${vmName}-root.qcow2' '${builtins.toString baseDisk.diskSize}GiB' --pool guest_local_images
       fi
     '') + ''
       uuid="$(${lib.getBin libvirt}/bin/virsh domuuid '${vmName}' || true)"
