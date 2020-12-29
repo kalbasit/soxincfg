@@ -94,9 +94,18 @@ let
 
   hosts =
     if system == "x86_64-linux" then
-      lib.genAttrs [ "achilles" "hades" "zeus" ] config
+      lib.genAttrs [
+        "achilles"
+        "hades"
+        "zeus"
+      ]
+        config
     else if system == "aarch64-linux" then
-      lib.genAttrs [ "aarch64-linux-0" "kore" ] config
+      lib.genAttrs [
+        "aarch64-linux-0"
+        "kore"
+      ]
+        config
     else throw "I don't have any hosts buildable for the system ${system}";
 in
 hosts

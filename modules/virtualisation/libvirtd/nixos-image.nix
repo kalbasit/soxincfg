@@ -4,6 +4,8 @@ let
     inherit system;
     modules = [
       {
+        imports = [ ../../../profiles/kvm-2-vm ];
+
         users = {
           mutableUsers = false;
           users.root = {
@@ -15,43 +17,6 @@ let
           enable = true;
           passwordAuthentication = false;
           extraConfig = "StrictModes no";
-        };
-
-        boot.initrd.availableKernelModules = [
-          "xhci_pci"
-          "ehci_pci"
-          "ahci"
-          "usbhid"
-          "usb_storage"
-          "sd_mod"
-          "virtio_balloon"
-          "virtio_blk"
-          "virtio_pci"
-          "virtio_ring"
-        ];
-
-        boot.loader.grub = {
-          enable = true;
-          version = 2;
-          device = "/dev/vda";
-        };
-
-        fileSystems = {
-          "/" = {
-            fsType = "tmpfs";
-          };
-          "/nix" = {
-            label = "nixos-nix";
-            fsType = "ext4";
-          };
-          "/boot" = {
-            label = "nixos-boot";
-            fsType = "ext4";
-          };
-          "/efi" = {
-            label = "nixos-efi";
-            fsType = "vfat";
-          };
         };
 
         # We want our template image to be as small as possible, but the deployed
