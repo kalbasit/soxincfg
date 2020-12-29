@@ -22,7 +22,11 @@ in
   security.pki.certificates = [ nasreddineCA ];
 
   # Set the ssh authorized keys for the root user
-  users.users.root.openssh.authorizedKeys.keys = soxincfg.vars.users.yl.sshKeys;
+  users.users.root = {
+    inherit (soxincfg.vars.users.yl) hashedPassword;
+
+    openssh.authorizedKeys.keys = soxincfg.vars.users.yl.sshKeys;
+  };
 
   # set the default locale and the timeZone
   i18n.defaultLocale = "en_US.UTF-8";
