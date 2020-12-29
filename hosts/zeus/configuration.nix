@@ -10,7 +10,7 @@ with lib;
     nixos-hardware.nixosModules.common-pc-ssd
 
     ./iscsi.nix
-    ./win10.nix
+    # ./win10.nix
     ./k8s.nix
 
     ./hardware-configuration.nix

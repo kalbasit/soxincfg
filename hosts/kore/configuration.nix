@@ -65,7 +65,7 @@ in
 
   # configure OpenSSH server to listen on the ADMIN interface
   services.openssh = {
-    listenAddresses = [ { addr = "192.168.2.5"; port = 22; } ];
+    listenAddresses = [{ addr = "192.168.2.5"; port = 22; }];
     openFirewall = false;
   };
   systemd.services.sshd = { after = [ "network-interfaces.target" ]; serviceConfig.RestartSec = "5"; };

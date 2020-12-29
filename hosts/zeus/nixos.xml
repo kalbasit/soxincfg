@@ -1,8 +1,8 @@
 <domain type='kvm'>
-  <name>@name@</name>
+  <name>@vmName@</name>
   <uuid>UUID</uuid>
-  <memory unit='KiB'>@memory_kb@</memory>
-  <currentMemory unit='KiB'>@memory_kb@</currentMemory>
+  <memory unit='KiB'>@memoryKB@</memory>
+  <currentMemory unit='KiB'>@memoryKB@</currentMemory>
   <vcpu placement='static'>1</vcpu>
   <os>
     <type arch='x86_64' machine='pc-i440fx-5.1'>hvm</type>
@@ -30,7 +30,7 @@
     <emulator>/run/libvirt/nix-emulators/qemu-kvm</emulator>
     <disk type='file' device='disk'>
       <driver name="qemu" type="qcow2"/>
-      <source file="/srv/vms/guest_local_images/@name@-root.qcow2"/>
+      <source file="@diskSourceFile@"/>
       <target dev="vda" bus="virtio"/>
       <serial>1</serial>
     </disk>
@@ -63,8 +63,8 @@
       <address type='pci' domain='0x0000' bus='0x00' slot='0x06' function='0x0'/>
     </controller>
     <interface type='direct'>
-      <mac address='@mac_address@'/>
-      <source dev='@source_dev@' mode='bridge'/>
+      <mac address='@macAddress@'/>
+      <source dev='@hostNic@' mode='bridge'/>
       <target dev='macvtap0'/>
       <model type='rtl8139'/>
       <alias name='net0'/>

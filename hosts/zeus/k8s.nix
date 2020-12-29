@@ -3,28 +3,35 @@ with lib;
 let
   buildVM = pkgs.callPackage ./build-vm.nix { };
 
-  buildXML = vmName: memory: hostNic: mac: pkgs.substituteAll {
-    src = ./nixos.xml;
+  buildMasterVM = id:
+    let
+      vmName = "k8s-master-${id}";
+    in
+    buildVM {
+      inherit vmName;
 
-    name = vmName;
+      baseDisk = {
+        image = "/etc/libvirtd/base-images/nixos.qcow2";
+        diskSize = 50;
+      };
 
-    mac_address = mac;
+      xml = pkgs.substituteAll {
+        src = ./nixos.xml;
+        inherit vmName;
 
-    source_volume = "${vmName}-root.qcow2";
+        diskSourceFile = "/srv/vms/guest_local_images/${vmName}-root.qcow2";
+        hostNic = "ifcsn0";
+        macAddress = "50:00:00:00:00:0${id}";
+        memoryKB = 4 * 1024 * 1024;
+      };
+    };
 
-    memory_kb = 4 * 1024 * 1024;
-
-    source_dev = "ifcsn0";
-  };
 in
 {
   soxincfg.virtualisation.libvirtd = {
     enable = true;
     images = singleton "nixos";
   };
-  systemd.services.libvirtd-guest-k8s-master-1 = buildVM rec {
-    vmName = "k8s-master-1";
-    xml = buildXML vmName "8" "ifcsn0" "50:00:00:00:00:01";
-    baseDisk = { image = "/etc/libvirtd/base-images/nixos.qcow2"; diskSize = 50; };
-  };
+
+  systemd.services = attrsets.genAttrs [ "1" "2" "3" ] buildMasterVM;
 }
