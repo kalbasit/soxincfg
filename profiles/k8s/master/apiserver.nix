@@ -16,9 +16,9 @@ in
 
     etcd = {
       servers = [
-        "https://172.28.7.11:2379"
-        "https://172.28.7.12:2379"
-        "https://172.28.7.13:2379"
+        "https://192.168.50.6:2379"
+        "https://192.168.50.7:2379"
+        "https://192.168.50.8:2379"
       ];
       caFile = config.sops.secrets.etcd_ca_cert.path;
       certFile = config.sops.secrets.apiserver_etcd_client_cert.path;

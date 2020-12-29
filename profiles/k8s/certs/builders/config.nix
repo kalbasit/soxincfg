@@ -11,27 +11,27 @@
   ];
 
   masterHosts = [
-    "172.28.7.11"
-    "172.28.7.12"
-    "172.28.7.13"
+    "192.168.50.6"
+    "192.168.50.7"
+    "192.168.50.8"
   ];
 
   masterHostNames = [
-    "master-11.k8s.fsn.lama-corp.space"
-    "master-12.k8s.fsn.lama-corp.space"
-    "master-13.k8s.fsn.lama-corp.space"
+    "k8s-master-1.sn0.nasreddine.com"
+    "k8s-master-2.sn0.nasreddine.com"
+    "k8s-master-3.sn0.nasreddine.com"
   ];
 
   workerHosts = [
-    "172.28.7.111"
-    "172.28.7.112"
-    "172.28.7.113"
+    "192.168.50.9"
+    "192.168.50.10"
+    "192.168.50.11"
   ];
 
   workerHostNames = [
-    "worker-11.k8s.fsn.lama-corp.space"
-    "worker-12.k8s.fsn.lama-corp.space"
-    "worker-13.k8s.fsn.lama-corp.space"
+    "k8s-worker-1.sn0.nasreddine.com"
+    "k8s-worker-2.sn0.nasreddine.com"
+    "k8s-worker-3.sn0.nasreddine.com"
   ];
 
   advertiseIPs = [
@@ -39,17 +39,17 @@
   ];
 
   advertiseHostNames = [
-    "master.k8s.fsn.lama-corp.space"
+    "master.k8s.nasreddine.com"
   ];
 
-  domain = "k8s.fsn.lama-corp.space";
+  domain = "k8s.nasreddine.com";
 
   name = {
-    O = "Lama Corp.";
-    OU = "k8s cluster";
-    L = "fsn";
-    ST = "lama-corp";
-    C = "space";
+    O = "Nasreddine.";
+    OU = "k8s home cluster";
+    L = "Bay Area";
+    ST = "CA";
+    C = "US";
   };
 
   caConfigServerClient = builtins.toJSON {
