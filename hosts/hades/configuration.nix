@@ -18,8 +18,4 @@
   soxin.hardware.intelBacklight.enable = true;
 
   system.stateVersion = "20.09";
-
-  networking.extraHosts = ''
-    192.168.2.3 zeus.admin.nasreddine.com
-  '';
 }
