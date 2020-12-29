@@ -73,8 +73,8 @@ in
   # Allow unifi/ssh on the admin interface only
   networking.firewall.interfaces.ifcadmin.allowedTCPPorts = [ 22 8443 ];
 
-  # TODO(high): For some reason, when the firewall is enabled, I can't seem to connect via SSH or unifi
-  # THIS WORKS ON ZEUS BUT NOT HERE!
+  # TODO(high): For some reason, when the firewall is enabled, I can't seem to
+  # connect via SSH or unifi.
   networking.firewall.enable = mkForce false;
 
   # Setup the builder account
