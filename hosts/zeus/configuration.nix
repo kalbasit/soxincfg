@@ -50,6 +50,10 @@ with lib;
   networking.firewall.interfaces.ifcadmin.allowedTCPPorts = singleton 22;
   systemd.services.sshd = { after = [ "network-interfaces.target" ]; serviceConfig.RestartSec = "5"; };
 
+  # TODO(high): For some reason, when the firewall is enabled, I can't seem to
+  # connect via SSH.
+  networking.firewall.enable = mkForce false;
+
   #
   # Network
   #
@@ -87,16 +91,14 @@ with lib;
     enp2s0f1 = { useDHCP = false; };
     enp4s0f0 = { useDHCP = false; };
     enp4s0f1 = { useDHCP = false; };
+    # do not boot the bond interface itself
+    ifcbond0 = { useDHCP = false; };
 
     # The ADMIN interface
-    ifcadmin = {
-      useDHCP = true;
-    };
+    ifcadmin.useDHCP = true;
 
     # SN0 address
-    ifcsn0 = {
-      useDHCP = true;
-    };
+    ifcsn0.useDHCP = true;
   };
 
   system.stateVersion = "20.09";
