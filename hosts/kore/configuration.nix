@@ -15,11 +15,12 @@ in
     ./hardware-configuration.nix
   ];
 
-  soxincfg.services.dnsmasq = {
-    enable = true;
-    blockAds = true;
-  };
-
+  # Enable dnsmasq
+  networking.firewall.allowedUDPPorts = singleton 53;
+  networking.firewall.interfaces.ifcadmin.allowedUDPPorts = singleton 53;
+  networking.firewall.interfaces.ifcguest0.allowedUDPPorts = singleton 53;
+  networking.firewall.interfaces.eth0.allowedUDPPorts = singleton 53;
+  soxincfg.services.dnsmasq = { enable = true; blockAds = true; };
   services.dnsmasq = {
     servers = [ "192.168.2.1" "192.168.10.1" "192.168.11.1" ];
     extraConfig =
@@ -78,12 +79,12 @@ in
   };
   systemd.services.sshd = { after = [ "network-interfaces.target" ]; serviceConfig.RestartSec = "5"; };
 
-  # Allow unifi/ssh on the admin interface only
+  # Allow unifi/ssh on the admin interface only.
   networking.firewall.interfaces.ifcadmin.allowedTCPPorts = [ 22 8443 ];
 
   # TODO(high): For some reason, when the firewall is enabled, I can't seem to connect via SSH or unifi
   # THIS WORKS ON ZEUS BUT NOT HERE!
-  networking.firewall.enable = mkForce false;
+  # networking.firewall.enable = mkForce false;
 
   # Setup the builder account
   nix.trustedUsers = [ "root" "@wheel" "@builders" ];
