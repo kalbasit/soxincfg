@@ -28,23 +28,83 @@
       inherit (nixpkgs.lib) recursiveUpdate;
       inherit (futils.lib) eachDefaultSystem;
 
-      pkgImport = pkgs: system:
-        import pkgs {
-          inherit system;
-          overlays = lib.attrValues self.overlays;
+      pkgset = system:
+        let
           config = { allowUnfree = true; };
+          overlays = lib.concat (lib.attrValues self.overlays) [ self.overrides.${system} ];
+        in
+        {
+          pkgs = import nixpkgs { inherit config overlays system; };
+          pkgs-master = import nixpkgs-master {
+            inherit system; config = { };
+            overlays = [ ];
+          };
         };
 
-      pkgset = system: {
-        nixpkgs = pkgImport nixpkgs system;
-        nixpkgs-master = pkgImport nixpkgs-master system;
-      };
+      anySystemOutputs =
+        let
+          overlays = import ./overlays;
+          overlay = overlays.packages;
+        in
+        {
+          inherit overlay overlays;
+
+          checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
+
+          deploy.nodes = {
+            aarch64-linux-0 = {
+              hostname = "aarch64-linux-0.yl.ktdev.io";
+              profiles.system = {
+                sshUser = "root";
+                user = "root";
+                path = deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.aarch64-linux-0;
+              };
+            };
+
+            kore = {
+              hostname = "kore.admin.nasreddine.com";
+              profiles.system = {
+                sshUser = "root";
+                user = "root";
+                path = deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.kore;
+              };
+            };
+
+            zeus = {
+              hostname = "zeus.admin.nasreddine.com";
+              profiles.system = {
+                sshUser = "root";
+                user = "root";
+                path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.zeus;
+              };
+            };
+          };
+
+          nixosConfigurations =
+            let
+              hostsForSystem = system:
+                import ./hosts (
+                  recursiveUpdate inputs {
+                    inherit lib system;
+                    pkgset = pkgset system;
+                  }
+                );
+            in
+            (hostsForSystem "x86_64-linux")
+            //
+            (hostsForSystem "aarch64-linux");
+
+          nixosModules = recursiveUpdate (import ./modules) {
+            profiles = import ./profiles;
+            soxin = import ./soxin/soxin.nix;
+          };
+
+          vars = import ./vars;
+        };
 
       multiSystemOutputs = eachDefaultSystem (system:
         let
-          pkgset' = pkgset system;
-          osPkgs = pkgset'.nixpkgs;
-          pkgs = pkgset'.nixpkgs-master;
+          inherit (pkgset system) pkgs pkgs-master;
         in
         {
           devShell = pkgs.mkShell {
@@ -73,72 +133,10 @@
             '';
           };
 
-          packages = soxin.lib.overlaysToPkgs self.overlays pkgs;
-        }
-      );
+          overrides = import ./overlays/overrides.nix pkgs-master;
 
-      outputs = {
-        overlay = self.overlays.packages;
-
-        vars = import ./vars;
-
-        overlays = import ./overlays;
-
-        nixosModules = recursiveUpdate (import ./modules) {
-          profiles = import ./profiles;
-          soxin = import ./soxin/soxin.nix;
-          # TODO: Do I need this?
-          # soxincfg = import ./modules/soxincfg.nix;
-        };
-
-        nixosConfigurations =
-          let
-            hostsForSystem = system:
-              let
-                pkgset' = pkgset system;
-              in
-              import ./hosts (
-                recursiveUpdate inputs {
-                  inherit lib system;
-                  pkgset = pkgset';
-                }
-              );
-          in
-          (hostsForSystem "x86_64-linux")
-          //
-          (hostsForSystem "aarch64-linux");
-
-        deploy.nodes = {
-          aarch64-linux-0 = {
-            hostname = "aarch64-linux-0.yl.ktdev.io";
-            profiles.system = {
-              sshUser = "root";
-              user = "root";
-              path = deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.aarch64-linux-0;
-            };
-          };
-
-          kore = {
-            hostname = "kore.admin.nasreddine.com";
-            profiles.system = {
-              sshUser = "root";
-              user = "root";
-              path = deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.kore;
-            };
-          };
-
-          zeus = {
-            hostname = "zeus.admin.nasreddine.com";
-            profiles.system = {
-              sshUser = "root";
-              user = "root";
-              path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.zeus;
-            };
-          };
-        };
-
-        checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
-      };
+          packages = soxin.lib.overlaysToPkgs { inherit (self.overlays) packages; } pkgs;
+        });
     in
-    recursiveUpdate multiSystemOutputs outputs;
+    recursiveUpdate multiSystemOutputs anySystemOutputs;
 }
