@@ -125,6 +125,11 @@
               pre-commit
               sops
               sops-nix.packages.${system}.ssh-to-pgp
+
+              (terraform.withPlugins (ps: [
+                ps.unifi
+                ps.secret
+              ]))
             ];
 
             shellHook = ''
