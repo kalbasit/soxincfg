@@ -1,0 +1,3 @@
+mac,name,fixed_ip,note
+d0:50:99:93:65:93,zeus,192.168.2.3,Admin interface of Zeus server
+b8:27:eb:a8:5e:02,kore,192.168.2.5,Admin interface of Kore network admin
