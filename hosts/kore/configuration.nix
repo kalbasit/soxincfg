@@ -31,23 +31,26 @@ in
           "nix-cache.corp.ktdev.io"
           "plex.nasreddine.com"
           "soxincfg.nix-binary-cache.nasreddine.com"
-          "unifi.nasreddine.com"
 
           # "cache.nixos.org"
           # "risson.cachix.org"
           # "yl.cachix.org"
         ];
 
-        zeus_ip = "192.168.50.3";
-        zeus_hosts = [ ];
-
         hole_ip = "0.0.0.0";
         hole_hosts = [ "roblox.com" ];
+
+        kore_ip = "192.168.2.5";
+        kore_hosts = [ "unifi.nasreddine.com" ];
+
+        zeus_ip = "192.168.50.3";
+        zeus_hosts = [ ];
       in
       builtins.concatStringsSep "\n"
         ((map (host: "address=/${host}/${apollo_ip}") apollo_hosts)
-          ++ (map (host: "address=/${host}/${zeus_ip}") zeus_hosts)
-          ++ (map (host: "address=/${host}/${hole_ip}") hole_hosts));
+          ++ (map (host: "address=/${host}/${hole_ip}") hole_hosts)
+          ++ (map (host: "address=/${host}/${kore_ip}") kore_hosts)
+          ++ (map (host: "address=/${host}/${zeus_ip}") zeus_hosts));
   };
 
   # enable unifi and open the remote port
@@ -81,6 +84,13 @@ in
 
   # Allow unifi/ssh on the admin interface only.
   networking.firewall.interfaces.ifcadmin.allowedTCPPorts = [ 22 8443 ];
+
+  # Forward port 443 to unifi internally.
+  # We don't need to allow access to port 443 here because it gets re-routed to
+  # port 8443 which itself we allow.
+  networking.firewall.extraCommands = ''
+    ip46tables -w -t nat -I PREROUTING -p tcp --dport 443 -j REDIRECT --to-ports 8443 -i ifcadmin
+  '';
 
   # TODO(high): For some reason, when the firewall is enabled, I can't seem to connect via SSH or unifi
   # THIS WORKS ON ZEUS BUT NOT HERE!
