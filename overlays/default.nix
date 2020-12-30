@@ -1,3 +1,3 @@
 {
-  packages = import ./pkgs.nix;
+  packages = import ../pkgs;
 }
