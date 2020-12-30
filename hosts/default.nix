@@ -24,7 +24,7 @@ let
 
       specialArgs = {
         inherit nixos-hardware;
-        inherit (pkgset) nixpkgs-master;
+        inherit (pkgset) pkgs-master;
         soxincfg = self;
       };
 
@@ -46,7 +46,7 @@ let
                 # "nixpkgs-overlays=${path}/overlays"
               ];
 
-            nixpkgs = { pkgs = pkgset.nixpkgs; };
+            nixpkgs = { inherit (pkgset) pkgs; };
 
             nix.registry = {
               nixpkgs.flake = nixpkgs;
@@ -57,18 +57,6 @@ let
             system.configurationRevision = lib.mkIf (self ? rev) self.rev;
           };
 
-          overrides = {
-            nixpkgs.overlays =
-              let
-                override = import ../pkgs/override.nix pkgset.nixpkgs-master;
-
-                overlay = pkg: _: _: {
-                  "${pkg.pname}" = pkg;
-                };
-              in
-              lib.concat [ nur.overlay soxin.overlay ] (map overlay override);
-          };
-
           local = import "${toString ./.}/${path}/configuration.nix";
 
           flakeModules = builtins.attrValues (removeAttrs self.nixosModules [ "profiles" ]);
@@ -77,8 +65,9 @@ let
         lib.concat flakeModules [
           core
           global
-          overrides
           local
+
+          { nixpkgs.overlays = [ nur.overlay soxin.overlay self.overlay self.overrides.${system} ]; }
 
           sops-nix.nixosModules.sops
 
@@ -91,12 +80,9 @@ let
           }
         ];
     };
-
-  hosts =
-    if system == "x86_64-linux" then
-      lib.genAttrs [ "achilles" "hades" "zeus" ] config
-    else if system == "aarch64-linux" then
-      lib.genAttrs [ "aarch64-linux-0" "kore" ] config
-    else throw "I don't have any hosts buildable for the system ${system}";
 in
-hosts
+if system == "x86_64-linux" then
+  lib.genAttrs [ "achilles" "hades" "zeus" ] config
+else if system == "aarch64-linux" then
+  lib.genAttrs [ "aarch64-linux-0" "kore" ] config
+else builtins.trace "I don't have any hosts buildable for the system ${system}" [ ]
