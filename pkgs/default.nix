@@ -1,4 +1,3 @@
-# Custom packages
 final: prev: {
-  # define packages here using final.callPackage
+  terraform-providers = prev.terraform-providers // { unifi = prev.callPackage ./terraform-provider-unifi.nix { }; };
 }
