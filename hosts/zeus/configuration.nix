@@ -49,10 +49,6 @@ with lib;
   networking.firewall.interfaces.ifcadmin.allowedTCPPorts = singleton 22;
   systemd.services.sshd = { after = [ "network-interfaces.target" ]; serviceConfig.RestartSec = "5"; };
 
-  # TODO(high): For some reason, when the firewall is enabled, I can't seem to
-  # connect via SSH.
-  networking.firewall.enable = mkForce false;
-
   #
   # Network
   #
