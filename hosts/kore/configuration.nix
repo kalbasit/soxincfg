@@ -18,7 +18,6 @@ in
   # Enable dnsmasq
   networking.firewall.allowedUDPPorts = singleton 53;
   networking.firewall.interfaces.ifcadmin.allowedUDPPorts = singleton 53;
-  networking.firewall.interfaces.ifcguest0.allowedUDPPorts = singleton 53;
   networking.firewall.interfaces.eth0.allowedUDPPorts = singleton 53;
   soxincfg.services.dnsmasq = { enable = true; blockAds = true; };
   services.dnsmasq = {
@@ -118,12 +117,6 @@ in
       id = 2;
       interface = "eth0";
     };
-
-    # The GUEST0 interface
-    ifcguest0 = {
-      id = 11;
-      interface = "eth0";
-    };
   };
 
   networking.interfaces = {
@@ -131,12 +124,6 @@ in
     ifcadmin = {
       useDHCP = true;
       macAddress = "b8:27:eb:a8:5e:02";
-    };
-
-    # The GUEST0 interface
-    ifcguest0 = {
-      useDHCP = true;
-      macAddress = "b8:27:eb:a8:5e:0b";
     };
   };
 
