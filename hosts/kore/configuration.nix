@@ -27,7 +27,7 @@ in
         apollo_ip = "192.168.50.2";
         apollo_hosts = [
           "apollo.nasreddine.com"
-          "nix-cache.corp.ktdev.io"
+          # "nix-cache.corp.ktdev.io"
           "plex.nasreddine.com"
           "soxincfg.nix-binary-cache.nasreddine.com"
 
