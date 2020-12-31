@@ -127,8 +127,9 @@
               sops-nix.packages.${system}.ssh-to-pgp
 
               (terraform.withPlugins (ps: [
-                ps.unifi
+                ps.aws
                 ps.secret
+                ps.unifi
               ]))
             ];
 
