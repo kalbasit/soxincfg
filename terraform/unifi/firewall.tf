@@ -56,4 +56,10 @@ resource "unifi_firewall_rule" "isolate_admin" {
 
   src_network_id = each.value.id
   dst_network_id = unifi_network.admin.id
+
+  state_established = false
+  state_related     = false
+
+  state_invalid = true
+  state_new     = true
 }
