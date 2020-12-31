@@ -29,6 +29,7 @@ in
   services.fprintd.enable = true;
   security.pam.services.login.fprintAuth = true;
   security.pam.services.xscreensaver.fprintAuth = true;
+  security.pam.services.sudo.fprintAuth = true;
 
   system.stateVersion = "20.09";
 }
