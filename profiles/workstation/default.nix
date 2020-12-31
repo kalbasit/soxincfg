@@ -290,6 +290,8 @@ mkMerge [
 
       nix-index
 
+      nix-review
+
       nixops
 
       # curses-based file manager
