@@ -118,6 +118,7 @@
             ];
 
             buildInputs = with pkgs; [
+              awscli
               deploy-rs.packages.${system}.deploy-rs
               git
               gnumake
