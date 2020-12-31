@@ -25,5 +25,10 @@ in
   services.xserver.libinput.enable = true;
   services.xserver.libinput.accelSpeed = "0.5";
 
+  # enable fingerprint reader
+  services.fprintd.enable = true;
+  security.pam.services.login.fprintAuth = true;
+  security.pam.services.xscreensaver.fprintAuth = true;
+
   system.stateVersion = "20.09";
 }
