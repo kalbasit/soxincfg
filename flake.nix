@@ -36,8 +36,8 @@
         {
           pkgs = import nixpkgs { inherit config overlays system; };
           pkgs-master = import nixpkgs-master {
-            inherit system; config = { };
-            overlays = [ ];
+            inherit config system;
+            overlays = lib.attrValues self.overlays;
           };
         };
 
