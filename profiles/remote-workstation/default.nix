@@ -56,6 +56,8 @@ mkMerge [
   (optionalAttrs (mode == "NixOS") {
     environment.homeBinInPath = true;
 
+    services.eternal-terminal.enable = true;
+
     # L2TP VPN does not connect without the presence of this file!
     # https://github.com/NixOS/nixpkgs/issues/64965
     system.activationScripts.ipsec-secrets = ''
