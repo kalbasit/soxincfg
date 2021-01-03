@@ -46,8 +46,12 @@ with lib;
     listenAddresses = [{ addr = "192.168.2.3"; port = 22; }];
     openFirewall = false;
   };
-  networking.firewall.interfaces.ifcadmin.allowedTCPPorts = singleton 22;
   systemd.services.sshd = { after = [ "network-interfaces.target" ]; serviceConfig.RestartSec = "5"; };
+
+  # Open the SSH/Eternal-Terminal ports
+  networking.firewall.interfaces.ifcadmin.allowedTCPPorts = [
+    config.services.eternal-terminal.port
+  ] ++ (map (c: c.port) config.services.openssh.listenAddresses);
 
   #
   # Network
