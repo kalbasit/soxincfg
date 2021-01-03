@@ -262,6 +262,8 @@ mkMerge [
 
       xsel
 
+      eternal-terminal
+
       # zoom for meetings
       zoom-us
 
