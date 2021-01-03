@@ -5,8 +5,9 @@ resource "aws_instance" "aarch64-linux-0" {
   disable_api_termination = true
   key_name                = "yubikey_5c_09501258"
   vpc_security_group_ids = [
+    aws_security_group.allow_egress_to_anywhere.id,
+    aws_security_group.allow_eternal_terminal_from_anywhere.id,
     aws_security_group.allow_ssh_from_anywhere.id,
-    aws_security_group.allow_egress_to_anywhere.id
   ]
   subnet_id                   = module.vpc_us_west_1.public_subnets[0]
   associate_public_ip_address = true
