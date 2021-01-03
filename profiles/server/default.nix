@@ -1,4 +1,6 @@
-{ pkgs, ... }:
+{ config, lib, pkgs, ... }:
+
+with lib;
 
 {
   # Enable the installation of my neovim
@@ -6,8 +8,12 @@
   # soxin.programs.neovim.enable = true;
   environment.systemPackages = with pkgs; [ neovim ];
 
-  # Enable SSH server on all of my hosts
+  # Enable SSH server
   soxin.services.openssh.enable = true;
+
+  # Enable eternal-terminal
+  networking.firewall.allowedTCPPorts = singleton config.services.eternal-terminal.port;
+  services.eternal-terminal.enable = true;
 
   # Setup my keyboard layout
   soxin.settings.keyboard = {
