@@ -41,13 +41,15 @@ resource "aws_route53_record" "google_apps_domains-kalbas-it-cname" {
   count = length(var.google_apps_domains)
 }
 
-resource "aws_route53_record" "kalbas-it-spf" {
+resource "aws_route53_record" "kalbas-it-txt" {
   zone_id = aws_route53_zone.kalbas-it.zone_id
   name    = "kalbas.it"
-  type    = "SPF"
+  type    = "TXT"
   ttl     = 86400
 
   records = [
+    "google-site-verification=UvJ449OuIFMATBgpg0XNswXJV2l5FDGcPVDZEZ4BZ-Y",
+    "protonmail-verification=829eca95699d195547e5d5eb239817f035c804eb",
     "v=spf1 include:_spf.protonmail.ch mx ~all",
   ]
 }
@@ -75,18 +77,6 @@ resource "aws_route53_record" "kalbas-it-dmarc" {
 
   records = [
     "v=DMARC1; p=none; rua=mailto:kalbasit@pm.me"
-  ]
-}
-
-resource "aws_route53_record" "kalbas-it-txt" {
-  zone_id = aws_route53_zone.kalbas-it.zone_id
-  name    = "kalbas.it"
-  type    = "TXT"
-  ttl     = 86400
-
-  records = [
-    "google-site-verification=UvJ449OuIFMATBgpg0XNswXJV2l5FDGcPVDZEZ4BZ-Y",
-    "protonmail-verification=829eca95699d195547e5d5eb239817f035c804eb",
   ]
 }
 
