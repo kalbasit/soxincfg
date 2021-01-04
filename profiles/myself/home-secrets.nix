@@ -34,7 +34,7 @@ mkMerge [
 
   (optionalAttrs (mode == "home-manager") {
     programs.ssh.extraConfig = ''
-      Include config_include_myself
+      Include ~/.ssh/config_include_myself
     '';
   })
 ]

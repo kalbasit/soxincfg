@@ -29,7 +29,7 @@ with lib;
 
     (mkIf config.soxincfg.programs.ssh.enable (optionalAttrs (mode == "home-manager") {
       programs.ssh.extraConfig = ''
-        Include config_include_work_keeptruckin
+        Include ~/.ssh/config_include_work_keeptruckin
       '';
     }))
   ];
