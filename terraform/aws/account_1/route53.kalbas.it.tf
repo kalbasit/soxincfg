@@ -23,11 +23,8 @@ resource "aws_route53_record" "kalbas-it-mx" {
   ttl     = 86400
 
   records = [
-    "1 ASPMX.L.GOOGLE.COM",
-    "5 ALT1.ASPMX.L.GOOGLE.COM",
-    "5 ALT2.ASPMX.L.GOOGLE.COM",
-    "10 ALT3.ASPMX.L.GOOGLE.COM",
-    "10 ALT4.ASPMX.L.GOOGLE.COM",
+    "10 mail.protonmail.ch",
+    "20 mailsec.protonmail.ch",
   ]
 }
 
@@ -51,7 +48,33 @@ resource "aws_route53_record" "kalbas-it-spf" {
   ttl     = 86400
 
   records = [
-    "v=spf1 include:_spf.google.com ~all",
+    "v=spf1 include:_spf.protonmail.ch mx ~all",
+  ]
+}
+
+resource "aws_route53_record" "kalbas-it-dkim" {
+  for_each = {
+    "protonmail._domainkey"  = "protonmail.domainkey.dlyb54kvywczmsrghlfpdun3xs7b72fnyeaz5hjx5nza2pzu3jvqa.domains.proton.ch."
+    "protonmail2._domainkey" = "protonmail2.domainkey.dlyb54kvywczmsrghlfpdun3xs7b72fnyeaz5hjx5nza2pzu3jvqa.domains.proton.ch."
+    "protonmail3._domainkey" = "protonmail3.domainkey.dlyb54kvywczmsrghlfpdun3xs7b72fnyeaz5hjx5nza2pzu3jvqa.domains.proton.ch."
+  }
+
+  zone_id = aws_route53_zone.kalbas-it.zone_id
+  name    = "${each.key}.kalbas.it"
+  type    = "CNAME"
+  ttl     = 86400
+
+  records = [each.value]
+}
+
+resource "aws_route53_record" "kalbas-it-dmarc" {
+  zone_id = aws_route53_zone.kalbas-it.zone_id
+  name    = "_dmarc.kalbas.it"
+  type    = "TXT"
+  ttl     = 5
+
+  records = [
+    "v=DMARC1; p=none; rua=mailto:kalbasit@pm.me"
   ]
 }
 
@@ -63,7 +86,7 @@ resource "aws_route53_record" "kalbas-it-txt" {
 
   records = [
     "google-site-verification=UvJ449OuIFMATBgpg0XNswXJV2l5FDGcPVDZEZ4BZ-Y",
-    "v=spf1 include:_spf.google.com ~all",
+    "protonmail-verification=829eca95699d195547e5d5eb239817f035c804eb",
   ]
 }
 
