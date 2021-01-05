@@ -76,7 +76,7 @@ resource "aws_route53_record" "kalbas-it-dmarc" {
   ttl     = 5
 
   records = [
-    "v=DMARC1; p=none; rua=mailto:kalbasit@pm.me"
+    "v=DMARC1; p=quarantine; rua=mailto:kalbasit@pm.me"
   ]
 }
 
