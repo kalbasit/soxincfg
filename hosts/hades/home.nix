@@ -14,6 +14,13 @@ with lib;
   # Setup the name of the wireless interface in Polybar
   soxin.services.xserver.windowManager.bar.modules.network.wlan = singleton "wlp110s0";
 
+  # Make sure GnuPG is able to pick up the right card (Yubikey)
+  home.file.".gnupg/scdaemon.conf".text = ''
+    reader-port Yubico YubiKey FIDO+CCID 01 00
+    disable-ccid
+    card-timeout 5
+  '';
+
   # Setup autorandr postswitch
   soxincfg.programs.autorandr.postswitch.move-workspaces-to-main = ''
     # Move the Slack workspace to the internal screen
