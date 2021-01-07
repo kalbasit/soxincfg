@@ -59,7 +59,6 @@ mkMerge [
           extraArgs = [
             "--clock"
             "--show-failed-attempts"
-            "--bar-indicator"
             "--datestr='%A %Y-%m-%d'"
           ];
         };
