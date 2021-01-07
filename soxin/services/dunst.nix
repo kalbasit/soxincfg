@@ -125,7 +125,7 @@ in
             history_length = 15;
 
             # Display indicators for URLs (U) and actions (A).
-            show_indicators = false;
+            show_indicators = true;
 
             # The height of a single line.  If the height is smaller than the
             # font height, it will get raised to the font height.
