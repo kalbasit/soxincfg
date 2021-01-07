@@ -161,6 +161,21 @@ in
 
             # Browser for opening urls in context menu.
             browser = "rbrowser";
+
+            ### mouse
+
+            # Defines list of actions for each mouse event
+            # Possible values are:
+            # * none: Don't do anything.
+            # * do_action: If the notification has exactly one action, or one is marked as default,
+            #              invoke it. If there are multiple and no default, open the context menu.
+            # * close_current: Close current notification.
+            # * close_all: Close all notifications.
+            # These values can be strung together for each mouse event, and
+            # will be executed in sequence.
+            mouse_middle_click = "close_all";
+            mouse_left_click = "do_action, close_current";
+            mouse_right_click = "close_current";
           };
 
           frame = {
