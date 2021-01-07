@@ -86,6 +86,7 @@ in
     assigns = {
       "charles" = [{ class = "^com-xk72-charles-gui-.*$"; }];
       "discord" = [{ class = "^discord$"; }];
+      "signal" = [{ class = "^Signal$"; }];
       "slack" = [{ class = "^Slack$"; }];
       "studio" = [{ class = "^obs$"; }];
       "tor" = [{ class = "^Tor Browser"; }];
