@@ -24,4 +24,5 @@ with lib;
     dpi = 196;
     height = 43;
   };
+  services.dunst.settings.global.geometry = "600x100-15+58";
 }
