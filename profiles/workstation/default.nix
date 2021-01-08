@@ -269,6 +269,8 @@ mkMerge [
       amazon-ecr-credential-helper
       docker-credential-gcr
 
+      filezilla
+
       gist
 
       gnupg
