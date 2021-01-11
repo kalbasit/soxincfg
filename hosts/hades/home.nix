@@ -26,6 +26,9 @@ with lib;
     # Move the Slack workspace to the internal screen
     ${getBin pkgs.i3}/bin/i3-msg "workspace slack; move workspace to output eDP-1"
 
+    # Move the Signal workspace to the internal screen
+    ${getBin pkgs.i3}/bin/i3-msg "workspace signal; move workspace to output eDP-1"
+
     # Move the TV workspace to the internal screen
     ${getBin pkgs.i3}/bin/i3-msg "workspace tv; move workspace to output DP-3"
 
