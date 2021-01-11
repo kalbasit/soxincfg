@@ -311,9 +311,10 @@ in
     }
     bindsym ${defaultModifier}+${thirdModifier}+l mode "$launcher"
 
-      set $app_mode Applications: (a)stroid, (o)bs, (m)elloPlayer, (s)ocial
+      set $app_mode Applications: (a)stroid, (b)itwarden (o)bs, (m)elloPlayer, (s)ocial
       mode "$app_mode" {
         bindsym a exec astroid, mode default
+        bindsym b exec ${getBin pkgs.bitwarden}/bin/bitwarden, mode default
         bindsym o exec ${getBin pkgs.obs-studio}/bin/obs, mode default
         bindsym m exec ${getBin pkgs.mellowplayer}/bin/MellowPlayer, mode default
         bindsym s mode "$social_mode"
