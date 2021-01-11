@@ -4,17 +4,15 @@
       "inputs": {
         "flake-compat": "flake-compat",
         "naersk": "naersk",
-        "nixpkgs": [
-          "nixpkgs"
-        ],
+        "nixpkgs": "nixpkgs",
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1608488342,
-        "narHash": "sha256-JhEoKKmETJsdgS+kjT1rACnlM50q/JdVNyAfIbbVQcc=",
+        "lastModified": 1610347531,
+        "narHash": "sha256-Z11Pau1L1Byl6Zpdt2N4RtSZMsOck74jRS9O8LJfswc=",
         "owner": "serokell",
         "repo": "deploy-rs",
-        "rev": "91e934fd9e1e06044f75a3e3ad998813c2a90fb5",
+        "rev": "bcdf7b89663398a690348ca8b2883c2d18de42c4",
         "type": "github"
       },
       "original": {
@@ -127,17 +125,18 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1608062904,
-        "narHash": "sha256-QVaxOnGwZoBtNTlnAV0aeC30ASeJpo583wjotmhpOtg=",
+        "lastModified": 1605716121,
+        "narHash": "sha256-CbHicvkzLTfEY+aSUeUY7dfFlDOgZH3uK+PpUfb/DPA=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "647cc06986c1ae4a2bb05298e0cf598723e42970",
+        "rev": "6625284c397b44bc9518a5a1567c1b5aae455c08",
         "type": "github"
       },
       "original": {
-        "id": "nixpkgs",
-        "ref": "release-20.09",
-        "type": "indirect"
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
       }
     },
     "nixpkgs-master": {
@@ -152,6 +151,21 @@
       "original": {
         "id": "nixpkgs",
         "ref": "master",
+        "type": "indirect"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1608062904,
+        "narHash": "sha256-QVaxOnGwZoBtNTlnAV0aeC30ASeJpo583wjotmhpOtg=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "647cc06986c1ae4a2bb05298e0cf598723e42970",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "release-20.09",
         "type": "indirect"
       }
     },
@@ -175,7 +189,7 @@
         "futils": "futils",
         "home-manager": "home-manager",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs",
+        "nixpkgs": "nixpkgs_2",
         "nixpkgs-master": "nixpkgs-master",
         "nur": "nur",
         "sops-nix": "sops-nix",
