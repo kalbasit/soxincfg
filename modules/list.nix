@@ -8,8 +8,9 @@
   starship = ./programs/starship.nix;
 
   # services
-  i3 = ./services/x11/window-managers/i3.nix;
   dnsmasq = ./services/dnsmasq;
+  i3 = ./services/x11/window-managers/i3.nix;
+  iscsid = ./services/iscsid.nix;
 
   # settings
   nix = ./settings/nix;

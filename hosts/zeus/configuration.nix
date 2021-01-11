@@ -9,8 +9,6 @@ with lib;
     nixos-hardware.nixosModules.common-cpu-intel
     nixos-hardware.nixosModules.common-pc-ssd
 
-    ./iscsi.nix
-
     ./hardware-configuration.nix
   ];
 
@@ -18,6 +16,9 @@ with lib;
   home-manager.users.yl = import ./home.nix { inherit soxincfg; };
 
   soxin.hardware.intelBacklight.enable = true;
+
+  # Enable iscsid to create disks over on my NAS
+  soxincfg.services.iscsid.enable = true;
 
   # Setup the builder account
   nix.trustedUsers = [ "root" "@wheel" "@builders" ];
