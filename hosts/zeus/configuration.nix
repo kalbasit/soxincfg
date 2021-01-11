@@ -18,7 +18,7 @@ with lib;
   soxin.hardware.intelBacklight.enable = true;
 
   # Enable iscsid to create disks over on my NAS
-  soxincfg.services.iscsid.enable = true;
+  # soxincfg.services.iscsid.enable = true;
 
   # Setup the builder account
   nix.trustedUsers = [ "root" "@wheel" "@builders" ];
