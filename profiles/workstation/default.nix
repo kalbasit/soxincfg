@@ -271,6 +271,8 @@ mkMerge [
 
       filezilla
 
+      bitwarden-cli
+
       gist
 
       gnupg
