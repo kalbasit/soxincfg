@@ -114,7 +114,7 @@
 
 SCRIPT_NAME = 'urlserver'
 SCRIPT_AUTHOR = 'Sébastien Helleu <flashcode@flashtux.org>'
-SCRIPT_VERSION = '2.39'
+SCRIPT_VERSION = '2.3'
 SCRIPT_LICENSE = 'GPL3'
 SCRIPT_DESC = 'Shorten URLs with own HTTP server'
 
@@ -133,13 +133,13 @@ except ImportError:
 try:
     import ast
     import base64
+    import cgi
     import datetime
     import os
     import re
     import socket
     import string
     import sys
-    from html import escape
 except ImportError as message:
     print('Missing package(s) for %s: %s' % (SCRIPT_NAME, message))
     import_ok = False
@@ -478,7 +478,7 @@ def urlserver_server_reply_list(conn, sort='-time'):
         content += '  <tr>'
         url = item[3]
         obj = ''
-        message = (escape(item[4].replace(url, '\x01\x02\x03\x04'))
+        message = (cgi.escape(item[4].replace(url, '\x01\x02\x03\x04'))
                    .split('\t', 1))
         message[0] = '<span class="prefix">%s</span>' % message[0]
         message[1] = '<span class="message">%s</span>' % message[1]
@@ -916,20 +916,35 @@ def urlserver_print_cb(data, buffer, time, tags, displayed, highlight, prefix,
     if not displayed and urlserver_settings['msg_filtered'] != 'on':
         return weechat.WEECHAT_RC_OK
 
-    # log URLs even though I don't want to actually see them in the buffer
-    buffer_full_name = '%s.%s' % (
-        weechat.buffer_get_string(buffer, 'plugin'),
-        weechat.buffer_get_string(buffer, 'name'))
-    if urlserver_settings['buffer_short_name'] == 'on':
-        buffer_short_name = weechat.buffer_get_string(buffer, 'short_name')
-    else:
-        buffer_short_name = buffer_full_name
-
-    urlserver_update_urllist(buffer_full_name,
-                             buffer_short_name,
-                             tags,
-                             prefix,
-                             message)
+    if urlserver_settings['display_urls'] == 'on':
+        buffer_full_name = '%s.%s' % (
+            weechat.buffer_get_string(buffer, 'plugin'),
+            weechat.buffer_get_string(buffer, 'name'))
+        if urlserver_settings['buffer_short_name'] == 'on':
+            buffer_short_name = weechat.buffer_get_string(buffer, 'short_name')
+        else:
+            buffer_short_name = buffer_full_name
+        urls_short = urlserver_update_urllist(buffer_full_name,
+                                              buffer_short_name,
+                                              tags,
+                                              prefix,
+                                              message)
+        if urls_short:
+            if urlserver_settings['separators'] and \
+                    len(urlserver_settings['separators']) == 3:
+                separator = ' %s ' % (urlserver_settings['separators'][1])
+                urls_string = separator.join(urls_short)
+                urls_string = '%s %s %s' % (
+                    urlserver_settings['separators'][0],
+                    urls_string,
+                    urlserver_settings['separators'][2])
+            else:
+                urls_string = ' | '.join(urls_short)
+                urls_string = '[ ' + urls_string + ' ]'
+            weechat.prnt_date_tags(
+                buffer, 0, 'no_log,notify_none',
+                '%s%s' % (weechat.color(urlserver_settings['color']),
+                          urls_string))
 
     return weechat.WEECHAT_RC_OK
 
@@ -1118,8 +1133,6 @@ if __name__ == '__main__' and import_ok:
         if urlserver_settings['http_autostart'] == 'on':
             # start mini HTTP server
             urlserver_server_start()
-
-        urlserver_open_buffer()
 
         # load urls from file
         urlserver_read_urls()
