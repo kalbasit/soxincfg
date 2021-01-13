@@ -41,7 +41,6 @@
   polybar = ./services/x11/window-managers/bar;
   printing = ./services/printing.nix;
   sshd = ./services/networking/ssh/sshd.nix;
-  weechat = ./services/weechat.nix;
   xserver = ./services/x11/xserver.nix;
 
   # virtualisation
