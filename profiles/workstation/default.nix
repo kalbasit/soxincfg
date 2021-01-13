@@ -100,6 +100,7 @@ mkMerge [
         git.enable = true;
         ssh.enable = true;
         starship.enable = true;
+        weechat.enable = true;
       };
 
       services = {

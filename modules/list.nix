@@ -6,6 +6,7 @@
   git = ./programs/git.nix;
   ssh = ./programs/ssh.nix;
   starship = ./programs/starship.nix;
+  weechat = ./programs/weechat;
 
   # services
   dnsmasq = ./services/dnsmasq;
