@@ -37,10 +37,6 @@ let
 
     ${getBin pkgs.jrnl}/bin/jrnl "$current_profile" "$content"
   '';
-
-  # inherit (master) tiny tuijam;
-  inherit (pkgs) tiny tuijam;
-
 in
 {
   enable = true;
@@ -63,7 +59,6 @@ in
         { command = "floating enable"; criteria = { title = "^jrnl_entry$"; }; }
 
         { command = "sticky enable, floating enable, move scratchpad"; criteria = { class = "MellowPlayer"; }; }
-        { command = "sticky enable, floating enable, move scratchpad"; criteria = { class = "irc"; }; }
       ] ++ optionals config.soxin.programs.keybase.enable [
         { command = "sticky enable, floating enable, move scratchpad"; criteria = { class = "Keybase"; }; }
       ];
@@ -91,6 +86,7 @@ in
       "studio" = [{ class = "^obs$"; }];
       "tor" = [{ class = "^Tor Browser"; }];
       "virtualbox" = [{ class = "^VirtualBox"; }];
+      "weechat" = [{ class = "^WeeChat$"; }];
     };
 
     modifier = "Mod4";
@@ -220,7 +216,6 @@ in
       "${thirdModifier}+minus" = "scratchpad show";
 
       # Short-cuts for windows hidden in the scratchpad.
-      "${thirdModifier}+c" = "[class=\"irc\"] scratchpad show";
       "${thirdModifier}+m" = "[class=\"MellowPlayer\"] scratchpad show";
     } // (if config.soxin.programs.keybase.enable then {
       "${thirdModifier}+k" = "[class=\"Keybase\"] scratchpad show";
@@ -322,13 +317,13 @@ in
         bindsym Escape mode "$launcher"
       }
 
-        set $social_mode Social: (d)iscord, (i)rc${optionalString config.soxin.programs.keybase.enable ", (k)eybase"}, S(l)ack, (s)ignal
+        set $social_mode Social: (d)iscord${optionalString config.soxin.programs.keybase.enable ", (k)eybase"}, S(l)ack, (s)ignal, (w)eeChat
         mode "$social_mode" {
           bindsym d exec ${getBin pkgs.discord}/bin/Discord, mode default
-          bindsym i exec ${getBin pkgs.termite}/bin/termite --class=irc --title=irc --exec=${getBin tiny}/bin/tiny, mode default
           ${optionalString config.soxin.programs.keybase.enable "bindsym k exec ${getBin pkgs.keybase-gui}/bin/keybase-gui, mode default"}
           bindsym l exec ${getBin pkgs.slack}/bin/slack, mode default
           bindsym s exec ${getBin pkgs.signal-desktop}/bin/signal-desktop, mode default
+          bindsym w exec ${getBin pkgs.termite}/bin/termite --class=WeeChat --title=WeeChat --exec='${pkgs.tmux}/bin/tmux -L weechat attach -t weechat', mode default
 
           bindsym Escape mode "$launcher"
         }
