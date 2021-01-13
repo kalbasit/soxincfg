@@ -15,9 +15,10 @@ let
     installPhase = ''
       mkdir $out
 
+      ln -s ${config.home.homeDirectory}/.weechat/buddylist.txt $out/buddylist.txt
       ln -s ${config.home.homeDirectory}/.weechat/logs $out/logs
-      ln -s ${config.home.homeDirectory}/.weechat/weechat.log $out/weechat.log
       ln -s ${config.home.homeDirectory}/.weechat/urlserver_list.txt $out/urlserver_list.txt
+      ln -s ${config.home.homeDirectory}/.weechat/weechat.log $out/weechat.log
 
       ${rsync}/bin/rsync --exclude '*.sops' -avz $src/ $out/
     '';
@@ -44,8 +45,12 @@ in
 
       home.activation.weechat = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         mkdir -p ${config.home.homeDirectory}/.weechat/logs
-        touch ${config.home.homeDirectory}/.weechat/weechat.log
+
+        chmod 711 ${config.home.homeDirectory}/.weechat
+
+        touch ${config.home.homeDirectory}/.weechat/buddylist.txt
         touch ${config.home.homeDirectory}/.weechat/urlserver_list.txt
+        touch ${config.home.homeDirectory}/.weechat/weechat.log
 
         chmod 511 ${config.home.homeDirectory}/.weechat
       '';
@@ -78,7 +83,7 @@ in
           done
 
           # remove symlinks I added myself
-          rm -rf logs weechat.log urlserver_list.txt
+          rm -rf buddylist.txt logs urlserver_list.txt weechat.log
 
           ${pkgs.rsync}/bin/rsync -auz "$temp_dir/" "$local_dir/"
 
