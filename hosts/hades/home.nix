@@ -29,6 +29,9 @@ with lib;
     # Move the Signal workspace to the internal screen
     ${getBin pkgs.i3}/bin/i3-msg "workspace signal; move workspace to output eDP-1"
 
+    # Move the Weechat workspace to the internal screen
+    ${getBin pkgs.i3}/bin/i3-msg "workspace weechat; move workspace to output eDP-1"
+
     # Move the TV workspace to the internal screen
     ${getBin pkgs.i3}/bin/i3-msg "workspace tv; move workspace to output DP-3"
 
