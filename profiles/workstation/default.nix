@@ -267,6 +267,8 @@ mkMerge [
       # zoom for meetings
       zoom-us
 
+      libnotify
+
       amazon-ecr-credential-helper
       docker-credential-gcr
 
