@@ -58,6 +58,12 @@ mkMerge [
 
     services.eternal-terminal.enable = true;
 
+    # Allow the forwarding of the GnuPG extra socket.
+    # https://wiki.gnupg.org/AgentForwarding
+    services.openssh.extraConfig = ''
+      StreamLocalBindUnlink yes
+    '';
+
     # L2TP VPN does not connect without the presence of this file!
     # https://github.com/NixOS/nixpkgs/issues/64965
     system.activationScripts.ipsec-secrets = ''
