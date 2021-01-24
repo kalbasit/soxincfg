@@ -28,7 +28,7 @@ containsElement () {
 }
 
 function listWorkspaces() {
-	local all_workspaces workspaces current_workspace current_profile current_story dir elem file elem
+	local all_workspaces current_workspace dir elem elem file profile_name story story_name workspaces
 
 	# get the list of non-focused workspaces
 	all_workspaces=( $(@i3-msg_bin@ -t get_workspaces | @jq_bin@ -r '.[] | select(.focused == false) | .name') )
@@ -41,24 +41,15 @@ function listWorkspaces() {
 		fi
 	done
 
-	# compute the current profile and the current story
-	current_workspace="$( @i3-msg_bin@ -t get_workspaces | @jq_bin@ -r '.[] | select(.focused == true) | .name' )"
-	if echo "${current_workspace}" | grep -q '@'; then
-		current_profile="$( echo "${current_workspace}" | cut -d\@ -f1 )"
-		current_story="$( echo "${current_workspace}" | cut -d\@ -f2 )"
-	else
-		current_profile="${current_workspace}"
-	fi
-
 	# get the list of available stories
-	if [[ -z "${current_story:-}" ]]; then
-		for story in $(swm story list --name-only | grep "^${current_profile}/" | cut -d/ -f2-); do
-			elem="${current_profile}@${story}"
-			if ! containsElement "${elem}" "${all_workspaces[@]}"; then
-				all_workspaces+=("${elem}")
-			fi
-		done
-	fi
+	for story in $(swm story list --name-only); do
+		profile_name="$(echo "${story}" | cut -d/ -f1)"
+		story_name="$(echo "${story}" | cut -d/ -f2-)"
+		elem="${profile_name}@${story_name}"
+		if ! containsElement "${elem}" "${all_workspaces[@]}"; then
+			all_workspaces+=("${elem}")
+		fi
+	done
 
 	# sort the workspaces by putting first the non-story workspaces followed by the story workspaces
 	workspaces=( $(printf "%s\n" "${all_workspaces[@]}" | grep -v '@' | sort) $(printf "%s\n" "${all_workspaces[@]}" | grep '@' | sort) )
