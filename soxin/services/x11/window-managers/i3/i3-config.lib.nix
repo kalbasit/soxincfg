@@ -125,14 +125,14 @@ in
       # toggle sticky
       "${defaultModifier}+s" = "sticky toggle";
 
+      # change focus between tiling / floating windows
+      "${thirdModifier}+f" = "focus mode_toggle";
+
       # toggle tiling / floating
-      "${thirdModifier}+${secondModifier}+space" = "floating toggle";
+      "${thirdModifier}+${secondModifier}+f" = "floating toggle";
 
       # jrnl entry
       "${thirdModifier}+j" = "exec ${jrnlEntry}";
-
-      # change focus between tiling / floating windows
-      "${thirdModifier}+space" = "focus mode_toggle";
 
       # enter fullscreen mode for the focused container
       "${defaultModifier}+f" = "fullscreen toggle";
@@ -155,7 +155,7 @@ in
 
       # dynamic workspaces
       "${defaultModifier}+space" = "exec ${pkgs.rofi}/bin/rofi -show i3SwapWorkspaces";
-      "${secondModifier}+space" = "exec ${pkgs.rofi}/bin/rofi -show i3Workspaces";
+      "${thirdModifier}+space" = "exec ${pkgs.rofi}/bin/rofi -show i3Workspaces";
       "${defaultModifier}+${secondModifier}+space" = "exec ${pkgs.rofi}/bin/rofi -show i3MoveContainer";
       "${defaultModifier}+${thirdModifier}+space" = "exec ${pkgs.rofi}/bin/rofi -show i3RenameWorkspace";
 
