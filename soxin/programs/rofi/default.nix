@@ -20,6 +20,11 @@ let
         --subst-var-by jq_bin ${pkgs.jq}/bin/jq \
         --subst-var-by out_dir $out
 
+      substitute $src/i3-swap-workspaces.sh $out/bin/i3-swap-workspaces \
+        --subst-var-by i3-msg_bin ${pkgs.i3}/bin/i3-msg \
+        --subst-var-by jq_bin ${pkgs.jq}/bin/jq \
+        --subst-var-by out_dir $out
+
       substitute $src/i3-switch-workspaces.sh $out/bin/i3-switch-workspaces \
         --subst-var-by i3-msg_bin ${pkgs.i3}/bin/i3-msg \
         --subst-var-by jq_bin ${pkgs.jq}/bin/jq \
@@ -57,7 +62,7 @@ in
 
         extraConfig = (
           ''
-            rofi.modi: window,run,ssh,drun,i3Workspaces:${i3Support}/bin/i3-switch-workspaces,i3RenameWorkspace:${i3Support}/bin/i3-rename-workspace,i3MoveContainer:${i3Support}/bin/i3-move-container
+            rofi.modi: window,run,ssh,drun,i3Workspaces:${i3Support}/bin/i3-switch-workspaces,i3RenameWorkspace:${i3Support}/bin/i3-rename-workspace,i3SwapWorkspaces:${i3Support}/bin/i3-swap-workspaces,i3MoveContainer:${i3Support}/bin/i3-move-container
           ''
         ) + (optionalString (cfg.dpi != null) ''
           rofi.dpi: ${builtins.toString cfg.dpi}
