@@ -28,13 +28,16 @@ containsElement () {
 }
 
 function listWorkspaces() {
-	local result current_workspace current_profile current_story dir elem file elem
+	local all_workspaces workspaces current_workspace current_profile current_story dir elem file elem
 
-	# print out the list of currently active workspaces
-	result=( $(@i3-msg_bin@ -t get_workspaces | @jq_bin@ -r '.[] | if .focused == false then .name else empty end') )
+	# get the list of non-focused workspaces
+	all_workspaces=( $(@i3-msg_bin@ -t get_workspaces | @jq_bin@ -r '.[] | select(.focused == false) | .name') )
+
+	# sort the workspaces by putting first the non-story workspaces followed by the story workspaces
+	workspaces=( $(printf "%s\n" "${all_workspaces[@]}" | grep -v '@' | sort) $(printf "%s\n" "${all_workspaces[@]}" | grep '@' | sort) )
 
 	# compute the current profile and the current story
-	current_workspace="$( @i3-msg_bin@ -t get_workspaces | @jq_bin@ -r '.[] | if .focused == true then .name else empty end' )"
+	current_workspace="$( @i3-msg_bin@ -t get_workspaces | @jq_bin@ -r '.[] | select(.focused == true) | .name' )"
 	if echo "${current_workspace}" | grep -q '@'; then
 		current_profile="$( echo "${current_workspace}" | cut -d\@ -f1 )"
 		current_story="$( echo "${current_workspace}" | cut -d\@ -f2 )"
@@ -46,8 +49,8 @@ function listWorkspaces() {
 	if [[ -z "${current_story:-}" ]]; then
 		for story in $(swm story list --name-only | grep "^${current_profile}/" | cut -d/ -f2-); do
 			elem="${current_profile}@${story}"
-			if ! containsElement "${elem}" "${result[@]}"; then
-				result+=("${elem}")
+			if ! containsElement "${elem}" "${workspaces[@]}"; then
+				workspaces+=("${elem}")
 			fi
 		done
 	fi
@@ -55,12 +58,12 @@ function listWorkspaces() {
 	# print out the list of available profiles
 	for file in $(find "${HOME}/.zsh/profiles" -iregex '.*/[a-z]*\.zsh' | sort); do
 		elem="$(basename "${file}" .zsh)"
-		if ! containsElement "${elem}" "${result[@]}"; then
-			result=("${result[@]}" "${elem}")
+		if ! containsElement "${elem}" "${workspaces[@]}"; then
+			workspaces=("${workspaces[@]}" "${elem}")
 		fi
 	done
 
-	for elem in "${result[@]}"; do
+	for elem in "${workspaces[@]}"; do
 		echo "${elem}"
 	done
 }
