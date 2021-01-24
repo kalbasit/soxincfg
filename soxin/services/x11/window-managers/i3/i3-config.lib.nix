@@ -155,6 +155,7 @@ in
 
       # dynamic workspaces
       "${defaultModifier}+space" = "exec ${pkgs.rofi}/bin/rofi -show i3Workspaces";
+      "${secondModifier}+space" = "exec ${pkgs.rofi}/bin/rofi -show i3SwapWorkspaces";
       "${defaultModifier}+${secondModifier}+space" = "exec ${pkgs.rofi}/bin/rofi -show i3MoveContainer";
       "${defaultModifier}+${thirdModifier}+space" = "exec ${pkgs.rofi}/bin/rofi -show i3RenameWorkspace";
 
