@@ -38,8 +38,10 @@ readonly target_output="$(@i3-msg_bin@ -t get_workspaces | @jq_bin@ -r ".[] | se
 readonly source_workspace="$(@i3-msg_bin@ -t get_workspaces | @jq_bin@ -r ".[] | select(.visible == true and .focused == true) | .name")"
 readonly source_output="$(@i3-msg_bin@ -t get_workspaces | @jq_bin@ -r ".[] | select(.visible == true and .focused == true) | .output")"
 
-# if both workspaces are on the same output then just switch to it
-if [[ "${source_output}" == "${target_output}" ]]; then
+# if the target_output is empty then the workspace does not exist so just
+# switch to it to create it on the same output. Or if both workspaces are on
+# the same output then just switch to it
+if [[ -z "${target_output:-}" ]] || [[ "${source_output}" == "${target_output}" ]]; then
 	@i3-msg_bin@ workspace "$target_workspace" >/dev/null
 	exit 0
 fi
