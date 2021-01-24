@@ -24,11 +24,6 @@ set -euo pipefail
 
 source @out_dir@/lib/list-workspaces.sh
 
-if [[ "$(@i3-msg_bin@ -t get_outputs | @jq_bin@ -r '.[] | select(.name != "xroot-0") | .name' | wc -l)" -eq 1 ]]; then
-	echo "Need at least two outputs"
-	exit 1
-fi
-
 if [[ -z "${*}" ]]; then
 	# get the list of workspaces that are not empty
 	listWorkspaces
@@ -42,6 +37,12 @@ readonly target_output="$(@i3-msg_bin@ -t get_workspaces | @jq_bin@ -r ".[] | se
 # figure out the source workspace and the output name
 readonly source_workspace="$(@i3-msg_bin@ -t get_workspaces | @jq_bin@ -r ".[] | select(.visible == true and .focused == true) | .name")"
 readonly source_output="$(@i3-msg_bin@ -t get_workspaces | @jq_bin@ -r ".[] | select(.visible == true and .focused == true) | .output")"
+
+# if both workspaces are on the same output then just switch to it
+if [[ "${source_output}" == "${target_output}" ]]; then
+	@i3-msg_bin@ workspace "$target_workspace" >/dev/null
+	exit 0
+fi
 
 # swap them now
 @i3-msg_bin@ move workspace to output "$target_output" >/dev/null
