@@ -54,7 +54,14 @@ function listWorkspaces() {
 	# sort the workspaces by putting first the non-story workspaces followed by the story workspaces
 	workspaces=( $(printf "%s\n" "${all_workspaces[@]}" | grep -v '@' | sort) $(printf "%s\n" "${all_workspaces[@]}" | grep '@' | sort) )
 
+	# compute the current workspace
+	current_workspace="$( @i3-msg_bin@ -t get_workspaces | @jq_bin@ -r '.[] | select(.focused == true) | .name' )"
+
 	for elem in "${workspaces[@]}"; do
+		if [[ "${elem}" == "${current_workspace}" ]]; then
+			continue
+		fi
+
 		echo "${elem}"
 	done
 }
