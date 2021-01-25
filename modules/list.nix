@@ -1,5 +1,6 @@
 {
   # programs
+  android = ./programs/android.nix;
   autorandr = ./programs/autorandr.nix;
   brave = ./programs/brave.nix;
   chromium = ./programs/chromium;
