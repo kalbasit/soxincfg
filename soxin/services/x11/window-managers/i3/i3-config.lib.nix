@@ -81,6 +81,7 @@ in
     assigns = {
       "charles" = [{ class = "^com-xk72-charles-gui-.*$"; }];
       "discord" = [{ class = "^discord$"; }];
+      "element" = [{ class = "^Element$"; }];
       "signal" = [{ class = "^Signal$"; }];
       "slack" = [{ class = "^Slack$"; }];
       "studio" = [{ class = "^obs$"; }];
@@ -318,9 +319,10 @@ in
         bindsym Escape mode "$launcher"
       }
 
-        set $social_mode Social: (d)iscord${optionalString config.soxin.programs.keybase.enable ", (k)eybase"}, S(l)ack, (s)ignal, (w)eeChat
+        set $social_mode Social: (d)iscord, (e)lement${optionalString config.soxin.programs.keybase.enable ", (k)eybase"}, S(l)ack, (s)ignal, (w)eeChat
         mode "$social_mode" {
           bindsym d exec ${getBin pkgs.discord}/bin/Discord, mode default
+          bindsym e exec ${getBin pkgs.element-desktop}/bin/element-desktop, mode default
           ${optionalString config.soxin.programs.keybase.enable "bindsym k exec ${getBin pkgs.keybase-gui}/bin/keybase-gui, mode default"}
           bindsym l exec ${getBin pkgs.slack}/bin/slack, mode default
           bindsym s exec ${getBin pkgs.signal-desktop}/bin/signal-desktop, mode default
