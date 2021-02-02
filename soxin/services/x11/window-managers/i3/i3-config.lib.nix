@@ -59,8 +59,6 @@ in
         { command = "floating enable"; criteria = { title = "^jrnl_entry$"; }; }
 
         { command = "sticky enable, floating enable, move scratchpad"; criteria = { class = "MellowPlayer"; }; }
-      ] ++ optionals config.soxin.programs.keybase.enable [
-        { command = "sticky enable, floating enable, move scratchpad"; criteria = { class = "Keybase"; }; }
       ];
     };
 
@@ -82,6 +80,7 @@ in
       "charles" = [{ class = "^com-xk72-charles-gui-.*$"; }];
       "discord" = [{ class = "^discord$"; }];
       "element" = [{ class = "^Element$"; }];
+      "keybase" = [{ class = "^Keybase$"; }];
       "signal" = [{ class = "^Signal$"; }];
       "slack" = [{ class = "^Slack$"; }];
       "studio" = [{ class = "^obs$"; }];
@@ -218,9 +217,7 @@ in
 
       # Short-cuts for windows hidden in the scratchpad.
       "${thirdModifier}+m" = "[class=\"MellowPlayer\"] scratchpad show";
-    } // (if config.soxin.programs.keybase.enable then {
-      "${thirdModifier}+k" = "[class=\"Keybase\"] scratchpad show";
-    } else { });
+    };
 
     modes = {
       resize = {
