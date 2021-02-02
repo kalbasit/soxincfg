@@ -29,6 +29,9 @@ with lib;
     # Move the Signal workspace to the internal screen
     ${getBin pkgs.i3}/bin/i3-msg "workspace signal; move workspace to output eDP-1"
 
+    # Move the Keybase workspace to the internal screen
+    ${getBin pkgs.i3}/bin/i3-msg "workspace keybase; move workspace to output eDP-1"
+
     # Move the Element workspace to the internal screen
     ${getBin pkgs.i3}/bin/i3-msg "workspace element; move workspace to output eDP-1"
 
