@@ -22,5 +22,11 @@ in
 
   soxin.hardware.intelBacklight.enable = true;
 
+  # The ADMIN interface
+  networking.interfaces.eno1.useDHCP = false; # Turn off DHCP on the main network as gets priority on DNS server
+  networking.interfaces.ifcadmin.useDHCP = true; # Turn on DHCP on the admin interface
+  networking.networkmanager.unmanaged = [ "eno1" "ifcadmin" ]; # Tell NM not to manage the wired connection
+  networking.vlans.ifcadmin = { id = 2; interface = "eno1"; }; # Create the ifcadmin interface
+
   system.stateVersion = "20.09";
 }
