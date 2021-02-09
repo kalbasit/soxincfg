@@ -260,7 +260,9 @@ mkMerge [
 
       file
 
-      dnsutils
+      dnsutils # for dig
+
+      binutils # for strings
 
       weechat
 
