@@ -258,6 +258,10 @@ mkMerge [
     home.packages = with pkgs; [
       remmina
 
+      file
+
+      dnsutils
+
       weechat
 
       xsel
