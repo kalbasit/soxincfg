@@ -262,6 +262,8 @@ mkMerge [
 
       dnsutils # for dig
 
+      imagemagick # for convert
+
       binutils # for strings
 
       weechat
