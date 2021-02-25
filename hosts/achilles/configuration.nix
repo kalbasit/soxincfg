@@ -31,5 +31,12 @@ in
   security.pam.services.xscreensaver.fprintAuth = true;
   security.pam.services.sudo.fprintAuth = true;
 
+  # wordpress
+  soxincfg.services.wordpress.tripintech.enable = true;
+  services.wordpress.tripintech.virtualHost = {
+    adminAddr = "kalbasit@pm.me";
+    hostName = "tripintech.local";
+  };
+
   system.stateVersion = "20.09";
 }

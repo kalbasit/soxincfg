@@ -13,6 +13,7 @@
   dnsmasq = ./services/dnsmasq;
   i3 = ./services/x11/window-managers/i3.nix;
   iscsid = ./services/iscsid.nix;
+  wordpress-tripintech = ./services/wordpress/tripintech;
 
   # settings
   nix = ./settings/nix;
