@@ -8,6 +8,9 @@ with lib;
   # soxin.programs.neovim.enable = true;
   environment.systemPackages = with pkgs; [ neovim ];
 
+  # Enable TailScale for zero-config VPN service.
+  services.tailscale.enable = true;
+
   # Enable SSH server
   soxin.services.openssh.enable = true;
 
