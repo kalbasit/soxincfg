@@ -260,6 +260,8 @@ mkMerge [
 
       file
 
+      qb64
+
       dnsutils # for dig
 
       imagemagick # for convert
