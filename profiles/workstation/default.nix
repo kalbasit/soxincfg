@@ -123,6 +123,9 @@ mkMerge [
 
         services.gnome3.gnome-keyring.enable = true;
 
+        # Enable TailScale for zero-config VPN service.
+        services.tailscale.enable = true;
+
         services.logind = {
           lidSwitch = "hybrid-sleep";
           lidSwitchDocked = "ignore";
