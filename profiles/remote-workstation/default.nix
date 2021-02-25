@@ -58,6 +58,9 @@ mkMerge [
 
     services.eternal-terminal.enable = true;
 
+    # Enable TailScale for zero-config VPN service.
+    services.tailscale.enable = true;
+
     # Allow the forwarding of the GnuPG extra socket.
     # https://wiki.gnupg.org/AgentForwarding
     services.openssh.extraConfig = ''
