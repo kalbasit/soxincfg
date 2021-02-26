@@ -286,6 +286,8 @@ mkMerge [
 
       bitwarden-cli
 
+      gdb
+
       gist
 
       gnupg
