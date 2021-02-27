@@ -23,9 +23,9 @@ in
 
   # Set the ssh authorized keys for the root user
   users.users.root = {
-    inherit (soxincfg.vars.users.yl) hashedPassword;
+    inherit (soxincfg.vars.users.root) hashedPassword;
 
-    openssh.authorizedKeys.keys = soxincfg.vars.users.yl.sshKeys;
+    openssh.authorizedKeys.keys = soxincfg.vars.users.root.sshKeys;
   };
 
   # set the default locale and the timeZone
