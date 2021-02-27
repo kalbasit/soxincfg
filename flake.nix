@@ -70,6 +70,15 @@
               };
             };
 
+            vultr-x86-64-linux-0 = {
+              hostname = "45.32.86.37";
+              profiles.system = {
+                sshUser = "root";
+                user = "root";
+                path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.vultr-x86-64-linux-0;
+              };
+            };
+
             zeus = {
               hostname = "zeus.admin.nasreddine.com";
               profiles.system = {
