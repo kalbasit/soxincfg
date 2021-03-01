@@ -10,11 +10,22 @@ with lib;
   networking.useDHCP = false;
   networking.interfaces.ens3.useDHCP = true;
 
-  soxincfg.services.wordpress.tripintech.enable = true;
+  security.acme = {
+    email = "kalbasit@pm.me";
+    acceptTerms = true;
+  };
+
+  soxincfg.services.wordpress.tripintech = {
+    enable = true;
+    openFirewall = true;
+  };
   services.wordpress.tripintech = {
     virtualHost = {
       adminAddr = "wael.nasreddine@gmail.com";
       hostName = "tripin.tech";
+
+      enableACME = true;
+      forceSSL = true;
     };
   };
 
