@@ -7,6 +7,8 @@ in
 {
   options.soxincfg.services.wordpress.tripintech = {
     enable = mkEnableOption "Serve the Trip in tech Wordpress";
+
+    openFirewall = mkEnableOption "open TCP ports 80 and 443";
   };
 
   config = mkIf cfg.enable (mkMerge [
@@ -21,6 +23,8 @@ in
           passwordFile = "/run/secrets/wordpress_tripintech_database_password_file";
         };
       };
+
+      networking.firewall.allowedTCPPorts = mkIf cfg.openFirewall [ 80 443 ];
     })
   ]);
 }
