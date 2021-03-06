@@ -16,15 +16,16 @@
   boot.loader.grub.device = "/dev/vda";
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/b3a956cf-cf42-4395-a5e3-0cc259af63c5";
+    {
+      device = "/dev/disk/by-uuid/b3a956cf-cf42-4395-a5e3-0cc259af63c5";
       fsType = "ext4";
     };
 
-    swapDevices = [
-          {
+  swapDevices = [
+    {
       device = "/swapfile";
       priority = 10;
       size = 1024;
     }
-    ];
+  ];
 }

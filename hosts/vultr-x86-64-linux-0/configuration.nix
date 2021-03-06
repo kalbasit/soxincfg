@@ -15,13 +15,13 @@ with lib;
     acceptTerms = true;
   };
 
+  # enable tripin.tech
   soxincfg.services.wordpress.tripintech = {
     enable = true;
     openFirewall = true;
   };
   services.wordpress.tripintech = {
     virtualHost = {
-      adminAddr = "wael.nasreddine@gmail.com";
       hostName = "tripin.tech";
 
       enableACME = true;

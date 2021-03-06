@@ -1,0 +1,87 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number:
+            c8:8b:7e:49:b0:25:cd:ab:74:e9:7e:c9:0f:61:e2:8c
+        Signature Algorithm: sha256WithRSAEncryption
+        Issuer: CN=Nasreddine Network
+        Validity
+            Not Before: Mar  6 19:11:02 2021 GMT
+            Not After : Mar  4 19:11:02 2031 GMT
+        Subject: CN=dev.tripin.tech
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                RSA Public-Key: (2048 bit)
+                Modulus:
+                    00:96:c1:c3:3c:47:34:5e:55:32:16:bc:99:24:a9:
+                    40:75:cb:09:43:1d:91:e4:54:60:8a:51:d6:e5:e4:
+                    21:67:f3:2a:24:25:3b:67:fe:b1:15:60:18:55:d7:
+                    4c:e1:d8:cb:fc:e7:87:2f:7f:91:15:54:3c:3c:3f:
+                    5e:03:92:a0:dd:d8:82:e1:97:a9:4b:12:67:7e:be:
+                    f5:3b:12:6d:84:12:bf:d0:85:ef:f7:c1:fb:41:04:
+                    58:57:75:32:2d:b4:cb:be:b8:0c:43:aa:a4:4c:2a:
+                    9c:94:57:cf:25:77:e5:2e:0a:9b:13:80:96:10:69:
+                    73:74:13:cc:71:19:ed:00:71:61:27:9a:19:d2:ce:
+                    ef:66:1c:8f:f4:2c:d0:75:e1:42:a4:44:50:d8:15:
+                    65:50:7d:81:41:3c:72:1e:97:c4:4d:0c:d1:27:8b:
+                    95:1a:c9:3a:29:f8:ec:66:e1:ee:d0:56:21:cc:10:
+                    0c:d9:d9:eb:32:de:79:5e:b7:63:d7:7b:38:98:09:
+                    4b:c7:c2:1e:be:17:ef:7f:51:0f:81:43:3e:cd:29:
+                    9d:ca:98:56:f1:a4:60:cd:05:60:1d:ab:2a:4d:e0:
+                    12:dd:96:72:c1:3c:06:36:e9:ac:7d:5f:67:f7:d7:
+                    de:99:16:5d:3d:45:a9:30:fe:3c:af:92:1d:44:be:
+                    6e:71
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Basic Constraints: 
+                CA:FALSE
+            X509v3 Subject Key Identifier: 
+                F7:D2:62:6C:40:E7:D2:9C:91:E3:55:DA:AB:4C:F7:0D:E3:9F:7E:C0
+            X509v3 Authority Key Identifier: 
+                keyid:EA:DA:9B:A1:2F:35:B7:35:7E:81:46:03:EB:88:F4:85:41:0F:A5:AE
+                DirName:/CN=Nasreddine Network
+                serial:F2:E3:5F:7A:88:67:D7:C4
+
+            X509v3 Extended Key Usage: 
+                TLS Web Server Authentication
+            X509v3 Key Usage: 
+                Digital Signature, Key Encipherment
+            X509v3 Subject Alternative Name: 
+                DNS:dev.tripin.tech
+    Signature Algorithm: sha256WithRSAEncryption
+         1e:02:01:59:9f:cb:ee:17:68:6d:09:f8:92:07:db:a6:b0:7c:
+         68:7f:73:ad:f0:eb:a6:fb:a2:73:39:93:2a:72:09:58:76:1f:
+         0f:14:50:f2:7a:c9:28:9d:47:49:cb:6a:2a:9c:04:e8:6e:6f:
+         17:d2:59:7f:b5:14:22:11:12:02:8f:99:e4:58:a5:74:28:50:
+         1e:7f:16:5e:e9:fa:5d:96:ab:92:f9:c9:ba:17:bf:e1:fc:4c:
+         0b:ae:38:17:aa:57:11:cf:63:ca:57:3b:ef:af:8f:57:3f:c5:
+         d5:92:92:ed:48:e2:12:2d:f0:32:01:03:9a:0d:63:43:db:1d:
+         fb:38:9d:9e:e9:a7:96:70:4e:fb:54:9d:01:4c:43:7a:1e:b5:
+         ba:da:39:e1:14:6a:a2:ec:d1:ac:6b:2e:4c:5a:b1:f5:ba:03:
+         a9:26:f4:ae:53:9e:72:4d:09:af:57:12:e3:ef:54:86:11:a0:
+         db:c2:d1:9e:21:c2:18:11:ca:53:dc:b6:81:15:bc:99:85:27:
+         87:24:de:cf:68:21:6f:9f:a9:4d:d4:b0:95:d9:bc:ea:19:13:
+         5b:f7:b1:c9:44:d7:ee:af:1d:d9:7f:cf:ee:25:71:e4:21:db:
+         7c:b1:6c:71:ff:a6:e9:3e:dc:c2:c4:f7:bc:59:d0:5f:7c:94:
+         48:db:d0:ca
+-----BEGIN CERTIFICATE-----
+MIIDfTCCAmWgAwIBAgIRAMiLfkmwJc2rdOl+yQ9h4owwDQYJKoZIhvcNAQELBQAw
+HTEbMBkGA1UEAwwSTmFzcmVkZGluZSBOZXR3b3JrMB4XDTIxMDMwNjE5MTEwMloX
+DTMxMDMwNDE5MTEwMlowGjEYMBYGA1UEAwwPZGV2LnRyaXBpbi50ZWNoMIIBIjAN
+BgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlsHDPEc0XlUyFryZJKlAdcsJQx2R
+5FRgilHW5eQhZ/MqJCU7Z/6xFWAYVddM4djL/OeHL3+RFVQ8PD9eA5Kg3diC4Zep
+SxJnfr71OxJthBK/0IXv98H7QQRYV3UyLbTLvrgMQ6qkTCqclFfPJXflLgqbE4CW
+EGlzdBPMcRntAHFhJ5oZ0s7vZhyP9CzQdeFCpERQ2BVlUH2BQTxyHpfETQzRJ4uV
+Gsk6KfjsZuHu0FYhzBAM2dnrMt55Xrdj13s4mAlLx8Ievhfvf1EPgUM+zSmdyphW
+8aRgzQVgHasqTeAS3ZZywTwGNumsfV9n99femRZdPUWpMP48r5IdRL5ucQIDAQAB
+o4G6MIG3MAkGA1UdEwQCMAAwHQYDVR0OBBYEFPfSYmxA59KckeNV2qtM9w3jn37A
+ME0GA1UdIwRGMESAFOram6EvNbc1foFGA+uI9IVBD6WuoSGkHzAdMRswGQYDVQQD
+DBJOYXNyZWRkaW5lIE5ldHdvcmuCCQDy4196iGfXxDATBgNVHSUEDDAKBggrBgEF
+BQcDATALBgNVHQ8EBAMCBaAwGgYDVR0RBBMwEYIPZGV2LnRyaXBpbi50ZWNoMA0G
+CSqGSIb3DQEBCwUAA4IBAQAeAgFZn8vuF2htCfiSB9umsHxof3Ot8Oum+6JzOZMq
+cglYdh8PFFDyeskonUdJy2oqnATobm8X0ll/tRQiERICj5nkWKV0KFAefxZe6fpd
+lquS+cm6F7/h/EwLrjgXqlcRz2PKVzvvr49XP8XVkpLtSOISLfAyAQOaDWND2x37
+OJ2e6aeWcE77VJ0BTEN6HrW62jnhFGqi7NGsay5MWrH1ugOpJvSuU55yTQmvVxLj
+71SGEaDbwtGeIcIYEcpT3LaBFbyZhSeHJN7PaCFvn6lN1LCV2bzqGRNb97HJRNfu
+rx3Zf8/uJXHkIdt8sWxx/6bpPtzCxPe8WdBffJRI29DK
+-----END CERTIFICATE-----

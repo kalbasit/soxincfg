@@ -22,6 +22,12 @@ in
 
   soxin.hardware.intelBacklight.enable = true;
 
+  # enable tripin.tech
+  soxincfg.services.wordpress.tripintech = {
+    enable = true;
+    enableDevTLS = true;
+  };
+
   # The ADMIN interface
   networking.interfaces.eno1.useDHCP = false; # Turn off DHCP on the main network as gets priority on DNS server
   networking.interfaces.ifcadmin.useDHCP = true; # Turn on DHCP on the admin interface
