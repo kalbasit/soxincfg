@@ -140,6 +140,7 @@
                 ps.aws
                 ps.secret
                 ps.unifi
+                ps.vultr
               ]))
             ];
 
