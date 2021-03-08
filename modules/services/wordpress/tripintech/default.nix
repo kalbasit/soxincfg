@@ -3,6 +3,23 @@
 with lib;
 let
   cfg = config.soxincfg.services.wordpress.tripintech;
+
+  buildPluginOrTheme = with pkgs; pname: version: src: stdenv.mkDerivation {
+    inherit pname version src;
+
+    buildInputs = [ pkgs.unzip ];
+    installPhase = "mkdir -p $out; cp -R * $out/";
+  };
+
+  buildPlugin = with pkgs; pname: version: sha256: buildPluginOrTheme pname version (fetchurl {
+    inherit sha256;
+    url = "https://downloads.wordpress.org/plugin/${pname}.${version}.zip";
+  });
+
+  buildTheme = with pkgs; pname: version: sha256: buildPluginOrTheme pname version (fetchurl {
+    inherit sha256;
+    url = "https://downloads.wordpress.org/theme/${pname}.${version}.zip";
+  });
 in
 {
   options.soxincfg.services.wordpress.tripintech = {
@@ -32,21 +49,15 @@ in
         };
 
         plugins =
-          let
-            yoast_seo = pkgs.stdenv.mkDerivation rec {
-              pname = "wordpress-seo";
-              version = "15.9.1";
+          [
+            # Yoast SEO
+            (buildPlugin "wordpress-seo" "15.9.1" "sha256-rdRE6UuuOTefI0L6WFbnxzT/sORAMPeaF/j+jSqxQUQ=")
+          ];
 
-              src = pkgs.fetchurl {
-                url = "https://downloads.wordpress.org/plugin/${pname}.${version}.zip";
-                sha256 = "sha256-rdRE6UuuOTefI0L6WFbnxzT/sORAMPeaF/j+jSqxQUQ=";
-              };
-
-              buildInputs = [ pkgs.unzip ];
-              installPhase = "mkdir -p $out; cp -R * $out/";
-            };
-          in
-          [ yoast_seo ];
+        themes =
+          [
+            (buildTheme "hestia" "3.0.13" "sha256-Zue06cmvGX7uzqBu6OHnvwBb0NghoFqSZTk/HAJOheA=")
+          ];
 
         virtualHost = mkMerge [
           { adminAddr = "wael.nasreddine@gmail.com"; }
