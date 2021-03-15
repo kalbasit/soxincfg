@@ -303,6 +303,8 @@ mkMerge [
 
       lastpass-cli
 
+      lazygit
+
       mercurial
 
       mosh
