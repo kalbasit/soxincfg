@@ -4,6 +4,7 @@
   autorandr = ./programs/autorandr.nix;
   brave = ./programs/brave.nix;
   chromium = ./programs/chromium;
+  dbeaver = ./programs/dbeaver;
   git = ./programs/git.nix;
   ssh = ./programs/ssh.nix;
   starship = ./programs/starship.nix;
