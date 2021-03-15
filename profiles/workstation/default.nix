@@ -97,6 +97,7 @@ mkMerge [
         autorandr.enable = true;
         brave.enable = true;
         chromium = { enable = true; surfingkeys.enable = true; };
+        dbeaver.enable = true;
         git.enable = true;
         ssh.enable = true;
         starship.enable = true;
