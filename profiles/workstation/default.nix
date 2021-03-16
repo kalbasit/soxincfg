@@ -15,7 +15,6 @@ mkMerge [
 
       programs = {
         fzf.enable = true;
-        git.enable = true;
         htop.enable = true;
         keybase = {
           enable = true;
