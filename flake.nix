@@ -70,6 +70,15 @@
               };
             };
 
+            x86-64-linux-0 = {
+              hostname = "x86-64-linux-0.yl.ktdev.io";
+              profiles.system = {
+                sshUser = "root";
+                user = "root";
+                path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.x86-64-linux-0;
+              };
+            };
+
             zeus = {
               hostname = "zeus.admin.nasreddine.com";
               profiles.system = {
