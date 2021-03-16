@@ -71,6 +71,15 @@
             };
 
             redacted-host = {
+              hostname = "redacted-host.yl.ktdev.io";
+              profiles.system = {
+                sshUser = "root";
+                user = "root";
+                path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.redacted-host;
+              };
+            };
+
+            redacted-host = {
               hostname = "host.invalid";
               profiles.system = {
                 sshUser = "root";
