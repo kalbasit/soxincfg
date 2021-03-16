@@ -50,10 +50,20 @@ in
             system = "aarch64-linux";
             supportedFeatures = [ ];
           }
+
+          {
+            hostName = "x86-64-linux-0.yl.ktdev.io";
+            maxJobs = 6;
+            sshKey = builtins.toString config.sops.secrets.ssh_key_x86-64-linux-0.path;
+            sshUser = "builder";
+            system = "x86_64-linux";
+            supportedFeatures = [ ];
+          }
         ];
       };
 
       sops.secrets.ssh_key_aarch64-linux-0.sopsFile = ./secrets.sops.yaml;
+      sops.secrets.ssh_key_x86-64-linux-0.sopsFile = ./secrets.sops.yaml;
       sops.secrets.ssh_key_kore.sopsFile = ./secrets.sops.yaml;
       sops.secrets.ssh_key_zeus.sopsFile = ./secrets.sops.yaml;
     })

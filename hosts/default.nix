@@ -82,7 +82,7 @@ let
     };
 in
 if system == "x86_64-linux" then
-  lib.genAttrs [ "achilles" "hades" "zeus" ] config
+  lib.genAttrs [ "achilles" "hades" "zeus" "x86-64-linux-0" ] config
 else if system == "aarch64-linux" then
   lib.genAttrs [ "aarch64-linux-0" "kore" ] config
 else builtins.trace "I don't have any hosts buildable for the system ${system}" [ ]
