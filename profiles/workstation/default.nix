@@ -335,6 +335,7 @@ mkMerge [
       gotop
 
       jetbrains.idea-community
+      jetbrains.goland
 
       slack
 
