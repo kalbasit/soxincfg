@@ -28,8 +28,7 @@ mkMerge [
           enable = true;
           setMimeList = true;
           browsers = {
-            "firefox@personal" = home-manager.lib.hm.dag.entryBefore [ "firefox@keeptruckin" ] { };
-            "firefox@keeptruckin" = home-manager.lib.hm.dag.entryBefore [ "brave@personal" ] { };
+            "firefox@personal" = home-manager.lib.hm.dag.entryBefore [ "brave@personal" ] { };
             "brave@personal" = home-manager.lib.hm.dag.entryBefore [ "firefox@private" ] { };
             "firefox@private" = home-manager.lib.hm.dag.entryBefore [ "firefox@anya" ] { };
             "firefox@anya" = home-manager.lib.hm.dag.entryBefore [ "firefox@vanya" ] { };
