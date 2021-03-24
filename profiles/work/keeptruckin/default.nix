@@ -1,9 +1,11 @@
-{ config, lib, mode, pkgs, ... }:
+{ config, home-manager, lib, mode, pkgs, ... }:
 
 with lib;
 
 {
   config = mkMerge [
+    { soxin.programs.rbrowser.browsers."firefox@keeptruckin" = home-manager.lib.hm.dag.entryBetween [ "brave@personal" ] [ "firefox@personal" ] { }; }
+
     (optionalAttrs (mode == "NixOS") (
       let
         yl_home = config.users.users.yl.home;
