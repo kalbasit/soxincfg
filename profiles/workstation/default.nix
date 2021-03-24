@@ -28,17 +28,14 @@ mkMerge [
           enable = true;
           setMimeList = true;
           browsers = {
-            "firefox@personal" = home-manager.lib.hm.dag.entryBefore [ "chromium@keeptruckin" ] { };
-            "chromium@keeptruckin" = home-manager.lib.hm.dag.entryBefore [ "brave@personal" ] { };
-            "firefox@keeptruckin" = home-manager.lib.hm.dag.entryAnywhere { };
-            "chromium@personal" = home-manager.lib.hm.dag.entryAnywhere { };
-            "chromium@anya" = home-manager.lib.hm.dag.entryAnywhere { };
-            "chromium@private" = home-manager.lib.hm.dag.entryAnywhere { };
-            "chromium@ihab" = home-manager.lib.hm.dag.entryAnywhere { };
-            "chromium@nosecurity" = home-manager.lib.hm.dag.entryAnywhere { flags = singleton "--disable-web-security"; };
-            "chromium@tanya" = home-manager.lib.hm.dag.entryAnywhere { };
-            "chromium@vanya" = home-manager.lib.hm.dag.entryAnywhere { };
-            "brave@personal" = home-manager.lib.hm.dag.entryAnywhere { };
+            "firefox@personal" = home-manager.lib.hm.dag.entryBefore [ "firefox@keeptruckin" ] { };
+            "firefox@keeptruckin" = home-manager.lib.hm.dag.entryBefore [ "brave@personal" ] { };
+            "brave@personal" = home-manager.lib.hm.dag.entryBefore [ "firefox@private" ] { };
+            "firefox@private" = home-manager.lib.hm.dag.entryBefore [ "firefox@anya" ] { };
+            "firefox@anya" = home-manager.lib.hm.dag.entryBefore [ "firefox@vanya" ] { };
+            "firefox@vanya" = home-manager.lib.hm.dag.entryBefore [ "firefox@tanya" ] { };
+            "firefox@tanya" = home-manager.lib.hm.dag.entryBefore [ "firefox@ihab" ] { };
+            "firefox@ihab" = home-manager.lib.hm.dag.entryAnywhere { };
           };
         };
         rofi.enable = true;
