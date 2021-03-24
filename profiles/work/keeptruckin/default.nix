@@ -57,7 +57,7 @@ with lib;
               fi
 
               story="$(echo "$active_workspace" | cut -d@ -f2)"
-              rbrowser --profile "$profile" --browser "chromium" "https://k2labs.atlassian.net/browse/$story" --new-window
+              rbrowser --profile "$profile" --browser "firefox" --new-window "https://k2labs.atlassian.net/browse/$story"
             '';
           in
           "exec --no-startup-id ${openJira}";
