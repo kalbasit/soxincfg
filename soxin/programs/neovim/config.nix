@@ -70,6 +70,8 @@ in
             "goyo"
             "multiple-cursors"
             "ncm2"
+            "nerdtree"
+            "nerdtree-git-plugin"
             "pig-vim"
             "repeat"
             "rhubarb"
