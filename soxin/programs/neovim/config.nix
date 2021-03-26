@@ -71,7 +71,8 @@ in
             "multiple-cursors"
             "ncm2"
             "nerdtree"
-            "nerdtree-git-plugin"
+            # getting an error
+            # "nerdtree-git-plugin"
             "pig-vim"
             "repeat"
             "rhubarb"
