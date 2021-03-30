@@ -29,7 +29,6 @@ mkMerge [
     sops.secrets._local_share_remmina_my_network_vnc_vanya-macbook_ro_remmina = { inherit owner sopsFile; path = "${yl_home}/.local/share/remmina/my-network_vnc_vanya-macbook-ro.remmina"; };
     sops.secrets._netrc = { inherit owner sopsFile; path = "${yl_home}/.netrc"; };
     sops.secrets._ssh_config_include_myself = { inherit owner sopsFile; path = "${yl_home}/.ssh/config_include_myself"; };
-    sops.secrets._zsh_profiles_linnaeus_zsh = { inherit owner sopsFile; path = "${yl_home}/.zsh/profiles/linnaeus.zsh"; };
     sops.secrets._zsh_profiles_opensource_zsh = { inherit owner sopsFile; path = "${yl_home}/.zsh/profiles/opensource.zsh"; };
     sops.secrets._zsh_profiles_personal_zsh = { inherit owner sopsFile; path = "${yl_home}/.zsh/profiles/personal.zsh"; };
   })
