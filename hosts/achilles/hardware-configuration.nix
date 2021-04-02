@@ -23,8 +23,6 @@ with lib;
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-
   # HiDPI settings
   console.font = "${pkgs.terminus_font}/share/consolefonts/ter-v32n.psf.gz";
   console.earlySetup = true; # Needed when typing in passwords for full disk encryption
