@@ -48,8 +48,6 @@ in
 
   services.xserver.videoDrivers = mkForce [ "modesetting" ];
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-
   console.font = "Lat2-Terminus16";
 
   boot.initrd.luks.devices = {

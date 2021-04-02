@@ -43,8 +43,6 @@ in
 
   nix.maxJobs = lib.mkDefault 12;
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-
   soxin.hardware.serial_console.enable = true;
 
   console.font = "Lat2-Terminus16";
