@@ -260,6 +260,8 @@ mkMerge [
 
       dnsutils # for dig
 
+      dosbox
+
       imagemagick # for convert
 
       binutils # for strings
