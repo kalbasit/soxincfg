@@ -261,6 +261,7 @@ mkMerge [
       dnsutils # for dig
 
       dosbox
+      retroarch
 
       imagemagick # for convert
 
