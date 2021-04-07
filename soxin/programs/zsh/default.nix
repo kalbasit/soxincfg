@@ -149,10 +149,10 @@ in
           fgrep = "fgrep --color=auto";
           grep = "grep --color=auto";
 
-          # send_code sends the code to apollo
-          send_code = "${rsync}/bin/rsync -avuz --rsync-path=/usr/bin/rsync --delete --exclude=.snapshots/ --exclude=pkg/ --exclude=bin/ \"$CODE_PATH/\" apollo:/volume1/Code/active/";
-          # get_code gets code from apollo
-          get_code = "${rsync}/bin/rsync -avuz --rsync-path=/usr/bin/rsync --delete --exclude=.snapshots/ --exclude=pkg/ --exclude=bin/ apollo:/volume1/Code/active/ \"$CODE_PATH/\"";
+          # send_repositories sends the repositories to apollo
+          send_repositories = "${rsync}/bin/rsync -avuz --rsync-path=/usr/bin/rsync --delete --exclude=.snapshots/ --exclude=pkg/ --exclude=bin/ \"$CODE_PATH/repositories/\" apollo:/volume1/Code/repositories/";
+          # send_stories sends the stories to apollo
+          send_stories = "${rsync}/bin/rsync -avuz --rsync-path=/usr/bin/rsync --delete --exclude=.snapshots/ --exclude=pkg/ --exclude=bin/ \"$CODE_PATH/stories/\" apollo:/volume1/Code/stories/";
 
           # OS-Specific aliases
           # TODO: install this only on Mac
