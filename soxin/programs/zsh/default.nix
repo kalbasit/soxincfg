@@ -149,10 +149,10 @@ in
           fgrep = "fgrep --color=auto";
           grep = "grep --color=auto";
 
-          # send_code sends the code to redacted-host
-          send_code = "${rsync}/bin/rsync -avuz --rsync-path=/usr/bin/rsync --delete --exclude=.snapshots/ --exclude=pkg/ --exclude=bin/ \"$CODE_PATH/\" redacted-host:/volume1/Code/active/";
-          # get_code gets code from redacted-host
-          get_code = "${rsync}/bin/rsync -avuz --rsync-path=/usr/bin/rsync --delete --exclude=.snapshots/ --exclude=pkg/ --exclude=bin/ redacted-host:/volume1/Code/active/ \"$CODE_PATH/\"";
+          # send_repositories sends the repositories to redacted-host
+          send_repositories = "${rsync}/bin/rsync -avuz --rsync-path=/usr/bin/rsync --delete --exclude=.snapshots/ --exclude=pkg/ --exclude=bin/ \"$CODE_PATH/repositories/\" redacted-host:/volume1/Code/repositories/";
+          # send_stories sends the stories to redacted-host
+          send_stories = "${rsync}/bin/rsync -avuz --rsync-path=/usr/bin/rsync --delete --exclude=.snapshots/ --exclude=pkg/ --exclude=bin/ \"$CODE_PATH/stories/\" redacted-host:/volume1/Code/stories/";
 
           # OS-Specific aliases
           # TODO: install this only on Mac
