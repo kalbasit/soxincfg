@@ -333,7 +333,7 @@ mkMerge [
       # XXX: Failing to compile on Darwin
       gotop
 
-      jetbrains.idea-community
+      jetbrains.idea-ultimate
       jetbrains.goland
 
       slack
