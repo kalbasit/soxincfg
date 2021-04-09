@@ -21,6 +21,9 @@ in
   # load YL's home-manager configuration
   home-manager.users.yl = import ./home.nix { inherit soxincfg; };
 
+  # allow me to use serve_this on my main machine but only exposed to the main interface
+  networking.firewall.interfaces.ifcadmin.allowedTCPPorts = [ 6090 ];
+
   soxin.hardware.intelBacklight.enable = true;
 
   # The ADMIN interface
