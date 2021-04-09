@@ -13,6 +13,7 @@ in
     nixos-hardware.nixosModules.common-pc-ssd
 
     ./hardware-configuration.nix
+    ./win10.nix
   ];
 
   sops.secrets._etc_NetworkManager_system-connections_Nasreddine-VPN_nmconnection = { inherit sopsFile; path = "/etc/NetworkManager/system-connections/Nasreddine-VPN.nmconnection"; };
