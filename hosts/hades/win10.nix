@@ -5,7 +5,6 @@ let
     {
       after = [ "libvirtd.service" ];
       requires = [ "libvirtd.service" ];
-      wantedBy = [ "multi-user.target" ];
       serviceConfig = {
         Type = "oneshot";
         RemainAfterExit = "yes";
