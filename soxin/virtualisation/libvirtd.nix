@@ -1,4 +1,4 @@
-{ mode, config, lib, ... }:
+{ mode, config, lib, pkgs, ... }:
 
 with lib;
 let
@@ -25,6 +25,8 @@ in
       };
 
       soxin.users.groups = optional cfg.addAdminUsersToGroup "libvirtd";
+
+      environment.systemPackages = with pkgs; [ virt-manager spice-gtk ];
     })
   ]);
 }
