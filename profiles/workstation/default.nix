@@ -262,7 +262,13 @@ mkMerge [
       dnsutils # for dig
 
       dosbox
-      retroarch
+      (retroarch.override {
+        cores = with libretro; [
+          beetle-psx
+          beetle-psx-hw
+          beetle-snes
+        ];
+      })
 
       imagemagick # for convert
 
