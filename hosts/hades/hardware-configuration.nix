@@ -41,11 +41,11 @@ in
     useOSProber = true;
   };
 
-  boot.loader.systemd-boot.enable = mkDefault false;
+  boot.loader.systemd-boot.enable = false;
 
-  nix.maxJobs = mkDefault 12;
+  nix.maxJobs = 12;
 
-  powerManagement.cpuFreqGovernor = mkDefault "powersave";
+  powerManagement.cpuFreqGovernor = "powersave";
 
   services.xserver.videoDrivers = mkForce [ "modesetting" ];
 
