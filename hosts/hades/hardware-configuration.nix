@@ -38,6 +38,7 @@ in
     efiSupport = true;
     enable = true;
     enableCryptodisk = true;
+    useOSProber = true;
   };
 
   boot.loader.systemd-boot.enable = mkDefault false;
