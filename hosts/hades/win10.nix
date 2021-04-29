@@ -17,7 +17,7 @@ let
             src = ./win10.xml;
 
             name = vmName;
-            admin_source_dev = "ifcadmin";
+            admin_source_dev = "eno1";
             admin_mac_address = "ea:5e:04:11:a1:a3";
             wifi_source_dev = "wlp110s0";
             wifi_mac_address = "f6:ae:e7:2f:7c:93";
