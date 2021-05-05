@@ -26,5 +26,31 @@ in
 
   soxin.hardware.intelBacklight.enable = true;
 
+  services.synergy.server = {
+    address = "192.168.2.26";
+    autoStart = true;
+    enable = true;
+    screenName = "hades";
+    configFile = pkgs.writeText "synergy.conf" { } ''
+      section: screens
+          poseidon:
+          hades:
+      end
+
+      section: links
+          hades:
+              left = poseidon
+
+          poseidon:
+              right = hades
+      end
+
+      section: options
+          keystroke(control+super+right) = switchInDirection(right)
+          keystroke(control+super+left) = switchInDirection(left)
+      end
+    '';
+  };
+
   system.stateVersion = "20.09";
 }
