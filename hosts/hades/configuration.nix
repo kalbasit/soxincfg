@@ -31,7 +31,7 @@ in
     autoStart = true;
     enable = true;
     screenName = "hades";
-    configFile = pkgs.writeText "synergy.conf" { } ''
+    configFile = pkgs.writeText "synergy.conf" ''
       section: screens
           poseidon:
           hades:
