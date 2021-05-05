@@ -1,4 +1,4 @@
-{ config, soxincfg, nixos-hardware, ... }:
+{ config, soxincfg, nixos-hardware, pkgs, ... }:
 let
   sopsFile = ./secrets.sops.yaml;
 in
@@ -21,10 +21,41 @@ in
   # load YL's home-manager configuration
   home-manager.users.yl = import ./home.nix { inherit soxincfg; };
 
-  # allow me to use serve_this on my main machine but only exposed to the main interface
-  networking.firewall.interfaces.ifcadmin.allowedTCPPorts = [ 6090 ];
+  networking.firewall.allowedTCPPorts = [
+    # allow me to use serve_this on my main machine
+    6090
+
+    # allow synergy on port 24800
+    24800
+  ];
 
   soxin.hardware.intelBacklight.enable = true;
+
+  services.synergy.server = {
+    address = "192.168.2.26";
+    autoStart = true;
+    enable = true;
+    screenName = "hades";
+    configFile = pkgs.writeText "synergy.conf" ''
+      section: screens
+          poseidon:
+          hades:
+      end
+
+      section: links
+          hades:
+              left = poseidon
+
+          poseidon:
+              right = hades
+      end
+
+      section: options
+          keystroke(control+super+right) = switchInDirection(right)
+          keystroke(control+super+left) = switchInDirection(left)
+      end
+    '';
+  };
 
   system.stateVersion = "20.09";
 }
