@@ -21,8 +21,13 @@ in
   # load YL's home-manager configuration
   home-manager.users.yl = import ./home.nix { inherit soxincfg; };
 
-  # allow me to use serve_this on my main machine but only exposed to the main interface
-  networking.firewall.interfaces.ifcadmin.allowedTCPPorts = [ 6090 ];
+  networking.firewall.allowedTCPPorts = [
+    # allow me to use serve_this on my main machine
+    6090
+
+    # allow synergy on port 24800
+    24800
+  ];
 
   soxin.hardware.intelBacklight.enable = true;
 
