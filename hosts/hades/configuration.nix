@@ -1,4 +1,4 @@
-{ config, soxincfg, nixos-hardware, ... }:
+{ config, soxincfg, nixos-hardware, pkgs, ... }:
 let
   sopsFile = ./secrets.sops.yaml;
 in
