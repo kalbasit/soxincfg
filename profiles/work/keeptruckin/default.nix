@@ -7,7 +7,7 @@ with lib;
     {
       soxin.programs.rbrowser.browsers = {
         "chromium@keeptruckin" = home-manager.lib.hm.dag.entryBetween [ "brave@personal" ] [ "firefox@keeptruckin" ] { };
-       "firefox@keeptruckin"  = home-manager.lib.hm.dag.entryAfter [ "firefox@personal" ] { };
+        "firefox@keeptruckin" = home-manager.lib.hm.dag.entryAfter [ "firefox@personal" ] { };
       };
     }
 
@@ -33,7 +33,7 @@ with lib;
         sops.secrets._config_ktmr_ansible_vault_passwd = { inherit owner sopsFile; path = "${yl_home}/.config/ktmr/ansible-vault.passwd"; };
         sops.secrets._config_ktmr_config_nix = { inherit owner sopsFile; path = "${yl_home}/.config/ktmr/config.nix"; };
         sops.secrets._config_mark = { inherit owner sopsFile; path = "${yl_home}/.config/mark"; };
-        sops.secrets._etc_NetworkManager_system-connections_KeepTruckin-Lahore-PK-Office-VPN_nmconnection =  { inherit sopsFile; path = "/etc/NetworkManager/system-connections/KeepTruckin-Lahore-PK-Office-VPN.nmconnection"; };
+        sops.secrets._etc_NetworkManager_system-connections_KeepTruckin-Lahore-PK-Office-VPN_nmconnection = { inherit sopsFile; path = "/etc/NetworkManager/system-connections/KeepTruckin-Lahore-PK-Office-VPN.nmconnection"; };
         sops.secrets._etc_NetworkManager_system-connections_KeepTruckin-VPN_nmconnection = { inherit sopsFile; path = "/etc/NetworkManager/system-connections/KeepTruckin-VPN.nmconnection"; };
         sops.secrets._etc_NetworkManager_system-connections_KeepTruckin_nmconnection = { inherit sopsFile; path = "/etc/NetworkManager/system-connections/KeepTruckin.nmconnection"; };
         sops.secrets._local_share_remmina_keeptruckin_vnc_mac-devprod_remmina = { inherit owner sopsFile; path = "${yl_home}/.local/share/remmina/keeptruckin_vnc_mac-devprod.remmina"; };
