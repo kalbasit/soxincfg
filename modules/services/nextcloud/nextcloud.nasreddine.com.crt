@@ -1,0 +1,88 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number:
+            c8:8b:7e:49:b0:25:cd:ab:74:e9:7e:c9:0f:61:e2:8d
+        Signature Algorithm: sha256WithRSAEncryption
+        Issuer: CN=Nasreddine Network
+        Validity
+            Not Before: May 13 20:35:00 2021 GMT
+            Not After : May 11 20:35:00 2031 GMT
+        Subject: CN=nextcloud.nasreddine.com
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                RSA Public-Key: (2048 bit)
+                Modulus:
+                    00:af:ea:3a:7b:96:df:42:0a:d1:b1:3c:fb:21:c6:
+                    7e:ee:00:74:12:89:5b:d6:24:ce:ff:59:92:37:dd:
+                    45:d3:ca:e1:88:5a:fc:0f:49:e5:e9:64:04:31:59:
+                    51:cb:ec:c9:b7:1f:f7:c6:fb:1d:89:13:99:8c:b2:
+                    da:e3:ec:28:76:8c:41:62:ba:3a:35:7b:b4:af:de:
+                    3a:e8:dd:cb:39:27:23:03:b1:40:45:ac:cc:e0:07:
+                    26:5b:b8:51:2e:0a:60:e9:9e:01:b3:b8:a4:5a:27:
+                    b0:ac:9b:b5:d6:71:c5:60:f5:c9:4d:3c:97:9a:c9:
+                    a7:01:1d:7a:97:e0:35:fb:16:71:94:f1:06:da:36:
+                    8f:49:d4:9a:0f:9a:74:50:1a:56:fe:9c:90:99:44:
+                    5c:5c:4d:76:ad:11:11:16:a1:7b:88:91:17:f4:d9:
+                    7b:75:18:62:ae:70:0c:c4:cb:e3:60:53:37:6d:b3:
+                    25:d7:2f:2b:07:f8:29:a8:5c:54:8b:8f:da:eb:e5:
+                    39:e2:a6:e8:64:e9:da:5a:00:17:73:b3:6c:c9:eb:
+                    90:02:81:e6:f2:66:90:1d:e5:c0:51:79:5f:f1:b0:
+                    4a:42:77:98:2e:1f:c4:71:c5:18:73:62:12:37:2d:
+                    3a:7e:e7:fe:ba:59:ca:65:63:ee:ec:8e:0e:fb:39:
+                    db:ed
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Basic Constraints: 
+                CA:FALSE
+            X509v3 Subject Key Identifier: 
+                A9:B1:54:BB:C7:09:2D:29:64:50:9B:E4:0A:A6:57:EE:AD:27:3F:3B
+            X509v3 Authority Key Identifier: 
+                keyid:EA:DA:9B:A1:2F:35:B7:35:7E:81:46:03:EB:88:F4:85:41:0F:A5:AE
+                DirName:/CN=Nasreddine Network
+                serial:F2:E3:5F:7A:88:67:D7:C4
+
+            X509v3 Extended Key Usage: 
+                TLS Web Server Authentication
+            X509v3 Key Usage: 
+                Digital Signature, Key Encipherment
+            X509v3 Subject Alternative Name: 
+                DNS:nextcloud.nasreddine.com
+    Signature Algorithm: sha256WithRSAEncryption
+         26:31:6e:1c:b0:5b:91:61:2c:4f:0c:db:d2:86:1d:7c:5e:26:
+         24:ac:c7:42:38:77:e7:9a:1a:22:75:1d:02:6e:a5:af:34:fc:
+         8d:9d:25:02:e2:95:5b:a9:82:30:10:f1:4f:75:cf:c0:68:fa:
+         67:c9:8b:0a:8c:02:22:86:16:6f:0c:5c:e7:b3:a4:3b:ce:4b:
+         1d:1e:0b:3a:bf:4f:6e:19:d5:e3:f7:19:13:59:44:4d:bb:b9:
+         1d:71:a7:35:0a:71:e2:2f:81:86:26:6b:b0:ab:e4:9e:08:e6:
+         35:06:e9:ea:78:b5:18:ce:c4:68:76:5e:d0:18:73:ad:da:1e:
+         d2:fd:51:29:24:01:af:29:d3:88:96:a2:f6:a8:dc:17:f9:0f:
+         36:ed:16:98:dd:0a:1c:2f:93:6a:7b:87:33:f2:7d:fd:d8:d8:
+         8a:45:e3:33:5d:5d:99:1e:06:62:a7:cb:3b:44:2b:ad:e7:53:
+         f4:1d:c4:43:dc:95:21:f3:aa:ab:1b:b5:74:03:1c:81:87:34:
+         c3:29:f4:3e:c1:1c:69:42:d6:cf:b0:15:c7:df:02:46:65:b6:
+         05:1c:72:12:cb:39:cd:7e:e0:eb:3d:c0:43:a1:67:b9:c3:fe:
+         a4:4d:bf:8d:96:0f:d8:46:9a:a1:3f:38:5a:d5:3d:9a:eb:0f:
+         a3:c6:a1:b1
+-----BEGIN CERTIFICATE-----
+MIIDjzCCAnegAwIBAgIRAMiLfkmwJc2rdOl+yQ9h4o0wDQYJKoZIhvcNAQELBQAw
+HTEbMBkGA1UEAwwSTmFzcmVkZGluZSBOZXR3b3JrMB4XDTIxMDUxMzIwMzUwMFoX
+DTMxMDUxMTIwMzUwMFowIzEhMB8GA1UEAwwYbmV4dGNsb3VkLm5hc3JlZGRpbmUu
+Y29tMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAr+o6e5bfQgrRsTz7
+IcZ+7gB0Eolb1iTO/1mSN91F08rhiFr8D0nl6WQEMVlRy+zJtx/3xvsdiROZjLLa
+4+wodoxBYro6NXu0r9466N3LOScjA7FARazM4AcmW7hRLgpg6Z4Bs7ikWiewrJu1
+1nHFYPXJTTyXmsmnAR16l+A1+xZxlPEG2jaPSdSaD5p0UBpW/pyQmURcXE12rRER
+FqF7iJEX9Nl7dRhirnAMxMvjYFM3bbMl1y8rB/gpqFxUi4/a6+U54qboZOnaWgAX
+c7NsyeuQAoHm8maQHeXAUXlf8bBKQneYLh/EccUYc2ISNy06fuf+ulnKZWPu7I4O
++znb7QIDAQABo4HDMIHAMAkGA1UdEwQCMAAwHQYDVR0OBBYEFKmxVLvHCS0pZFCb
+5AqmV+6tJz87ME0GA1UdIwRGMESAFOram6EvNbc1foFGA+uI9IVBD6WuoSGkHzAd
+MRswGQYDVQQDDBJOYXNyZWRkaW5lIE5ldHdvcmuCCQDy4196iGfXxDATBgNVHSUE
+DDAKBggrBgEFBQcDATALBgNVHQ8EBAMCBaAwIwYDVR0RBBwwGoIYbmV4dGNsb3Vk
+Lm5hc3JlZGRpbmUuY29tMA0GCSqGSIb3DQEBCwUAA4IBAQAmMW4csFuRYSxPDNvS
+hh18XiYkrMdCOHfnmhoidR0CbqWvNPyNnSUC4pVbqYIwEPFPdc/AaPpnyYsKjAIi
+hhZvDFzns6Q7zksdHgs6v09uGdXj9xkTWURNu7kdcac1CnHiL4GGJmuwq+SeCOY1
+BunqeLUYzsRodl7QGHOt2h7S/VEpJAGvKdOIlqL2qNwX+Q827RaY3QocL5Nqe4cz
+8n392NiKReMzXV2ZHgZip8s7RCut51P0HcRD3JUh86qrG7V0AxyBhzTDKfQ+wRxp
+QtbPsBXH3wJGZbYFHHISyznNfuDrPcBDoWe5w/6kTb+Nlg/YRpqhPzha1T2a6w+j
+xqGx
+-----END CERTIFICATE-----

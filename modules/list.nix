@@ -14,6 +14,7 @@
   dnsmasq = ./services/dnsmasq;
   i3 = ./services/x11/window-managers/i3.nix;
   iscsid = ./services/iscsid.nix;
+  nextcloud = ./services/nextcloud;
 
   # settings
   nix = ./settings/nix;
