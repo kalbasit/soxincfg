@@ -44,7 +44,9 @@ in
         kore_hosts = [ "unifi.nasreddine.com" ];
 
         zeus_ip = "192.168.50.3";
-        zeus_hosts = [ ];
+        zeus_hosts = [
+          "nextcloud.nasreddine.com"
+        ];
       in
       builtins.concatStringsSep "\n"
         ((map (host: "address=/${host}/${apollo_ip}") apollo_hosts)
