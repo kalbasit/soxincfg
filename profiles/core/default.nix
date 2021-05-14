@@ -1,4 +1,5 @@
-{ config, pkgs, soxincfg, ... }:
+{ config, pkgs, soxincfg, mode, lib, ... }:
+with lib;
 let
   nasreddineCA = builtins.readFile (builtins.fetchurl {
     url = "https://s3-us-west-1.amazonaws.com/nasreddine-infra/ca.crt";
@@ -6,6 +7,8 @@ let
   });
 in
 {
+config = mkMerge [
+(optionalAttrs (mode == "NixOS") {
   nix = {
     package = pkgs.nixFlakes;
 
@@ -31,4 +34,6 @@ in
   # set the default locale and the timeZone
   i18n.defaultLocale = "en_US.UTF-8";
   time.timeZone = "America/Los_Angeles";
+})
+];
 }

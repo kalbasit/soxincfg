@@ -8,6 +8,10 @@
       url = "github:nix-community/home-manager/release-20.09";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    home-manager-master = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs-master";
+    };
     soxin = {
       url = "github:SoxinOS/soxin";
       inputs = {
@@ -22,7 +26,7 @@
     deploy-rs.url = "github:serokell/deploy-rs";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-master, soxin, futils, sops-nix, deploy-rs, ... } @ inputs:
+  outputs = { self, home-manager-master, nixpkgs, nixpkgs-master, soxin, futils, sops-nix, deploy-rs, ... } @ inputs:
     let
       inherit (nixpkgs) lib;
       inherit (nixpkgs.lib) recursiveUpdate;
@@ -89,6 +93,30 @@
             };
           };
 
+          # TODO: deliver this similarly to nixosConfigurations
+          homeConfigurations.penguin = home-manager-master.lib.homeManagerConfiguration {
+      system = "x86_64-linux";
+      homeDirectory = "/home/wael.nasreddine";
+      username = "wael.nasreddine";
+extraSpecialArgs = {
+    mode = "home-manager";
+    soxin = soxin;
+soxincfg = self;
+};
+extraModules = [
+self.nixosModules.profiles.core
+soxin.nixosModules.soxin
+] ++ (builtins.mapAttrs (_: moduleFile: import moduleFile) (import ../soxin/modules/list.nix));
+      configuration = { config, pkgs, ... }: {
+        home.stateVersion = "21.05";
+        programs.home-manager.enable = true;
+
+       imports = [
+(import ./hosts/penguin/home.nix {soxincfg = self;})
+];
+      };
+    };
+
           nixosConfigurations =
             let
               hostsForSystem = system:
@@ -127,6 +155,7 @@
             ];
 
             buildInputs = with pkgs; [
+	      (home-manager-master.packages.${system}.home-manager)
               awscli
               deploy-rs.packages.${system}.deploy-rs
               git
