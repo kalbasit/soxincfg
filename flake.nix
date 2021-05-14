@@ -106,7 +106,7 @@ soxincfg = self;
 extraModules = [
 self.nixosModules.profiles.core
 soxin.nixosModules.soxin
-];
+] ++ (builtins.mapAttrs (_: moduleFile: import moduleFile) (import ../soxin/modules/list.nix));
       configuration = { config, pkgs, ... }: {
         home.stateVersion = "21.05";
         programs.home-manager.enable = true;
