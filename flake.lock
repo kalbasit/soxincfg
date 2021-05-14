@@ -88,6 +88,26 @@
         "type": "github"
       }
     },
+    "home-manager-master": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-master"
+        ]
+      },
+      "locked": {
+        "lastModified": 1620692082,
+        "narHash": "sha256-s/eBXs4OI47yPWNTKoAg4f/H7wMLyO+VEMmobXkzfI8=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "23769994e8f7b212d9a257799173b120ed87736b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
     "naersk": {
       "inputs": {
         "nixpkgs": [
@@ -204,6 +224,7 @@
         "deploy-rs": "deploy-rs",
         "futils": "futils",
         "home-manager": "home-manager",
+        "home-manager-master": "home-manager-master",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-master": "nixpkgs-master",

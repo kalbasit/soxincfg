@@ -11,7 +11,8 @@
 , sops-nix
 , soxin
 , system
-}:
+, ...
+}@args:
 let
   config = path:
     let
