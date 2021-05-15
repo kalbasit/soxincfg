@@ -1,14 +1,12 @@
-# home-manager configuration for user `yl`
-{ soxincfg }:
-{ config, pkgs, home-manager, lib, ... }:
+{ config, pkgs, home-manager, lib, soxincfg, ... }:
 
 with lib;
 
 {
   imports = [
     soxincfg.nixosModules.profiles.myself
-    soxincfg.nixosModules.profiles.work.keeptruckin
-    soxincfg.nixosModules.profiles.workstation
+    # soxincfg.nixosModules.profiles.work.keeptruckin
+    # soxincfg.nixosModules.profiles.workstation
   ];
 
   # Make sure GnuPG is able to pick up the right card (Yubikey)
