@@ -2,7 +2,6 @@
   # settings
   fonts = ./settings/fonts.nix;
   gtk = ./settings/gtk.nix;
-  theme = ./settings/theme;
   users = ./settings/users.nix;
 
   # programs
@@ -15,7 +14,6 @@
   mosh = ./programs/mosh.nix;
   neovim = ./programs/neovim;
   pet = ./programs/pet.nix;
-  rofi = ./programs/rofi;
   ssh = ./programs/ssh.nix;
   starship = ./programs/starship.nix;
   termite = ./programs/termite.nix;
