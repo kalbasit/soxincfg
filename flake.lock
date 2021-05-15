@@ -261,7 +261,7 @@
         ]
       },
       "locked": {
-        "narHash": "sha256-+i8fxxbqQnAWYm8YxOnGV/szfeMApu+lZbJFNyiGQmg=",
+        "narHash": "sha256-gvlTNK09GFE6P5pstWYomH0FUuE5AiSB/z09WnDy/2U=",
         "path": "/yl/code/stories/personal/soxin/home-manager-standalone/github.com/SoxinOS/soxin",
         "type": "path"
       },
