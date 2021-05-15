@@ -6,6 +6,7 @@
   chromium = ./programs/chromium;
   dbeaver = ./programs/dbeaver;
   git = ./programs/git.nix;
+  neovim = ./programs/neovim;
   ssh = ./programs/ssh.nix;
   starship = ./programs/starship.nix;
   weechat = ./programs/weechat;

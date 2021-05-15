@@ -12,7 +12,6 @@
   keybase = ./programs/keybase.nix;
   less = ./programs/less.nix;
   mosh = ./programs/mosh.nix;
-  neovim = ./programs/neovim;
   pet = ./programs/pet.nix;
   ssh = ./programs/ssh.nix;
   starship = ./programs/starship.nix;
