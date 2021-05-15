@@ -99,9 +99,7 @@
             homeDirectory = "/home/yl";
             username = "yl";
             configuration = ./hosts/penguin/home.nix;
-            hmSpecialArgs = {
-              soxincfg = self;
-            };
+            hmSpecialArgs = { soxincfg = self; };
           };
 
           nixosConfigurations =
