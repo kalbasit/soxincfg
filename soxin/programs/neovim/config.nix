@@ -49,7 +49,6 @@ in
       {
         names =
           [
-            "Gist"
             "Gundo"
             "LanguageClient-neovim"
             "PreserveNoEOL"
@@ -83,6 +82,7 @@ in
             "vim-clang-format"
             "vim-eunuch"
             "vim-fugitive"
+            # "vim-gist"
             "vim-markdown"
             "vim-scala"
             "vim-signify"
