@@ -117,7 +117,7 @@ mkMerge [
       {
         environment.homeBinInPath = true;
 
-        services.gnome3.gnome-keyring.enable = true;
+        services.gnome.gnome-keyring.enable = true;
 
         # Enable TailScale for zero-config VPN service.
         services.tailscale.enable = true;
