@@ -29,20 +29,17 @@ in
       neovimConfig = mkOption {
         type = types.attrs;
         internal = true;
-        default = { };
+        readOnly = true;
+        default = (import ./config.nix {
+        inherit (cfg) extraRC extraKnownPlugins extraPluginDictionaries;
+        inherit config pkgs;
+      });
         description = "NeoVim configuration passed to pkgs.wrapNeovim.";
       };
     };
   };
 
   config = mkIf cfg.enable (mkMerge [
-    {
-      soxin.programs.neovim.neovimConfig = (import ./config.nix {
-        inherit (cfg) extraRC extraKnownPlugins extraPluginDictionaries;
-        inherit config pkgs;
-      });
-    }
-
     (optionalAttrs (mode == "NixOS") {
       environment.variables.EDITOR = "nvim";
 
