@@ -6,7 +6,7 @@ with lib;
   imports = [
     soxincfg.nixosModules.profiles.myself
     # soxincfg.nixosModules.profiles.work.keeptruckin
-    # soxincfg.nixosModules.profiles.workstation
+    soxincfg.nixosModules.profiles.workstation.chromeos.local
   ];
 
   # Make sure GnuPG is able to pick up the right card (Yubikey)
