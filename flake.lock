@@ -160,11 +160,11 @@
     },
     "nixpkgs-master": {
       "locked": {
-        "lastModified": 1621094675,
-        "narHash": "sha256-HLBp931z3FkrdnYZbkDSksjCJaCAyxdMiWMfFLg6KNo=",
+        "lastModified": 1621100619,
+        "narHash": "sha256-jw+O4enLwKZ4/1ORUpDpG8mhd4IIljc05cMhXhuATlI=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "5a6540c49c9deadfb2957a97ce9977d51636d82b",
+        "rev": "226863905b90485005621f6e730035b867dfe895",
         "type": "github"
       },
       "original": {
@@ -175,11 +175,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1621094675,
-        "narHash": "sha256-HLBp931z3FkrdnYZbkDSksjCJaCAyxdMiWMfFLg6KNo=",
+        "lastModified": 1621100619,
+        "narHash": "sha256-jw+O4enLwKZ4/1ORUpDpG8mhd4IIljc05cMhXhuATlI=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "5a6540c49c9deadfb2957a97ce9977d51636d82b",
+        "rev": "226863905b90485005621f6e730035b867dfe895",
         "type": "github"
       },
       "original": {
@@ -261,7 +261,7 @@
         ]
       },
       "locked": {
-        "narHash": "sha256-d9MpkBzv1whXZVgLVn4pKSZdDR/aY+CLPyVRdPbIVnM=",
+        "narHash": "sha256-3sVwTHSH7890RuotQCtzju3nw3CCm0xmLanu6GjYSVA=",
         "path": "/yl/code/stories/personal/soxin/home-manager-standalone/github.com/SoxinOS/soxin",
         "type": "path"
       },

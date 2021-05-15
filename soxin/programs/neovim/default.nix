@@ -4,6 +4,20 @@ with lib;
 let
   cfg = config.soxin.programs.neovim;
 
+  # TODO: This should be in Soxin, not that everything else shouldn't!
+  soxinConfigure = {
+    packages.soxin = {
+      start = filter (f: f != null) (map
+        (x: if x ? plugin && x.optional == true then null else (x.plugin or x))
+        cfg.theme.plugins);
+      opt = filter (f: f != null)
+        (map (x: if x ? plugin && x.optional == true then x.plugin else null)
+          cfg.theme.plugins);
+    };
+    customRC = cfg.extraConfig
+      + pkgs.lib.concatMapStrings pluginConfig cfg.plugins;
+  };
+
   extraRC =
     cfg.theme.extraRC
     + (import ./customrc.nix { inherit (pkgs) ag gocode xsel; inherit (lib) getBin; })
@@ -103,6 +117,36 @@ let
   # before vim-go and conflicts with it causing problems starting nvim.
   # See https://github.com/sheerun/vim-polyglot/issues/309
   opt = with pkgs.vimPlugins; [ polyglot ];
+
+
+  pluginWithConfigType = types.submodule {
+    options = {
+      config = mkOption {
+        type = types.lines;
+        description = "vimscript for this plugin to be placed in init.vim";
+        default = "";
+      };
+
+      optional = mkEnableOption "optional" // {
+        description = "Don't load by default (load with :packadd)";
+      };
+
+      plugin = mkOption {
+        type = types.package;
+        description = "vim plugin";
+      };
+    };
+  };
+
+  # A function to get the configuration string (if any) from an element of 'plugins'
+  pluginConfig = p:
+    if p ? plugin && (p.config or "") != "" then ''
+      " ${p.plugin.pname or p.plugin.name} {{{
+      ${p.config}
+      " }}}
+    '' else
+      "";
+
 in
 {
   options = {
@@ -111,6 +155,48 @@ in
       name = "neovim";
       includeKeyboardLayout = true;
       includeTheme = true;
+      extraOptions = {
+        extraConfig = mkOption {
+          type = types.lines;
+          default = "";
+          example = ''
+            set nocompatible
+            set nobackup
+          '';
+          description = ''
+            Custom vimrc lines.
+            </para><para>
+            This option is mutually exclusive with <varname>configure</varname>.
+          '';
+        };
+
+        extraPackages = mkOption {
+          type = with types; listOf package;
+          default = [ ];
+          example = "[ pkgs.shfmt ]";
+          description = "Extra packages available to nvim.";
+        };
+
+        plugins = mkOption {
+          type = with types; listOf (either package pluginWithConfigType);
+          default = [ ];
+          example = literalExample ''
+            with pkgs.vimPlugins; [
+              yankring
+              vim-nix
+              { plugin = vim-startify;
+                config = "let g:startify_change_to_vcs_root = 0";
+              }
+            ]
+          '';
+          description = ''
+            List of vim plugins to install optionally associated with
+            configuration to be placed in init.vim.
+            </para><para>
+            This option is mutually exclusive with <varname>configure</varname>.
+          '';
+        };
+      };
     };
   };
 
