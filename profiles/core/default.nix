@@ -7,33 +7,33 @@ let
   });
 in
 {
-config = mkMerge [
-(optionalAttrs (mode == "NixOS") {
-  nix = {
-    package = pkgs.nixFlakes;
+  config = mkMerge [
+    (optionalAttrs (mode == "NixOS") {
+      nix = {
+        package = pkgs.nixFlakes;
 
-    # enable the sandbox but only on Linux
-    useSandbox = pkgs.stdenv.hostPlatform.isLinux;
+        # enable the sandbox but only on Linux
+        useSandbox = pkgs.stdenv.hostPlatform.isLinux;
 
-    extraOptions = ''
-      experimental-features = nix-command flakes ca-references
-    '';
-  };
+        extraOptions = ''
+          experimental-features = nix-command flakes ca-references
+        '';
+      };
 
-  boot.tmpOnTmpfs = true;
+      boot.tmpOnTmpfs = true;
 
-  security.pki.certificates = [ nasreddineCA ];
+      security.pki.certificates = [ nasreddineCA ];
 
-  # Set the ssh authorized keys for the root user
-  users.users.root = {
-    inherit (soxincfg.vars.users.yl) hashedPassword;
+      # Set the ssh authorized keys for the root user
+      users.users.root = {
+        inherit (soxincfg.vars.users.yl) hashedPassword;
 
-    openssh.authorizedKeys.keys = soxincfg.vars.users.yl.sshKeys;
-  };
+        openssh.authorizedKeys.keys = soxincfg.vars.users.yl.sshKeys;
+      };
 
-  # set the default locale and the timeZone
-  i18n.defaultLocale = "en_US.UTF-8";
-  time.timeZone = "America/Los_Angeles";
-})
-];
+      # set the default locale and the timeZone
+      i18n.defaultLocale = "en_US.UTF-8";
+      time.timeZone = "America/Los_Angeles";
+    })
+  ];
 }

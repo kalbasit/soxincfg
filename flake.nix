@@ -140,7 +140,7 @@
             ];
 
             buildInputs = with pkgs; [
-	      (home-manager-master.packages.${system}.home-manager)
+              (home-manager-master.packages.${system}.home-manager)
               awscli
               deploy-rs.packages.${system}.deploy-rs
               git

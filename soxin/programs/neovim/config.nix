@@ -44,14 +44,11 @@ in
         extraRC
       ];
 
-    vam.knownPlugins = pkgs.vimPlugins // extraKnownPlugins;
+    # vam.knownPlugins = extraKnownPlugins;
     vam.pluginDictionaries = extraPluginDictionaries ++ [
       {
         names =
           [
-            "Gundo"
-            "LanguageClient-neovim"
-            "PreserveNoEOL"
             "ack-vim"
             "ale"
             "auto-pairs"
@@ -62,6 +59,9 @@ in
             "easymotion"
             "editorconfig-vim"
             "emmet-vim"
+            "LanguageClient-neovim"
+            "gundo-vim"
+            "PreserveNoEOL"
             "fzf-vim"
             "fzfWrapper"
             "goyo"
