@@ -6,7 +6,6 @@
 , viAlias ? true
 , vimAlias ? true
 , withNodeJs ? true
-, withPython ? true
 , withPython3 ? true
 , withRuby ? true
 }:
@@ -24,9 +23,8 @@ let
     else throw "I'm not sure what to do with the keyboard layout ${dl}";
 in
 {
-  inherit viAlias vimAlias withNodeJs withPython withPython3 withRuby;
+  inherit viAlias vimAlias withNodeJs withPython3 withRuby;
 
-  extraPythonPackages = ps: with ps; [ pynvim ];
   extraPython3Packages = ps: with ps; [ pynvim ];
 
   configure = {
