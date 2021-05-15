@@ -2,10 +2,10 @@
   description = "Soxin template flake";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/release-20.09";
+    nixpkgs.url = "nixpkgs/master";
     nixpkgs-master.url = "nixpkgs/master";
     home-manager = {
-      url = "github:nix-community/home-manager/release-20.09";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager-master = {
@@ -94,28 +94,15 @@
           };
 
           # TODO: deliver this similarly to nixosConfigurations
-          homeConfigurations.penguin = home-manager-master.lib.homeManagerConfiguration {
-      system = "x86_64-linux";
-      homeDirectory = "/home/wael.nasreddine";
-      username = "wael.nasreddine";
-extraSpecialArgs = {
-    mode = "home-manager";
-    soxin = soxin;
-soxincfg = self;
-};
-extraModules = [
-self.nixosModules.profiles.core
-soxin.nixosModules.soxin
-] ++ (builtins.mapAttrs (_: moduleFile: import moduleFile) (import ../soxin/modules/list.nix));
-      configuration = { config, pkgs, ... }: {
-        home.stateVersion = "21.05";
-        programs.home-manager.enable = true;
-
-       imports = [
-(import ./hosts/penguin/home.nix {soxincfg = self;})
-];
-      };
-    };
+          homeConfigurations.penguin = soxin.lib.homeManagerConfiguration {
+            system = "x86_64-linux";
+            homeDirectory = "/home/yl";
+            username = "yl";
+            configuration = ./hosts/penguin/home.nix;
+            hmSpecialArgs = {
+              soxincfg = self;
+            };
+          };
 
           nixosConfigurations =
             let
