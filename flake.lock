@@ -160,11 +160,11 @@
     },
     "nixpkgs-master": {
       "locked": {
-        "lastModified": 1621050643,
-        "narHash": "sha256-HGscch90dLlSJhhcyjIS/k5sp7QOffNnjrDMudj+ZjE=",
+        "lastModified": 1621094675,
+        "narHash": "sha256-HLBp931z3FkrdnYZbkDSksjCJaCAyxdMiWMfFLg6KNo=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "fc63be7ac8c33e4ef0e45b868e89a9181a1525e5",
+        "rev": "5a6540c49c9deadfb2957a97ce9977d51636d82b",
         "type": "github"
       },
       "original": {
@@ -175,11 +175,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1621050643,
-        "narHash": "sha256-HGscch90dLlSJhhcyjIS/k5sp7QOffNnjrDMudj+ZjE=",
+        "lastModified": 1621094675,
+        "narHash": "sha256-HLBp931z3FkrdnYZbkDSksjCJaCAyxdMiWMfFLg6KNo=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "fc63be7ac8c33e4ef0e45b868e89a9181a1525e5",
+        "rev": "5a6540c49c9deadfb2957a97ce9977d51636d82b",
         "type": "github"
       },
       "original": {
@@ -206,11 +206,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1621040067,
-        "narHash": "sha256-c8vvzLRJ5LCCJGezvQk55H8cK3/p89NCH6FXQw3Foz8=",
+        "lastModified": 1621085944,
+        "narHash": "sha256-E18G2Bi7Y2wGHCsRJZuXNXOzTdFx6oQIfVS0XX5jU+o=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "66e9bc5918674984ed499cd51697ced509ec38a8",
+        "rev": "d2d3e374a443c8e8d5cd67b0ba62acdd1ac79767",
         "type": "github"
       },
       "original": {
@@ -261,7 +261,7 @@
         ]
       },
       "locked": {
-        "narHash": "sha256-QI5znbRGTmMaZkON9KppRUCGUd6eXUpNM/+qdlZusV8=",
+        "narHash": "sha256-d9MpkBzv1whXZVgLVn4pKSZdDR/aY+CLPyVRdPbIVnM=",
         "path": "/yl/code/stories/personal/soxin/home-manager-standalone/github.com/SoxinOS/soxin",
         "type": "path"
       },

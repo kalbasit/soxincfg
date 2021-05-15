@@ -5,8 +5,8 @@ let
   cfg = config.soxin.programs.neovim;
 
   extraRC =
-    # cfg.theme.extraRC
-    "" + (import ./customrc.nix { inherit (pkgs) ag gocode xsel; inherit (lib) getBin; })
+    cfg.theme.extraRC
+    + (import ./customrc.nix { inherit (pkgs) ag gocode xsel; inherit (lib) getBin; })
     + (optionalString (cfg.keyboardLayout == "colemak") ''
       "" AutoPairs{{{
 
@@ -96,7 +96,7 @@ let
     yats-vim
     zoomwintab-vim
   ]
-  # ++ cfg.theme.plugins # load the colorscheme packages
+  ++ cfg.theme.plugins # load the colorscheme packages
   ++ (optionals (cfg.keyboardLayout == "colemak") [ vim-colemak ]);
 
   # NOTE: polyglot must be loaded manually because if it gets loaded
