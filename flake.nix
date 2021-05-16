@@ -2,8 +2,8 @@
   description = "Soxin template flake";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/master";
-    nixpkgs-master.url = "nixpkgs/master";
+    nixpkgs.url = "github:NixOS/nixpkgs/4a9b0f0eb450d7bef5db5c05c2086b24aaecf05c";
+    nixpkgs-master.url = "github:NixOS/nixpkgs/4a9b0f0eb450d7bef5db5c05c2086b24aaecf05c";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
