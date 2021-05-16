@@ -72,6 +72,7 @@ mkMerge [
             }
           ];
         };
+        theme = "gruvbox-dark";
       };
 
       # virtualisation = {
