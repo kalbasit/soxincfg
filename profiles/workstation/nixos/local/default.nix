@@ -36,7 +36,10 @@ mkMerge [
             "firefox@ihab" = home-manager.lib.hm.dag.entryAnywhere { };
           };
         };
-        rofi.enable = true;
+        rofi = {
+          enable = true;
+          i3.enable = true;
+        };
         termite.enable = true;
         tmux.enable = true;
         urxvt.enable = true;
