@@ -16,7 +16,7 @@ in
       extraConfig = builtins.concatStringsSep "\n" [
         (pkgs.callPackage ./customrc.nix { })
 
-        (optionalString (config.soxin.programs.neovim.keyboardLayout == "colemak") ''
+        (optionalString (true /*config.soxin.programs.neovim.keyboardLayout == "colemak"*/) ''
           "" AutoPairs{{{
 
           " disable shortcuts, <A-n> conflicts with Colemak movement
@@ -111,7 +111,7 @@ in
         # See https://github.com/sheerun/vim-polyglot/issues/309
         { plugin = polyglot; optional = true; }
       ]
-      ++ (optionals (config.soxin.programs.neovim.keyboardLayout == "colemak") [ vim-colemak ]);
+      ++ (optionals (true /*TODO: config.soxin.programs.neovim.keyboardLayout == "colemak"*/) [ vim-colemak ]);
     };
   };
 }
