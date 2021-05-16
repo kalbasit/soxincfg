@@ -9,7 +9,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     soxin = {
-      url = "github:SoxinOS/soxin";
+      url = "github:SoxinOS/soxin/personal/soxin/home-manager-standalone";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         home-manager.follows = "home-manager";
@@ -96,6 +96,7 @@
             username = "yl";
             configuration = ./hosts/penguin/home.nix;
             hmSpecialArgs = { soxincfg = self; };
+            modules = [ self.nixosModules.soxincfg ];
           };
 
           nixosConfigurations =
@@ -112,9 +113,10 @@
             //
             (hostsForSystem "aarch64-linux");
 
-          nixosModules = recursiveUpdate (import ./modules) {
+          nixosModules = {
             profiles = import ./profiles;
             soxin = import ./soxin/soxin.nix;
+            soxincfg = import ./modules/soxincfg.nix;
           };
 
           vars = import ./vars;
