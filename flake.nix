@@ -8,10 +8,6 @@
       url = "github:nix-community/home-manager/77188bcd6e2c6c7a99253b36f08ed7b65f2901d2";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    home-manager-master = {
-      url = "github:nix-community/home-manager/77188bcd6e2c6c7a99253b36f08ed7b65f2901d2";
-      inputs.nixpkgs.follows = "nixpkgs-master";
-    };
     soxin = {
       url = "github:SoxinOS/soxin";
       inputs = {
@@ -26,7 +22,7 @@
     deploy-rs.url = "github:serokell/deploy-rs";
   };
 
-  outputs = { self, home-manager-master, nixpkgs, nixpkgs-master, soxin, futils, sops-nix, deploy-rs, ... } @ inputs:
+  outputs = { self, home-manager, nixpkgs, nixpkgs-master, soxin, futils, sops-nix, deploy-rs, ... } @ inputs:
     let
       inherit (nixpkgs) lib;
       inherit (nixpkgs.lib) recursiveUpdate;
@@ -140,7 +136,7 @@
             ];
 
             buildInputs = with pkgs; [
-              (home-manager-master.packages.${system}.home-manager)
+              (home-manager.packages.${system}.home-manager)
               awscli
               deploy-rs.packages.${system}.deploy-rs
               git
