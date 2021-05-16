@@ -13,10 +13,10 @@ in
     soxin.programs.neovim = {
       inherit (cfg) enable;
 
-      extraConfig =
-        # (import ./customrc.nix { inherit (pkgs) ag gocode xsel; inherit (lib) getBin; })
+      extraConfig = builtins.concatStringsSep "\n" [
         (pkgs.callPackage ./customrc.nix { })
-        + (optionalString (config.soxin.programs.neovim.keyboardLayout == "colemak") ''
+
+        (optionalString (config.soxin.programs.neovim.keyboardLayout == "colemak") ''
           "" AutoPairs{{{
 
           " disable shortcuts, <A-n> conflicts with Colemak movement
@@ -57,7 +57,8 @@ in
           let g:no_ruby_maps = 1
 
           " }}}
-        '');
+        '')
+      ];
 
       plugins = with pkgs.vimPlugins; [
         vim-gist
