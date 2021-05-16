@@ -168,9 +168,10 @@
         "type": "github"
       },
       "original": {
-        "id": "nixpkgs",
-        "ref": "master",
-        "type": "indirect"
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "4a9b0f0eb450d7bef5db5c05c2086b24aaecf05c",
+        "type": "github"
       }
     },
     "nixpkgs_2": {
@@ -183,9 +184,10 @@
         "type": "github"
       },
       "original": {
-        "id": "nixpkgs",
-        "ref": "master",
-        "type": "indirect"
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "4a9b0f0eb450d7bef5db5c05c2086b24aaecf05c",
+        "type": "github"
       }
     },
     "nixpkgs_3": {
@@ -261,7 +263,7 @@
         ]
       },
       "locked": {
-        "narHash": "sha256-49M9hWkC6QbnS3KaCkG6G5oXKtAaDcrWDQoz50HdjUU=",
+        "narHash": "sha256-MzARcoo767GE4Zjce42R7CDLkMkF+8Ftaft8xAXdMrM=",
         "path": "/yl/code/stories/personal/soxin/home-manager-standalone/github.com/SoxinOS/soxin",
         "type": "path"
       },

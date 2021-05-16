@@ -205,7 +205,8 @@ in
           '';
 
         plugins = let inherit (pkgs) fetchFromGitHub; in
-          [
+          config.soxin.settings.theme.zsh.plugins
+          ++ [
             {
               name = "enhancd";
               file = "init.sh";
