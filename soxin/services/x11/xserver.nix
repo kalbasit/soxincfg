@@ -24,6 +24,7 @@ in
         ];
 
         libinput.enable = true;
+        libinput.mouse.naturalScrolling = true;
         libinput.touchpad.naturalScrolling = true;
 
         displayManager = {
