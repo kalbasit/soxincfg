@@ -22,7 +22,6 @@ mkMerge [
         };
         less.enable = true;
         mosh.enable = true;
-        neovim.enable = true;
         pet.enable = true;
         rbrowser = {
           enable = true;
@@ -95,6 +94,7 @@ mkMerge [
         chromium = { enable = true; surfingkeys.enable = true; };
         dbeaver.enable = true;
         git.enable = true;
+        neovim.enable = true;
         ssh.enable = true;
         starship.enable = true;
       };

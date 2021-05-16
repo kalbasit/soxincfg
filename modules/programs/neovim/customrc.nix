@@ -1,8 +1,10 @@
 { ag
-, getBin
 , gocode
+, lib
 , xsel
 }:
+
+with lib;
 
 ''
   "" Settings{{{
