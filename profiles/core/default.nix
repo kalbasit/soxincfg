@@ -8,6 +8,20 @@ let
 in
 {
   config = mkMerge [
+    {
+      soxin.settings = {
+        keyboard = {
+          layouts = [
+            {
+              x11 = { layout = "us"; variant = "colemak"; };
+              console = { keyMap = "colemak"; };
+            }
+          ];
+        };
+        theme = "gruvbox-dark";
+      };
+    }
+
     (optionalAttrs (mode == "NixOS") {
       nix = {
         package = pkgs.nixFlakes;

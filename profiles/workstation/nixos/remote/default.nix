@@ -24,14 +24,6 @@ mkMerge [
 
       services = { openssh.enable = true; };
 
-      settings = {
-        keyboard = {
-          layouts = [
-            { console = { keyMap = "colemak"; }; }
-          ];
-        };
-      };
-
       virtualisation = {
         docker.enable = true;
         libvirtd.enable = true;

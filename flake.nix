@@ -22,7 +22,16 @@
     deploy-rs.url = "github:serokell/deploy-rs";
   };
 
-  outputs = { self, home-manager, nixpkgs, nixpkgs-master, soxin, futils, sops-nix, deploy-rs, ... } @ inputs:
+  outputs = { self
+  , deploy-rs
+  , futils
+  , home-manager
+  , nixpkgs
+  , nixpkgs-master
+  , nur
+  , sops-nix
+  , soxin
+  , ... } @ inputs:
     let
       inherit (nixpkgs) lib;
       inherit (nixpkgs.lib) recursiveUpdate;
@@ -90,13 +99,21 @@
           };
 
           # TODO: deliver this similarly to nixosConfigurations
-          homeConfigurations.penguin = soxin.lib.homeManagerConfiguration {
+          homeConfigurations.penguin = soxin.lib.homeManagerConfiguration rec{
             system = "x86_64-linux";
             homeDirectory = "/home/yl";
             username = "yl";
             configuration = ./hosts/penguin/home.nix;
             hmSpecialArgs = { soxincfg = self; };
-            modules = builtins.attrValues self.nixosModules;
+            inherit (pkgset system) pkgs;
+            modules =
+              let
+                flakeModules = builtins.attrValues (removeAttrs self.nixosModules [ "profiles" ]);
+              in
+              lib.concat flakeModules [
+                self.nixosModules.profiles.core
+                { nixpkgs.overlays = [ nur.overlay soxin.overlay self.overlay self.overrides.${system} ]; }
+              ];
           };
 
           nixosConfigurations =

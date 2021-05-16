@@ -71,15 +71,6 @@ mkMerge [
       settings = {
         fonts.enable = true;
         gtk.enable = true;
-        keyboard = {
-          layouts = [
-            {
-              x11 = { layout = "us"; variant = "colemak"; };
-              console = { keyMap = "colemak"; };
-            }
-          ];
-        };
-        theme = "gruvbox-dark";
       };
 
       virtualisation = {

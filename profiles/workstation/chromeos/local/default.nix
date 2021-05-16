@@ -64,15 +64,6 @@ mkMerge [
       settings = {
         # fonts.enable = true;
         # gtk.enable = true;
-        keyboard = {
-          layouts = [
-            {
-              x11 = { layout = "us"; variant = "colemak"; };
-              console = { keyMap = "colemak"; };
-            }
-          ];
-        };
-        theme = "gruvbox-dark";
       };
 
       # virtualisation = {
@@ -272,9 +263,9 @@ mkMerge [
       # XXX: Failing to compile on Darwin
       gotop
 
-      jetbrains.idea-ultimate
-      jetbrains.goland
-      bazel
+      # jetbrains.idea-ultimate
+      # jetbrains.goland
+      # bazel
 
       slack
 
