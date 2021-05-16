@@ -5,11 +5,11 @@
     nixpkgs.url = "github:NixOS/nixpkgs/4a9b0f0eb450d7bef5db5c05c2086b24aaecf05c";
     nixpkgs-master.url = "github:NixOS/nixpkgs/4a9b0f0eb450d7bef5db5c05c2086b24aaecf05c";
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/77188bcd6e2c6c7a99253b36f08ed7b65f2901d2";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager-master = {
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/77188bcd6e2c6c7a99253b36f08ed7b65f2901d2";
       inputs.nixpkgs.follows = "nixpkgs-master";
     };
     soxin = {

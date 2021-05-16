@@ -84,6 +84,7 @@
       "original": {
         "owner": "nix-community",
         "repo": "home-manager",
+        "rev": "77188bcd6e2c6c7a99253b36f08ed7b65f2901d2",
         "type": "github"
       }
     },
@@ -104,6 +105,7 @@
       "original": {
         "owner": "nix-community",
         "repo": "home-manager",
+        "rev": "77188bcd6e2c6c7a99253b36f08ed7b65f2901d2",
         "type": "github"
       }
     },
