@@ -16,7 +16,6 @@ mkMerge [
         };
         less.enable = true;
         mosh.enable = true;
-        neovim.enable = true;
         pet.enable = true;
         ssh.enable = true;
         tmux.enable = true;
@@ -42,6 +41,7 @@ mkMerge [
     soxincfg = {
       programs = {
         git.enable = true;
+        neovim.enable = true;
         ssh.enable = true;
         starship.enable = true;
       };
