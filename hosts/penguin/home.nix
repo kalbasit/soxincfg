@@ -9,7 +9,7 @@ with lib;
     # soxincfg.nixosModules.profiles.workstation.chromeos.local
   ];
 
-  soxin.keyboard.layouts = [
+  soxin.settings.keyboard.layouts = [
     {
       x11 = { layout = "us"; variant = "colemak"; };
       console = { keyMap = "colemak"; };
