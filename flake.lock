@@ -189,11 +189,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1621135401,
-        "narHash": "sha256-d/zTVhmolLJ00gJUaju2D/r3rYmjX2A1FBEW8tIHZrM=",
+        "lastModified": 1621136794,
+        "narHash": "sha256-As7XIca/WucrwxYL7GQJ3VidVFQrHPzLEaLezDXHGBg=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "d2b052fd2dcb0fe4a6ee830e470d7c328fd68372",
+        "rev": "03aa4f0e1186a7dac8932e1a97bb0c0f29cca98f",
         "type": "github"
       },
       "original": {
@@ -243,7 +243,7 @@
         ]
       },
       "locked": {
-        "narHash": "sha256-dX6RsGHoxuTfU2yCrcDgjsArUwIMn204/JKfRKX0wmQ=",
+        "narHash": "sha256-pKxEQUnFsZrunwcdUMmWU0ChqpcpjUGTYp49+UTOoqQ=",
         "path": "/yl/code/stories/personal/soxin/home-manager-standalone/github.com/SoxinOS/soxin",
         "type": "path"
       },

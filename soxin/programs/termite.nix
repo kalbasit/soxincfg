@@ -13,10 +13,14 @@ in
 
   config = mkIf cfg.enable (mkMerge [
     (optionalAttrs (mode == "home-manager") {
-      programs.termite = {
-        enable = true;
-        font = "Source Code Pro for Powerline 9";
-      };
+      programs.termite = mkMerge [
+        config.soxin.settings.theme.termite.extraConfig
+
+        {
+          enable = true;
+          font = "Source Code Pro for Powerline 9";
+        }
+      ];
     })
   ]);
 }
