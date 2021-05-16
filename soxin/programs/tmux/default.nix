@@ -205,7 +205,8 @@ in
             # fuzzy client selection
             bind s split-window -p 20 -v ${pkgs.nur.repos.kalbasit.swm}/bin/swm --ignore-pattern ".Spotlight-V100|.Trashes|.fseventsd" tmux switch-client --kill-pane
           ''
-          + cfg.extraConfig;
+          + cfg.extraConfig
+          + config.soxin.theme.tmux.extraConfig;
         };
     };
 
