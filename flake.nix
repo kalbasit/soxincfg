@@ -96,7 +96,7 @@
             username = "yl";
             configuration = ./hosts/penguin/home.nix;
             hmSpecialArgs = { soxincfg = self; };
-            modules = [ self.nixosModules.soxincfg ];
+            modules = builtins.attrValues self.nixosModules;
           };
 
           nixosConfigurations =
