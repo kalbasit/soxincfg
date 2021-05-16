@@ -80,7 +80,7 @@ mkMerge [
         # brave.enable = true;
         # chromium = { enable = true; surfingkeys.enable = true; };
         dbeaver.enable = true;
-        git.enable = true;
+        git = { enable = true; enableGpgSigningKey = false; };
         neovim.enable = true;
         ssh.enable = true;
         starship.enable = true;
