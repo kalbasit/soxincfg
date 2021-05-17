@@ -9,6 +9,7 @@
   neovim = ./programs/neovim;
   ssh = ./programs/ssh.nix;
   starship = ./programs/starship.nix;
+  tmux = ./programs/tmux;
   weechat = ./programs/weechat;
 
   # services

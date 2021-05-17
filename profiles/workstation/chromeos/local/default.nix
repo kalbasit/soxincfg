@@ -34,7 +34,6 @@ mkMerge [
         # };
         # rofi.enable = true;
         # termite.enable = true;
-        tmux.enable = true;
         # urxvt.enable = true;
         zsh.enable = true;
       };
@@ -84,6 +83,7 @@ mkMerge [
         neovim.enable = true;
         ssh.enable = true;
         starship.enable = true;
+        tmux.enable = true;
       };
 
       # services = {

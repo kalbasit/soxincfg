@@ -22,16 +22,18 @@
     deploy-rs.url = "github:serokell/deploy-rs";
   };
 
-  outputs = { self
-  , deploy-rs
-  , futils
-  , home-manager
-  , nixpkgs
-  , nixpkgs-master
-  , nur
-  , sops-nix
-  , soxin
-  , ... } @ inputs:
+  outputs =
+    { self
+    , deploy-rs
+    , futils
+    , home-manager
+    , nixpkgs
+    , nixpkgs-master
+    , nur
+    , sops-nix
+    , soxin
+    , ...
+    } @ inputs:
     let
       inherit (nixpkgs) lib;
       inherit (nixpkgs.lib) recursiveUpdate;
