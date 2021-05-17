@@ -94,69 +94,64 @@ in
       soxin.programs.tmux = {
         inherit (cfg) enable;
 
-        extraConfig = ''
-          ${tmuxVimAwarness}
+        extraConfig =
+          tmuxVimAwarness
+          + ''
+            #
+            # Settings
+            #
 
-          #
-          # Settings
-          #
+            # don't allow the terminal to rename windows
+            set-window-option -g allow-rename off
 
-          # don't allow the terminal to rename windows
-          set-window-option -g allow-rename off
+            # show the current command in the border of the pane
+            set -g pane-border-status "top"
+            set -g pane-border-format "#P: #{pane_current_command}"
 
-          # show the current command in the border of the pane
-          set -g pane-border-status "top"
-          set -g pane-border-format "#P: #{pane_current_command}"
+            # Terminal emulator window title
+            set -g set-titles on
+            set -g set-titles-string '#S:#I.#P #W'
 
-          # Terminal emulator window title
-          set -g set-titles on
-          set -g set-titles-string '#S:#I.#P #W'
+            # Status Bar
+            set-option -g status on
 
-          # Status Bar
-          set-option -g status on
+            # Notifying if other windows has activities
+            #setw -g monitor-activity off
+            set -g visual-activity on
 
-          # Notifying if other windows has activities
-          #setw -g monitor-activity off
-          set -g visual-activity on
+            # Trigger the bell for any action
+            set-option -g bell-action any
+            set-option -g visual-bell off
 
-          # Trigger the bell for any action
-          set-option -g bell-action any
-          set-option -g visual-bell off
+            # No Mouse!
+            set -g mouse off
 
-          # No Mouse!
-          set -g mouse off
+            # Do not update the environment, keep everything from what it was started with except for my ZSH_PROFILE
+            set -g update-environment "ZSH_PROFILE"
 
-          # Do not update the environment, keep everything from what it was started with except for my ZSH_PROFILE
-          set -g update-environment "ZSH_PROFILE"
+            # Last active window
+            bind C-t last-window
+            bind C-r switch-client -l
+            # bind C-n next-window
+            bind C-n switch-client -p
+            bind C-o switch-client -n
+          ''
+          + copyPaste
+          + optionalString (keyboardLayout == "colemak") colemakBindings
+          + optionalString pkgs.stdenv.isLinux ''
+            set  -g default-terminal "tmux-256color"
 
-          # Last active window
-          bind C-t last-window
-          bind C-r switch-client -l
-          # bind C-n next-window
-          bind C-n switch-client -p
-          bind C-o switch-client -n
+            # fuzzy client selection
+            bind s split-window -p 20 -v ${pkgs.nur.repos.kalbasit.swm}/bin/swm tmux switch-client --kill-pane
+          ''
+          + optionalString pkgs.stdenv.isDarwin ''
+            set  -g default-terminal "xterm-256color"
 
-          ${copyPaste}
-        ''
-        + optionalString (keyboardLayout == "colemak") colemakBindings
-        + optionalString pkgs.stdenv.isLinux ''
-          set  -g default-terminal "tmux-256color"
+            # fuzzy client selection
+            bind s split-window -p 20 -v ${pkgs.nur.repos.kalbasit.swm}/bin/swm --ignore-pattern ".Spotlight-V100|.Trashes|.fseventsd" tmux switch-client --kill-pane
+          '';
 
-          # fuzzy client selection
-          bind s split-window -p 20 -v ${pkgs.nur.repos.kalbasit.swm}/bin/swm tmux switch-client --kill-pane
-        ''
-        + optionalString pkgs.stdenv.isDarwin ''
-          set  -g default-terminal "xterm-256color"
-
-          # fuzzy client selection
-          bind s split-window -p 20 -v ${pkgs.nur.repos.kalbasit.swm}/bin/swm --ignore-pattern ".Spotlight-V100|.Trashes|.fseventsd" tmux switch-client --kill-pane
-        '';
-
-        plugins = with pkgs.tmuxPlugins; [
-          logging
-          prefix-highlight
-          fzf-tmux-url
-        ];
+        plugins = with pkgs.tmuxPlugins; [ logging prefix-highlight fzf-tmux-url ];
       };
     }
 
