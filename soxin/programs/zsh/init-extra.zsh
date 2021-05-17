@@ -159,6 +159,13 @@ fi
 # exports
 #####################################################################
 
+# setup nix
+if [[ -f /etc/profile.d/nix.sh ]]; then
+	# This file is idempotent so no need to check if Nix is already loaded
+	# before sourcing it.
+	source /etc/profile.d/nix.sh
+fi
+
 # setup fzf
 if [[ -o interactive ]]; then
 	export ENHANCD_FILTER=@fzf_bin@
