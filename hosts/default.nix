@@ -13,77 +13,71 @@
 , system
 , ...
 }@args:
+with lib;
 let
   config = path:
     let
       # This allows you to have sub-folders to order cnofigurations inside the
       # hosts folder.
-      hostName = lib.lists.last (lib.splitString "/" path);
+      hostName = lists.last (splitString "/" path);
+
+      flakeModules = builtins.attrValues (removeAttrs self.nixosModules [ "profiles" ]);
     in
     soxin.lib.nixosSystem {
       inherit system;
 
-      specialArgs = {
+      globalSpecialArgs = {
         inherit nixos-hardware;
         inherit (pkgset) pkgs-master;
         soxincfg = self;
       };
 
-      modules =
-        let
-          inherit (self.nixosModules.profiles) core;
+      globalModules =
+        flakeModules
+        ++ singleton self.nixosModules.profiles.core;
 
-          global = {
-            networking.hostName = hostName;
-            nix.nixPath =
-              let
-                path = toString ../.;
-              in
-              [
-                "nixpkgs=${nixpkgs}"
-                "nixpkgs-master=${nixpkgs-master}"
+      nixosModules = [
+        # host-specific NixOS configuration
+        { networking.hostName = hostName; }
 
-                # TODO: overlays are not working. Marc will propose a different approach.
-                # "nixpkgs-overlays=${path}/overlays"
-              ];
+        # include sops module
+        sops-nix.nixosModules.sops
 
-            nixpkgs = { inherit (pkgset) pkgs; };
+        # include the local configuration for the host
+        (import "${toString ./.}/${path}/configuration.nix")
 
-            nix.registry = {
-              nixpkgs.flake = nixpkgs;
-              nixpkgs-master.flake = nixpkgs-master;
-              soxincfg.flake = self;
-            };
+        # setup Nix
+        {
+          nix.nixPath =
+            let
+              path = toString ../.;
+            in
+            [
+              "nixpkgs=${nixpkgs}"
+              "nixpkgs-master=${nixpkgs-master}"
 
-            system.configurationRevision = lib.mkIf (self ? rev) self.rev;
+              # TODO: overlays are not working. Marc will propose a different approach.
+              # "nixpkgs-overlays=${path}/overlays"
+            ];
+
+          nixpkgs = {
+            inherit (pkgset) pkgs;
+            overlays = [ nur.overlay soxin.overlay self.overlay self.overrides.${system} ];
           };
 
-          local = import "${toString ./.}/${path}/configuration.nix";
+          nix.registry = {
+            nixpkgs.flake = nixpkgs;
+            nixpkgs-master.flake = nixpkgs-master;
+            soxincfg.flake = self;
+          };
 
-          flakeModules = builtins.attrValues (removeAttrs self.nixosModules [ "profiles" ]);
-
-        in
-        lib.concat flakeModules [
-          core
-          global
-          local
-
-          { nixpkgs.overlays = [ nur.overlay soxin.overlay self.overlay self.overrides.${system} ]; }
-
-          sops-nix.nixosModules.sops
-
-          # This allows us to use our flake modules in NixOS and home-manager
-          # configurations.
-          {
-            options.home-manager.users = lib.mkOption {
-              type = lib.types.attrsOf (lib.types.submoduleWith { modules = flakeModules; });
-            };
-          }
-        ];
+          system.configurationRevision = mkIf (self ? rev) self.rev;
+        }
+      ];
     };
 in
 if system == "x86_64-linux" then
-  lib.genAttrs [ "achilles" "hades" "zeus" "x86-64-linux-0" ] config
+  genAttrs [ "achilles" "hades" "zeus" "x86-64-linux-0" ] config
 else if system == "aarch64-linux" then
-  lib.genAttrs [ "aarch64-linux-0" "kore" ] config
+  genAttrs [ "aarch64-linux-0" "kore" ] config
 else builtins.trace "I don't have any hosts buildable for the system ${system}" [ ]
