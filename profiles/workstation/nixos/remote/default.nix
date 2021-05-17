@@ -18,7 +18,6 @@ mkMerge [
         mosh.enable = true;
         pet.enable = true;
         ssh.enable = true;
-        zsh.enable = true;
       };
 
       services = { openssh.enable = true; };
@@ -36,6 +35,7 @@ mkMerge [
         ssh.enable = true;
         starship.enable = true;
         tmux.enable = true;
+        zsh.enable = true;
       };
 
       settings = {

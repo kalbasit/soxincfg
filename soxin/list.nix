@@ -15,9 +15,7 @@
   pet = ./programs/pet.nix;
   ssh = ./programs/ssh.nix;
   starship = ./programs/starship.nix;
-  termite = ./programs/termite.nix;
   urxvt = ./programs/urxvt.nix;
-  zsh = ./programs/zsh;
 
   # hardware
   fwupd = ./hardware/fwupd.nix;
