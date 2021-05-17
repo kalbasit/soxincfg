@@ -4,7 +4,7 @@ with lib;
 let
   cfg = config.soxincfg.programs.tmux;
 
-  inherit (config.soxin.settings) keyboardLayout;
+  keyboardLayout = config.soxin.settings.keyboard.defaultLayout.console.keyMap;
 
   tmuxVimAwarness = ''
     # Smart pane switching with awareness of Vim splits.

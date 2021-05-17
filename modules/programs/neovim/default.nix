@@ -3,6 +3,8 @@
 with lib;
 let
   cfg = config.soxincfg.programs.neovim;
+
+  keyboardLayout = config.soxin.settings.keyboard.defaultLayout.console.keyMap;
 in
 {
   options.soxincfg.programs.neovim = {
@@ -16,7 +18,7 @@ in
       extraConfig = builtins.concatStringsSep "\n" [
         (pkgs.callPackage ./customrc.nix { })
 
-        (optionalString (true /*config.soxin.programs.neovim.keyboardLayout == "colemak"*/) ''
+        (optionalString (keyboardLayout == "colemak") ''
           "" AutoPairs{{{
 
           " disable shortcuts, <A-n> conflicts with Colemak movement
@@ -111,7 +113,7 @@ in
         # See https://github.com/sheerun/vim-polyglot/issues/309
         { plugin = polyglot; optional = true; }
       ]
-      ++ (optionals (true /*TODO: config.soxin.programs.neovim.keyboardLayout == "colemak"*/) [ vim-colemak ]);
+      ++ (optionals (keyboardLayout == "colemak") [ vim-colemak ]);
     };
   };
 }
