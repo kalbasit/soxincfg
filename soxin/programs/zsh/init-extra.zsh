@@ -166,6 +166,13 @@ if [[ -f /etc/profile.d/nix.sh ]]; then
 	source /etc/profile.d/nix.sh
 fi
 
+# are we running on ChromeOS
+if grep -q '^ID=debian$' /etc/os-release; then
+	# workaround an issue preventing mount of /proc in user namespace
+	# XXX: https://discourse.nixos.org/t/chrome-os-83-breaks-nix-sandboxing/6764/4
+	sudo umount /proc/{cpuinfo,diskstats,meminfo,stat,uptime} &> /dev/null || true
+fi
+
 # setup fzf
 if [[ -o interactive ]]; then
 	export ENHANCD_FILTER=@fzf_bin@
