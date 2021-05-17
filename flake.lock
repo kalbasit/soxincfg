@@ -243,9 +243,12 @@
         ]
       },
       "locked": {
-        "narHash": "sha256-7HR445MPiX8x3OYLaR5kVlmmFF7gDeY6Rh5XiToR47M=",
-        "path": "/yl/code/stories/personal/soxin/home-manager-standalone/github.com/SoxinOS/soxin",
-        "type": "path"
+        "lastModified": 1621286891,
+        "narHash": "sha256-4NKWn2WQirldNmwPZZMsTYp0dzFM/hZOudqbArq0Tsg=",
+        "owner": "SoxinOS",
+        "repo": "soxin",
+        "rev": "97cd05365be7cd2d8e051315b95ce5400402b75d",
+        "type": "github"
       },
       "original": {
         "owner": "SoxinOS",
