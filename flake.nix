@@ -157,7 +157,6 @@
               awscli
               deploy-rs.packages.${system}.deploy-rs
               git
-              gnumake
               nixpkgs-fmt
               pre-commit
               sops
