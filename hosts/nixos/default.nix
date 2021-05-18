@@ -1,7 +1,4 @@
-{ deploy-rs
-, futils
-, home-manager
-, lib
+{ lib
 , nixos-hardware
 , nixpkgs
 , nixpkgs-master

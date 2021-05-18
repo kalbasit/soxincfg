@@ -1,14 +1,7 @@
-{ deploy-rs
-, futils
-, home-manager
-, lib
-, nixos-hardware
-, nixpkgs
-, nixpkgs-master
+{ lib
 , nur
 , pkgset
 , self
-, sops-nix
 , soxin
 , system
 , ...
