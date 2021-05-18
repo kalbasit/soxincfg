@@ -160,13 +160,14 @@ mkMerge [
     home.file = {
       ".config/greenclip.cfg".text = ''
         Config {
-         maxHistoryLength = 250,
-         historyPath = "~/.cache/greenclip.history",
-         staticHistoryPath = "~/.cache/greenclip.staticHistory",
-         imageCachePath = "/tmp/",
+         maxHistoryLength = 1000,
+         historyPath = "~/.local/share/greenclip/history",
+         staticHistoryPath = "~/.local/share/greenclip/staticHistory",
+         imageCachePath = "~/.local/share/greenclip/images/",
          usePrimarySelectionAsInput = False,
          blacklistedApps = [],
-         trimSpaceFromSelection = True
+         trimSpaceFromSelection = True,
+         enableImageSupport = True
         }
       '';
 
