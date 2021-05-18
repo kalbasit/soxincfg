@@ -15,6 +15,11 @@
 }@args:
 with lib;
 let
+  buildHosts = hostPaths:
+    builtins.builtins.listToAttrs (
+      map (path: nameValuePair (lists.last (splitString "/" path)) (nixosSystem path)) hostPaths
+    );
+
   nixosSystem = path:
     let
       # This allows you to have sub-folders to order cnofigurations inside the
@@ -77,7 +82,7 @@ let
     };
 in
 if system == "x86_64-linux" then
-  import ./x86-64 { inherit lib nixosSystem; }
+  import ./x86-64 { inherit buildHosts; }
 else if system == "aarch64-linux" then
-  import ./aarch64-linux { inherit lib nixosSystem; }
+  import ./aarch64-linux { inherit buildHosts; }
 else builtins.trace "I don't have any hosts buildable for the system ${system}" [ ]

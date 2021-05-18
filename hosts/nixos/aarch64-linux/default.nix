@@ -1,8 +1,6 @@
-{ lib, nixosSystem }:
+{ buildHosts }:
 
-with lib;
-
-genAttrs [
-  ./aarch64-linux-0
-  ./kore
-] nixosSystem
+buildHosts [
+  (builtins.toString ./aarch64-linux-0)
+  (builtins.toString ./kore)
+]

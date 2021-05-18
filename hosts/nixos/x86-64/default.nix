@@ -1,10 +1,8 @@
-{ lib, nixosSystem }:
+{ buildHosts }:
 
-with lib;
-
-genAttrs [
-  ./achilles
-  ./hades
-  ./x86-64-linux-0
-  ./zeus
-] nixosSystem
+buildHosts [
+  (builtins.toString ./achilles)
+  (builtins.toString ./hades)
+  (builtins.toString ./x86-64-linux-0)
+  (builtins.toString ./zeus)
+]
