@@ -29,7 +29,7 @@ let
       username = "yl";
       configuration = path + "/home.nix";
       hmSpecialArgs = { soxincfg = self; };
-      modules =
+      hmModules =
         let
           flakeModules = builtins.attrValues (removeAttrs self.nixosModules [ "profiles" ]);
         in
