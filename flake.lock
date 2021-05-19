@@ -243,16 +243,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1621443455,
+        "lastModified": 1621444078,
         "narHash": "sha256-G+Y4ZcNGHpAw29HN7n5TnDVs/kiLj8zHW1ZY9iZcWCg=",
         "owner": "SoxinOS",
         "repo": "soxin",
-        "rev": "017d4f779e00e82fc8124c273c6e886c146530df",
+        "rev": "3f1ff7a006b4c2f1cc326ac1ea62f75cf16c3b95",
         "type": "github"
       },
       "original": {
         "owner": "SoxinOS",
-        "ref": "add-home-manager-support",
         "repo": "soxin",
         "type": "github"
       }
