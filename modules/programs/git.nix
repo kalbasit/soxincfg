@@ -7,6 +7,10 @@ in
 {
   options.soxincfg.programs.git = {
     enable = mkEnableOption "programs.git";
+
+    enableGpgSigningKey = recursiveUpdate
+      (mkEnableOption "enable gpg signing")
+      { default = cfg.enable; };
   };
 
   config = mkIf cfg.enable (mkMerge [
@@ -15,9 +19,14 @@ in
         enable = true;
         userName = "Wael M. Nasreddine";
         userEmail = "wael.nasreddine@gmail.com";
-        gpgSigningKey = "me@yl.codes";
       };
     }
+
+    (mkIf cfg.enableGpgSigningKey {
+      soxin.programs.git = {
+        gpgSigningKey = "me@yl.codes";
+      };
+    })
 
     (optionalAttrs (mode == "home-manager") {
       home.packages = with pkgs; [
@@ -114,7 +123,7 @@ in
           prompt = true;
         };
 
-        "mergetool \"vimdiff\"" = optionalAttrs config.soxin.programs.neovim.enable {
+        "mergetool \"vimdiff\"" = optionalAttrs config.soxincfg.programs.neovim.enable {
           cmd = "nvim -d $LOCAL $REMOTE $MERGED -c '$wincmd w' -c 'wincmd J'";
         };
 

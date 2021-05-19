@@ -2,10 +2,10 @@
   description = "Soxin template flake";
 
   inputs = {
-    nixpkgs.url = "nixpkgs/release-20.09";
-    nixpkgs-master.url = "nixpkgs/master";
+    nixpkgs.url = "github:NixOS/nixpkgs/4a9b0f0eb450d7bef5db5c05c2086b24aaecf05c";
+    nixpkgs-master.url = "github:NixOS/nixpkgs/4a9b0f0eb450d7bef5db5c05c2086b24aaecf05c";
     home-manager = {
-      url = "github:nix-community/home-manager/release-20.09";
+      url = "github:nix-community/home-manager/77188bcd6e2c6c7a99253b36f08ed7b65f2901d2";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     soxin = {
@@ -22,7 +22,18 @@
     deploy-rs.url = "github:serokell/deploy-rs";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-master, soxin, futils, sops-nix, deploy-rs, ... } @ inputs:
+  outputs =
+    { self
+    , deploy-rs
+    , futils
+    , home-manager
+    , nixpkgs
+    , nixpkgs-master
+    , nur
+    , sops-nix
+    , soxin
+    , ...
+    } @ inputs:
     let
       inherit (nixpkgs) lib;
       inherit (nixpkgs.lib) recursiveUpdate;
@@ -89,6 +100,24 @@
             };
           };
 
+          # TODO: deliver this similarly to nixosConfigurations
+          homeConfigurations.penguin = soxin.lib.homeManagerConfiguration rec{
+            system = "x86_64-linux";
+            homeDirectory = "/home/yl";
+            username = "yl";
+            configuration = ./hosts/penguin/home.nix;
+            hmSpecialArgs = { soxincfg = self; };
+            inherit (pkgset system) pkgs;
+            modules =
+              let
+                flakeModules = builtins.attrValues (removeAttrs self.nixosModules [ "profiles" ]);
+              in
+              lib.concat flakeModules [
+                self.nixosModules.profiles.core
+                { nixpkgs.overlays = [ nur.overlay soxin.overlay self.overlay self.overrides.${system} ]; }
+              ];
+          };
+
           nixosConfigurations =
             let
               hostsForSystem = system:
@@ -103,9 +132,10 @@
             //
             (hostsForSystem "aarch64-linux");
 
-          nixosModules = recursiveUpdate (import ./modules) {
+          nixosModules = {
             profiles = import ./profiles;
             soxin = import ./soxin/soxin.nix;
+            soxincfg = import ./modules/soxincfg.nix;
           };
 
           vars = import ./vars;
@@ -127,6 +157,7 @@
             ];
 
             buildInputs = with pkgs; [
+              (home-manager.packages.${system}.home-manager)
               awscli
               deploy-rs.packages.${system}.deploy-rs
               git

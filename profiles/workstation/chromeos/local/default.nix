@@ -1,97 +1,100 @@
-{ config, lib, mode, pkgs, ... }:
+{ config, home-manager, lib, mode, pkgs, ... }:
 
 with lib;
 
 mkMerge [
   {
     soxin = {
-      hardware = { fwupd.enable = true; };
+      hardware = {
+        # yubikey.enable = true;
+      };
 
       programs = {
         fzf.enable = true;
         htop.enable = true;
-        keybase = {
-          enable = true;
-          enableFs = true;
-        };
+        # keybase = {
+        #   enable = true;
+        #   enableFs = true;
+        # };
         less.enable = true;
         mosh.enable = true;
-        neovim.enable = true;
         pet.enable = true;
-        ssh.enable = true;
-        tmux.enable = true;
-        zsh.enable = true;
+        # rbrowser = {
+        #   enable = true;
+        #   setMimeList = true;
+        #   browsers = {
+        #     "firefox@personal" = home-manager.lib.hm.dag.entryBefore [ "brave@personal" ] { };
+        #     "brave@personal" = home-manager.lib.hm.dag.entryBefore [ "firefox@private" ] { };
+        #     "firefox@private" = home-manager.lib.hm.dag.entryBefore [ "firefox@anya" ] { };
+        #     "firefox@anya" = home-manager.lib.hm.dag.entryBefore [ "firefox@vanya" ] { };
+        #     "firefox@vanya" = home-manager.lib.hm.dag.entryBefore [ "firefox@tanya" ] { };
+        #     "firefox@tanya" = home-manager.lib.hm.dag.entryBefore [ "firefox@ihab" ] { };
+        #     "firefox@ihab" = home-manager.lib.hm.dag.entryAnywhere { };
+        #   };
+        # };
+        # rofi.enable = true;
+        # urxvt.enable = true;
       };
 
-      services = { openssh.enable = true; };
+      services = {
+        # caffeine.enable = true;
+        # dunst.enable = true;
+        # gpgAgent.enable = true;
+        # locker = {
+        #   enable = true;
+        #   color = "ffa500";
+        #   extraArgs = [
+        #     "--clock"
+        #     "--show-failed-attempts"
+        #     "--datestr='%A %Y-%m-%d'"
+        #   ];
+        # };
+        # networkmanager.enable = true;
+        # openssh.enable = true;
+        # printing = {
+        #   enable = true;
+        #   brands = [ "epson" ];
+        # };
+        # xserver.enable = true;
+      };
 
       settings = {
-        keyboard = {
-          layouts = [
-            { console = { keyMap = "colemak"; }; }
-          ];
-        };
+        # fonts.enable = true;
+        # gtk.enable = true;
       };
 
-      virtualisation = {
-        docker.enable = true;
-        libvirtd.enable = true;
-      };
+      # virtualisation = {
+      #   docker.enable = true;
+      #   libvirtd.enable = true;
+      #   virtualbox.enable = true;
+      # };
     };
 
     soxincfg = {
       programs = {
-        git.enable = true;
+        # android.enable = true;
+        # autorandr.enable = true;
+        # brave.enable = true;
+        # chromium = { enable = true; surfingkeys.enable = true; };
+        dbeaver.enable = true;
+        git = { enable = true; enableGpgSigningKey = false; };
+        neovim.enable = true;
         ssh.enable = true;
         starship.enable = true;
+        # termite.enable = true;
+        tmux.enable = true;
+        zsh.enable = true;
       };
+
+      # services = {
+      #   xserver.windowManager.i3.enable = true;
+      # };
 
       settings = {
         nix.distributed-builds.enable = true;
       };
     };
   }
-
-  (optionalAttrs (mode == "NixOS") {
-    environment.homeBinInPath = true;
-
-    services.eternal-terminal.enable = true;
-
-    # Enable TailScale for zero-config VPN service.
-    services.tailscale.enable = true;
-
-    # Allow the forwarding of the GnuPG extra socket.
-    # https://wiki.gnupg.org/AgentForwarding
-    services.openssh.extraConfig = ''
-      StreamLocalBindUnlink yes
-    '';
-
-    # L2TP VPN does not connect without the presence of this file!
-    # https://github.com/NixOS/nixpkgs/issues/64965
-    system.activationScripts.ipsec-secrets = ''
-      touch $out/etc/ipsec.secrets
-    '';
-
-    # While creating the user runtime directories, create the gnupg directories
-    # as well if the user is YL.
-    # This is meant to solve this ssh issue:
-    #
-    #  > ssh zeus
-    #  Error: remote port forwarding failed for listen path /run/user/2000/gnupg/S.gpg-agent
-    systemd.services."user-runtime-dir@".serviceConfig.ExecStartPost = with pkgs;
-      let
-        script = writeScript "create-run-user-gnupg.sh" ''
-          #!${runtimeShell}
-          set -euo pipefail
-
-          if [[ "$1" != "${builtins.toString config.users.users.yl.uid}" ]]; then exit 0; fi
-
-          mkdir -m 700 /run/user/$1/gnupg
-          chown $1 /run/user/$1/gnupg
-        '';
-      in
-      "${script} %i";
-  })
 
   (optionalAttrs (mode == "home-manager") {
     programs.bat.enable = true;
@@ -178,10 +181,42 @@ mkMerge [
     };
 
     home.packages = with pkgs; [
+      file
+
+      dnsutils # for dig
+
+      dosbox
+      (retroarch.override {
+        cores = with libretro; [
+          beetle-psx
+          beetle-psx-hw
+          beetle-snes
+        ];
+      })
+
+      imagemagick # for convert
+
+      binutils # for strings
+
       weechat
+
+      xsel
+
+      eternal-terminal
+
+      # zoom for meetings
+      zoom-us
+
+      libnotify
 
       amazon-ecr-credential-helper
       docker-credential-gcr
+
+      filezilla
+
+      bitwarden-cli
+
+      gdb
 
       gist
 
@@ -191,9 +226,13 @@ mkMerge [
 
       jq
 
+      jrnl
+
       killall
 
       lastpass-cli
+
+      lazygit
 
       mercurial
 
@@ -202,6 +241,8 @@ mkMerge [
       nur.repos.kalbasit.nixify
 
       nix-index
+
+      nix-review
 
       nixops
 
@@ -215,7 +256,6 @@ mkMerge [
       unzip
 
       nix-zsh-completions
-    ] ++ (optionals stdenv.isLinux [
       #
       # Linux applications
       #
@@ -223,10 +263,14 @@ mkMerge [
       # XXX: Failing to compile on Darwin
       gotop
 
+      # jetbrains.idea-ultimate
+      # jetbrains.goland
+      # bazel
+
       slack
 
       # Games
       _2048-in-terminal
-    ]);
+    ];
   })
 ]

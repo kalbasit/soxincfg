@@ -2,21 +2,20 @@
 
 with lib;
 let
-  cfg = config.soxin.programs.termite;
+  cfg = config.soxincfg.programs.termite;
 in
 {
   options = {
-    soxin.programs.termite = {
+    soxincfg.programs.termite = {
       enable = mkEnableOption "termite";
     };
   };
 
   config = mkIf cfg.enable (mkMerge [
+    { soxin.programs.termite.enable = true; }
+
     (optionalAttrs (mode == "home-manager") {
-      programs.termite = {
-        enable = true;
-        font = "Source Code Pro for Powerline 9";
-      };
+      programs.termite.font = "Source Code Pro for Powerline 9";
     })
   ]);
 }

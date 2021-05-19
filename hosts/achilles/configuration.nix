@@ -4,7 +4,7 @@ let
 in
 {
   imports = [
-    soxincfg.nixosModules.profiles.workstation
+    soxincfg.nixosModules.profiles.workstation.nixos.local
     soxincfg.nixosModules.profiles.myself
 
     nixos-hardware.nixosModules.common-cpu-intel
