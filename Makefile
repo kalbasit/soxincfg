@@ -5,7 +5,7 @@ all: build
 
 .PHONY: build
 build:
-	nixos-rebuild --flake '.#$(HOST)' build
+	nix build '.#nixosConfigurations.$(HOST).config.system.build.toplevel'
 
 .PHONY: test
 test:

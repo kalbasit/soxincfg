@@ -1,4 +1,5 @@
-{ config, pkgs, soxincfg, ... }:
+{ config, pkgs, soxincfg, mode, lib, ... }:
+with lib;
 let
   nasreddineCA = builtins.readFile (builtins.fetchurl {
     url = "https://s3-us-west-1.amazonaws.com/nasreddine-infra/ca.crt";
@@ -6,29 +7,47 @@ let
   });
 in
 {
-  nix = {
-    package = pkgs.nixFlakes;
+  config = mkMerge [
+    {
+      soxin.settings = {
+        keyboard = {
+          layouts = [
+            {
+              x11 = { layout = "us"; variant = "colemak"; };
+              console = { keyMap = "colemak"; };
+            }
+          ];
+        };
+        theme = "gruvbox-dark";
+      };
+    }
 
-    # enable the sandbox but only on Linux
-    useSandbox = pkgs.stdenv.hostPlatform.isLinux;
+    (optionalAttrs (mode == "NixOS") {
+      nix = {
+        package = pkgs.nixFlakes;
 
-    extraOptions = ''
-      experimental-features = nix-command flakes ca-references
-    '';
-  };
+        # enable the sandbox but only on Linux
+        useSandbox = pkgs.stdenv.hostPlatform.isLinux;
 
-  boot.tmpOnTmpfs = true;
+        extraOptions = ''
+          experimental-features = nix-command flakes ca-references
+        '';
+      };
 
-  security.pki.certificates = [ nasreddineCA ];
+      boot.tmpOnTmpfs = true;
 
-  # Set the ssh authorized keys for the root user
-  users.users.root = {
-    inherit (soxincfg.vars.users.yl) hashedPassword;
+      security.pki.certificates = [ nasreddineCA ];
 
-    openssh.authorizedKeys.keys = soxincfg.vars.users.yl.sshKeys;
-  };
+      # Set the ssh authorized keys for the root user
+      users.users.root = {
+        inherit (soxincfg.vars.users.yl) hashedPassword;
 
-  # set the default locale and the timeZone
-  i18n.defaultLocale = "en_US.UTF-8";
-  time.timeZone = "America/Los_Angeles";
+        openssh.authorizedKeys.keys = soxincfg.vars.users.yl.sshKeys;
+      };
+
+      # set the default locale and the timeZone
+      i18n.defaultLocale = "en_US.UTF-8";
+      time.timeZone = "America/Los_Angeles";
+    })
+  ];
 }

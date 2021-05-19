@@ -6,6 +6,8 @@ with lib;
 let
   cfg = config.soxin.programs.less;
 
+  keyboardLayout = config.soxin.settings.keyboard.defaultLayout.console.keyMap;
+
   colemakKeybindings = ''
     #command
     n left-scroll
@@ -62,8 +64,8 @@ in
               #env
               LESS= ${optionalString cfg.colors ''--RAW-CONTROL-CHARS''} ${optionalString cfg.quitIfOneScreen ''--no-init --quit-if-one-screen''} ${optionalString cfg.ignoreCase ''--ignore-case''}
             ''
-            + optionalString (config.soxin.settings.keyboard.defaultLayout.x11.variant == "colemak") colemakKeybindings
-            + optionalString (config.soxin.settings.keyboard.defaultLayout.x11.variant == "bepo") bepoKeybindings
+            + optionalString (keyboardLayout == "colemak") colemakKeybindings
+            + optionalString (keyboardLayout == "bepo") bepoKeybindings
           );
         in
         pkgs.runCommand "less-config"

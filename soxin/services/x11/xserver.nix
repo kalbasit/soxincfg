@@ -24,7 +24,8 @@ in
         ];
 
         libinput.enable = true;
-        libinput.naturalScrolling = true;
+        libinput.mouse.naturalScrolling = true;
+        libinput.touchpad.naturalScrolling = true;
 
         displayManager = {
           defaultSession = "none+i3";

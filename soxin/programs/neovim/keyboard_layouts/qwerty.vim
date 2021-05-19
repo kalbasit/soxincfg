@@ -1,3 +1,0 @@
-""
-"" Qwerty keyboard bindings
-""

@@ -5,7 +5,7 @@ with lib;
 {
   # Enable the installation of my neovim
   # TODO: Need a minimal neovim with just my keybindings
-  # soxin.programs.neovim.enable = true;
+  # soxincfg.programs.neovim.enable = true;
   environment.systemPackages = with pkgs; [ neovim ];
 
   # Enable TailScale for zero-config VPN service.
