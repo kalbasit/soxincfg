@@ -1,7 +1,4 @@
-{ deploy-rs
-, futils
-, home-manager
-, lib
+{ lib
 , nixos-hardware
 , nixpkgs
 , nixpkgs-master
@@ -15,7 +12,12 @@
 }@args:
 with lib;
 let
-  config = path:
+  buildHosts = hostPaths:
+    builtins.builtins.listToAttrs (
+      map (path: nameValuePair (lists.last (splitString "/" path)) (nixosSystem path)) hostPaths
+    );
+
+  nixosSystem = path:
     let
       # This allows you to have sub-folders to order cnofigurations inside the
       # hosts folder.
@@ -44,7 +46,7 @@ let
         sops-nix.nixosModules.sops
 
         # include the local configuration for the host
-        (import "${toString ./.}/${path}/configuration.nix")
+        "${path}/configuration.nix"
 
         # setup Nix
         {
@@ -77,7 +79,7 @@ let
     };
 in
 if system == "x86_64-linux" then
-  genAttrs [ "achilles" "hades" "zeus" "x86-64-linux-0" ] config
+  import ./x86-64 { inherit buildHosts; }
 else if system == "aarch64-linux" then
-  genAttrs [ "aarch64-linux-0" "kore" ] config
+  import ./aarch64-linux { inherit buildHosts; }
 else builtins.trace "I don't have any hosts buildable for the system ${system}" [ ]
