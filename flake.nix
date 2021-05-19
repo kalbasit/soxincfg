@@ -100,28 +100,24 @@
             };
           };
 
-          # TODO: deliver this similarly to nixosConfigurations
-          homeConfigurations.penguin = soxin.lib.homeManagerConfiguration rec{
-            system = "x86_64-linux";
-            homeDirectory = "/home/yl";
-            username = "yl";
-            configuration = ./hosts/penguin/home.nix;
-            hmSpecialArgs = { soxincfg = self; };
-            inherit (pkgset system) pkgs;
-            modules =
-              let
-                flakeModules = builtins.attrValues (removeAttrs self.nixosModules [ "profiles" ]);
-              in
-              lib.concat flakeModules [
-                self.nixosModules.profiles.core
-                { nixpkgs.overlays = [ nur.overlay soxin.overlay self.overlay self.overrides.${system} ]; }
-              ];
-          };
+          homeConfigurations =
+            let
+              hostsForSystem = system:
+                import ./hosts/home-manager (
+                  recursiveUpdate inputs {
+                    inherit lib system;
+                    pkgset = pkgset system;
+                  }
+                );
+            in
+            (hostsForSystem "x86_64-linux")
+            //
+            (hostsForSystem "aarch64-linux");
 
           nixosConfigurations =
             let
               hostsForSystem = system:
-                import ./hosts (
+                import ./hosts/nixos (
                   recursiveUpdate inputs {
                     inherit lib system;
                     pkgset = pkgset system;
@@ -161,7 +157,6 @@
               awscli
               deploy-rs.packages.${system}.deploy-rs
               git
-              gnumake
               nixpkgs-fmt
               pre-commit
               sops
