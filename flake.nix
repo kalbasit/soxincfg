@@ -9,7 +9,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     soxin = {
-      url = "github:SoxinOS/soxin/add-home-manager-support";
+      url = "github:SoxinOS/soxin";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         home-manager.follows = "home-manager";
