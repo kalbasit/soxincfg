@@ -6,7 +6,7 @@ in
   imports = [
     soxincfg.nixosModules.profiles.myself
     soxincfg.nixosModules.profiles.work.keeptruckin
-    soxincfg.nixosModules.profiles.workstation
+    soxincfg.nixosModules.profiles.workstation.nixos.local
 
     nixos-hardware.nixosModules.common-cpu-intel
     nixos-hardware.nixosModules.common-pc-laptop

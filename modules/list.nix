@@ -6,9 +6,13 @@
   chromium = ./programs/chromium;
   dbeaver = ./programs/dbeaver;
   git = ./programs/git.nix;
+  neovim = ./programs/neovim;
   ssh = ./programs/ssh.nix;
   starship = ./programs/starship.nix;
+  termite = ./programs/termite.nix;
+  tmux = ./programs/tmux;
   weechat = ./programs/weechat;
+  zsh = ./programs/zsh;
 
   # services
   dnsmasq = ./services/dnsmasq;

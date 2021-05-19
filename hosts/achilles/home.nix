@@ -7,7 +7,7 @@ with lib;
 {
   imports = [
     soxincfg.nixosModules.profiles.myself
-    soxincfg.nixosModules.profiles.workstation
+    soxincfg.nixosModules.profiles.workstation.nixos.local
   ];
 
   # Setup the name of the wireless interface in Polybar

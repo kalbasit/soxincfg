@@ -41,241 +41,245 @@ in
 {
   enable = true;
 
-  config = {
-    bars = [ ];
+  config =
+    {
+      bars = [ ];
 
-    fonts = [ "pango:Source Code Pro for Powerline 8" ];
+      fonts = { names = [ "pango:Source Code Pro for Powerline" ]; size = 8.0; };
 
-    window = {
-      commands = [
-        { command = "floating enable"; criteria = { workspace = "^studio$"; }; }
+      window = {
+        commands = [
+          {
+            command = "floating enable";
+            criteria = { workspace = "^studio$"; };
+          }
 
-        { command = "floating enable"; criteria = { class = "^Arandr"; }; }
-        { command = "floating enable"; criteria = { class = "^Pavucontrol"; }; }
-        { command = "floating enable"; criteria = { class = "^ROX-Filer$"; }; }
-        { command = "floating enable"; criteria = { class = "^SimpleScreenRecorder$"; }; }
-        { command = "floating enable"; criteria = { class = "^Tor Browser"; }; }
-        { command = "floating enable"; criteria = { class = "^net-filebot-Main$"; }; }
-        { command = "floating enable"; criteria = { title = "^jrnl_entry$"; }; }
+          { command = "floating enable"; criteria = { class = "^Arandr"; }; }
+          { command = "floating enable"; criteria = { class = "^Pavucontrol"; }; }
+          { command = "floating enable"; criteria = { class = "^ROX-Filer$"; }; }
+          { command = "floating enable"; criteria = { class = "^SimpleScreenRecorder$"; }; }
+          { command = "floating enable"; criteria = { class = "^Tor Browser"; }; }
+          { command = "floating enable"; criteria = { class = "^net-filebot-Main$"; }; }
+          { command = "floating enable"; criteria = { title = "^jrnl_entry$"; }; }
 
-        { command = "sticky enable, floating enable, move scratchpad"; criteria = { class = "MellowPlayer"; }; }
+          { command = "sticky enable, floating enable, move scratchpad"; criteria = { class = "MellowPlayer"; }; }
+        ];
+      };
+
+      floating = { modifier = "${defaultModifier}"; };
+
+      focus = {
+        # focus should not follow the mouse pointer
+        followMouse = false;
+
+        # on window activation, just set the urgency hint. The default behavior is to
+        # set the urgency hint if the window is not on the active workspace, and to
+        # focus the window on an active workspace. It does surprise me sometimes and I
+        # would like to keep it simple by having to manually switch to the urgent
+        # window.
+        newWindow = "urgent";
+      };
+
+      assigns = {
+        "charles" = [{ class = "^com-xk72-charles-gui-.*$"; }];
+        "discord" = [{ class = "^discord$"; }];
+        "element" = [{ class = "^Element$"; }];
+        "keybase" = [{ class = "^Keybase$"; }];
+        "signal" = [{ class = "^Signal$"; }];
+        "slack" = [{ class = "^Slack$"; }];
+        "studio" = [{ class = "^obs$"; }];
+        "tor" = [{ class = "^Tor Browser"; }];
+        "virtualbox" = [{ class = "^VirtualBox"; }];
+      };
+
+      modifier = "Mod4";
+
+      keybindings = {
+        # change focus
+        "${defaultModifier}+n" = "focus left";
+        "${defaultModifier}+e" = "focus down";
+        "${defaultModifier}+i" = "focus up";
+        "${defaultModifier}+o" = "focus right";
+
+        # move focused window
+        "${defaultModifier}+${secondModifier}+n" = "move left";
+        "${defaultModifier}+${secondModifier}+e" = "move down";
+        "${defaultModifier}+${secondModifier}+i" = "move up";
+        "${defaultModifier}+${secondModifier}+o" = "move right";
+
+        # split in horizontal orientation
+        "${defaultModifier}+h" = "split h";
+
+        # split in vertical orientation
+        "${defaultModifier}+v" = "split v";
+
+        # change focus between output
+        "${defaultModifier}+${thirdModifier}+n" = "focus output left";
+        "${defaultModifier}+${thirdModifier}+e" = "focus output down";
+        "${defaultModifier}+${thirdModifier}+i" = "focus output up";
+        "${defaultModifier}+${thirdModifier}+o" = "focus output right";
+
+        # move workspaces between monitors
+        "${defaultModifier}+${secondModifier}+${thirdModifier}+n" = "move workspace to output left";
+        "${defaultModifier}+${secondModifier}+${thirdModifier}+e" = "move workspace to output down";
+        "${defaultModifier}+${secondModifier}+${thirdModifier}+i" = "move workspace to output up";
+        "${defaultModifier}+${secondModifier}+${thirdModifier}+o" = "move workspace to output right";
+
+        # toggle sticky
+        "${defaultModifier}+s" = "sticky toggle";
+
+        # change focus between tiling / floating windows
+        "${thirdModifier}+f" = "focus mode_toggle";
+
+        # toggle tiling / floating
+        "${thirdModifier}+${secondModifier}+f" = "floating toggle";
+
+        # jrnl entry
+        "${thirdModifier}+j" = "exec ${jrnlEntry}";
+
+        # enter fullscreen mode for the focused container
+        "${defaultModifier}+f" = "fullscreen toggle";
+
+        # kill focused window
+        "${defaultModifier}+${secondModifier}+q" = "kill";
+
+        # rbrowser
+        "${defaultModifier}+b" = "exec rbrowser";
+
+        # rofi run
+        "${defaultModifier}+r" = "exec ${pkgs.rofi}/bin/rofi -show run";
+
+        # list open windows to switch to
+        "${thirdModifier}+Tab" = "exec ${pkgs.rofi}/bin/rofi -show window";
+
+        # switch between the current and the previously focused one
+        "${defaultModifier}+Tab" = "workspace back_and_forth";
+        "${defaultModifier}+${secondModifier}+Tab" = "move container to workspace back_and_forth";
+
+        # dynamic workspaces
+        "${defaultModifier}+space" = "exec ${pkgs.rofi}/bin/rofi -show i3SwapWorkspaces";
+        "${thirdModifier}+space" = "exec ${pkgs.rofi}/bin/rofi -show i3Workspaces";
+        "${defaultModifier}+${secondModifier}+space" = "exec ${pkgs.rofi}/bin/rofi -show i3MoveContainer";
+        "${defaultModifier}+${thirdModifier}+space" = "exec ${pkgs.rofi}/bin/rofi -show i3RenameWorkspace";
+
+        # change container layout (stacked, tabbed, toggle split)
+        "${defaultModifier}+l" = "layout stacking";
+        "${defaultModifier}+u" = "layout tabbed";
+        "${defaultModifier}+y" = "layout toggle split";
+
+        # focus the parent container
+        "${defaultModifier}+a" = "focus parent";
+
+        # focus the child container
+        "${defaultModifier}+d" = "focus child";
+
+        # start a region screenshot
+        "${defaultModifier}+${secondModifier}+4" = "exec ${getBin pkgs.flameshot}/bin/flameshot gui --delay 500 --path ${config.home.homeDirectory}/Desktop";
+
+        # start a screen recorder
+        "${defaultModifier}+${secondModifier}+5" = "exec ${getBin pkgs.simplescreenrecorder}/bin/simplescreenrecorder";
+
+        # focus the urgent window
+        "${defaultModifier}+x" = "[urgent=latest] focus";
+
+        # mark current window / goto mark
+        # https://github.com/tybitsfox/i3msg/blob/master/.i3/config
+        "${defaultModifier}+m" = "exec i3-input -F 'mark %s' -l 1 -P 'Mark: '";
+        "${defaultModifier}+apostrophe" = "exec i3-input -F '[con_mark=\"%s\"] focus' -l 1 -P 'Go to: '";
+
+        # volume support
+        "XF86AudioRaiseVolume" = "exec ${nosid} ${getBin pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ false, exec ${nosid} ${getBin pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%";
+        "XF86AudioLowerVolume" = "exec ${nosid} ${getBin pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ false, exec ${nosid} ${getBin pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%";
+        "XF86AudioMute" = "exec ${nosid} ${getBin pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
+        "XF86AudioMicMute" = "exec ${nosid} ${getBin pkgs.pulseaudio}/bin/pactl set-source-mute @DEFAULT_SOURCE@ toggle";
+
+        # brightness support
+        "XF86MonBrightnessUp" = "exec ${nosid} ${getBin pkgs.brightnessctl}/bin/brightnessctl s +5%";
+        "XF86MonBrightnessDown" = "exec ${nosid} ${getBin pkgs.brightnessctl}/bin/brightnessctl s 5%-";
+        "${secondModifier}+XF86MonBrightnessUp" = "exec ${nosid} ${getBin pkgs.brightnessctl}/bin/brightnessctl s +1%";
+        "${secondModifier}+XF86MonBrightnessDown" = "exec ${nosid} ${getBin pkgs.brightnessctl}/bin/brightnessctl s 1%-";
+
+        # sleep support
+        "XF86PowerOff" = "exec ${nosid} ${locker} && systemctl suspend";
+
+        # clipboard history
+        "${defaultModifier}+${thirdModifier}+c" = "exec ${getBin pkgs.rofi}/bin/rofi -modi \"clipboard:${getBin pkgs.haskellPackages.greenclip}/bin/greenclip print\" -show clipboard";
+
+        # Terminals
+        "${defaultModifier}+Return" = "exec ${getBin pkgs.termite}/bin/termite";
+        "${defaultModifier}+${secondModifier}+Return" = "exec ${getBin pkgs.alacritty}/bin/alacritty";
+
+        # Modes
+        "${defaultModifier}+${thirdModifier}+r" = "mode resize";
+        "${defaultModifier}+${thirdModifier}+m" = "mode move";
+
+        # Make the currently focused window a scratchpad
+        "${defaultModifier}+${secondModifier}+minus" = "move scratchpad";
+
+        # Show the next scratchpad windows
+        "${thirdModifier}+minus" = "scratchpad show";
+
+        # Short-cuts for windows hidden in the scratchpad.
+        "${thirdModifier}+m" = "[class=\"MellowPlayer\"] scratchpad show";
+      };
+
+      modes = {
+        resize = {
+          # Micro resizement
+          "Control+n" = "resize shrink width 10 px or 1 ppt";
+          "Control+e" = "resize grow height 10 px or 1 ppt";
+          "Control+i" = "resize shrink height 10 px or 1 ppt";
+          "Control+o" = "resize grow width 10 px or 1 ppt";
+
+          # Normal resizing
+          "n" = "resize shrink width 50 px or 5 ppt";
+          "e" = "resize grow height 50 px or 5 ppt";
+          "i" = "resize shrink height 50 px or 5 ppt";
+          "o" = "resize grow width 50 px or 5 ppt";
+
+          # Macro resizing
+          "${secondModifier}+n" = "resize shrink width 100 px or 10 ppt";
+          "${secondModifier}+e" = "resize grow height 100 px or 10 ppt";
+          "${secondModifier}+i" = "resize shrink height 100 px or 10 ppt";
+          "${secondModifier}+o" = "resize grow width 100 px or 10 ppt";
+
+          # back to normal: Enter or Escape
+          "Return" = "mode default";
+          "Escape" = "mode default";
+        };
+
+        move = {
+          # Micro movement
+          "Control+n" = "move left 10 px";
+          "Control+e" = "move down 10 px";
+          "Control+i" = "move up 10 px";
+          "Control+o" = "move right 10 px";
+
+          # Normal resizing
+          "n" = "move left 50 px";
+          "e" = "move down 50 px";
+          "i" = "move up 50 px";
+          "o" = "move right 50 px";
+
+          # Macro resizing
+          "${secondModifier}+n" = "move left 100 px";
+          "${secondModifier}+e" = "move down 100 px";
+          "${secondModifier}+i" = "move up 100 px";
+          "${secondModifier}+o" = "move right 100 px";
+
+          # back to normal: Enter or Escape
+          "Return" = "mode default";
+          "Escape" = "mode default";
+        };
+      };
+
+      startup = [
+        { command = "${getBin pkgs.xlibs.xset}/bin/xset r rate 300 30"; always = false; notification = false; }
+        { command = "${getBin pkgs.xcape}/bin/xcape -e 'Control_L=Escape'"; always = false; notification = false; }
+        { command = "${getBin pkgs.haskellPackages.greenclip}/bin/greenclip daemon"; always = false; notification = false; }
+        { command = "i3-msg \"workspace personal; exec ${nosid} ${getBin pkgs.termite}/bin/termite\""; always = false; notification = true; }
       ];
     };
-
-    floating = { modifier = "${defaultModifier}"; };
-
-    focus = {
-      # focus should not follow the mouse pointer
-      followMouse = false;
-
-      # on window activation, just set the urgency hint. The default behavior is to
-      # set the urgency hint if the window is not on the active workspace, and to
-      # focus the window on an active workspace. It does surprise me sometimes and I
-      # would like to keep it simple by having to manually switch to the urgent
-      # window.
-      newWindow = "urgent";
-    };
-
-    assigns = {
-      "charles" = [{ class = "^com-xk72-charles-gui-.*$"; }];
-      "discord" = [{ class = "^discord$"; }];
-      "element" = [{ class = "^Element$"; }];
-      "keybase" = [{ class = "^Keybase$"; }];
-      "signal" = [{ class = "^Signal$"; }];
-      "slack" = [{ class = "^Slack$"; }];
-      "studio" = [{ class = "^obs$"; }];
-      "tor" = [{ class = "^Tor Browser"; }];
-      "virtualbox" = [{ class = "^VirtualBox"; }];
-    };
-
-    modifier = "Mod4";
-
-    keybindings = {
-      # change focus
-      "${defaultModifier}+n" = "focus left";
-      "${defaultModifier}+e" = "focus down";
-      "${defaultModifier}+i" = "focus up";
-      "${defaultModifier}+o" = "focus right";
-
-      # move focused window
-      "${defaultModifier}+${secondModifier}+n" = "move left";
-      "${defaultModifier}+${secondModifier}+e" = "move down";
-      "${defaultModifier}+${secondModifier}+i" = "move up";
-      "${defaultModifier}+${secondModifier}+o" = "move right";
-
-      # split in horizontal orientation
-      "${defaultModifier}+h" = "split h";
-
-      # split in vertical orientation
-      "${defaultModifier}+v" = "split v";
-
-      # change focus between output
-      "${defaultModifier}+${thirdModifier}+n" = "focus output left";
-      "${defaultModifier}+${thirdModifier}+e" = "focus output down";
-      "${defaultModifier}+${thirdModifier}+i" = "focus output up";
-      "${defaultModifier}+${thirdModifier}+o" = "focus output right";
-
-      # move workspaces between monitors
-      "${defaultModifier}+${secondModifier}+${thirdModifier}+n" = "move workspace to output left";
-      "${defaultModifier}+${secondModifier}+${thirdModifier}+e" = "move workspace to output down";
-      "${defaultModifier}+${secondModifier}+${thirdModifier}+i" = "move workspace to output up";
-      "${defaultModifier}+${secondModifier}+${thirdModifier}+o" = "move workspace to output right";
-
-      # toggle sticky
-      "${defaultModifier}+s" = "sticky toggle";
-
-      # change focus between tiling / floating windows
-      "${thirdModifier}+f" = "focus mode_toggle";
-
-      # toggle tiling / floating
-      "${thirdModifier}+${secondModifier}+f" = "floating toggle";
-
-      # jrnl entry
-      "${thirdModifier}+j" = "exec ${jrnlEntry}";
-
-      # enter fullscreen mode for the focused container
-      "${defaultModifier}+f" = "fullscreen toggle";
-
-      # kill focused window
-      "${defaultModifier}+${secondModifier}+q" = "kill";
-
-      # rbrowser
-      "${defaultModifier}+b" = "exec rbrowser";
-
-      # rofi run
-      "${defaultModifier}+r" = "exec ${pkgs.rofi}/bin/rofi -show run";
-
-      # list open windows to switch to
-      "${thirdModifier}+Tab" = "exec ${pkgs.rofi}/bin/rofi -show window";
-
-      # switch between the current and the previously focused one
-      "${defaultModifier}+Tab" = "workspace back_and_forth";
-      "${defaultModifier}+${secondModifier}+Tab" = "move container to workspace back_and_forth";
-
-      # dynamic workspaces
-      "${defaultModifier}+space" = "exec ${pkgs.rofi}/bin/rofi -show i3SwapWorkspaces";
-      "${thirdModifier}+space" = "exec ${pkgs.rofi}/bin/rofi -show i3Workspaces";
-      "${defaultModifier}+${secondModifier}+space" = "exec ${pkgs.rofi}/bin/rofi -show i3MoveContainer";
-      "${defaultModifier}+${thirdModifier}+space" = "exec ${pkgs.rofi}/bin/rofi -show i3RenameWorkspace";
-
-      # change container layout (stacked, tabbed, toggle split)
-      "${defaultModifier}+l" = "layout stacking";
-      "${defaultModifier}+u" = "layout tabbed";
-      "${defaultModifier}+y" = "layout toggle split";
-
-      # focus the parent container
-      "${defaultModifier}+a" = "focus parent";
-
-      # focus the child container
-      "${defaultModifier}+d" = "focus child";
-
-      # start a region screenshot
-      "${defaultModifier}+${secondModifier}+4" = "exec ${getBin pkgs.flameshot}/bin/flameshot gui --delay 500 --path ${config.home.homeDirectory}/Desktop";
-
-      # start a screen recorder
-      "${defaultModifier}+${secondModifier}+5" = "exec ${getBin pkgs.simplescreenrecorder}/bin/simplescreenrecorder";
-
-      # focus the urgent window
-      "${defaultModifier}+x" = "[urgent=latest] focus";
-
-      # mark current window / goto mark
-      # https://github.com/tybitsfox/i3msg/blob/master/.i3/config
-      "${defaultModifier}+m" = "exec i3-input -F 'mark %s' -l 1 -P 'Mark: '";
-      "${defaultModifier}+apostrophe" = "exec i3-input -F '[con_mark=\"%s\"] focus' -l 1 -P 'Go to: '";
-
-      # volume support
-      "XF86AudioRaiseVolume" = "exec ${nosid} ${getBin pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ false, exec ${nosid} ${getBin pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%";
-      "XF86AudioLowerVolume" = "exec ${nosid} ${getBin pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ false, exec ${nosid} ${getBin pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%";
-      "XF86AudioMute" = "exec ${nosid} ${getBin pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
-      "XF86AudioMicMute" = "exec ${nosid} ${getBin pkgs.pulseaudio}/bin/pactl set-source-mute @DEFAULT_SOURCE@ toggle";
-
-      # brightness support
-      "XF86MonBrightnessUp" = "exec ${nosid} ${getBin pkgs.brightnessctl}/bin/brightnessctl s +5%";
-      "XF86MonBrightnessDown" = "exec ${nosid} ${getBin pkgs.brightnessctl}/bin/brightnessctl s 5%-";
-      "${secondModifier}+XF86MonBrightnessUp" = "exec ${nosid} ${getBin pkgs.brightnessctl}/bin/brightnessctl s +1%";
-      "${secondModifier}+XF86MonBrightnessDown" = "exec ${nosid} ${getBin pkgs.brightnessctl}/bin/brightnessctl s 1%-";
-
-      # sleep support
-      "XF86PowerOff" = "exec ${nosid} ${locker} && systemctl suspend";
-
-      # clipboard history
-      "${defaultModifier}+${thirdModifier}+c" = "exec ${getBin pkgs.rofi}/bin/rofi -modi \"clipboard:${getBin pkgs.haskellPackages.greenclip}/bin/greenclip print\" -show clipboard";
-
-      # Terminals
-      "${defaultModifier}+Return" = "exec ${getBin pkgs.termite}/bin/termite";
-      "${defaultModifier}+${secondModifier}+Return" = "exec ${getBin pkgs.alacritty}/bin/alacritty";
-
-      # Modes
-      "${defaultModifier}+${thirdModifier}+r" = "mode resize";
-      "${defaultModifier}+${thirdModifier}+m" = "mode move";
-
-      # Make the currently focused window a scratchpad
-      "${defaultModifier}+${secondModifier}+minus" = "move scratchpad";
-
-      # Show the next scratchpad windows
-      "${thirdModifier}+minus" = "scratchpad show";
-
-      # Short-cuts for windows hidden in the scratchpad.
-      "${thirdModifier}+m" = "[class=\"MellowPlayer\"] scratchpad show";
-    };
-
-    modes = {
-      resize = {
-        # Micro resizement
-        "Control+n" = "resize shrink width 10 px or 1 ppt";
-        "Control+e" = "resize grow height 10 px or 1 ppt";
-        "Control+i" = "resize shrink height 10 px or 1 ppt";
-        "Control+o" = "resize grow width 10 px or 1 ppt";
-
-        # Normal resizing
-        "n" = "resize shrink width 50 px or 5 ppt";
-        "e" = "resize grow height 50 px or 5 ppt";
-        "i" = "resize shrink height 50 px or 5 ppt";
-        "o" = "resize grow width 50 px or 5 ppt";
-
-        # Macro resizing
-        "${secondModifier}+n" = "resize shrink width 100 px or 10 ppt";
-        "${secondModifier}+e" = "resize grow height 100 px or 10 ppt";
-        "${secondModifier}+i" = "resize shrink height 100 px or 10 ppt";
-        "${secondModifier}+o" = "resize grow width 100 px or 10 ppt";
-
-        # back to normal: Enter or Escape
-        "Return" = "mode default";
-        "Escape" = "mode default";
-      };
-
-      move = {
-        # Micro movement
-        "Control+n" = "move left 10 px";
-        "Control+e" = "move down 10 px";
-        "Control+i" = "move up 10 px";
-        "Control+o" = "move right 10 px";
-
-        # Normal resizing
-        "n" = "move left 50 px";
-        "e" = "move down 50 px";
-        "i" = "move up 50 px";
-        "o" = "move right 50 px";
-
-        # Macro resizing
-        "${secondModifier}+n" = "move left 100 px";
-        "${secondModifier}+e" = "move down 100 px";
-        "${secondModifier}+i" = "move up 100 px";
-        "${secondModifier}+o" = "move right 100 px";
-
-        # back to normal: Enter or Escape
-        "Return" = "mode default";
-        "Escape" = "mode default";
-      };
-    };
-
-    startup = [
-      { command = "${getBin pkgs.xlibs.xset}/bin/xset r rate 300 30"; always = false; notification = false; }
-      { command = "${getBin pkgs.xcape}/bin/xcape -e 'Control_L=Escape'"; always = false; notification = false; }
-      { command = "${getBin pkgs.haskellPackages.greenclip}/bin/greenclip daemon"; always = false; notification = false; }
-      { command = "i3-msg \"workspace personal; exec ${nosid} ${getBin pkgs.termite}/bin/termite\""; always = false; notification = true; }
-    ];
-  };
 
   extraConfig = ''
     # keep the urgency border of a window for 500ms

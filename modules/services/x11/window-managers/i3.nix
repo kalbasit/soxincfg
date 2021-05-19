@@ -44,16 +44,22 @@ in
         };
       };
 
-      xsession.windowManager.i3.config = {
-        keybindings = {
-          "${defaultModifier}+${thirdModifier}+s" = "exec ${nosid} ${getBin pkgs.pulseaudio}/bin/pactl set-source-mute @DEFAULT_SOURCE@ toggle";
-        };
+      xsession.windowManager.i3.config = mkMerge [
+        {
+          keybindings = {
+            "${defaultModifier}+${thirdModifier}+s" = "exec ${nosid} ${getBin pkgs.pulseaudio}/bin/pactl set-source-mute @DEFAULT_SOURCE@ toggle";
+          };
 
 
-        startup = [
-          { command = "${getBin pkgs.nitrogen}/bin/nitrogen --restore"; always = false; notification = false; }
-        ];
-      };
+          startup = [
+            { command = "${getBin pkgs.nitrogen}/bin/nitrogen --restore"; always = false; notification = false; }
+          ];
+        }
+
+        (mkIf (true /* TODO: config.soxin.settings.theme == "gruvbox-dark"*/) (
+          config.soxin.settings.theme.i3.config
+        ))
+      ];
     })
   ]);
 }
