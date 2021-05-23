@@ -9,5 +9,5 @@ if [[ ! -d "$soxin_path" ]]; then
     exit 1
 fi
 
-ln -s "$soxin_path" soxin
-nix flake update --override-input soxin path:./soxin
+ln -nsf "$soxin_path" soxin
+nix flake update --override-input soxin "path:$soxin_path"
