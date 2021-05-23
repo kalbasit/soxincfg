@@ -5,7 +5,7 @@
 
     # TODO: Getting an error because delve does not build on this arch which is required for NeoVim
     # soxincfg.nixosModules.profiles.myself
-    # soxincfg.nixosModules.profiles.remote-workstation
+    # soxincfg.nixosModules.profiles.workstation.nixos.remote
     # soxincfg.nixosModules.profiles.work.keeptruckin
 
     "${modulesPath}/virtualisation/amazon-image.nix"

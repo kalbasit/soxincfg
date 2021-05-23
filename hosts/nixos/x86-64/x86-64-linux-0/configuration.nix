@@ -3,7 +3,7 @@
   imports = [
     soxincfg.nixosModules.profiles.myself
     soxincfg.nixosModules.profiles.work.keeptruckin
-    soxincfg.nixosModules.profiles.remote-workstation
+    soxincfg.nixosModules.profiles.workstation.nixos.remote
 
     "${modulesPath}/virtualisation/amazon-image.nix"
   ];
