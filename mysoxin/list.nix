@@ -1,6 +1,5 @@
 {
   # settings
-  fonts = ./settings/fonts.nix;
   gtk = ./settings/gtk.nix;
   users = ./settings/users.nix;
 

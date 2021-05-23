@@ -2,12 +2,12 @@
 
 with lib;
 let
-  cfg = config.soxin.settings.fonts;
+  cfg = config.soxincfg.settings.fonts;
 in
 {
   # TODO: find a nice way of selecting a default font.
   options = {
-    soxin.settings.fonts = {
+    soxincfg.settings.fonts = {
       enable = mkEnableOption "Enable default settings for fonts.";
     };
   };

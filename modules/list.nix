@@ -21,5 +21,6 @@
   nextcloud = ./services/nextcloud;
 
   # settings
+  fonts = ./settings/fonts;
   nix = ./settings/nix;
 }

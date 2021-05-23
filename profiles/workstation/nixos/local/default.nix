@@ -65,7 +65,6 @@ mkMerge [
       };
 
       settings = {
-        fonts.enable = true;
         gtk.enable = true;
       };
 
@@ -97,6 +96,7 @@ mkMerge [
       };
 
       settings = {
+        fonts.enable = true;
         nix.distributed-builds.enable = true;
       };
     };
