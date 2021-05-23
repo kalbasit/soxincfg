@@ -5,7 +5,6 @@
   users = ./settings/users.nix;
 
   # programs
-  fzf = ./programs/fzf.nix;
   git = ./programs/git.nix;
   htop = ./programs/htop.nix;
   keybase = ./programs/keybase.nix;

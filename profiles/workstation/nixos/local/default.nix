@@ -14,7 +14,6 @@ mkMerge [
       };
 
       programs = {
-        fzf.enable = true;
         htop.enable = true;
         keybase = {
           enable = true;
@@ -155,6 +154,7 @@ mkMerge [
   (optionalAttrs (mode == "home-manager") {
     programs.bat.enable = true;
     programs.direnv.enable = true;
+    programs.fzf.enable = true;
     services.flameshot.enable = true;
 
     home.file = {
