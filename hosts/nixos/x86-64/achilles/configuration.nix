@@ -23,7 +23,7 @@ in
 
   # speed up the trackpad
   services.xserver.libinput.enable = true;
-  services.xserver.libinput.accelSpeed = "0.5";
+  services.xserver.libinput.touchpad.accelSpeed = "0.5";
 
   # enable fingerprint reader
   services.fprintd.enable = true;
