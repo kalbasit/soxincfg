@@ -342,6 +342,8 @@ mkMerge [
 
       slack
 
+      glances
+
       # Games
       _2048-in-terminal
     ]);
