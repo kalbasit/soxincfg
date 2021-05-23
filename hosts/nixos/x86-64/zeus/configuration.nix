@@ -4,7 +4,7 @@ with lib;
   imports = [
     soxincfg.nixosModules.profiles.myself
     soxincfg.nixosModules.profiles.work.keeptruckin
-    soxincfg.nixosModules.profiles.remote-workstation
+    soxincfg.nixosModules.profiles.workstation.nixos.remote
 
     nixos-hardware.nixosModules.common-cpu-intel
     nixos-hardware.nixosModules.common-pc-ssd
