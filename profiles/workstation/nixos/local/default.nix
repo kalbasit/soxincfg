@@ -64,10 +64,6 @@ mkMerge [
         xserver.enable = true;
       };
 
-      settings = {
-        gtk.enable = true;
-      };
-
       virtualisation = {
         docker.enable = true;
         libvirtd.enable = true;
@@ -97,6 +93,7 @@ mkMerge [
 
       settings = {
         fonts.enable = true;
+        gtk.enable = true;
         nix.distributed-builds.enable = true;
       };
     };

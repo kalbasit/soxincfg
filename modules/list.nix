@@ -22,5 +22,6 @@
 
   # settings
   fonts = ./settings/fonts;
+  gtk = ./settings/gtk;
   nix = ./settings/nix;
 }

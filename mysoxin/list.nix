@@ -1,6 +1,5 @@
 {
   # settings
-  gtk = ./settings/gtk.nix;
   users = ./settings/users.nix;
 
   # programs

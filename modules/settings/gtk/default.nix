@@ -2,11 +2,11 @@
 
 with lib;
 let
-  cfg = config.soxin.settings.gtk;
+  cfg = config.soxincfg.settings.gtk;
 in
 {
   options = {
-    soxin.settings.gtk = {
+    soxincfg.settings.gtk = {
       enable = mkEnableOption "GTK";
     };
   };
