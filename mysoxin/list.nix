@@ -1,6 +1,5 @@
 {
   # programs
-  starship = ./programs/starship.nix;
   urxvt = ./programs/urxvt.nix;
 
   # hardware
