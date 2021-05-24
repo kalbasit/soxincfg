@@ -23,11 +23,8 @@ in
       };
     }
 
-    (mkIf cfg.enableGpgSigningKey {
-      soxin.programs.git = {
-        gpgSigningKey = "me@yl.codes";
-      };
-    })
+    # enable GPG signing
+    (mkIf cfg.enableGpgSigningKey { soxin.programs.git.gpgSigningKey = "me@yl.codes"; })
 
     (optionalAttrs (mode == "home-manager") {
       home.packages = with pkgs; [
