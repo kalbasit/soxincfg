@@ -1,6 +1,5 @@
 {
   # programs
-  keybase = ./programs/keybase.nix;
   less = ./programs/less.nix;
   mosh = ./programs/mosh.nix;
   pet = ./programs/pet.nix;
