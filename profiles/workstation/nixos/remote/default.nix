@@ -8,7 +8,6 @@ mkMerge [
       hardware = { fwupd.enable = true; };
 
       programs = {
-        htop.enable = true;
         keybase = {
           enable = true;
           enableFs = true;
@@ -30,6 +29,7 @@ mkMerge [
     soxincfg = {
       programs = {
         git.enable = true;
+        htop.enable = true;
         neovim.enable = true;
         ssh.enable = true;
         starship.enable = true;

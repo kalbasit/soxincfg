@@ -14,7 +14,6 @@ mkMerge [
       };
 
       programs = {
-        htop.enable = true;
         keybase = {
           enable = true;
           enableFs = true;
@@ -79,6 +78,7 @@ mkMerge [
         chromium = { enable = true; surfingkeys.enable = true; };
         dbeaver.enable = true;
         git.enable = true;
+        htop.enable = true;
         neovim.enable = true;
         ssh.enable = true;
         starship.enable = true;

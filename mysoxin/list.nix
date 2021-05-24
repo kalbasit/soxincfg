@@ -1,6 +1,5 @@
 {
   # programs
-  htop = ./programs/htop.nix;
   keybase = ./programs/keybase.nix;
   less = ./programs/less.nix;
   mosh = ./programs/mosh.nix;
