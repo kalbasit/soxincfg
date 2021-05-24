@@ -16,6 +16,9 @@ in
               x11 = { layout = "us"; variant = "colemak"; };
               console = { keyMap = "colemak"; };
             }
+            {
+              x11 = { layout = "us"; };
+            }
           ];
         };
         theme = "gruvbox-dark";
