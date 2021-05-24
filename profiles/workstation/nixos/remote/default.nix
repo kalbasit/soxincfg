@@ -13,7 +13,6 @@ mkMerge [
           enableFs = true;
         };
         less.enable = true;
-        pet.enable = true;
         ssh.enable = true;
       };
 
@@ -31,6 +30,7 @@ mkMerge [
         htop.enable = true;
         mosh.enable = true;
         neovim.enable = true;
+        pet.enable = true;
         ssh.enable = true;
         starship.enable = true;
         tmux.enable = true;

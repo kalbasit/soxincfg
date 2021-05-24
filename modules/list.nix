@@ -9,6 +9,7 @@
   htop = ./programs/htop;
   mosh = ./programs/mosh;
   neovim = ./programs/neovim;
+  pet = ./programs/pet;
   ssh = ./programs/ssh.nix;
   starship = ./programs/starship.nix;
   termite = ./programs/termite.nix;

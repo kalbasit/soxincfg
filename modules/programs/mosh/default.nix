@@ -21,7 +21,7 @@ in
     (optionalAttrs (mode == "NixOS") {
       programs.mosh = { enable = true; };
 
-      networking.firewall.allowedUDPPortRanges = [ { from = 60000; to = 61000; } ];
+      networking.firewall.allowedUDPPortRanges = [{ from = 60000; to = 61000; }];
     })
 
     (optionalAttrs (mode == "home-manager") { home.packages = [ pkgs.mosh ]; })
