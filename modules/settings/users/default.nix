@@ -2,21 +2,26 @@
 
 with lib;
 let
+  cfg = config.soxincfg.settings.users;
+
+  defaultGroups = [
+    "builders"
+    "dialout"
+    "fuse"
+    "users"
+    "video"
+  ];
+
   makeUser = userName: { uid, isAdmin ? false, home ? "/home/${userName}", hashedPassword ? "", sshKeys ? [ ] }: nameValuePair
     userName
     {
       inherit home uid hashedPassword;
 
       group = "mine";
-      extraGroups = [
-        "builders"
-        "dialout"
-        "fuse"
-        "users"
-        "video"
-      ]
-      ++ config.soxin.users.groups
-      ++ (optionals isAdmin [ "wheel" ]);
+      extraGroups =
+        defaultGroups
+        ++ cfg.groups
+        ++ (optionals isAdmin [ "wheel" ]);
 
       shell = pkgs.zsh;
       isNormalUser = true;
@@ -26,7 +31,7 @@ let
 
 in
 {
-  options.soxin.users = {
+  options.soxincfg.settings.users = {
     enable = mkOption {
       type = types.bool;
       default = true;
@@ -52,7 +57,7 @@ in
     };
   };
 
-  config = mkIf config.soxin.users.enable (mkMerge [
+  config = mkIf cfg.enable (mkMerge [
     (optionalAttrs (mode == "NixOS") {
       users = {
         mutableUsers = false;
@@ -62,7 +67,7 @@ in
           mine = { gid = 2000; };
         };
 
-        users = mapAttrs' makeUser config.soxin.users.users;
+        users = mapAttrs' makeUser config.soxincfg.settings.users.users;
       };
     })
   ]);

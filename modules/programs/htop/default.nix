@@ -2,11 +2,11 @@
 
 with lib;
 let
-  cfg = config.soxin.programs.htop;
+  cfg = config.soxincfg.programs.htop;
 in
 {
   options = {
-    soxin.programs.htop = {
+    soxincfg.programs.htop = {
       enable = mkEnableOption "Whether to enable htop.";
     };
   };

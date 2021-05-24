@@ -130,7 +130,7 @@
 
           nixosModules = {
             profiles = import ./profiles;
-            soxin = import ./soxin/soxin.nix;
+            soxin = import ./mysoxin/soxin.nix;
             soxincfg = import ./modules/soxincfg.nix;
           };
 

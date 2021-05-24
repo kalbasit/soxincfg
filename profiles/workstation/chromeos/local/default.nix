@@ -10,15 +10,11 @@ mkMerge [
       };
 
       programs = {
-        fzf.enable = true;
-        htop.enable = true;
         # keybase = {
         #   enable = true;
         #   enableFs = true;
         # };
         less.enable = true;
-        mosh.enable = true;
-        pet.enable = true;
         # rbrowser = {
         #   enable = true;
         #   setMimeList = true;
@@ -33,7 +29,6 @@ mkMerge [
         #   };
         # };
         # rofi.enable = true;
-        # urxvt.enable = true;
       };
 
       services = {
@@ -78,7 +73,10 @@ mkMerge [
         # chromium = { enable = true; surfingkeys.enable = true; };
         dbeaver.enable = true;
         git = { enable = true; enableGpgSigningKey = false; };
+        htop.enable = true;
+        mosh.enable = true;
         neovim.enable = true;
+        pet.enable = true;
         ssh.enable = true;
         starship.enable = true;
         # termite.enable = true;
@@ -99,6 +97,7 @@ mkMerge [
   (optionalAttrs (mode == "home-manager") {
     programs.bat.enable = true;
     programs.direnv.enable = true;
+    programs.fzf.enable = true;
 
     home.file = {
       ".npmrc".text = "prefix=${config.home.homeDirectory}/.filesystem";
@@ -235,8 +234,6 @@ mkMerge [
       lazygit
 
       mercurial
-
-      mosh
 
       nur.repos.kalbasit.nixify
 
