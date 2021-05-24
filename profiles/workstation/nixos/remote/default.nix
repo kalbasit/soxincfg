@@ -13,7 +13,6 @@ mkMerge [
           enableFs = true;
         };
         less.enable = true;
-        ssh.enable = true;
       };
 
       services = { openssh.enable = true; };
