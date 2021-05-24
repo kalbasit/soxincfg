@@ -5,7 +5,7 @@
   brave = ./programs/brave.nix;
   chromium = ./programs/chromium;
   dbeaver = ./programs/dbeaver;
-  git = ./programs/git.nix;
+  git = ./programs/git;
   neovim = ./programs/neovim;
   ssh = ./programs/ssh.nix;
   starship = ./programs/starship.nix;
