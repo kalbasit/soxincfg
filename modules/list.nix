@@ -24,4 +24,5 @@
   fonts = ./settings/fonts;
   gtk = ./settings/gtk;
   nix = ./settings/nix;
+  users = ./settings/users;
 }

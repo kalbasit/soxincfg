@@ -1,7 +1,4 @@
 {
-  # settings
-  users = ./settings/users.nix;
-
   # programs
   git = ./programs/git.nix;
   htop = ./programs/htop.nix;
