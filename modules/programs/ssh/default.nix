@@ -2,7 +2,7 @@
 
 with lib;
 let
-  cfg = config.soxin.programs.ssh;
+  cfg = config.soxincfg.programs.ssh;
 
   yesOrNo = v: if v then "yes" else "no";
 in
@@ -11,10 +11,10 @@ in
   # https://infosec.mozilla.org/guidelines/openssh
 
   options = {
-    soxin.programs.ssh = {
-      enable = mkEnableOption "Whether to enable SSH client.";
+    soxincfg.programs.ssh = {
+      enable = mkEnableOption "enable SSH client";
 
-      hashKnownHosts = mkEnableOption "Whether to hash known hosts.";
+      hashKnownHosts = mkEnableOption "hash known hosts";
 
       hostKeyAlgorithms = mkOption {
         type = with types; listOf str;
@@ -110,6 +110,11 @@ in
       programs.ssh = {
         enable = true;
 
+        compression = true;
+        serverAliveInterval = 20;
+        controlMaster = "auto";
+        controlPersist = "yes";
+
         extraConfig = ''
           # Host keys the client accepts - order here is honored by OpenSSH
           ${optionalString (cfg.hostKeyAlgorithms != [ ])
@@ -122,6 +127,19 @@ in
           ${optionalString (cfg.ciphers != [ ])
               ("Ciphers " + (concatStringsSep "," cfg.ciphers))}
         '';
+
+        matchBlocks = {
+          # special host so ssh into the VM started with nixos-start-vm
+          # See soxin/programs/zsh/plugins/functions/nixos-start-vm
+          hvm = {
+            hostname = "localhost";
+            port = 2222;
+            forwardAgent = true;
+            extraOptions = {
+              StrictHostKeyChecking = "no";
+            };
+          };
+        };
       };
     })
   ]);

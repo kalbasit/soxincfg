@@ -5,9 +5,12 @@
   brave = ./programs/brave.nix;
   chromium = ./programs/chromium;
   dbeaver = ./programs/dbeaver;
-  git = ./programs/git.nix;
+  git = ./programs/git;
+  htop = ./programs/htop;
+  mosh = ./programs/mosh;
   neovim = ./programs/neovim;
-  ssh = ./programs/ssh.nix;
+  pet = ./programs/pet;
+  ssh = ./programs/ssh;
   starship = ./programs/starship.nix;
   termite = ./programs/termite.nix;
   tmux = ./programs/tmux;
@@ -21,5 +24,8 @@
   nextcloud = ./services/nextcloud;
 
   # settings
+  fonts = ./settings/fonts;
+  gtk = ./settings/gtk;
   nix = ./settings/nix;
+  users = ./settings/users;
 }

@@ -332,8 +332,8 @@ in
 
       set $daemon_mode Daemons: (g)reenclip, (x)cape
       mode "$daemon_mode" { ''
-        # bindsym g exec ${nosid} ${getBin pkgs.haskellPackages.greenclip}/bin/greenclip daemon, mode default
-     + ''  bindsym x exec ${nosid} ${getBin pkgs.xcape}/bin/xcape -e 'Control_L=Escape', mode default
+  # bindsym g exec ${nosid} ${getBin pkgs.haskellPackages.greenclip}/bin/greenclip daemon, mode default
+  + ''  bindsym x exec ${nosid} ${getBin pkgs.xcape}/bin/xcape -e 'Control_L=Escape', mode default
 
         bindsym Escape mode "$launcher"
       }

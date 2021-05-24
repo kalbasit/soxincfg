@@ -6,11 +6,11 @@ with lib;
 
   config = mkMerge [
     (optionalAttrs (mode == "NixOS") {
-      soxin = {
+      soxincfg.settings.users = {
         # allow my user to access secrets
-        users.groups = [ "keys" ];
+        groups = [ "keys" ];
 
-        users.users = {
+        users = {
           yl = {
             inherit (soxincfg.vars.users.yl) hashedPassword sshKeys uid;
             isAdmin = true;

@@ -1,22 +1,4 @@
 {
-  # settings
-  fonts = ./settings/fonts.nix;
-  gtk = ./settings/gtk.nix;
-  users = ./settings/users.nix;
-
-  # programs
-  autorandr = ./programs/autorandr.nix;
-  fzf = ./programs/fzf.nix;
-  git = ./programs/git.nix;
-  htop = ./programs/htop.nix;
-  keybase = ./programs/keybase.nix;
-  less = ./programs/less.nix;
-  mosh = ./programs/mosh.nix;
-  pet = ./programs/pet.nix;
-  ssh = ./programs/ssh.nix;
-  starship = ./programs/starship.nix;
-  urxvt = ./programs/urxvt.nix;
-
   # hardware
   fwupd = ./hardware/fwupd.nix;
   intelBacklight = ./hardware/intel-backlight.nix;

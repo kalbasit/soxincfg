@@ -189,11 +189,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1621808687,
-        "narHash": "sha256-xRo9Q7AU0GfSbQrRg01fUiLpbXpEkhxKNY0VecF1VBE=",
+        "lastModified": 1621867447,
+        "narHash": "sha256-IG4e6IGow8zB+3kFBDVZKU0fiwT9/4cRsneI7DRu5ss=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "f17309879467d4549b84dbd7b5faca9021ae00eb",
+        "rev": "e6a75d6063442b5b5559ac97b65fc17d1d6bd1a4",
         "type": "github"
       },
       "original": {
@@ -243,11 +243,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1621444078,
-        "narHash": "sha256-G+Y4ZcNGHpAw29HN7n5TnDVs/kiLj8zHW1ZY9iZcWCg=",
+        "lastModified": 1621872313,
+        "narHash": "sha256-eCHApkiCDmL4JZcEp4WTrCc0PmoXz3U6Yq555BqNEUk=",
         "owner": "SoxinOS",
         "repo": "soxin",
-        "rev": "3f1ff7a006b4c2f1cc326ac1ea62f75cf16c3b95",
+        "rev": "de145a031fcf1f592e35da67b79606527f99658a",
         "type": "github"
       },
       "original": {

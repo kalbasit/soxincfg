@@ -10,7 +10,7 @@ in
       enable = mkEnableOption "Enable libvirtd.";
       addAdminUsersToGroup = recursiveUpdate
         (mkEnableOption ''
-          Whether to add admin users declared in soxin.users to the
+          Whether to add admin users declared in soxincfg.settings.users to the
           `libvirtd` group.
         '')
         { default = true; };
@@ -24,7 +24,7 @@ in
         qemuRunAsRoot = false;
       };
 
-      soxin.users.groups = optional cfg.addAdminUsersToGroup "libvirtd";
+      soxincfg.settings.users.groups = optional cfg.addAdminUsersToGroup "libvirtd";
 
       environment.systemPackages = with pkgs; [ virt-manager spice-gtk ];
     })

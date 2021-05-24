@@ -10,7 +10,7 @@ in
       enable = mkEnableOption "Enable virtualbox.";
       addAdminUsersToGroup = recursiveUpdate
         (mkEnableOption ''
-          Whether to add admin users declared in soxin.users to the `virtualbox`
+          Whether to add admin users declared in soxincfg.settings.users to the `virtualbox`
           group.
         '')
         { default = true; };
@@ -22,7 +22,7 @@ in
       virtualisation.virtualbox.host.enable = true;
       virtualisation.virtualbox.host.enableExtensionPack = true;
 
-      soxin.users.groups = optional cfg.addAdminUsersToGroup "vboxusers";
+      soxincfg.settings.users.groups = optional cfg.addAdminUsersToGroup "vboxusers";
     })
   ]);
 }
