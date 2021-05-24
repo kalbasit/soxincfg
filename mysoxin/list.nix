@@ -1,6 +1,5 @@
 {
   # programs
-  less = ./programs/less.nix;
   mosh = ./programs/mosh.nix;
   pet = ./programs/pet.nix;
   ssh = ./programs/ssh.nix;
