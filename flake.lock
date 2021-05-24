@@ -74,17 +74,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1621417094,
-        "narHash": "sha256-Csk4p8jFUma7FtMnjEJGTPGxCOnTbb30xr8AXwrUTMM=",
+        "lastModified": 1621794721,
+        "narHash": "sha256-JXfTSZUu9EVbT9D/MFsx0cXfa8bw1NFCzIxZ7gO73Uo=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "3d18912f5ae7c98bd5249411d98cdf3b28fe1f09",
+        "rev": "90493027e33ba9eb3f50dc1da365d0e4ca31bf14",
         "type": "github"
       },
       "original": {
         "owner": "nix-community",
+        "ref": "release-21.05",
         "repo": "home-manager",
-        "rev": "3d18912f5ae7c98bd5249411d98cdf3b28fe1f09",
         "type": "github"
       }
     },
@@ -141,33 +141,33 @@
     },
     "nixpkgs-master": {
       "locked": {
-        "lastModified": 1621547071,
-        "narHash": "sha256-JqK+vpJqrDY37k/nPHdd5wZN/uXeJ2LcG4XuXhx1GfQ=",
+        "lastModified": 1621863475,
+        "narHash": "sha256-tf52br1+h6BjWvZlFj8ClhwNiq6SMEsdREraWZRB95I=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "d6f68269def98baf4e85a7732c7d8b537c7a716c",
+        "rev": "0ae53091119a6622e698bb7ec9173a2ca0688ddc",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
+        "ref": "release-21.05",
         "repo": "nixpkgs",
-        "rev": "d6f68269def98baf4e85a7732c7d8b537c7a716c",
         "type": "github"
       }
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1621547071,
-        "narHash": "sha256-JqK+vpJqrDY37k/nPHdd5wZN/uXeJ2LcG4XuXhx1GfQ=",
+        "lastModified": 1621863475,
+        "narHash": "sha256-tf52br1+h6BjWvZlFj8ClhwNiq6SMEsdREraWZRB95I=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "d6f68269def98baf4e85a7732c7d8b537c7a716c",
+        "rev": "0ae53091119a6622e698bb7ec9173a2ca0688ddc",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
+        "ref": "release-21.05",
         "repo": "nixpkgs",
-        "rev": "d6f68269def98baf4e85a7732c7d8b537c7a716c",
         "type": "github"
       }
     },
@@ -243,15 +243,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1621872313,
-        "narHash": "sha256-eCHApkiCDmL4JZcEp4WTrCc0PmoXz3U6Yq555BqNEUk=",
+        "lastModified": 1621873337,
+        "narHash": "sha256-vg9tv5f1ZN3ut9GcGAtbyy6jg4AjDjvUuPAmlsPucjI=",
         "owner": "SoxinOS",
         "repo": "soxin",
-        "rev": "de145a031fcf1f592e35da67b79606527f99658a",
+        "rev": "1ee3227c0c722189c80258159644d8e42559ce7b",
         "type": "github"
       },
       "original": {
         "owner": "SoxinOS",
+        "ref": "release-21.05",
         "repo": "soxin",
         "type": "github"
       }
