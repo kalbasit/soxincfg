@@ -13,7 +13,6 @@ mkMerge [
           enableFs = true;
         };
         less.enable = true;
-        mosh.enable = true;
         pet.enable = true;
         ssh.enable = true;
       };
@@ -30,6 +29,7 @@ mkMerge [
       programs = {
         git.enable = true;
         htop.enable = true;
+        mosh.enable = true;
         neovim.enable = true;
         ssh.enable = true;
         starship.enable = true;
@@ -188,8 +188,6 @@ mkMerge [
       lastpass-cli
 
       mercurial
-
-      mosh
 
       nur.repos.kalbasit.nixify
 

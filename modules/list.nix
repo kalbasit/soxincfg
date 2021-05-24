@@ -7,6 +7,7 @@
   dbeaver = ./programs/dbeaver;
   git = ./programs/git;
   htop = ./programs/htop;
+  mosh = ./programs/mosh;
   neovim = ./programs/neovim;
   ssh = ./programs/ssh.nix;
   starship = ./programs/starship.nix;

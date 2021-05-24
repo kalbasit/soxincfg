@@ -15,7 +15,6 @@ mkMerge [
         #   enableFs = true;
         # };
         less.enable = true;
-        mosh.enable = true;
         pet.enable = true;
         # rbrowser = {
         #   enable = true;
@@ -77,6 +76,7 @@ mkMerge [
         dbeaver.enable = true;
         git = { enable = true; enableGpgSigningKey = false; };
         htop.enable = true;
+        mosh.enable = true;
         neovim.enable = true;
         ssh.enable = true;
         starship.enable = true;
@@ -235,8 +235,6 @@ mkMerge [
       lazygit
 
       mercurial
-
-      mosh
 
       nur.repos.kalbasit.nixify
 
