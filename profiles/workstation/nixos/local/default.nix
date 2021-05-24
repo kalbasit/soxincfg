@@ -14,15 +14,11 @@ mkMerge [
       };
 
       programs = {
-        fzf.enable = true;
-        htop.enable = true;
         keybase = {
           enable = true;
           enableFs = true;
         };
         less.enable = true;
-        mosh.enable = true;
-        pet.enable = true;
         rbrowser = {
           enable = true;
           setMimeList = true;
@@ -40,7 +36,6 @@ mkMerge [
           enable = true;
           i3.enable = true;
         };
-        urxvt.enable = true;
       };
 
       services = {
@@ -65,11 +60,6 @@ mkMerge [
         xserver.enable = true;
       };
 
-      settings = {
-        fonts.enable = true;
-        gtk.enable = true;
-      };
-
       virtualisation = {
         docker.enable = true;
         libvirtd.enable = true;
@@ -85,7 +75,10 @@ mkMerge [
         chromium = { enable = true; surfingkeys.enable = true; };
         dbeaver.enable = true;
         git.enable = true;
+        htop.enable = true;
+        mosh.enable = true;
         neovim.enable = true;
+        pet.enable = true;
         ssh.enable = true;
         starship.enable = true;
         termite.enable = true;
@@ -98,6 +91,8 @@ mkMerge [
       };
 
       settings = {
+        fonts.enable = true;
+        gtk.enable = true;
         nix.distributed-builds.enable = true;
       };
     };
@@ -155,6 +150,7 @@ mkMerge [
   (optionalAttrs (mode == "home-manager") {
     programs.bat.enable = true;
     programs.direnv.enable = true;
+    programs.fzf.enable = true;
     services.flameshot.enable = true;
 
     home.file = {
@@ -307,8 +303,6 @@ mkMerge [
       lazygit
 
       mercurial
-
-      mosh
 
       nur.repos.kalbasit.nixify
 

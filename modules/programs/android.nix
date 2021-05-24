@@ -10,9 +10,8 @@ in
   };
 
   config = mkIf cfg.enable (mkMerge [
-    (optionalAttrs (mode == "NixOS") {
-      programs.adb.enable = true;
-      soxin.users.groups = singleton "adbusers";
-    })
+    { soxincfg.settings.users.groups = singleton "adbusers"; }
+
+    (optionalAttrs (mode == "NixOS") { programs.adb.enable = true; })
   ]);
 }

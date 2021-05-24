@@ -10,7 +10,7 @@ in
       enable = mkEnableOption "Enable docker.";
       addAdminUsersToGroup = recursiveUpdate
         (mkEnableOption ''
-          Whether to add admin users declared in soxin.users to the `docker`
+          Whether to add admin users declared in soxincfg.settings.users to the `docker`
           group.
         '')
         { default = true; };
@@ -23,7 +23,7 @@ in
         enable = true;
       };
 
-      soxin.users.groups = optional cfg.addAdminUsersToGroup "docker";
+      soxincfg.settings.users.groups = optional cfg.addAdminUsersToGroup "docker";
     })
   ]);
 }

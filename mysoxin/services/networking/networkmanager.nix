@@ -22,7 +22,7 @@ in
 
       programs.nm-applet.enable = true;
 
-      soxin.users.groups = [ "networkmanager" ];
+      soxincfg.settings.users.groups = [ "networkmanager" ];
     })
   ]);
 }

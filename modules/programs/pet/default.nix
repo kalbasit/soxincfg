@@ -2,10 +2,13 @@
 
 with lib;
 
+let
+  cfg = config.soxincfg.programs.pet;
+in
 {
-  options.soxin.programs.pet.enable = mkEnableOption "pet";
+  options.soxincfg.programs.pet.enable = mkEnableOption "pet";
 
-  config = mkIf config.soxin.programs.pet.enable (mkMerge [
+  config = mkIf cfg.enable (mkMerge [
     (optionalAttrs (mode == "home-manager") {
       programs.zsh.initExtra = ''
         # setup pet
