@@ -1,6 +1,5 @@
 {
   # programs
-  ssh = ./programs/ssh.nix;
   starship = ./programs/starship.nix;
   urxvt = ./programs/urxvt.nix;
 

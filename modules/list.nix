@@ -10,7 +10,7 @@
   mosh = ./programs/mosh;
   neovim = ./programs/neovim;
   pet = ./programs/pet;
-  ssh = ./programs/ssh.nix;
+  ssh = ./programs/ssh;
   starship = ./programs/starship.nix;
   termite = ./programs/termite.nix;
   tmux = ./programs/tmux;
