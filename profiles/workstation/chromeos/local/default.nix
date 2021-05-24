@@ -29,7 +29,6 @@ mkMerge [
         #   };
         # };
         # rofi.enable = true;
-        # urxvt.enable = true;
       };
 
       services = {

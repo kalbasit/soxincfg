@@ -36,7 +36,6 @@ mkMerge [
           enable = true;
           i3.enable = true;
         };
-        urxvt.enable = true;
       };
 
       services = {

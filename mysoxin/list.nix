@@ -1,7 +1,4 @@
 {
-  # programs
-  urxvt = ./programs/urxvt.nix;
-
   # hardware
   fwupd = ./hardware/fwupd.nix;
   intelBacklight = ./hardware/intel-backlight.nix;
