@@ -243,9 +243,12 @@
         ]
       },
       "locked": {
-        "narHash": "sha256-+BBJq1Vp91vjXPrMq0HWU8SsVIklLUwmo67OsoQNSTE=",
-        "path": "/yl/code/stories/personal/soxin/shrink-my-soxin/github.com/SoxinOS/soxin",
-        "type": "path"
+        "lastModified": 1621872313,
+        "narHash": "sha256-eCHApkiCDmL4JZcEp4WTrCc0PmoXz3U6Yq555BqNEUk=",
+        "owner": "SoxinOS",
+        "repo": "soxin",
+        "rev": "de145a031fcf1f592e35da67b79606527f99658a",
+        "type": "github"
       },
       "original": {
         "owner": "SoxinOS",
