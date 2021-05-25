@@ -20,6 +20,7 @@ in
         autoRepeatInterval = 30;
 
         xkbOptions = concatStringsSep "," [
+          "grp:rctrl_rshift_toggle"
           "ctrl:nocaps"
         ];
 
