@@ -25,6 +25,7 @@ mkMerge [
 
     soxincfg = {
       programs = {
+        fzf.enable = true;
         git.enable = true;
         htop.enable = true;
         mosh.enable = true;
@@ -86,7 +87,6 @@ mkMerge [
   (optionalAttrs (mode == "home-manager") {
     programs.bat.enable = true;
     programs.direnv.enable = true;
-    programs.fzf.enable = true;
 
     home.file = {
       ".npmrc".text = "prefix=${config.home.homeDirectory}/.filesystem";

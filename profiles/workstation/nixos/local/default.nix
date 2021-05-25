@@ -74,6 +74,7 @@ mkMerge [
         brave.enable = true;
         chromium = { enable = true; surfingkeys.enable = true; };
         dbeaver.enable = true;
+        fzf.enable = true;
         git.enable = true;
         htop.enable = true;
         mosh.enable = true;
@@ -153,7 +154,6 @@ mkMerge [
   (optionalAttrs (mode == "home-manager") {
     programs.bat.enable = true;
     programs.direnv.enable = true;
-    programs.fzf.enable = true;
     services.flameshot.enable = true;
 
     home.file = {
