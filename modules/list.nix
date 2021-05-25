@@ -5,6 +5,7 @@
   brave = ./programs/brave.nix;
   chromium = ./programs/chromium;
   dbeaver = ./programs/dbeaver;
+  fzf = ./programs/fzf;
   git = ./programs/git;
   htop = ./programs/htop;
   mosh = ./programs/mosh;
