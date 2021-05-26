@@ -250,6 +250,8 @@ mkMerge [
     };
 
     home.packages = with pkgs; [
+      zulip zulip-term
+
       remmina
 
       file
