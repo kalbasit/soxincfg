@@ -1,0 +1,1 @@
+SUBSYSTEMS=="usb", ATTRS{idVendor}=="3297", ATTRS{idProduct}=="4976",RUN+="@out@/bin/switch-layout"
