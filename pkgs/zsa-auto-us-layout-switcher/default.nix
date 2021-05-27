@@ -11,12 +11,13 @@ let
     SUBSYSTEMS=="usb", ACTION=="add", ATTRS{idVendor}=="3297", \
       ATTRS{idProduct}=="4976", ENV{HOME}="/yl", ENV{DISPLAY}=":0", \
       ENV{XAUTHORITY}="/yl/.Xauthority", \
-      RUN+="@flock@/bin/flock --nonblock /tmp/switch-layout.lock -c @out@/bin/switch-layout"
+      RUN+="@flock@/bin/flock --nonblock /tmp/add-switch-layout.lock -c @out@/bin/switch-layout"
 
     # rule for removing the keyboard
     SUBSYSTEMS=="usb", ACTION=="remove", ATTRS{idVendor}=="3297", \
       ATTRS{idProduct}=="4976", ENV{HOME}="/yl", ENV{DISPLAY}=":0", \
-      ENV{XAUTHORITY}="/yl/.Xauthority", RUN+="@out@/bin/switch-layout"
+      ENV{XAUTHORITY}="/yl/.Xauthority", \
+      RUN+="@flock@/bin/flock --nonblock /tmp/remove-switch-layout.lock -c @out@/bin/switch-layout"
   '';
 
   autoswitcher = writeShellScript "zsa-auto-us-layout-switcher" ''
