@@ -49,6 +49,9 @@ let
         if [[ -n "$zsa_id" ]]; then
           log "Setting up the US layout onto the keyboard $zsa_id"
           setxkbmap -device "$zsa_id" -layout us
+        else
+          log "No ID were found for the ErgoDox EZ Glow"
+          exit 1
         fi
       ) 9>/tmp/switch-layout-loop.lock &
     fi
