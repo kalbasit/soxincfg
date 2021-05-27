@@ -29,6 +29,8 @@ in
     { soxin.settings.keyboard.layouts = singleton colemakLayout; }
 
     (optionalAttrs (mode == "NixOS") (mkIf cfg.zsa.enable  {
+      environment.systemPackages = with pkgs; [ wally-cli ];
+      hardware.keyboard.zsa.enable = true;
       services.udev.packages = singleton pkgs.zsa-auto-us-layout-switcher;
 
       systemd.services.zsa-auto-us-layout-switcher =
@@ -97,10 +99,5 @@ in
           };
       };
     }))
-
-    (optionalAttrs (mode == "NixOS") {
-      hardware.keyboard.zsa.enable = true;
-      environment.systemPackages = with pkgs; [ wally-cli ];
-    })
   ]);
 }
