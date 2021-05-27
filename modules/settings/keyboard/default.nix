@@ -84,7 +84,9 @@ in
           after = [ "graphical-session.target" ];
 
           environment = {
+            # TODO: This should be customizable
             Xauthority = "/yl/.Xauthority";
+            # TODO: This should be customizable
             DISPLAY = ":0";
           };
 
@@ -95,6 +97,7 @@ in
             ExecStop = auto-switcher-stop;
             RemainAfterExit = true;
             Type = "oneshot";
+            # TODO: This should be customizable
             User = "yl";
           };
       };
