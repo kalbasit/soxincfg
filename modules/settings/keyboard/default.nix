@@ -28,8 +28,11 @@ in
   config = mkIf cfg.enable (mkMerge [
     { soxin.settings.keyboard.layouts = singleton colemakLayout; }
 
+    (optionalAttrs (mode == "home-manager") (mkIf cfg.zsa.enable  {
+      home.packages = with pkgs; [ wally-cli ];
+    }))
+
     (optionalAttrs (mode == "NixOS") (mkIf cfg.zsa.enable  {
-      environment.systemPackages = with pkgs; [ wally-cli ];
       hardware.keyboard.zsa.enable = true;
       services.udev.packages = singleton pkgs.zsa-auto-us-layout-switcher;
 
