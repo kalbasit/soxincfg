@@ -8,6 +8,7 @@ let
     "builders"
     "dialout"
     "fuse"
+    "plugdev" # to access ZSA keyboards.
     "users"
     "video"
   ];
