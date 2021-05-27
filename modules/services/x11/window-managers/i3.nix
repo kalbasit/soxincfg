@@ -38,6 +38,7 @@ in
           filesystems.enable = true;
           ram.enable = true;
           microphone.enable = true;
+          keyboardLayout.enable = true;
           network.enable = true;
           volume.enable = true;
           temperature.enable = true;
