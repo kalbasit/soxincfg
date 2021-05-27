@@ -25,14 +25,6 @@ in
   services.xserver.libinput.enable = true;
   services.xserver.libinput.touchpad.accelSpeed = "0.5";
 
-  # use hades as a binary cache
-  # command:
-  #
-  #   nixos-rebuild --option substituters ssh://hades.admin.nasreddine.com --option require-sigs false --flake '.#achilles' build
-  #
-  nix.binaryCaches = ["ssh://hades.admin.nasreddine.com"];
-  nix.requireSignedBinaryCaches = false;
-
   # enable fingerprint reader
   services.fprintd.enable = true;
   security.pam.services.login.fprintAuth = true;
