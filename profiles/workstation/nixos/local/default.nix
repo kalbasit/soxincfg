@@ -107,6 +107,12 @@ mkMerge [
       {
         environment.homeBinInPath = true;
 
+        # allow the store to be accessed for store paths via SSH
+        nix.sshServe = {
+          enable = true;
+          keys = config.soxincfg.settings.users.users.yl.sshKeys;
+        };
+
         hardware.keyboard.zsa.enable = true;
         environment.systemPackages = with pkgs; [ wally-cli ];
 
