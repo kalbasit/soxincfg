@@ -282,7 +282,7 @@ let
         format-prefix = "";
         format-prefix-foreground = "\${colors.foreground-alt}";
         format-prefix-underline = "\${colors.secondary}";
-        label-layout = "%layout%";
+        label-layout = "%layout% (%variant%)";
         label-layout-underline = "\${colors.secondary}";
         label-indicator-padding = 1;
         label-indicator-margin = 1;
