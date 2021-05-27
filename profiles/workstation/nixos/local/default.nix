@@ -113,9 +113,6 @@ mkMerge [
           keys = config.soxincfg.settings.users.users.yl.sshKeys;
         };
 
-        hardware.keyboard.zsa.enable = true;
-        environment.systemPackages = with pkgs; [ wally-cli ];
-
         services.gnome.gnome-keyring.enable = true;
 
         # Enable TailScale for zero-config VPN service.
