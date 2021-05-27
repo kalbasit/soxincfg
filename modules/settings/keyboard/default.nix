@@ -28,9 +28,9 @@ in
   config = mkIf cfg.enable (mkMerge [
     { soxin.settings.keyboard.layouts = singleton colemakLayout; }
 
-    (mkIf cfg.zsa.enable {
-
-    })
+    (optionalAttrs (mode == "NixOS") (mkIf cfg.zsa.enable  {
+      services.udev.packages = singleton pkgs.zsa-auto-us-layout-switcher;
+    }))
 
     (optionalAttrs (mode == "NixOS") {
       hardware.keyboard.zsa.enable = true;
