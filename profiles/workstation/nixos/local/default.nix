@@ -252,6 +252,9 @@ mkMerge [
     home.packages = with pkgs; [
       zulip zulip-term
 
+      # Switch your X keyboard layouts from the command line
+      xkb-switch
+
       remmina
 
       file
