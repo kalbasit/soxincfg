@@ -17,6 +17,8 @@ with lib;
     enableCryptodisk = true;
   };
 
+  boot.loader.efi.canTouchEfiVariables = true;
+
   boot.loader.systemd-boot.enable = false;
 
   nix.maxJobs = lib.mkDefault 8;
