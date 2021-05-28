@@ -10,6 +10,7 @@
   htop = ./programs/htop;
   mosh = ./programs/mosh;
   neovim = ./programs/neovim;
+  onlykey = ./programs/onlykey;
   pet = ./programs/pet;
   ssh = ./programs/ssh;
   starship = ./programs/starship.nix;
