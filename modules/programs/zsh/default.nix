@@ -64,6 +64,8 @@ let
 
         substituteInPlace $out/mount.enc \
           --subst-var-by cryptsetup_bin ${getBin cryptsetup}/bin/cryptsetup \
+          --subst-var-by bw_bin ${getBin bitwarden-cli}/bin/bw \
+          --subst-var-by jq_bin ${getBin jq}/bin/jq \
           --subst-var-by lpass_bin ${getBin lastpass-cli}/bin/lpass
 
         substituteInPlace $out/umount.enc \

@@ -12,9 +12,7 @@ function mount.enc() {
 			print_info "${log_depth}" "\t     --ro          - Mount as read-only"
 		}
 
-		local lo_file=
-		local lp_id=
-		local mount_options=noatime
+		local lo_file= lp_id= bw_id= mount_options=noatime
 
 		while [[ $# -ge 1 ]]; do
 			case "${1}" in
@@ -35,6 +33,15 @@ function mount.enc() {
 					lp_id="${2}"
 					if [[ -z "${lp_id}" ]]; then
 						print_error "${log_depth}" "--lp_id requires an argument"
+						$0_help
+						return 1
+					fi
+					shift 2
+					;;
+				--bw_id)
+					bw_id="${2}"
+					if [[ -z "${bw_id}" ]]; then
+						print_error "${log_depth}" "--bw_id requires an argument"
 						$0_help
 						return 1
 					fi
@@ -64,6 +71,8 @@ function mount.enc() {
 		print_info "${log_depth}" "opening the encrypted device ${lo_file} as ${name}"
 		if [[ -n "${lp_id}" ]]; then
 			@lpass_bin@ show --password "${lp_id}" | sudo @cryptsetup_bin@ open --type plain "${lo_file}" "${name}" || return 1
+		elif [[ -n "${bw_id}" ]]; then
+			@bw_bin@ get item "${bw_id}" | @jq_bin@ -r '.fields[] | if .name == "Password" then .value else empty end' | sudo @cryptsetup_bin@ open --type plain "${lo_file}" "${name}" || return 1
 		else
 			sudo @cryptsetup_bin@ open --type plain "${lo_file}" "${name}" || return 1
 		fi
