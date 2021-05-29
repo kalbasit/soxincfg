@@ -7,7 +7,6 @@
   dbeaver = ./programs/dbeaver;
   fzf = ./programs/fzf;
   git = ./programs/git;
-  htop = ./programs/htop;
   mosh = ./programs/mosh;
   neovim = ./programs/neovim;
   onlykey = ./programs/onlykey;
