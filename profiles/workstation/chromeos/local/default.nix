@@ -74,7 +74,6 @@ mkMerge [
         dbeaver.enable = true;
         fzf.enable = true;
         git = { enable = true; enableGpgSigningKey = false; };
-        htop.enable = true;
         mosh.enable = true;
         neovim.enable = true;
         pet.enable = true;
@@ -265,6 +264,8 @@ mkMerge [
       # bazel
 
       slack
+
+      glances
 
       # Games
       _2048-in-terminal

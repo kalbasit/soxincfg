@@ -27,7 +27,6 @@ mkMerge [
       programs = {
         fzf.enable = true;
         git.enable = true;
-        htop.enable = true;
         mosh.enable = true;
         neovim.enable = true;
         pet.enable = true;
@@ -213,6 +212,8 @@ mkMerge [
       gotop
 
       slack
+
+      glances
 
       # Games
       _2048-in-terminal

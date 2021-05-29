@@ -76,7 +76,6 @@ mkMerge [
         dbeaver.enable = true;
         fzf.enable = true;
         git.enable = true;
-        htop.enable = true;
         mosh.enable = true;
         neovim.enable = true;
         onlykey.enable = true;
