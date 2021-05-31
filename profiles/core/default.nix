@@ -16,16 +16,8 @@ in
 
     # configure NixOS
     (optionalAttrs (mode == "NixOS") {
-      nix = {
-        package = pkgs.nixFlakes;
-
-        # enable the sandbox but only on Linux
-        useSandbox = pkgs.stdenv.hostPlatform.isLinux;
-
-        extraOptions = ''
-          experimental-features = nix-command flakes ca-references
-        '';
-      };
+      # enable the Nix sandbox but only on Linux
+      nix.useSandbox = pkgs.stdenv.hostPlatform.isLinux;
 
       boot.tmpOnTmpfs = true;
 
