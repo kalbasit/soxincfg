@@ -4,7 +4,7 @@
   inputs = {
     deploy-rs.url = github:serokell/deploy-rs;
     nixos-hardware.url = github:NixOS/nixos-hardware;
-    nixpkgs.url = github:NixOS/nixpkgs/7d71001b796340b219d1bfa8552c81995017544a;
+    nixpkgs.url = github:NixOS/nixpkgs/c258bb29a37d9023e74a1388f7f4167c75bb53fa;
     nur.url = github:nix-community/NUR;
     unstable.url = github:NixOS/nixpkgs/nixos-unstable;
     utils.url = github:gytis-ivaskevicius/flake-utils-plus/v1.1.0;
