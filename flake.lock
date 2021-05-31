@@ -162,7 +162,8 @@
         "nixpkgs": "nixpkgs_2",
         "nur": "nur",
         "soxin": "soxin",
-        "unstable": "unstable"
+        "unstable": "unstable",
+        "utils": "utils_2"
       }
     },
     "sops-nix": {
@@ -199,10 +200,12 @@
         "unstable": [
           "unstable"
         ],
-        "utils": "utils_2"
+        "utils": [
+          "utils"
+        ]
       },
       "locked": {
-        "narHash": "sha256-oHdxWVM49nd6X/YZPqczTq5wVfU1fTjePLAIFPMRVfE=",
+        "narHash": "sha256-7BgVTLyOIC2L4ksG40DNV2rGVZDAoakEs/XuP635JAM=",
         "path": "/yl/code/stories/personal/soxin/move-to-flakeutils/github.com/SoxinOS/soxin",
         "type": "path"
       },

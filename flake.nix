@@ -6,6 +6,7 @@
     nixpkgs.url = github:NixOS/nixpkgs/7d71001b796340b219d1bfa8552c81995017544a;
     nur.url = github:nix-community/NUR;
     unstable.url = github:NixOS/nixpkgs/nixos-unstable;
+    utils.url = github:gytis-ivaskevicius/flake-utils-plus/v1.1.0;
 
     soxin = {
       url = github:SoxinOS/soxin;
@@ -14,11 +15,12 @@
         nixpkgs.follows = "nixpkgs";
         nur.follows = "nur";
         unstable.follows = "unstable";
+        utils.follows = "utils";
       };
     };
   };
 
-  outputs = inputs@{ self, soxin, nixpkgs, ... }:
+  outputs = inputs@{ self, soxin, nixpkgs, utils, ... }:
     let
       # Enable deploy-rs support
       withDeploy = true;
@@ -28,6 +30,7 @@
 
       inherit (nixpkgs) lib;
       inherit (lib) optionalAttrs recursiveUpdate singleton;
+      inherit (utils.lib) flattenTree;
 
       # Channel definitions. `channels.<name>.{input,overlaysBuilder,config,patches}`
       channels = {
@@ -86,7 +89,7 @@
       home-managers = import ./home-managers inputs;
 
       # Evaluates to `packages.<system>.<pname> = <unstable-channel-reference>.<pname>`.
-      packagesBuilder = channels: import ./pkgs channels;
+      packagesBuilder = channels: flattenTree (import ./pkgs channels);
 
       # declare the vars that are used only by sops
       vars = optionalAttrs withSops (import ./vars inputs);
