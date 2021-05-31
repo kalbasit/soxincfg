@@ -221,7 +221,7 @@
         ]
       },
       "locked": {
-        "narHash": "sha256-8JZlMXeWq9dDRFTpFVzjB966iTXU5cu/EHudeiOqfWA=",
+        "narHash": "sha256-xZOJ4ee0JoBTWGfrLlX0dN5ItodK3CfmJqbdkDZEJRI=",
         "path": "/yl/code/stories/personal/soxin/move-to-flakeutils/github.com/SoxinOS/soxin",
         "type": "path"
       },
