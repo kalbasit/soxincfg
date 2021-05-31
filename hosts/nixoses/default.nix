@@ -1,5 +1,13 @@
-inputs@{ self, deploy-rs, ... }:
+inputs@{ self, deploy-rs, nixpkgs, ... }:
 
+let
+  inherit (nixpkgs) lib;
+  inherit (lib) recursiveUpdate;
+  inherit (builtins) removeAttrs;
+  inherit (builtins) singleton;
+
+  channelName = "nixpkgs";
+in
 {
   ###
   # x86_64-linux
@@ -10,13 +18,7 @@ inputs@{ self, deploy-rs, ... }:
       system = "x86_64-linux";
     in
     {
-      # System architecture.
-      inherit system;
-      # <name> of the channel to be used. Defaults to `nixpkgs`
-      channelName = "nixpkgs";
-      # Extra arguments to be passed to the modules.
-      extraArgs = { };
-      # Host specific configuration.
+      inherit channelName system;
       modules = [ ./achilles/configuration.nix ];
     };
 
@@ -25,13 +27,7 @@ inputs@{ self, deploy-rs, ... }:
       system = "x86_64-linux";
     in
     {
-      # System architecture.
-      inherit system;
-      # <name> of the channel to be used. Defaults to `nixpkgs`
-      channelName = "nixpkgs";
-      # Extra arguments to be passed to the modules.
-      extraArgs = { };
-      # Host specific configuration.
+      inherit channelName system;
       modules = [ ./hades/configuration.nix ];
     };
 
@@ -40,13 +36,7 @@ inputs@{ self, deploy-rs, ... }:
       system = "x86_64-linux";
     in
     {
-      # System architecture.
-      inherit system;
-      # <name> of the channel to be used. Defaults to `nixpkgs`
-      channelName = "nixpkgs";
-      # Extra arguments to be passed to the modules.
-      extraArgs = { };
-      # Host specific configuration.
+      inherit channelName system;
       modules = [ ./x86-64-linux-0/configuration.nix ];
 
       deploy = {
@@ -64,13 +54,7 @@ inputs@{ self, deploy-rs, ... }:
       system = "x86_64-linux";
     in
     {
-      # System architecture.
-      inherit system;
-      # <name> of the channel to be used. Defaults to `nixpkgs`
-      channelName = "nixpkgs";
-      # Extra arguments to be passed to the modules.
-      extraArgs = { };
-      # Host specific configuration.
+      inherit channelName system;
       modules = [ ./zeus/configuration.nix ];
 
       deploy = {
@@ -92,13 +76,7 @@ inputs@{ self, deploy-rs, ... }:
       system = "aarch64-linux";
     in
     {
-      # System architecture.
-      inherit system;
-      # <name> of the channel to be used. Defaults to `nixpkgs`
-      channelName = "nixpkgs";
-      # Extra arguments to be passed to the modules.
-      extraArgs = { };
-      # Host specific configuration.
+      inherit channelName system;
       modules = [ ./aarch64-linux-0/configuration.nix ];
 
       deploy = {
@@ -116,13 +94,7 @@ inputs@{ self, deploy-rs, ... }:
       system = "aarch64-linux";
     in
     {
-      # System architecture.
-      inherit system;
-      # <name> of the channel to be used. Defaults to `nixpkgs`
-      channelName = "nixpkgs";
-      # Extra arguments to be passed to the modules.
-      extraArgs = { };
-      # Host specific configuration.
+      inherit channelName system;
       modules = [ ./kore/configuration.nix ];
 
       deploy = {
