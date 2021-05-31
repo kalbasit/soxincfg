@@ -95,9 +95,14 @@ mkMerge [
   }
 
   (optionalAttrs (mode == "home-manager") {
+    # programs
     programs.bat.enable = true;
     programs.direnv.enable = true;
 
+    # services
+    services.clipmenu.enable = true;
+
+    # files
     home.file = {
       ".npmrc".text = "prefix=${config.home.homeDirectory}/.filesystem";
 

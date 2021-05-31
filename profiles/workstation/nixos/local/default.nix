@@ -155,24 +155,16 @@ mkMerge [
     ))
 
   (optionalAttrs (mode == "home-manager") {
+    # programs
     programs.bat.enable = true;
     programs.direnv.enable = true;
+
+    # services
+    services.clipmenu.enable = true;
     services.flameshot.enable = true;
 
+    # files
     home.file = {
-      ".config/greenclip.cfg".text = ''
-        Config {
-         maxHistoryLength = 1000,
-         historyPath = "~/.local/share/greenclip/history",
-         staticHistoryPath = "~/.local/share/greenclip/staticHistory",
-         imageCachePath = "~/.local/share/greenclip/images/",
-         usePrimarySelectionAsInput = False,
-         blacklistedApps = [],
-         trimSpaceFromSelection = True,
-         enableImageSupport = True
-        }
-      '';
-
       ".npmrc".text = "prefix=${config.home.homeDirectory}/.filesystem";
 
       ".gnupg/gpg.conf".text = ''
