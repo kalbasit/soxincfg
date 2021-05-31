@@ -203,7 +203,7 @@ in
         "XF86PowerOff" = "exec ${nosid} ${locker} && systemctl suspend";
 
         # clipboard history
-        # "${defaultModifier}+${thirdModifier}+c" = "exec ${getBin pkgs.rofi}/bin/rofi -modi \"clipboard:${getBin pkgs.haskellPackages.greenclip}/bin/greenclip print\" -show clipboard";
+        "${defaultModifier}+${thirdModifier}+c" = "exec CM_LAUNCHER=rofi ${getBin pkgs.clipmenu}/bin/clipmenu";
 
         # Terminals
         "${defaultModifier}+Return" = "exec ${getBin pkgs.termite}/bin/termite";
@@ -276,7 +276,6 @@ in
       startup = [
         { command = "${getBin pkgs.xlibs.xset}/bin/xset r rate 300 30"; always = false; notification = false; }
         { command = "${getBin pkgs.xcape}/bin/xcape -e 'Control_L=Escape'"; always = false; notification = false; }
-        # { command = "${getBin pkgs.haskellPackages.greenclip}/bin/greenclip daemon"; always = false; notification = false; }
         { command = "i3-msg \"workspace personal; exec ${nosid} ${getBin pkgs.termite}/bin/termite\""; always = false; notification = true; }
       ];
     };
@@ -331,9 +330,8 @@ in
         }
 
       set $daemon_mode Daemons: (g)reenclip, (x)cape
-      mode "$daemon_mode" { ''
-  # bindsym g exec ${nosid} ${getBin pkgs.haskellPackages.greenclip}/bin/greenclip daemon, mode default
-  + ''  bindsym x exec ${nosid} ${getBin pkgs.xcape}/bin/xcape -e 'Control_L=Escape', mode default
+      mode "$daemon_mode" {
+        bindsym x exec ${nosid} ${getBin pkgs.xcape}/bin/xcape -e 'Control_L=Escape', mode default
 
         bindsym Escape mode "$launcher"
       }
