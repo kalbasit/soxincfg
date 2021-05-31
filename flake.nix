@@ -89,7 +89,11 @@
       ];
 
       # Supported systems, used for packages, apps, devShell and multiple other definitions. Defaults to `flake-utils.lib.defaultSystems`
-      supportedSystems = [ "x86_64-linux" "x86_64-darwin" ];
+      supportedSystems = [
+        "aarch64-linux"
+        "x86_64-linux"
+        "x86_64-darwin"
+      ];
 
       # pull in all hosts
       hosts = import ./hosts inputs;
