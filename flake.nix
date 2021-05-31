@@ -1,184 +1,97 @@
 {
-  description = "Soxin template flake";
+  description = "SoxinCFG by Wael";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/release-21.05";
-    nixpkgs-master.url = "github:NixOS/nixpkgs/release-21.05";
-    home-manager = {
-      url = "github:nix-community/home-manager/release-21.05";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    deploy-rs.url = github:serokell/deploy-rs;
+    nixpkgs.url = github:NixOS/nixpkgs/release-21.05;
+    nur.url = github:nix-community/NUR;
+    unstable.url = github:NixOS/nixpkgs/nixos-unstable;
+
     soxin = {
-      url = "github:SoxinOS/soxin/release-21.05";
+      url = github:SoxinOS/soxin;
       inputs = {
+        deploy-rs.follows = "deploy-rs";
         nixpkgs.follows = "nixpkgs";
-        home-manager.follows = "home-manager";
+        nur.follows = "nur";
+        unstable.follows = "unstable";
       };
     };
-    futils.url = "github:numtide/flake-utils";
-    nixos-hardware.url = "nixos-hardware";
-    nur.url = "nur";
-    sops-nix.url = "github:Mic92/sops-nix";
-    deploy-rs.url = "github:serokell/deploy-rs";
   };
 
-  outputs =
-    { self
-    , deploy-rs
-    , futils
-    , home-manager
-    , nixpkgs
-    , nixpkgs-master
-    , nur
-    , sops-nix
-    , soxin
-    , ...
-    } @ inputs:
+  outputs = inputs@{ self, soxin, nixpkgs, ... }:
     let
+      # Enable deploy-rs support
+      withDeploy = true;
+
+      # Enable sops support
+      withSops = true;
+
       inherit (nixpkgs) lib;
-      inherit (nixpkgs.lib) recursiveUpdate;
-      inherit (futils.lib) eachDefaultSystem;
+      inherit (lib) optionalAttrs recursiveUpdate singleton;
 
-      pkgset = system:
-        let
-          config = { allowUnfree = true; };
-          overlays = lib.concat (lib.attrValues self.overlays) [ self.overrides.${system} ];
-        in
-        {
-          pkgs = import nixpkgs { inherit config overlays system; };
-          pkgs-master = import nixpkgs-master {
-            inherit config system;
-            overlays = lib.attrValues self.overlays;
-          };
+      # Channel definitions. `channels.<name>.{input,overlaysBuilder,config,patches}`
+      channels = {
+        nixpkgs = {
+          # Channel specific overlays
+          overlaysBuilder = channels: [
+            (final: prev: {
+              jetbrains = channels.unstable.jetbrains // {
+                idea-ultimate = channels.unstable.jetbrains.idea-ultimate.overrideAttrs (oa: rec {
+                  name = "idea-ultimate-${version}";
+                  version = "2020.2.4";
+                  src = prev.fetchurl {
+                    url = "https://download.jetbrains.com/idea/ideaIU-${version}-no-jbr.tar.gz";
+                    sha256 = "sha256-/pYbEN7vExfgXEuQy+Sc97h2HzxPlJ3im7VjraJEGRc=";
+                  };
+                });
+              };
+            })
+          ];
+
+          # Channel specific configuration. Overwrites `channelsConfig` argument
+          config = { };
+
+          # Yep, you see it first folks - you can patch nixpkgs!
+          patches = [ ];
         };
+      };
 
-      anySystemOutputs =
-        let
-          overlays = import ./overlays;
-          overlay = overlays.packages;
-        in
-        {
-          inherit overlay overlays;
+      # Default configuration values for `channels.<name>.config = {...}`
+      channelsConfig = {
+        # allowBroken = true;
+        allowUnfree = true;
+      };
 
-          checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
+      nixosModules = (import ./modules) // {
+        soxincfg = import ./modules/soxincfg.nix;
+        profiles = import ./profiles;
+      };
 
-          deploy.nodes = {
-            aarch64-linux-0 = {
-              hostname = "aarch64-linux-0.yl.ktdev.io";
-              profiles.system = {
-                sshUser = "root";
-                user = "root";
-                path = deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.aarch64-linux-0;
-              };
-            };
+      nixosModule = nixosModules.soxincfg;
 
-            kore = {
-              hostname = "kore.admin.nasreddine.com";
-              profiles.system = {
-                sshUser = "root";
-                user = "root";
-                path = deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.kore;
-              };
-            };
-
-            x86-64-linux-0 = {
-              hostname = "x86-64-linux-0.yl.ktdev.io";
-              profiles.system = {
-                sshUser = "root";
-                user = "root";
-                path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.x86-64-linux-0;
-              };
-            };
-
-            zeus = {
-              hostname = "zeus.admin.nasreddine.com";
-              profiles.system = {
-                sshUser = "root";
-                user = "root";
-                path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.zeus;
-              };
-            };
-          };
-
-          homeConfigurations =
-            let
-              hostsForSystem = system:
-                import ./hosts/home-manager (
-                  recursiveUpdate inputs {
-                    inherit lib system;
-                    pkgset = pkgset system;
-                  }
-                );
-            in
-            (hostsForSystem "x86_64-linux")
-            //
-            (hostsForSystem "aarch64-linux");
-
-          nixosConfigurations =
-            let
-              hostsForSystem = system:
-                import ./hosts/nixos (
-                  recursiveUpdate inputs {
-                    inherit lib system;
-                    pkgset = pkgset system;
-                  }
-                );
-            in
-            (hostsForSystem "x86_64-linux")
-            //
-            (hostsForSystem "aarch64-linux");
-
-          nixosModules = {
-            profiles = import ./profiles;
-            soxin = import ./mysoxin/soxin.nix;
-            soxincfg = import ./modules/soxincfg.nix;
-          };
-
-          vars = import ./vars;
-        };
-
-      multiSystemOutputs = eachDefaultSystem (system:
-        let
-          inherit (pkgset system) pkgs pkgs-master;
-        in
-        {
-          devShell = pkgs.mkShell {
-            sopsPGPKeyDirs = [
-              "./vars/sops-keys/hosts"
-              "./vars/sops-keys/users"
-            ];
-
-            nativeBuildInputs = [
-              sops-nix.packages.${system}.sops-pgp-hook
-            ];
-
-            buildInputs = with pkgs; [
-              (home-manager.packages.${system}.home-manager)
-              awscli
-              deploy-rs.packages.${system}.deploy-rs
-              git
-              nixpkgs-fmt
-              pre-commit
-              sops
-              sops-nix.packages.${system}.ssh-to-pgp
-
-              (terraform.withPlugins (ps: [
-                ps.aws
-                ps.secret
-                ps.unifi
-              ]))
-            ];
-
-            shellHook = ''
-              sopsPGPHook
-              git config diff.sopsdiffer.textconv "sops -d"
-            '';
-          };
-
-          overrides = import ./overlays/overrides.nix pkgs-master;
-
-          packages = soxin.lib.overlaysToPkgs { inherit (self.overlays) packages; } pkgs;
-        });
     in
-    recursiveUpdate multiSystemOutputs anySystemOutputs;
+    soxin.lib.systemFlake {
+      inherit inputs withDeploy withSops nixosModules nixosModule;
+
+      # add Soxin's main module to all builders
+      extraGlobalModules = [ nixosModule nixosModules.profiles.core ];
+
+      # Supported systems, used for packages, apps, devShell and multiple other definitions. Defaults to `flake-utils.lib.defaultSystems`
+      supportedSystems = [ "x86_64-linux" "x86_64-darwin" ];
+
+      # pull in all hosts
+      hosts = import ./hosts inputs;
+
+      # create all home-managers
+      home-managers = import ./home-managers inputs;
+
+      # Evaluates to `packages.<system>.<pname> = <unstable-channel-reference>.<pname>`.
+      packagesBuilder = channels: import ./pkgs channels;
+
+      # declare the vars that are used only by sops
+      vars = optionalAttrs withSops (import ./vars inputs);
+
+      # include all overlays
+      overlay = import ./overlays;
+    };
 }
