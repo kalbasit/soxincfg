@@ -3,6 +3,7 @@
 
   inputs = {
     deploy-rs.url = github:serokell/deploy-rs;
+    nixos-hardware.url = github:NixOS/nixos-hardware;
     nixpkgs.url = github:NixOS/nixpkgs/7d71001b796340b219d1bfa8552c81995017544a;
     nur.url = github:nix-community/NUR;
     unstable.url = github:NixOS/nixpkgs/nixos-unstable;
@@ -20,7 +21,7 @@
     };
   };
 
-  outputs = inputs@{ self, soxin, nixpkgs, utils, ... }:
+  outputs = inputs@{ nixos-hardware, nixpkgs, self, soxin, utils, ... }:
     let
       # Enable deploy-rs support
       withDeploy = true;
@@ -96,5 +97,8 @@
 
       # include all overlays
       overlay = import ./overlays;
+
+      # set the nixos specialArgs
+      nixosSpecialArgs = { inherit nixos-hardware; };
     };
 }
