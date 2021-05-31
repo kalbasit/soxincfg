@@ -158,11 +158,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1622409301,
-        "narHash": "sha256-DON9CpKTR9k14Y/+5fsXponzYyi7L41DKUsSYkOUHjU=",
+        "lastModified": 1622447676,
+        "narHash": "sha256-o58Fl8vmy8jG5T7ojGQ1Cg5zJCCKdHgn0DgPo0TgY/Y=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "1190770a713fb15aea2c6c25d3a0e0304ad51d71",
+        "rev": "6ae5440a6f830621670f86d3f9f42df7d6a0f2d0",
         "type": "github"
       },
       "original": {
@@ -221,12 +221,13 @@
         ]
       },
       "locked": {
-        "narHash": "sha256-0OeqHwfgV1OWvzhkOXxAQ+gjE1PAZT7/XLKrOdvyeeU=",
+        "narHash": "sha256-ASihVT6/N31eMInoRILB/L3He094SJHu4hIXOIO2Tr8=",
         "path": "/yl/code/stories/personal/soxin/move-to-flakeutils/github.com/SoxinOS/soxin",
         "type": "path"
       },
       "original": {
         "owner": "SoxinOS",
+        "ref": "release-21.05",
         "repo": "soxin",
         "type": "github"
       }
