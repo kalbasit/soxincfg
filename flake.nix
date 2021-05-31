@@ -67,6 +67,7 @@
       };
 
       nixosModules = (import ./modules) // {
+        soxin = import ./mysoxin/soxin.nix; # TODO: Get rid of this!
         soxincfg = import ./modules/soxincfg.nix;
         profiles = import ./profiles;
       };
@@ -78,7 +79,7 @@
       inherit inputs withDeploy withSops nixosModules nixosModule;
 
       # add Soxin's main module to all builders
-      extraGlobalModules = [ nixosModule nixosModules.profiles.core ];
+      extraGlobalModules = [ nixosModule nixosModules.profiles.core nixosModules.soxin ];
 
       # Supported systems, used for packages, apps, devShell and multiple other definitions. Defaults to `flake-utils.lib.defaultSystems`
       supportedSystems = [ "x86_64-linux" "x86_64-darwin" ];
