@@ -3,7 +3,7 @@
 
   inputs = {
     deploy-rs.url = github:serokell/deploy-rs;
-    nixpkgs.url = github:NixOS/nixpkgs/release-21.05;
+    nixpkgs.url = github:NixOS/nixpkgs/7d71001b796340b219d1bfa8552c81995017544a;
     nur.url = github:nix-community/NUR;
     unstable.url = github:NixOS/nixpkgs/nixos-unstable;
 
