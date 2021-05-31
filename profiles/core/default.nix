@@ -1,4 +1,4 @@
-{ config, pkgs, soxincfg, mode, lib, ... }:
+{ pkgs, soxincfg, mode, lib, ... }:
 with lib;
 let
   nasreddineCA = builtins.readFile (builtins.fetchurl {
@@ -18,6 +18,9 @@ in
     (optionalAttrs (mode == "NixOS") {
       # enable the Nix sandbox but only on Linux
       nix.useSandbox = pkgs.stdenv.hostPlatform.isLinux;
+
+      # setup NIX_PATH to allow users to access the nixpkgs that built the system
+      nix.nixPath = singleton "nixpkgs=${pkgs.path}";
 
       boot.tmpOnTmpfs = true;
 
