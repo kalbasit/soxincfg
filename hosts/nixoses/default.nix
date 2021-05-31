@@ -1,11 +1,7 @@
-inputs@{ self, deploy-rs, nixpkgs, ... }:
+inputs@{ self, deploy-rs, ... }:
 
 let
-  inherit (nixpkgs) lib;
-  inherit (lib) recursiveUpdate;
-  inherit (builtins) removeAttrs;
-  inherit (builtins) singleton;
-
+  # the default channel to follow.
   channelName = "nixpkgs";
 in
 {
