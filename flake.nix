@@ -10,7 +10,7 @@
     utils.url = github:gytis-ivaskevicius/flake-utils-plus/v1.1.0;
 
     soxin = {
-      url = github:SoxinOS/soxin;
+      url = github:SoxinOS/soxin/release-21.05;
       inputs = {
         deploy-rs.follows = "deploy-rs";
         nixpkgs.follows = "nixpkgs";
