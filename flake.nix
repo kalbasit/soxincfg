@@ -62,8 +62,12 @@
 
       # Default configuration values for `channels.<name>.config = {...}`
       channelsConfig = {
-        # allowBroken = true;
         allowUnfree = true;
+
+        # Set allowBroken and allowUnsupportedSystem so the 'nix flake check' works.
+        # TODO: Why do I have to do this?
+        allowBroken = true;
+        allowUnsupportedSystem = true;
       };
 
       nixosModules = (import ./modules) // {
