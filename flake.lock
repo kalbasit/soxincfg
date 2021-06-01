@@ -95,11 +95,11 @@
     },
     "nixos-hardware": {
       "locked": {
-        "lastModified": 1622475342,
-        "narHash": "sha256-c08illT/TUfI2oeLlN8YP4kcGtXLsJOcoq9CNzoRQhM=",
+        "lastModified": 1622521809,
+        "narHash": "sha256-7XcqrtrHDeaasKzg/ruroLsC2fb6Fi3aenCrv1+xVLk=",
         "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "d38958a6aa5bdbf3239f26a04689f3d9ae7da0c0",
+        "rev": "b2186d6c3cdc58fb3a8def0f608bcae61138cc6f",
         "type": "github"
       },
       "original": {
@@ -158,11 +158,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1622483169,
-        "narHash": "sha256-uEHHS2pZRcyXBRUtynugr5FPhiRW4IVNaEbWqPI7tC0=",
+        "lastModified": 1622562705,
+        "narHash": "sha256-tWKPfPmGsWCBWcMU9pTFulwKoD4YHlSOfmjznEDsZ/s=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "3022dd625fbdaee8cfa7aeb5a4fdff345b2738c6",
+        "rev": "951b24b40410244ba2faab134b5f10c0372645cc",
         "type": "github"
       },
       "original": {
@@ -221,7 +221,7 @@
         ]
       },
       "locked": {
-        "narHash": "sha256-1NOXlW3uPNmZCz8jDAz7rAxn6XpbpF9fHrnlu/t5p4Y=",
+        "narHash": "sha256-nMGioPcvclwiYpC9gEi8mBbZjZV/oQyuWXUdJp58DEw=",
         "path": "/yl/code/stories/personal/soxin/move-to-flakeutils/github.com/SoxinOS/soxin",
         "type": "path"
       },
