@@ -2,11 +2,15 @@
 
 with lib;
 let
-  # keys
-  meta = "Mod4";
-  shift = "Shift";
+  # basic key combinations.
   alt = "Mod1";
   ctrl = "Control";
+  meta = "Mod4";
+  shift = "Shift";
+
+  # complex key combinations.
+  hyper = "${alt}+${shift}+${ctrl}+${meta}";
+  meh = "${alt}+${shift}+${ctrl}";
 
   nosid = "--no-startup-id";
   locker = "${getBin pkgs.xautolock}/bin/xautolock -locknow && sleep 1";
@@ -117,16 +121,16 @@ in
         "${meta}+v" = "split v";
 
         # change focus between output
-        "${meta}+${alt}+n" = "focus output left";
-        "${meta}+${alt}+e" = "focus output down";
-        "${meta}+${alt}+i" = "focus output up";
-        "${meta}+${alt}+o" = "focus output right";
+        "${meh}+n" = "focus output left";
+        "${meh}+e" = "focus output down";
+        "${meh}+i" = "focus output up";
+        "${meh}+o" = "focus output right";
 
         # move workspaces between monitors
-        "${meta}+${shift}+${alt}+n" = "move workspace to output left";
-        "${meta}+${shift}+${alt}+e" = "move workspace to output down";
-        "${meta}+${shift}+${alt}+i" = "move workspace to output up";
-        "${meta}+${shift}+${alt}+o" = "move workspace to output right";
+        "${hyper}+n" = "move workspace to output left";
+        "${hyper}+e" = "move workspace to output down";
+        "${hyper}+i" = "move workspace to output up";
+        "${hyper}+o" = "move workspace to output right";
 
         # toggle sticky
         "${meta}+s" = "sticky toggle";
