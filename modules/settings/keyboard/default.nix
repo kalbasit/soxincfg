@@ -20,19 +20,19 @@ in
 
       zsa.enable =
         recursiveUpdate
-        (mkEnableOption "support for keyboards from ZSA like the ErgoDox EZ, Planck EZ and Moonlander Mark I")
-        { default = true; };
+          (mkEnableOption "support for keyboards from ZSA like the ErgoDox EZ, Planck EZ and Moonlander Mark I")
+          { default = true; };
     };
   };
 
   config = mkIf cfg.enable (mkMerge [
     { soxin.settings.keyboard.layouts = singleton colemakLayout; }
 
-    (optionalAttrs (mode == "home-manager") (mkIf cfg.zsa.enable  {
+    (optionalAttrs (mode == "home-manager") (mkIf cfg.zsa.enable {
       home.packages = with pkgs; [ wally-cli ];
     }))
 
-    (optionalAttrs (mode == "NixOS") (mkIf cfg.zsa.enable  {
+    (optionalAttrs (mode == "NixOS") (mkIf cfg.zsa.enable {
       hardware.keyboard.zsa.enable = true;
       services.udev.packages = singleton pkgs.zsa-auto-us-layout-switcher;
 
@@ -83,7 +83,8 @@ in
             log "Setting up the options"
             setxkbmap -option ctrl:nocaps
           '';
-        in {
+        in
+        {
           after = [ "graphical-session.target" ];
 
           environment = {
@@ -103,7 +104,7 @@ in
             # TODO: This should be customizable
             User = "yl";
           };
-      };
+        };
     }))
   ]);
 }
