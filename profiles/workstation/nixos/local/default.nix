@@ -343,6 +343,8 @@ mkMerge [
 
       # Games
       _2048-in-terminal
+
+      protonvpn-cli
     ]);
   })
 ]
