@@ -14,15 +14,15 @@ in
       nix = {
         distributedBuilds = true;
         buildMachines = [
-          {
-            hostName = "zeus.admin.nasreddine.com";
-            sshUser = "builder";
-            sshKey = builtins.toString config.sops.secrets.ssh_key_zeus.path;
-            system = "x86_64-linux";
-            maxJobs = 8;
-            supportedFeatures = [ ];
-            mandatoryFeatures = [ ];
-          }
+          # {
+          #   hostName = "zeus.admin.nasreddine.com";
+          #   sshUser = "builder";
+          #   sshKey = builtins.toString config.sops.secrets.ssh_key_zeus.path;
+          #   system = "x86_64-linux";
+          #   maxJobs = 8;
+          #   supportedFeatures = [ ];
+          #   mandatoryFeatures = [ ];
+          # }
 
           # {
           #   hostName = "aarch64.nixos.community";
