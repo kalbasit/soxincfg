@@ -23,7 +23,8 @@ let
       ATTRS{idProduct}=="4976", \
       RUN{program}="${systemd}/bin/systemctl stop zsa-auto-us-layout-switcher.service"
   '';
-in stdenvNoCC.mkDerivation {
+in
+stdenvNoCC.mkDerivation {
   pname = "zsa-auto-us-layout-switcher";
   version = "1.0.0";
 
