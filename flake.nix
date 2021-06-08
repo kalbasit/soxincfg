@@ -2,26 +2,26 @@
   description = "SoxinCFG by Wael";
 
   inputs = {
-    deploy-rs.url = github:serokell/deploy-rs;
-    nixos-hardware.url = github:NixOS/nixos-hardware;
-    nixpkgs.url = github:NixOS/nixpkgs/c258bb29a37d9023e74a1388f7f4167c75bb53fa;
-    nur.url = github:nix-community/NUR;
-    unstable.url = github:NixOS/nixpkgs/nixos-unstable;
-    utils.url = github:gytis-ivaskevicius/flake-utils-plus/v1.1.0;
+    deploy-rs.url = "github:serokell/deploy-rs";
+    flake-utils-plus.url = "github:gytis-ivaskevicius/flake-utils-plus/v1.1.0";
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/c258bb29a37d9023e74a1388f7f4167c75bb53fa";
+    nur.url = "github:nix-community/NUR";
 
     soxin = {
-      url = github:SoxinOS/soxin/release-21.05;
+      url = "github:SoxinOS/soxin/release-21.05";
       inputs = {
         deploy-rs.follows = "deploy-rs";
+        flake-utils-plus.follows = "flake-utils-plus";
+        nixpkgs-unstable.follows = "nixpkgs-unstable";
         nixpkgs.follows = "nixpkgs";
         nur.follows = "nur";
-        unstable.follows = "unstable";
-        utils.follows = "utils";
       };
     };
   };
 
-  outputs = inputs@{ nixos-hardware, nixpkgs, self, soxin, utils, ... }:
+  outputs = inputs@{ flake-utils-plus, nixos-hardware, nixpkgs, self, soxin, ... }:
     let
       # Enable deploy-rs support
       withDeploy = true;
@@ -31,7 +31,7 @@
 
       inherit (nixpkgs) lib;
       inherit (lib) optionalAttrs recursiveUpdate singleton;
-      inherit (utils.lib) flattenTree;
+      inherit (flake-utils-plus.lib) flattenTree;
 
       # Channel definitions. `channels.<name>.{input,overlaysBuilder,config,patches}`
       channels = {
@@ -39,8 +39,8 @@
           # Channel specific overlays
           overlaysBuilder = channels: [
             (final: prev: {
-              jetbrains = channels.unstable.jetbrains // {
-                idea-ultimate = channels.unstable.jetbrains.idea-ultimate.overrideAttrs (oa: rec {
+              jetbrains = channels.nixpkgs-unstable.jetbrains // {
+                idea-ultimate = channels.nixpkgs-unstable.jetbrains.idea-ultimate.overrideAttrs (oa: rec {
                   name = "idea-ultimate-${version}";
                   version = "2020.2.4";
                   src = prev.fetchurl {
