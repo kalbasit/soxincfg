@@ -1,4 +1,4 @@
-{ pkgs, soxincfg, mode, lib, ... }:
+{ pkgs, soxin, soxincfg, mode, lib, inputs, ... }:
 with lib;
 let
   nasreddineCA = builtins.readFile (builtins.fetchurl {
@@ -20,7 +20,12 @@ in
       nix.useSandbox = pkgs.stdenv.hostPlatform.isLinux;
 
       # setup NIX_PATH to allow users to access the nixpkgs that built the system
-      nix.nixPath = singleton "nixpkgs=${pkgs.path}";
+      nix.nixPath = [
+        "nixpkgs-unstable=${inputs.nixpkgs-unstable}"
+        "nixpkgs=${pkgs.path}"
+        "soxin=${soxin}"
+        "soxincfg=${soxincfg}"
+      ];
 
       boot.tmpOnTmpfs = true;
 
