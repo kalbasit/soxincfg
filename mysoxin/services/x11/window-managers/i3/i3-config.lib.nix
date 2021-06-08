@@ -2,9 +2,16 @@
 
 with lib;
 let
-  defaultModifier = "Mod4";
-  secondModifier = "Shift";
-  thirdModifier = "Mod1";
+  # basic key combinations.
+  alt = "Mod1";
+  ctrl = "Control";
+  meta = "Mod4";
+  shift = "Shift";
+
+  # complex key combinations.
+  hyper = "${alt}+${shift}+${ctrl}+${meta}";
+  meh = "${alt}+${shift}+${ctrl}";
+
   nosid = "--no-startup-id";
   locker = "${getBin pkgs.xautolock}/bin/xautolock -locknow && sleep 1";
 
@@ -66,7 +73,7 @@ in
         ];
       };
 
-      floating = { modifier = "${defaultModifier}"; };
+      floating = { modifier = "${meta}"; };
 
       focus = {
         # focus should not follow the mouse pointer
@@ -96,96 +103,96 @@ in
 
       keybindings = {
         # change focus
-        "${defaultModifier}+n" = "focus left";
-        "${defaultModifier}+e" = "focus down";
-        "${defaultModifier}+i" = "focus up";
-        "${defaultModifier}+o" = "focus right";
+        "${meta}+n" = "focus left";
+        "${meta}+e" = "focus down";
+        "${meta}+i" = "focus up";
+        "${meta}+o" = "focus right";
 
         # move focused window
-        "${defaultModifier}+${secondModifier}+n" = "move left";
-        "${defaultModifier}+${secondModifier}+e" = "move down";
-        "${defaultModifier}+${secondModifier}+i" = "move up";
-        "${defaultModifier}+${secondModifier}+o" = "move right";
+        "${meta}+${shift}+n" = "move left";
+        "${meta}+${shift}+e" = "move down";
+        "${meta}+${shift}+i" = "move up";
+        "${meta}+${shift}+o" = "move right";
 
         # split in horizontal orientation
-        "${defaultModifier}+h" = "split h";
+        "${meta}+h" = "split h";
 
         # split in vertical orientation
-        "${defaultModifier}+v" = "split v";
+        "${meta}+v" = "split v";
 
         # change focus between output
-        "${defaultModifier}+${thirdModifier}+n" = "focus output left";
-        "${defaultModifier}+${thirdModifier}+e" = "focus output down";
-        "${defaultModifier}+${thirdModifier}+i" = "focus output up";
-        "${defaultModifier}+${thirdModifier}+o" = "focus output right";
+        "${meh}+n" = "focus output left";
+        "${meh}+e" = "focus output down";
+        "${meh}+i" = "focus output up";
+        "${meh}+o" = "focus output right";
 
         # move workspaces between monitors
-        "${defaultModifier}+${secondModifier}+${thirdModifier}+n" = "move workspace to output left";
-        "${defaultModifier}+${secondModifier}+${thirdModifier}+e" = "move workspace to output down";
-        "${defaultModifier}+${secondModifier}+${thirdModifier}+i" = "move workspace to output up";
-        "${defaultModifier}+${secondModifier}+${thirdModifier}+o" = "move workspace to output right";
+        "${hyper}+n" = "move workspace to output left";
+        "${hyper}+e" = "move workspace to output down";
+        "${hyper}+i" = "move workspace to output up";
+        "${hyper}+o" = "move workspace to output right";
 
         # toggle sticky
-        "${defaultModifier}+s" = "sticky toggle";
+        "${meta}+s" = "sticky toggle";
 
         # change focus between tiling / floating windows
-        "${thirdModifier}+f" = "focus mode_toggle";
+        "${alt}+f" = "focus mode_toggle";
 
         # toggle tiling / floating
-        "${thirdModifier}+${secondModifier}+f" = "floating toggle";
+        "${alt}+${shift}+f" = "floating toggle";
 
         # jrnl entry
-        "${thirdModifier}+j" = "exec ${jrnlEntry}";
+        "${alt}+j" = "exec ${jrnlEntry}";
 
         # enter fullscreen mode for the focused container
-        "${defaultModifier}+f" = "fullscreen toggle";
+        "${meta}+f" = "fullscreen toggle";
 
         # kill focused window
-        "${defaultModifier}+${secondModifier}+q" = "kill";
+        "${meta}+${shift}+q" = "kill";
 
         # rbrowser
-        "${defaultModifier}+b" = "exec rbrowser";
+        "${meta}+b" = "exec rbrowser";
 
         # rofi run
-        "${defaultModifier}+r" = "exec ${pkgs.rofi}/bin/rofi -show run";
+        "${meta}+r" = "exec ${pkgs.rofi}/bin/rofi -show run";
 
         # list open windows to switch to
-        "${thirdModifier}+Tab" = "exec ${pkgs.rofi}/bin/rofi -show window";
+        "${alt}+Tab" = "exec ${pkgs.rofi}/bin/rofi -show window";
 
         # switch between the current and the previously focused one
-        "${defaultModifier}+Tab" = "workspace back_and_forth";
-        "${defaultModifier}+${secondModifier}+Tab" = "move container to workspace back_and_forth";
+        "${meta}+Tab" = "workspace back_and_forth";
+        "${meta}+${shift}+Tab" = "move container to workspace back_and_forth";
 
         # dynamic workspaces
-        "${defaultModifier}+space" = "exec ${pkgs.rofi}/bin/rofi -show i3SwapWorkspaces";
-        "${thirdModifier}+space" = "exec ${pkgs.rofi}/bin/rofi -show i3Workspaces";
-        "${defaultModifier}+${secondModifier}+space" = "exec ${pkgs.rofi}/bin/rofi -show i3MoveContainer";
-        "${defaultModifier}+${thirdModifier}+space" = "exec ${pkgs.rofi}/bin/rofi -show i3RenameWorkspace";
+        "${meta}+space" = "exec ${pkgs.rofi}/bin/rofi -show i3SwapWorkspaces";
+        "${alt}+space" = "exec ${pkgs.rofi}/bin/rofi -show i3Workspaces";
+        "${meta}+${shift}+space" = "exec ${pkgs.rofi}/bin/rofi -show i3MoveContainer";
+        "${meta}+${alt}+space" = "exec ${pkgs.rofi}/bin/rofi -show i3RenameWorkspace";
 
         # change container layout (stacked, tabbed, toggle split)
-        "${defaultModifier}+l" = "layout stacking";
-        "${defaultModifier}+u" = "layout tabbed";
-        "${defaultModifier}+y" = "layout toggle split";
+        "${meta}+l" = "layout stacking";
+        "${meta}+u" = "layout tabbed";
+        "${meta}+y" = "layout toggle split";
 
         # focus the parent container
-        "${defaultModifier}+a" = "focus parent";
+        "${meta}+a" = "focus parent";
 
         # focus the child container
-        "${defaultModifier}+d" = "focus child";
+        "${meta}+d" = "focus child";
 
         # start a region screenshot
-        "${defaultModifier}+${secondModifier}+4" = "exec ${getBin pkgs.flameshot}/bin/flameshot gui --delay 500 --path ${config.home.homeDirectory}/Desktop";
+        "${meta}+${shift}+4" = "exec ${getBin pkgs.flameshot}/bin/flameshot gui --delay 500 --path ${config.home.homeDirectory}/Desktop";
 
         # start a screen recorder
-        "${defaultModifier}+${secondModifier}+5" = "exec ${getBin pkgs.simplescreenrecorder}/bin/simplescreenrecorder";
+        "${meta}+${shift}+5" = "exec ${getBin pkgs.simplescreenrecorder}/bin/simplescreenrecorder";
 
         # focus the urgent window
-        "${defaultModifier}+x" = "[urgent=latest] focus";
+        "${meta}+x" = "[urgent=latest] focus";
 
         # mark current window / goto mark
         # https://github.com/tybitsfox/i3msg/blob/master/.i3/config
-        "${defaultModifier}+m" = "exec i3-input -F 'mark %s' -l 1 -P 'Mark: '";
-        "${defaultModifier}+apostrophe" = "exec i3-input -F '[con_mark=\"%s\"] focus' -l 1 -P 'Go to: '";
+        "${meta}+m" = "exec i3-input -F 'mark %s' -l 1 -P 'Mark: '";
+        "${meta}+apostrophe" = "exec i3-input -F '[con_mark=\"%s\"] focus' -l 1 -P 'Go to: '";
 
         # volume support
         "XF86AudioRaiseVolume" = "exec ${nosid} ${getBin pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ false, exec ${nosid} ${getBin pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%";
@@ -196,40 +203,40 @@ in
         # brightness support
         "XF86MonBrightnessUp" = "exec ${nosid} ${getBin pkgs.brightnessctl}/bin/brightnessctl s +5%";
         "XF86MonBrightnessDown" = "exec ${nosid} ${getBin pkgs.brightnessctl}/bin/brightnessctl s 5%-";
-        "${secondModifier}+XF86MonBrightnessUp" = "exec ${nosid} ${getBin pkgs.brightnessctl}/bin/brightnessctl s +1%";
-        "${secondModifier}+XF86MonBrightnessDown" = "exec ${nosid} ${getBin pkgs.brightnessctl}/bin/brightnessctl s 1%-";
+        "${shift}+XF86MonBrightnessUp" = "exec ${nosid} ${getBin pkgs.brightnessctl}/bin/brightnessctl s +1%";
+        "${shift}+XF86MonBrightnessDown" = "exec ${nosid} ${getBin pkgs.brightnessctl}/bin/brightnessctl s 1%-";
 
         # sleep support
         "XF86PowerOff" = "exec ${nosid} ${locker} && systemctl suspend";
 
         # clipboard history
-        "${defaultModifier}+${thirdModifier}+c" = "exec CM_LAUNCHER=rofi ${getBin pkgs.clipmenu}/bin/clipmenu";
+        "${meta}+${alt}+c" = "exec CM_LAUNCHER=rofi ${getBin pkgs.clipmenu}/bin/clipmenu";
 
         # Terminals
-        "${defaultModifier}+Return" = "exec ${getBin pkgs.termite}/bin/termite";
-        "${defaultModifier}+${secondModifier}+Return" = "exec ${getBin pkgs.alacritty}/bin/alacritty";
+        "${meta}+Return" = "exec ${getBin pkgs.termite}/bin/termite";
+        "${meta}+${shift}+Return" = "exec ${getBin pkgs.alacritty}/bin/alacritty";
 
         # Modes
-        "${defaultModifier}+${thirdModifier}+r" = "mode resize";
-        "${defaultModifier}+${thirdModifier}+m" = "mode move";
+        "${meta}+${alt}+r" = "mode resize";
+        "${meta}+${alt}+m" = "mode move";
 
         # Make the currently focused window a scratchpad
-        "${defaultModifier}+${secondModifier}+minus" = "move scratchpad";
+        "${meta}+${shift}+minus" = "move scratchpad";
 
         # Show the next scratchpad windows
-        "${thirdModifier}+minus" = "scratchpad show";
+        "${alt}+minus" = "scratchpad show";
 
         # Short-cuts for windows hidden in the scratchpad.
-        "${thirdModifier}+m" = "[class=\"MellowPlayer\"] scratchpad show";
+        "${alt}+m" = "[class=\"MellowPlayer\"] scratchpad show";
       };
 
       modes = {
         resize = {
           # Micro resizement
-          "Control+n" = "resize shrink width 10 px or 1 ppt";
-          "Control+e" = "resize grow height 10 px or 1 ppt";
-          "Control+i" = "resize shrink height 10 px or 1 ppt";
-          "Control+o" = "resize grow width 10 px or 1 ppt";
+          "${ctrl}+n" = "resize shrink width 10 px or 1 ppt";
+          "${ctrl}+e" = "resize grow height 10 px or 1 ppt";
+          "${ctrl}+i" = "resize shrink height 10 px or 1 ppt";
+          "${ctrl}+o" = "resize grow width 10 px or 1 ppt";
 
           # Normal resizing
           "n" = "resize shrink width 50 px or 5 ppt";
@@ -238,10 +245,10 @@ in
           "o" = "resize grow width 50 px or 5 ppt";
 
           # Macro resizing
-          "${secondModifier}+n" = "resize shrink width 100 px or 10 ppt";
-          "${secondModifier}+e" = "resize grow height 100 px or 10 ppt";
-          "${secondModifier}+i" = "resize shrink height 100 px or 10 ppt";
-          "${secondModifier}+o" = "resize grow width 100 px or 10 ppt";
+          "${shift}+n" = "resize shrink width 100 px or 10 ppt";
+          "${shift}+e" = "resize grow height 100 px or 10 ppt";
+          "${shift}+i" = "resize shrink height 100 px or 10 ppt";
+          "${shift}+o" = "resize grow width 100 px or 10 ppt";
 
           # back to normal: Enter or Escape
           "Return" = "mode default";
@@ -250,10 +257,10 @@ in
 
         move = {
           # Micro movement
-          "Control+n" = "move left 10 px";
-          "Control+e" = "move down 10 px";
-          "Control+i" = "move up 10 px";
-          "Control+o" = "move right 10 px";
+          "${ctrl}+n" = "move left 10 px";
+          "${ctrl}+e" = "move down 10 px";
+          "${ctrl}+i" = "move up 10 px";
+          "${ctrl}+o" = "move right 10 px";
 
           # Normal resizing
           "n" = "move left 50 px";
@@ -262,10 +269,10 @@ in
           "o" = "move right 50 px";
 
           # Macro resizing
-          "${secondModifier}+n" = "move left 100 px";
-          "${secondModifier}+e" = "move down 100 px";
-          "${secondModifier}+i" = "move up 100 px";
-          "${secondModifier}+o" = "move right 100 px";
+          "${shift}+n" = "move left 100 px";
+          "${shift}+e" = "move down 100 px";
+          "${shift}+i" = "move up 100 px";
+          "${shift}+o" = "move right 100 px";
 
           # back to normal: Enter or Escape
           "Return" = "mode default";
@@ -305,7 +312,7 @@ in
       bindsym Return mode default
       bindsym Escape mode default
     }
-    bindsym ${defaultModifier}+${thirdModifier}+l mode "$launcher"
+    bindsym ${meta}+${alt}+l mode "$launcher"
 
       set $app_mode Applications: (a)stroid, (b)itwarden (o)bs, (m)elloPlayer, (s)ocial
       mode "$app_mode" {
@@ -369,14 +376,14 @@ in
           bindsym Escape mode "$settings_mode"
         }
 
-      set $power_mode System: (l)ock, L(o)gout, (s)uspend, (h)ibernate, (r)eboot, (${secondModifier}+s)hutdown
+      set $power_mode System: (l)ock, L(o)gout, (s)uspend, (h)ibernate, (r)eboot, (${shift}+s)hutdown
       mode "$power_mode" {
         bindsym l exec ${nosid} ${locker}, mode default
         bindsym o exit
         bindsym s exec ${nosid} ${locker} && systemctl suspend, mode default
         bindsym h exec ${nosid} ${locker} && systemctl hibernate, mode default
         bindsym r exec ${nosid} systemctl reboot
-        bindsym ${secondModifier}+s exec ${nosid} systemctl poweroff -i
+        bindsym ${shift}+s exec ${nosid} systemctl poweroff -i
 
         bindsym Escape mode "$launcher"
       }

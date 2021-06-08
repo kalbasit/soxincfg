@@ -1,11 +1,14 @@
-{ config, soxincfg, nixos-hardware, pkgs, ... }:
+{ config, lib, soxincfg, nixos-hardware, pkgs, ... }:
 let
+  inherit (lib) mkForce;
+
   sopsFile = ./secrets.sops.yaml;
 in
 {
   imports = [
     soxincfg.nixosModules.profiles.myself
     soxincfg.nixosModules.profiles.work.keeptruckin
+    soxincfg.nixosModules.profiles.work.ulta
     soxincfg.nixosModules.profiles.workstation.nixos.local
 
     nixos-hardware.nixosModules.common-cpu-intel
@@ -15,6 +18,11 @@ in
     ./hardware-configuration.nix
     ./win10.nix
   ];
+
+  # Set the timezone temporarily to Europe.
+  location.latitude = mkForce 50.44;
+  location.longitude = mkForce 30.58;
+  time.timeZone = mkForce "Europe/Kiev";
 
   sops.secrets._etc_NetworkManager_system-connections_Nasreddine-VPN_nmconnection = { inherit sopsFile; path = "/etc/NetworkManager/system-connections/Nasreddine-VPN.nmconnection"; };
 
