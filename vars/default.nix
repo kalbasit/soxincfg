@@ -1,3 +1,5 @@
+inputs@{ ... }:
+
 {
   users = import ./users;
 }

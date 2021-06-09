@@ -1,4 +1,4 @@
-{ config, pkgs, soxincfg, mode, lib, ... }:
+{ pkgs, soxin, soxincfg, mode, lib, inputs, ... }:
 with lib;
 let
   nasreddineCA = builtins.readFile (builtins.fetchurl {
@@ -16,16 +16,16 @@ in
 
     # configure NixOS
     (optionalAttrs (mode == "NixOS") {
-      nix = {
-        package = pkgs.nixFlakes;
+      # enable the Nix sandbox but only on Linux
+      nix.useSandbox = pkgs.stdenv.hostPlatform.isLinux;
 
-        # enable the sandbox but only on Linux
-        useSandbox = pkgs.stdenv.hostPlatform.isLinux;
-
-        extraOptions = ''
-          experimental-features = nix-command flakes ca-references
-        '';
-      };
+      # setup NIX_PATH to allow users to access the nixpkgs that built the system
+      nix.nixPath = [
+        "nixpkgs-unstable=${inputs.nixpkgs-unstable}"
+        "nixpkgs=${pkgs.path}"
+        "soxin=${soxin}"
+        "soxincfg=${soxincfg}"
+      ];
 
       boot.tmpOnTmpfs = true;
 
