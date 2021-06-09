@@ -39,4 +39,10 @@ stdenvNoCC.mkDerivation {
     substitute ${rule} $out/lib/udev/rules.d/60-zsa-auto-us-layout.rules \
       --subst-var-by out $out
   '';
+
+  meta = {
+    inherit (systemd.meta) platforms;
+
+    description = "Auto-switch the Keyboard layout to US, but only for my ZSA.";
+  };
 }
