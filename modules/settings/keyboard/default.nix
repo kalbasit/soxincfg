@@ -1,4 +1,4 @@
-{ mode, config, pkgs, lib, ... }:
+{ mode, config, pkgs, lib, soxincfg, ... }:
 
 with lib;
 let
@@ -34,7 +34,7 @@ in
 
     (optionalAttrs (mode == "NixOS") (mkIf cfg.zsa.enable {
       hardware.keyboard.zsa.enable = true;
-      services.udev.packages = singleton pkgs.zsa-auto-us-layout-switcher;
+      services.udev.packages = singleton soxincfg.packages.${pkgs.system}.zsa-auto-us-layout-switcher;
 
       systemd.services.zsa-auto-us-layout-switcher =
         let

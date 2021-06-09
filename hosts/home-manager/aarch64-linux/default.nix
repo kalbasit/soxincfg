@@ -1,4 +1,0 @@
-{ buildHosts }:
-
-buildHosts [
-]

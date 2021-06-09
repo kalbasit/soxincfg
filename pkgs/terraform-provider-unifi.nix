@@ -1,4 +1,4 @@
-{ buildGoModule, fetchFromGitHub, lib, ... }:
+{ buildGoModule, fetchFromGitHub, lib, go, ... }:
 
 # copied from nixpkgs
 let
@@ -16,6 +16,8 @@ let
       # if the versions are not provided via file paths.
       postBuild = "mv $NIX_BUILD_TOP/go/bin/${data.repo}{,_v${data.version}}";
       passthru = data;
+
+      meta = { inherit (go.meta) platforms; };
     };
 in
 buildWithGoModule rec {
