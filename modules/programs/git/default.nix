@@ -147,6 +147,10 @@ in
           followRedirects = true;
         };
 
+        init = {
+          defaultBranch = "main";
+        };
+
         merge = {
           log = true;
           tool = "vimdiff";
