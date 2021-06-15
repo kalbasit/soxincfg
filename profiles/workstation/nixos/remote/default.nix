@@ -191,8 +191,6 @@ mkMerge [
 
       nix-index
 
-      nixops
-
       # curses-based file manager
       lf
 
