@@ -115,11 +115,11 @@
     },
     "nixos-hardware": {
       "locked": {
-        "lastModified": 1623143341,
-        "narHash": "sha256-a8NjpJVvJkb3ehu/KP1OaWwlRexom2D7lQEH5uCO9yA=",
+        "lastModified": 1623569835,
+        "narHash": "sha256-Mg+FN1JkEQ91Zff0+ot/ndRgD9BB+uDBLN12AcBYkSA=",
         "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "fccbee72df707c3fb074854668deee6e1ff02351",
+        "rev": "7305b276c90cfd3ad0a2452101a49c0b52c784c0",
         "type": "github"
       },
       "original": {
@@ -146,11 +146,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1622966049,
-        "narHash": "sha256-6g+28v94ISkVk9TBSsITVOnB2slK8plieWPIF2jo/l0=",
+        "lastModified": 1623324058,
+        "narHash": "sha256-Jm9GUTXdjXz56gWDKy++EpFfjrBaxqXlLvTLfgEi8lo=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "fbfb79400a08bf754e32b4d4fc3f7d8f8055cf94",
+        "rev": "432fc2d9a67f92e05438dff5fdc2b39d33f77997",
         "type": "github"
       },
       "original": {
@@ -162,17 +162,17 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1622295200,
-        "narHash": "sha256-zr5cedtBgbm4YcwTVBHfYruoipHOKgR3ci7MK3UsAJg=",
+        "lastModified": 1623704699,
+        "narHash": "sha256-72dHeRZ44cXsq3wgknOgXrfzR6bXIAtKC4nNsTCaSJI=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "c258bb29a37d9023e74a1388f7f4167c75bb53fa",
+        "rev": "8db24dec5368ef35657bbca14f0a3baaeefb0f88",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
+        "ref": "release-21.05",
         "repo": "nixpkgs",
-        "rev": "c258bb29a37d9023e74a1388f7f4167c75bb53fa",
         "type": "github"
       }
     },
@@ -194,11 +194,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1623259217,
-        "narHash": "sha256-DroQM+z15Cwmu80ZgNGx+SPg3XPo4x/cRT5UX291TDM=",
+        "lastModified": 1623730382,
+        "narHash": "sha256-/ATfoZQI/sOsMQOMg396tmdOoCra//Z3qZZQgSpAcvs=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "f71bd8ff068ae06cda9c0d88526759ae385e7fe0",
+        "rev": "a48e0e30cf10f3c98a713ad99add51fa6d9543ba",
         "type": "github"
       },
       "original": {
