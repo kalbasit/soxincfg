@@ -4,8 +4,9 @@ let
 in
 {
   imports = [
-    soxincfg.nixosModules.profiles.workstation.nixos.local
     soxincfg.nixosModules.profiles.myself
+    soxincfg.nixosModules.profiles.work.ulta
+    soxincfg.nixosModules.profiles.workstation.nixos.local
 
     nixos-hardware.nixosModules.common-cpu-intel
     nixos-hardware.nixosModules.common-pc-laptop
