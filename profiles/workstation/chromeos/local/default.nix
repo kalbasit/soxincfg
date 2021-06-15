@@ -245,8 +245,6 @@ mkMerge [
 
       nix-review
 
-      nixops
-
       # curses-based file manager
       lf
 
