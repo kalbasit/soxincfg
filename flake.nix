@@ -6,7 +6,7 @@
     flake-utils-plus.url = "github:gytis-ivaskevicius/flake-utils-plus/v1.1.0";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs.url = "github:NixOS/nixpkgs/c258bb29a37d9023e74a1388f7f4167c75bb53fa";
+    nixpkgs.url = "github:NixOS/nixpkgs/release-21.05";
     nur.url = "github:nix-community/NUR";
 
     soxin = {
