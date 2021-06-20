@@ -1,4 +1,4 @@
-{ config, soxincfg, nixos-hardware, ... }:
+{ config, soxincfg, ... }:
 let
   sopsFile = ./secrets.sops.yaml;
 in
@@ -7,10 +7,6 @@ in
     soxincfg.nixosModules.profiles.myself
     soxincfg.nixosModules.profiles.work.ulta
     soxincfg.nixosModules.profiles.workstation.nixos.local
-
-    nixos-hardware.nixosModules.common-cpu-intel
-    nixos-hardware.nixosModules.common-pc-laptop
-    nixos-hardware.nixosModules.common-pc-ssd
 
     ./hardware-configuration.nix
   ];
