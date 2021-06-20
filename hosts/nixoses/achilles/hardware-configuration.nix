@@ -1,8 +1,13 @@
-{ lib, pkgs, ... }:
+{ lib, pkgs, nixos-hardware, ... }:
 
 with lib;
 
 {
+  imports = [
+    nixos-hardware.nixosModules.common-pc-laptop
+    nixos-hardware.nixosModules.lenovo-thinkpad-p1-gen3
+  ];
+
   # Common firmware, i.e. for wifi cards
   hardware.enableRedistributableFirmware = true;
 
