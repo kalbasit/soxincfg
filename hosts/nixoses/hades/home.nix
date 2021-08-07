@@ -12,13 +12,6 @@ with lib;
     soxincfg.nixosModules.profiles.workstation.nixos.local
   ];
 
-  # Set the timezone temporarily to Europe.
-  soxin.services.xserver.windowManager.bar.modules.time.timezones = singleton {
-    timezone = "Europe/Kiev";
-    prefix = "EEST";
-    format = "%H:%M:%S";
-  };
-
   # Setup the name of the wireless interface in Polybar
   soxin.services.xserver.windowManager.bar.modules.network.wlan = singleton "wlp110s0";
 
