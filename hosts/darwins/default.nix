@@ -3,6 +3,7 @@ inputs@{ ... }:
 let
   # the default channel to follow.
   channelName = "nixpkgs";
+  output = "darwinConfigurations";
 in
 {
   ###
@@ -14,7 +15,7 @@ in
       system = "x86_64-darwin";
     in
     {
-      inherit channelName system;
+      inherit channelName system output;
       modules = [ ./poseidon/configuration.nix ];
     };
 }
