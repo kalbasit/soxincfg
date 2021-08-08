@@ -1,9 +1,10 @@
-inputs@{ ... }:
+inputs@{ darwin, ... }:
 
 let
   # the default channel to follow.
   channelName = "nixpkgs";
   output = "darwinConfigurations";
+  builder = darwin.lib.darwinSystem;
 in
 {
   ###
@@ -15,7 +16,7 @@ in
       system = "x86_64-darwin";
     in
     {
-      inherit channelName system output;
+      inherit channelName system output builder;
       modules = [ ./poseidon/configuration.nix ];
     };
 }
