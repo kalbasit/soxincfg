@@ -20,15 +20,15 @@ let
   # builder = args: darwin.lib.darwinSystem (builtins.removeAttrs args [ "system" ]);
 in
 # mapAttrs
-#   (n: v: recursiveUpdate
-#     {
-#       # inherit
-#       #   builder
-#       #   mode
-#       #   output
-#       #   ;
-#     }
-#     v)
+  #   (n: v: recursiveUpdate
+  #     {
+  #       # inherit
+  #       #   builder
+  #       #   mode
+  #       #   output
+  #       #   ;
+  #     }
+  #     v)
 {
   penguin = {
     configuration = ./penguin/home.nix;
