@@ -35,8 +35,8 @@ in
       };
     })
 
-    {
+    (optionalAttrs (mode == "home-manager") {
       fonts.fontconfig.enable = true;
-    }
+    })
   ]);
 }

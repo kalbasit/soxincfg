@@ -85,7 +85,7 @@ in
   };
 
   config = mkIf cfg.enable (mkMerge [
-    {
+    (optionalAttrs (mode == "NixOS" || mode == "home-manager") {
       programs.ssh = {
         extraConfig = ''
           PubkeyAuthentication yes
@@ -94,7 +94,7 @@ in
           HashKnownHosts ${yesOrNo cfg.hashKnownHosts}
         '';
       };
-    }
+    })
 
     (optionalAttrs (mode == "NixOS") {
       programs.ssh = {

@@ -90,7 +90,7 @@ in
   };
 
   config = mkIf cfg.enable (mkMerge [
-    {
+    (optionalAttrs (mode == "NixOS" || mode == "home-manager") {
       soxin.programs.tmux = {
         inherit (cfg) enable;
 
@@ -153,9 +153,9 @@ in
 
         plugins = with pkgs.tmuxPlugins; [ logging prefix-highlight fzf-tmux-url ];
       };
-    }
+    })
 
-    {
+    (optionalAttrs (mode == "NixOS" || mode == "home-manager") {
       programs.tmux = {
         clock24 = true;
         customPaneNavigationAndResize = ! (keyboardLayout == "colemak");
@@ -165,6 +165,6 @@ in
         secureSocket = pkgs.stdenv.isLinux;
         shortcut = "t";
       };
-    }
+    })
   ]);
 }

@@ -139,7 +139,7 @@ in
   config = mkIf cfg.enable (mkMerge [
     { soxin.programs.zsh.enable = true; }
 
-    {
+    (optionalAttrs (mode == "NixOS" || mode == "home-manager") {
       programs.zsh.shellAliases = with pkgs; {
         cat = "${bat}/bin/bat";
         e = "\${EDITOR:-nvim}";
@@ -188,12 +188,12 @@ in
         # use 'fc -fl 1' for mm/dd/yyyy
         history = "fc -il 1";
       };
-    }
-
-    (mkIf pkgs.stdenv.hostPlatform.isDarwin {
-      # TODO: swm should parse a configuration file in order to ignore these
-      programs.zsh.shellAliases.swm = ''swm --ignore-pattern ".Spotlight-V100|.Trashes|.fseventsd"'';
     })
+
+    (optionalAttrs (mode == "nix-darwin" || mode == "home-manager") (mkIf pkgs.stdenv.hostPlatform.isDarwin {
+      # TODO: swm should parse a configuration file in order to ignore these
+      environment.shellAliases.swm = ''swm --ignore-pattern ".Spotlight-V100|.Trashes|.fseventsd"'';
+    }))
 
     (optionalAttrs (mode == "NixOS") {
       programs.zsh = {
