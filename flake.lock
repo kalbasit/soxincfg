@@ -166,11 +166,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1628287055,
-        "narHash": "sha256-YwxtAt25pZofJT/e4sxw9cFBaFok+zgIy04HFV0rDd0=",
+        "lastModified": 1628605906,
+        "narHash": "sha256-XqCCPDIIG4zMPJ/V757FgzGM2zypcRb1BY7u/DqHKX0=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "0dde103318090f77ac95ef7fc26fe0cdd00fa0b3",
+        "rev": "fe01052444c1d66ed6ef76df2af798c9769e9e79",
         "type": "github"
       },
       "original": {
@@ -182,11 +182,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1628460690,
-        "narHash": "sha256-aLwCbAug2OmPiRCsQ71JZIcUHL/4t3gstLirBGB5D1g=",
+        "lastModified": 1628607662,
+        "narHash": "sha256-TT7jldaYFtHGdVX/yE6FjdpPdNY01xIygB2zGjzFTqk=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "9d5f7324c281905c114975e193357f40c9d345a0",
+        "rev": "2d6ab6c6b92f7aaf8bc53baba9754b9bfdce56f2",
         "type": "github"
       },
       "original": {
@@ -214,11 +214,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1628474546,
-        "narHash": "sha256-vz6JfCXCO2/UTeJD+sjJbvs7LAfSgbcW2iw5UZVlb4s=",
+        "lastModified": 1628635227,
+        "narHash": "sha256-psoqGz8ideJzIhZR14aPRmz9DQD/Co2Lmjz9OGQUfn4=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "8be165c689a017b8c9df0466e14cc283d78544c8",
+        "rev": "8f2ccf7556fe4034f3b8b5294de799ffe9e22ca5",
         "type": "github"
       },
       "original": {
@@ -259,6 +259,9 @@
     },
     "soxin": {
       "inputs": {
+        "darwin": [
+          "darwin"
+        ],
         "deploy-rs": [
           "deploy-rs"
         ],
@@ -278,11 +281,11 @@
         "sops-nix": "sops-nix"
       },
       "locked": {
-        "lastModified": 1628485572,
-        "narHash": "sha256-q3WMbh3MQAOoadWOMWd97/nmuFWlSoxFY6GAOLh+5I8=",
+        "lastModified": 1628637501,
+        "narHash": "sha256-N4apsya3jw9lWmwQTRSMUZHBcPGeKm20oSSeMl4hyrs=",
         "owner": "SoxinOS",
         "repo": "soxin",
-        "rev": "7998641608e52900b4a465dad117f369bd4d68f0",
+        "rev": "ecca320a9c7bf07ac63505a9acd3ebf642574db1",
         "type": "github"
       },
       "original": {

@@ -2,12 +2,12 @@
   description = "SoxinCFG by Wael";
 
   inputs = {
+    darwin.url = "github:lnl7/nix-darwin/master";
     deploy-rs.url = "github:serokell/deploy-rs";
     flake-utils-plus.url = "github:gytis-ivaskevicius/flake-utils-plus/v1.1.0";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs.url = "github:NixOS/nixpkgs/release-21.05";
-    darwin.url = "github:lnl7/nix-darwin/master";
     nur.url = "github:nix-community/NUR";
 
     darwin.inputs.nixpkgs.follows = "nixpkgs";
@@ -15,6 +15,7 @@
     soxin = {
       url = "github:SoxinOS/soxin/release-21.05";
       inputs = {
+        darwin.follows = "darwin";
         deploy-rs.follows = "deploy-rs";
         flake-utils-plus.follows = "flake-utils-plus";
         nixpkgs-unstable.follows = "nixpkgs-unstable";
