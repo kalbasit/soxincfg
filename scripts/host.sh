@@ -92,7 +92,7 @@ case "${action}" in
         if isNixOS; then
             sudo nixos-rebuild --flake ".#${host}" test --show-trace
         elif isDarwin; then
-            "$0" "$action" "$host"
+            "$0" build "$host"
             sudo ./result/activate
             ./result/activate-user
         else
