@@ -281,11 +281,11 @@
         "sops-nix": "sops-nix"
       },
       "locked": {
-        "lastModified": 1628643137,
-        "narHash": "sha256-ABj5emHsPvD3WAPzreQRE45p9eoTwa1GROuoTMuK4lI=",
+        "lastModified": 1628645080,
+        "narHash": "sha256-9nvO4MkJWP4/cGvh4OEa/7OrwIUnNgMqz03HTi9t+e4=",
         "owner": "SoxinOS",
         "repo": "soxin",
-        "rev": "6d74cadd63e3666afa17f063118efaff420160ad",
+        "rev": "9bcb0dbd502975ca2c78b57bb9e187da9387c8f0",
         "type": "github"
       },
       "original": {

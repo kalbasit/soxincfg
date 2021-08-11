@@ -42,5 +42,21 @@ in
       i18n.defaultLocale = "en_US.UTF-8";
       time.timeZone = "America/Los_Angeles";
     })
+
+    # configure Darwin
+    (optionalAttrs (mode == "nix-darwin") {
+      # setup NIX_PATH to allow users to access the nixpkgs that built the system
+      nix.nixPath = [
+        "nixpkgs-unstable=${inputs.nixpkgs-unstable}"
+        "nixpkgs=${pkgs.path}"
+        "soxin=${soxin}"
+        "soxincfg=${soxincfg}"
+      ];
+
+      security.pki.certificates = [ nasreddineCA ];
+
+      # set the timeZone
+      time.timeZone = "America/Los_Angeles";
+    })
   ];
 }
