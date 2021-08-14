@@ -105,10 +105,6 @@ mkMerge [
     programs.bat.enable = true;
     programs.direnv.enable = true;
 
-    # services
-    services.clipmenu.enable = true;
-    services.flameshot.enable = true;
-
     # files
     home.file = {
       ".npmrc".text = "prefix=${config.home.homeDirectory}/.filesystem";
