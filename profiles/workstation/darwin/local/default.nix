@@ -66,7 +66,6 @@ mkMerge [
     soxincfg = {
       programs = {
         android.enable = true;
-        autorandr.enable = true;
         brave.enable = true;
         chromium = { enable = true; surfingkeys.enable = true; };
         dbeaver.enable = true;
