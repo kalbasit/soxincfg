@@ -6,18 +6,12 @@ mkMerge [
   {
     soxin = {
       hardware = {
-        bluetooth.enable = true;
         fwupd.enable = true;
-        lowbatt.enable = true;
         sound.enable = true;
         yubikey.enable = true;
       };
 
       programs = {
-        keybase = {
-          enable = true;
-          enableFs = true;
-        };
         less.enable = true;
         rbrowser = {
           enable = true;
@@ -42,7 +36,8 @@ mkMerge [
         # TODO: this should be a catenate service
         # caffeine.enable = true;
         # dunst.enable = true;
-        gpgAgent.enable = true;
+        # TODO: this does not work on Mac because of systemd things
+        # gpgAgent.enable = true;
         # locker = {
         #   enable = true;
         #   color = "ffa500";
