@@ -13,19 +13,19 @@ mkMerge [
 
       programs = {
         less.enable = true;
-        rbrowser = {
-          enable = true;
-          setMimeList = true;
-          browsers = {
-            "firefox@personal" = home-manager.lib.hm.dag.entryBefore [ "brave@personal" ] { };
-            "brave@personal" = home-manager.lib.hm.dag.entryBefore [ "firefox@private" ] { };
-            "firefox@private" = home-manager.lib.hm.dag.entryBefore [ "firefox@anya" ] { };
-            "firefox@anya" = home-manager.lib.hm.dag.entryBefore [ "firefox@vanya" ] { };
-            "firefox@vanya" = home-manager.lib.hm.dag.entryBefore [ "firefox@tanya" ] { };
-            "firefox@tanya" = home-manager.lib.hm.dag.entryBefore [ "firefox@ihab" ] { };
-            "firefox@ihab" = home-manager.lib.hm.dag.entryAnywhere { };
-          };
-        };
+        # rbrowser = {
+        #   enable = true;
+        #   setMimeList = true;
+        #   browsers = {
+        #     "firefox@personal" = home-manager.lib.hm.dag.entryBefore [ "brave@personal" ] { };
+        #     "brave@personal" = home-manager.lib.hm.dag.entryBefore [ "firefox@private" ] { };
+        #     "firefox@private" = home-manager.lib.hm.dag.entryBefore [ "firefox@anya" ] { };
+        #     "firefox@anya" = home-manager.lib.hm.dag.entryBefore [ "firefox@vanya" ] { };
+        #     "firefox@vanya" = home-manager.lib.hm.dag.entryBefore [ "firefox@tanya" ] { };
+        #     "firefox@tanya" = home-manager.lib.hm.dag.entryBefore [ "firefox@ihab" ] { };
+        #     "firefox@ihab" = home-manager.lib.hm.dag.entryAnywhere { };
+        #   };
+        # };
         # rofi = {
         #   enable = true;
         #   i3.enable = true;
