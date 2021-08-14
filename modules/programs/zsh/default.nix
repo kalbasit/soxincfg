@@ -190,9 +190,14 @@ in
       };
     })
 
-    (optionalAttrs (mode == "nix-darwin" || mode == "home-manager") (mkIf pkgs.stdenv.hostPlatform.isDarwin {
+    (optionalAttrs (mode == "nix-darwin") (mkIf pkgs.stdenv.hostPlatform.isDarwin {
       # TODO: swm should parse a configuration file in order to ignore these
       environment.shellAliases.swm = ''swm --ignore-pattern ".Spotlight-V100|.Trashes|.fseventsd"'';
+    }))
+
+    (optionalAttrs (mode == "home-manager") (mkIf pkgs.stdenv.hostPlatform.isDarwin {
+      # TODO: swm should parse a configuration file in order to ignore these
+      programs.zsh.shellAliases.swm  = ''swm --ignore-pattern ".Spotlight-V100|.Trashes|.fseventsd"'';
     }))
 
     (optionalAttrs (mode == "NixOS") {
