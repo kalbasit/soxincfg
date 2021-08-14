@@ -84,6 +84,7 @@ in
         multiple-cursors
         ncm2
         pig-vim
+        registers-nvim
         repeat
         rhubarb
         sleuth
