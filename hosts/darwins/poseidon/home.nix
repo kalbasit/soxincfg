@@ -1,4 +1,8 @@
-{ config, soxincfg, ... }:
+# home-manager configuration for user `yl`
+{ soxincfg }:
+{ config, pkgs, home-manager, lib, ... }:
+
+with lib;
 
 {
   imports = [
@@ -6,9 +10,4 @@
     soxincfg.nixosModules.profiles.work.keeptruckin
     soxincfg.nixosModules.profiles.workstation.darwin.local
   ];
-
-  # load YL's home-manager configuration
-  home-manager.users.yl = import ./home.nix { inherit soxincfg; };
-
-  time.timeZone = "America/Los_Angeles";
 }
