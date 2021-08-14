@@ -77,7 +77,7 @@ mkMerge [
         pet.enable = true;
         ssh.enable = true;
         starship.enable = true;
-        termite.enable = true;
+        # termite.enable = true;
         tmux.enable = true;
         zsh.enable = true;
       };
