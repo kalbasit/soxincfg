@@ -501,6 +501,9 @@ with lib;
   " Custom "
   """"""""""
 
+  " open a non-existant file
+  noremap <leader>gf :e <cfile><cr>
+
   vnoremap <leader>rv :call ExtractVariable()<cr>
   nnoremap <leader>ri :call InlineVariable()<cr>
 
