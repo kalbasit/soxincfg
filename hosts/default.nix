@@ -1,4 +1,4 @@
 inputs@{ ... }:
 
 (import ./nixoses inputs)
-// (import ./darwins inputs)
+  // (import ./darwins inputs)
