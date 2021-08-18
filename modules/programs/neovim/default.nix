@@ -63,8 +63,6 @@ in
       ];
 
       plugins = with pkgs.vimPlugins; [
-        vim-gist
-        gundo-vim
         LanguageClient-neovim
         PreserveNoEOL
         ack-vim
@@ -82,9 +80,11 @@ in
         fzf-vim
         fzfWrapper
         goyo
+        gundo-vim
         multiple-cursors
         ncm2
         pig-vim
+        registers-nvim
         repeat
         rhubarb
         sleuth
@@ -96,6 +96,7 @@ in
         vim-clang-format
         vim-eunuch
         vim-fugitive
+        vim-gist
         vim-go
         vim-markdown
         vim-scala
