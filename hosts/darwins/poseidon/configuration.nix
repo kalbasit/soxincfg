@@ -1,5 +1,10 @@
-{ config, pkgs, soxincfg, ... }:
+{ config, lib, pkgs, soxincfg, ... }:
 
+let
+  inherit (lib)
+    singleton
+    ;
+in
 {
   imports = [
     soxincfg.nixosModules.profiles.myself
@@ -10,10 +15,7 @@
   # load YL's home-manager configuration
   home-manager.users.yl = import ./home.nix { inherit soxincfg; };
 
-  users.users.yl = {
-    home = "/Users/yl";
-    shell = pkgs.zsh;
-  };
+  environment.systemPath = singleton "/etc/profiles/per-user/yl/bin";
 
   time.timeZone = "America/Los_Angeles";
 }
