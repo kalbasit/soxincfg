@@ -59,6 +59,9 @@
           patches = [
             # XXX: https://github.com/NixOS/nixpkgs/pull/124815
             ./patches/124815-update-onlykey-udev-rules.patch
+
+            # XXX: https://github.com/NixOS/nixpkgs/pull/134755
+            ./patches/134755-onlykey-cli-1.2.2-1.2.5.patch
           ];
         };
       };
