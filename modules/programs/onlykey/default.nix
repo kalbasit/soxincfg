@@ -11,7 +11,7 @@ in
 
   config = mkIf cfg.enable (mkMerge [
     (optionalAttrs (mode == "home-manager") {
-      home.packages = with pkgs; [ onlykey-cli ];
+      home.packages = with pkgs; [ onlykey onlykey-agent onlykey-cli ];
     })
 
     (optionalAttrs (mode == "NixOS") {
