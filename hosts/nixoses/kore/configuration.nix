@@ -38,7 +38,7 @@ in
         ];
 
         hole_ip = "0.0.0.0";
-        hole_hosts = [ "roblox.com" ];
+        hole_hosts = [ ];
 
         kore_ip = "192.168.2.5";
         kore_hosts = [ "unifi.nasreddine.com" ];
