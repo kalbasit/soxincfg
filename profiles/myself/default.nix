@@ -10,13 +10,7 @@ with lib;
         # allow my user to access secrets
         groups = [ "keys" ];
 
-        users = {
-          yl = {
-            inherit (soxincfg.vars.users.yl) hashedPassword sshKeys uid;
-            isAdmin = true;
-            home = "/yl";
-          };
-        };
+        inherit (soxincfg.vars) users;
       };
     })
   ];
