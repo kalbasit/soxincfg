@@ -9,6 +9,7 @@ inputs@{ ... }:
     uid = 2000;
 
     isAdmin = true;
+    isNixTrustedUser = true;
 
     homeFunc = { pkgs }:
       if pkgs.stdenv.hostPlatform.isLinux
