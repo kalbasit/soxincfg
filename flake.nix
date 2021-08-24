@@ -56,19 +56,7 @@
           config = { };
 
           # Yep, you see it first folks - you can patch nixpkgs!
-          patches = [
-            # XXX: https://github.com/NixOS/nixpkgs/pull/124815
-            ./patches/124815-update-onlykey-udev-rules.patch
-
-            # XXX: https://github.com/NixOS/nixpkgs/pull/134755
-            ./patches/134755-onlykey-cli-1.2.2-1.2.5.patch
-
-            # XXX: https://github.com/NixOS/nixpkgs/pull/134764
-            ./patches/134764-onlykey-agent-1.0.2.patch
-
-            # XXX: https://github.com/NixOS/nixpkgs/pull/134838
-            ./patches/134838-onlykey-5.3.3.patch
-          ];
+          patches = [ ];
         };
       };
 
