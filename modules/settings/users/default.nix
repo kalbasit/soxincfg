@@ -13,11 +13,8 @@ let
     "video"
   ];
 
-  makeUser = userName: { uid, isAdmin ? false, home ? "/home/${userName}", hashedPassword ? "", sshKeys ? [ ] }: nameValuePair
-    userName
+  makeUser = userName: { isAdmin, sshKeys, ... }@user:
     {
-      inherit home uid hashedPassword;
-
       group = "mine";
       extraGroups =
         defaultGroups
@@ -28,7 +25,8 @@ let
       isNormalUser = true;
 
       openssh.authorizedKeys.keys = sshKeys;
-    };
+    }
+    // (builtins.removeAttrs user [ "isAdmin" "sshKeys" ]);
 
 in
 {
@@ -47,6 +45,29 @@ in
       description = ''
         The list of users to create.
       '';
+
+      apply = users:
+        let
+          defaults = {
+            hashedPassword = "";
+            home = "/home/${userName}";
+            isAdmin = false;
+            isNixTrustedUser = false;
+            sshKeys = [ ];
+          };
+        in
+        # for each user, first use the default, then make sure the name is always
+        # set and finally pass the user. Each step will override attributes from
+        # the previous one, so it's important the passed-in value is evaluated
+        # last.
+        mapAttrs
+          (name: user:
+            defaults
+            // { inherit name; }
+            // builtins.removeAttrs user [ "homeFunc" ]
+            // { home = user.homeFunc { inherit pkgs; }; }
+          )
+          users;
     };
 
     groups = mkOption {
@@ -68,7 +89,7 @@ in
           mine = { gid = 2000; };
         };
 
-        users = mapAttrs' makeUser config.soxincfg.settings.users.users;
+        users = mapAttrs makeUser config.soxincfg.settings.users.users;
       };
     })
   ]);
