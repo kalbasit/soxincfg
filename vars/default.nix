@@ -1,5 +1,5 @@
 inputs@{ ... }:
 
 {
-  users = import ./users;
+  users = import ./users inputs;
 }

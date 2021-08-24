@@ -117,8 +117,8 @@
       # Evaluates to `packages.<system>.<pname> = <unstable-channel-reference>.<pname>`.
       packagesBuilder = channels: flattenTree (import ./pkgs channels);
 
-      # declare the vars that are used only by sops
-      vars = optionalAttrs withSops (import ./vars inputs);
+      # declare the vars
+      vars = import ./vars inputs;
 
       # include all overlays
       overlay = import ./overlays;
