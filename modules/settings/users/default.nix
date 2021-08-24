@@ -1,4 +1,4 @@
-{ mode, config, pkgs, lib, ... }:
+{ mode, config, options, pkgs, lib, ... }:
 
 with lib;
 let
@@ -26,7 +26,7 @@ let
 
       openssh.authorizedKeys.keys = sshKeys;
     }
-    // (builtins.removeAttrs user [ "isAdmin" "sshKeys" ]);
+    // (builtins.removeAttrs user [ "isAdmin" "isNixTrustedUser" "sshKeys" ]);
 
 in
 {
@@ -46,6 +46,10 @@ in
         The list of users to create.
       '';
 
+      # for each user, first use the default, then make sure the name is always
+      # set and finally pass the user. Each step will override attributes from
+      # the previous one, so it's important the passed-in value is evaluated
+      # last.
       apply = users:
         let
           defaults = {
@@ -56,10 +60,6 @@ in
             sshKeys = [ ];
           };
         in
-        # for each user, first use the default, then make sure the name is always
-        # set and finally pass the user. Each step will override attributes from
-        # the previous one, so it's important the passed-in value is evaluated
-        # last.
         mapAttrs
           (name: user:
             defaults
@@ -91,6 +91,14 @@ in
 
         users = mapAttrs makeUser config.soxincfg.settings.users.users;
       };
+
+      nix.trustedUsers =
+        let
+          user_list = builtins.attrValues config.soxincfg.settings.users.users;
+          trustedUsers = filter (user: user.isNixTrustedUser) user_list;
+        in
+        options.nix.trustedUsers.default
+        ++ map (user: user.name) trustedUsers;
     })
   ]);
 }
