@@ -1,3 +1,5 @@
+inputs@{ ... }:
+
 {
   yl = {
     hashedPassword = "$6$MYCrQEicWSxoGrHN$wHR2sLVtd4wuSN9U0aMpR0ZdE.nWTKoXh/3em3rSB7SkNYREkPgqT8EzINsvkkl9B9uWpTVJz.ULrIuPrjtL2/";
