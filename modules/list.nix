@@ -30,4 +30,5 @@
   keyboard = ./settings/keyboard;
   nix = ./settings/nix;
   users = ./settings/users;
+  home-manager-settings = ./settings/home-manager;
 }

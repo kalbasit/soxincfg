@@ -30,6 +30,7 @@ with lib;
 
         networking.networkmanager.packages = with pkgs; [ networkmanager-fortisslvpn ];
 
+        sops.secrets._aws_configure_profile_keeptruckin_sh = { inherit owner sopsFile; mode = "0500"; };
         sops.secrets._config_ktmr_ansible_vault_passwd = { inherit owner sopsFile; path = "${yl_home}/.config/ktmr/ansible-vault.passwd"; };
         sops.secrets._config_ktmr_config_nix = { inherit owner sopsFile; path = "${yl_home}/.config/ktmr/config.nix"; };
         sops.secrets._config_mark = { inherit owner sopsFile; path = "${yl_home}/.config/mark"; };

@@ -7,8 +7,7 @@ let
 in
 mkMerge [
   (optionalAttrs (mode == "NixOS") {
-    sops.secrets._aws_config = { inherit owner sopsFile; path = "${yl_home}/.aws/config"; };
-    sops.secrets._aws_credentials = { inherit owner sopsFile; path = "${yl_home}/.aws/credentials"; };
+    sops.secrets._aws_configure_profile_personal_sh = { inherit owner sopsFile; mode = "0500"; };
     sops.secrets._config_pet_config_toml = { inherit owner sopsFile; path = "${yl_home}/.config/pet/config.toml"; };
     sops.secrets._config_pet_snippet_toml = { inherit owner sopsFile; path = "${yl_home}/.config/pet/snippet.toml"; };
     sops.secrets._config_remmina_remmina_pref = { inherit owner sopsFile; path = "${yl_home}/.config/remmina/remmina.pref"; };
