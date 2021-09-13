@@ -56,7 +56,7 @@
           config = { };
 
           # Yep, you see it first folks - you can patch nixpkgs!
-          patches = [ ];
+          patches = [ ./patches/kernel_5_11_and_5_12.patch ];
         };
       };
 
