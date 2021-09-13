@@ -41,6 +41,22 @@ in
     useOSProber = true;
   };
 
+  # Fix for Scarlet Focusrite
+  boot.kernelPackages=pkgs.linuxPackages_5_11;
+  boot.kernelPatches =
+  let
+    focusrite-scarlett-backports=pkgs.fetchFromGitHub{
+      owner="sadko4u";
+      repo="focusrite-scarlett-backports";
+      rev="97ab71438152ab4665005419fa131cf6d9958495";
+      sha256="sha256-WfOrVXUa9khLc1+Wc1aoC568nbZ1tBo3ODhzneb4lTc=";
+    };
+
+    in singleton {
+    name = "focusrite-scarlett-backports";
+    patch = "${focusrite-scarlett-backports}/vanilla-linux-5.11.1-scarlett-gen3.patch";
+  };
+
   boot.loader.efi.canTouchEfiVariables = true;
 
   boot.loader.systemd-boot.enable = false;
