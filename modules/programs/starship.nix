@@ -17,6 +17,11 @@ in
     (optionalAttrs (mode == "home-manager") {
       programs.starship = {
         settings = {
+          battery = {
+            full_symbol = "🔋 ";
+            charging_symbol = "⚡️ ";
+            discharging_symbol = "💀 ";
+          };
           battery.display = [
             { threshold = 10; style = "bold red"; }
             { threshold = 15; style = "red"; }
