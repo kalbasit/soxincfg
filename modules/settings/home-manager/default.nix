@@ -2,8 +2,8 @@
 
 let
   inherit (lib)
-  optionalAttrs
-  ;
+    optionalAttrs
+    ;
 in
 optionalAttrs (mode == "home-manager") {
   home.activation.aws-credentials = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
