@@ -213,8 +213,8 @@ in
         "${meta}+${alt}+c" = "exec CM_LAUNCHER=rofi ${getBin pkgs.clipmenu}/bin/clipmenu";
 
         # Terminals
-        "${meta}+Return" = "exec ${getBin pkgs.termite}/bin/termite";
-        "${meta}+${shift}+Return" = "exec ${getBin pkgs.alacritty}/bin/alacritty";
+        "${meta}+Return" = "exec ${getBin pkgs.wezterm}/bin/wezterm";
+        "${meta}+${shift}+Return" = "exec ${getBin pkgs.termite}/bin/termite";
 
         # Modes
         "${meta}+${alt}+r" = "mode resize";
