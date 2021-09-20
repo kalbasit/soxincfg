@@ -1,13 +1,13 @@
 { mode, config, pkgs, lib, ... }:
 
 let
-  inherit(lib)
+  inherit (lib)
     mkEnableOption
     mkIf
     mkMerge
     optionalAttrs
     singleton
-  ;
+    ;
 
   cfg = config.soxincfg.programs.wezterm;
 in
