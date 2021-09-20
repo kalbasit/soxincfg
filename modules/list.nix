@@ -16,6 +16,7 @@
   termite = ./programs/termite.nix;
   tmux = ./programs/tmux;
   weechat = ./programs/weechat;
+  wezterm = ./programs/wezterm;
   zsh = ./programs/zsh;
 
   # services
