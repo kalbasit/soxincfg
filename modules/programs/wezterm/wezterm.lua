@@ -20,5 +20,6 @@ wezterm.on("update-right-status", function(window, pane)
 end)
 
 return {
+  check_for_updates = false, -- since it's installed by Nix, let Nix manage its updates.
   color_scheme = "Gruvbox Dark",
 }
