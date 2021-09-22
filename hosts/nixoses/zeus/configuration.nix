@@ -1,16 +1,21 @@
 { config, soxincfg, lib, nixos-hardware, pkgs, ... }:
-with lib;
+let
+  sopsFile = ./secrets.sops.yaml;
+in
 {
   imports = [
     soxincfg.nixosModules.profiles.myself
     soxincfg.nixosModules.profiles.work.keeptruckin
-    soxincfg.nixosModules.profiles.workstation.nixos.remote
+    soxincfg.nixosModules.profiles.work.ulta
+    soxincfg.nixosModules.profiles.workstation.nixos.local
 
     nixos-hardware.nixosModules.common-cpu-intel
     nixos-hardware.nixosModules.common-pc-ssd
 
     ./hardware-configuration.nix
   ];
+
+  sops.secrets._etc_NetworkManager_system-connections_Nasreddine-VPN_nmconnection = { inherit sopsFile; path = "/etc/NetworkManager/system-connections/Nasreddine-VPN.nmconnection"; };
 
   # load YL's home-manager configuration
   home-manager.users.yl = import ./home.nix { inherit soxincfg; };
