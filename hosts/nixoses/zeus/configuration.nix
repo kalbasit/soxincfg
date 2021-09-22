@@ -1,5 +1,9 @@
 { config, soxincfg, lib, nixos-hardware, pkgs, ... }:
 let
+  inherit (lib)
+    mkForce
+    ;
+
   sopsFile = ./secrets.sops.yaml;
 in
 {
@@ -14,6 +18,9 @@ in
 
     ./hardware-configuration.nix
   ];
+
+  # force the keyboard to be us on the console to work correctly with my zsa
+  console.keyMap = mkForce "us";
 
   sops.secrets._etc_NetworkManager_system-connections_Nasreddine-VPN_nmconnection = { inherit sopsFile; path = "/etc/NetworkManager/system-connections/Nasreddine-VPN.nmconnection"; };
 
