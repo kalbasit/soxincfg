@@ -41,6 +41,13 @@ in
     enableCryptodisk = true;
   };
 
+  # enable focusrite Gen3 support.
+  soxin.hardware.sound.focusRiteGen3Support = true;
+
+  boot.loader.efi.canTouchEfiVariables = true;
+
+  boot.loader.systemd-boot.enable = false;
+
   nix.maxJobs = lib.mkDefault 12;
 
   soxin.hardware.serial_console.enable = true;
