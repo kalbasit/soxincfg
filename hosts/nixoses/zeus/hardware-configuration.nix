@@ -33,20 +33,12 @@ in
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
   boot.kernelModules = [ "kvm-intel" "iscsi_tcp" ];
 
-  boot.loader.grub = {
-    configurationLimit = 30;
-    device = "nodev";
-    efiSupport = true;
-    enable = true;
-    enableCryptodisk = true;
-  };
-
   # enable focusrite Gen3 support.
   soxin.hardware.sound.focusRiteGen3Support = true;
 
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.loader.systemd-boot.enable = false;
+  boot.loader.systemd-boot.enable = true;
 
   nix.maxJobs = lib.mkDefault 12;
 
