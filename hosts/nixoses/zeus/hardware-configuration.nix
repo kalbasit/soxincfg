@@ -34,11 +34,10 @@ in
   boot.kernelModules = [ "kvm-intel" "iscsi_tcp" ];
 
   # enable focusrite Gen3 support.
-  soxin.hardware.sound.focusRiteGen3Support = true;
-
-  boot.loader.efi.canTouchEfiVariables = true;
+  #soxin.hardware.sound.focusRiteGen3Support = true;
 
   boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 
   nix.maxJobs = lib.mkDefault 12;
 
@@ -69,9 +68,8 @@ in
 
   fileSystems = nfsFSEntries // {
     "/" = {
-      device = "/dev/disk/by-uuid/471c4bf2-14c9-4eef-a791-8beebfcfe31a";
-      fsType = "btrfs";
-      options = [ "subvol=@nixos/@root" ];
+      device = "/dev/disk/by-uuid/9633b2d0-5809-467f-80b0-be75cbcfd67c";
+      fsType = "ext4";
     };
 
     # "/home" = {
@@ -99,6 +97,6 @@ in
   };
 
   swapDevices = [
-    { device = "/dev/disk/by-uuid/f58da878-7e18-430e-ad8c-321f63c61a4e"; }
+    # { device = "/dev/disk/by-uuid/f58da878-7e18-430e-ad8c-321f63c61a4e"; }
   ];
 }
