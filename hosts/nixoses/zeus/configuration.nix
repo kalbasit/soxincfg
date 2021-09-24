@@ -3,8 +3,6 @@ let
   inherit (lib)
     mkForce
     ;
-
-  sopsFile = ./secrets.sops.yaml;
 in
 {
   imports = [
@@ -21,8 +19,6 @@ in
 
   # force the keyboard to be us on the console to work correctly with my zsa
   console.keyMap = mkForce "us";
-
-  sops.secrets._etc_NetworkManager_system-connections_Nasreddine-VPN_nmconnection = { inherit sopsFile; path = "/etc/NetworkManager/system-connections/Nasreddine-VPN.nmconnection"; };
 
   # load YL's home-manager configuration
   home-manager.users.yl = import ./home.nix { inherit soxincfg; };
