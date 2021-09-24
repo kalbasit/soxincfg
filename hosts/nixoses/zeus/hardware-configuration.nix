@@ -41,8 +41,6 @@ in
 
   nix.maxJobs = lib.mkDefault 12;
 
-  soxin.hardware.serial_console.enable = true;
-
   console.font = "Lat2-Terminus16";
 
   boot.initrd.luks.devices = {
