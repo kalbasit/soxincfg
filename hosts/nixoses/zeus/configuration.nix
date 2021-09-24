@@ -29,7 +29,7 @@ in
 
   soxin.hardware.intelBacklight.enable = true;
 
-  soxincfg.services.nextcloud.enable = true;
+  # soxincfg.services.nextcloud.enable = true;
 
   # Enable iscsid to create disks over on my NAS
   # soxincfg.services.iscsid.enable = true;
