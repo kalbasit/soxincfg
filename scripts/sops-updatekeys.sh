@@ -23,3 +23,5 @@ for fn in "${sops_files[@]}"; do
     >&2 echo ">>> Updating $fn"
     sops updatekeys -y "$fn"
 done
+
+rm -f ".sops.yaml"
