@@ -12,7 +12,7 @@ cd "$root_dir"
 
 rm -f ".sops.yaml"
 
-readonly sops_files=($(find . -name '*.sops.*' -print))
+readonly sops_files=($(find . -name '*.sops' -print) $(find . -name '*.sops.*' -print))
 
 cat <<EOF > .sops.yaml
 creation_rules:
