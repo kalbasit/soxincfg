@@ -23,8 +23,6 @@ in
   # load YL's home-manager configuration
   home-manager.users.yl = import ./home.nix { inherit soxincfg; };
 
-  soxin.hardware.intelBacklight.enable = true;
-
   # soxincfg.services.nextcloud.enable = true;
 
   # Enable iscsid to create disks over on my NAS
