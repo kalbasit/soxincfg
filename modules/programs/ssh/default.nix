@@ -14,6 +14,8 @@ in
     soxincfg.programs.ssh = {
       enable = mkEnableOption "enable SSH client";
 
+      enableSSHAgent = mkEnableOption "enable SSH client";
+
       hashKnownHosts = mkEnableOption "hash known hosts";
 
       hostKeyAlgorithms = mkOption {
@@ -103,6 +105,8 @@ in
           kexAlgorithms
           macs
           ciphers;
+
+        startAgent = cfg.enableSSHAgent;
       };
     })
 
