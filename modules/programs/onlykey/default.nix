@@ -10,6 +10,12 @@ in
   };
 
   config = mkIf cfg.enable (mkMerge [
+    {
+      soxincfg.programs.ssh = {
+        enableSSHAgent = mkDefault true;
+      };
+    }
+
     (optionalAttrs (mode == "home-manager") {
       home.packages = with pkgs; [ onlykey onlykey-agent onlykey-cli ];
     })
