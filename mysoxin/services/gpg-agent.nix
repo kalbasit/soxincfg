@@ -40,7 +40,7 @@ in
       services.gpg-agent = {
         enable = true;
 
-        enableSSHSupport = cfg.ssh-support.enable;
+        enableSshSupport = cfg.ssh-support.enable;
         enableExtraSocket = cfg.extra-socket;
 
         defaultCacheTtl = cfg.cacheTtl;
