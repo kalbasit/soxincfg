@@ -41,7 +41,10 @@ mkMerge [
       services = {
         caffeine.enable = true;
         dunst.enable = true;
-        gpgAgent.enable = true;
+        gpgAgent = {
+          enable = true;
+          extra-socket = true;
+        };
         locker = {
           enable = true;
           color = "ffa500";
