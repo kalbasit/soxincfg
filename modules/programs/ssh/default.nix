@@ -1,7 +1,19 @@
 { mode, config, pkgs, lib, ... }:
 
-with lib;
 let
+  inherit (lib)
+    concatStringsSep
+    mkDefault
+    mkEnableOption
+    mkIf
+    mkMerge
+    mkOption
+    optionalAttrs
+    optionalString
+    singleton
+    types
+    ;
+
   cfg = config.soxincfg.programs.ssh;
 
   yesOrNo = v: if v then "yes" else "no";
@@ -19,7 +31,7 @@ in
       hashKnownHosts = mkEnableOption "hash known hosts";
 
       hostKeyAlgorithms = mkOption {
-        type = with types; listOf str;
+        type = with types; types.listOf types.str;
         default = [
           "ssh-ed25519-cert-v01@openssh.com"
           "ssh-rsa-cert-v01@openssh.com"

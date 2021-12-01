@@ -1,7 +1,16 @@
 { config, lib, mode, pkgs, ... }:
 
-with lib;
+
 let
+  inherit (lib)
+    mkDefault
+    mkEnableOption
+    mkIf
+    mkMerge
+    optionalAttrs
+    singleton
+    ;
+
   cfg = config.soxincfg.programs.onlykey;
 in
 {
@@ -17,7 +26,7 @@ in
     }
 
     (optionalAttrs (mode == "home-manager") {
-      home.packages = with pkgs; [ onlykey onlykey-agent onlykey-cli ];
+      home.packages = [ pkgs.onlykey pkgs.onlykey-agent pkgs.onlykey-cli ];
     })
 
     (optionalAttrs (mode == "NixOS") (
