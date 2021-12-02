@@ -37,22 +37,25 @@ in
       hardware.onlykey.enable = true;
     })
 
-    (mkIf cfg.ssh-support.enable (optionalAttrs (mode == "NixOS") (
-      let
-        yl_home = config.users.users.yl.home;
-        owner = config.users.users.yl.name;
-        sopsFile = ./secrets.sops.yaml;
-        id_ed25519_sk_rk_path = "${yl_home}/.ssh/id_ed25519_sk_rk";
-      in
-      {
-        sops.secrets._ssh_id_ed25519_sk_rk = { inherit owner sopsFile; path = id_ed25519_sk_rk_path; };
+    (mkIf cfg.ssh-support.enable (optionalAttrs (mode == "home-manager") {
+      soxincfg.programs.ssh = {
+        identitiesOnly = mkDefault true;
+        identityFiles = singleton "~/.ssh/id_ed25519_sk_rk";
+      };
+    }))
 
-        soxincfg.programs.ssh = {
-          identitiesOnly = mkDefault true;
-          identityFiles = singleton id_ed25519_sk_rk_path;
+    (mkIf cfg.ssh-support.enable (optionalAttrs (mode == "NixOS") {
+      sops.secrets._ssh_id_ed25519_sk_rk =
+        let
+          yl_home = config.users.users.yl.home;
+          owner = config.users.users.yl.name;
+          sopsFile = ./secrets.sops.yaml;
+        in
+        {
+          inherit owner sopsFile;
+          path = "${yl_home}/.ssh/id_ed25519_sk_rk";
         };
-      }
+    })
     )
-    ))
   ]);
 }
