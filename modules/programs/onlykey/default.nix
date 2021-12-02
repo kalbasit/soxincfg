@@ -16,12 +16,16 @@ in
 {
   options.soxincfg.programs.onlykey = {
     enable = mkEnableOption "programs.onlykey";
+
+    ssh-support = {
+      enable = mkEnableOption "Whether to enable SSH support with OnlyKey.";
+    };
   };
 
   config = mkIf cfg.enable (mkMerge [
     {
       soxincfg.programs.ssh = {
-        enableSSHAgent = mkDefault true;
+        enableSSHAgent = mkDefault cfg.ssh-support.enable;
       };
     }
 
@@ -29,7 +33,11 @@ in
       home.packages = [ pkgs.onlykey pkgs.onlykey-agent pkgs.onlykey-cli ];
     })
 
-    (optionalAttrs (mode == "NixOS") (
+    (optionalAttrs (mode == "NixOS") {
+      hardware.onlykey.enable = true;
+    })
+
+    (mkIf cfg.ssh-support.enable (optionalAttrs (mode == "NixOS") (
       let
         yl_home = config.users.users.yl.home;
         owner = config.users.users.yl.name;
@@ -37,7 +45,6 @@ in
         id_ed25519_sk_rk_path = "${yl_home}/.ssh/id_ed25519_sk_rk";
       in
       {
-        hardware.onlykey.enable = true;
         sops.secrets._ssh_id_ed25519_sk_rk = { inherit owner sopsFile; path = id_ed25519_sk_rk_path; };
 
         soxincfg.programs.ssh = {
@@ -45,6 +52,7 @@ in
           identityFiles = singleton id_ed25519_sk_rk_path;
         };
       }
+    )
     ))
   ]);
 }

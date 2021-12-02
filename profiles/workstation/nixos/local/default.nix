@@ -81,7 +81,10 @@ mkMerge [
         git.enable = true;
         mosh.enable = true;
         neovim.enable = true;
-        onlykey.enable = true;
+        onlykey = {
+          enable = true;
+          ssh-support.enable = true;
+        };
         pet.enable = true;
         ssh.enable = true;
         starship.enable = true;

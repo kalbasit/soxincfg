@@ -3,6 +3,7 @@
 let
   inherit (lib)
     concatStringsSep
+    isString
     mkDefault
     mkEnableOption
     mkIf
@@ -44,7 +45,8 @@ in
       };
 
       identityFiles = mkOption {
-        type = types.listOf types.path;
+        apply = list: map (path: if isString path then path else toString path) list;
+        type = types.listOf (types.either types.path types.str);
         default = [ ];
         description = ''
           The identity files to offer all hosts.
@@ -126,9 +128,21 @@ in
       programs.ssh = {
         extraConfig = ''
           PubkeyAuthentication yes
+
           # Ensure KnownHosts are unreadable if leaked - it is otherwise
           # easier to know which hosts your keys have access to.
           HashKnownHosts ${yesOrNo cfg.hashKnownHosts}
+
+          # Host keys the client accepts - order here is honored by OpenSSH
+          ${optionalString (cfg.hostKeyAlgorithms != [ ])
+              ("HostKeyAlgorithms " + (concatStringsSep "," cfg.hostKeyAlgorithms))}
+
+          ${optionalString (cfg.kexAlgorithms != [ ])
+              ("KexAlgorithms " + (concatStringsSep "," cfg.kexAlgorithms))}
+          ${optionalString (cfg.macs != [ ])
+              ("MACs " + (concatStringsSep "," cfg.macs))}
+          ${optionalString (cfg.ciphers != [ ])
+              ("Ciphers " + (concatStringsSep "," cfg.ciphers))}
         '';
       };
     }
@@ -136,9 +150,9 @@ in
     (mkIf config.soxin.hardware.yubikey.enable {
       soxincfg.programs.ssh = {
         identitiesOnly = mkDefault true;
-        identityFiles = singleton (pkgs.writeText "id_rsa.pub" ''
-          ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC+Pe+dPmFXssGgCYUmKwOHLL7gAlbvUxt64D0C8xL64GI+yjzOaF+zlXVkvpKpwwIwgUwtZLABTsgKfkzEzKZbIPEt9jn8eba/82mKF//TKup2dnpunfux6wMJQAQA/1m9tKtSFJOBbNXkZmtQ3Ewm4T/dJPOr7RnX/eyIIBrfJ9NQoMmSU8MJ8ii2V6nrFi1srZAHb5KVpSSSJJOM9jZs9DQ4FJ5YLTpDVG35KbrpSaYSgQwjnIajQI+yQmYF+/m7KofBgbjYTrZ71VgAjXXd/zXw+Z+kN/CyxDccd35oI/KlX5tIy/Qz3JIlHao1WWMM4cVN9dzJuGdFIi+QBsv2nOzNaCvCGdvguhhWLM1gaXGgVHasoZcNedPasteabg2GJjsQTbc82XXWLkAcDVhrRjvG2sfOTXskneDhZhahavrjs5LE8eq3JsfjVUCJLIK3YyS7T6vN6CAzv3y1r47sshjisG9b3E9L4MDZCKZ2YViaA+oHoEemxOC08m5SaGXJX8tt68MIP9pwva5ESZdwS9pbRjQg7QzIDg6nMRSgw/KleZ7g/vtk/5IxEVtK0vbhjFOjDfY8XzPXEYkxkxmsCytKoGnRFmtTHTNJ/vC0Dz6+KTwRJiF1ZjQzbFHEEo/scs82mx4EXxD6XnpPQkAHmQYTOloUevXX2zrx3rDbfQ== cardno:000609501258
-        '');
+        # identityFiles = singleton (pkgs.writeText "id_rsa.pub" ''
+        #   ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC+Pe+dPmFXssGgCYUmKwOHLL7gAlbvUxt64D0C8xL64GI+yjzOaF+zlXVkvpKpwwIwgUwtZLABTsgKfkzEzKZbIPEt9jn8eba/82mKF//TKup2dnpunfux6wMJQAQA/1m9tKtSFJOBbNXkZmtQ3Ewm4T/dJPOr7RnX/eyIIBrfJ9NQoMmSU8MJ8ii2V6nrFi1srZAHb5KVpSSSJJOM9jZs9DQ4FJ5YLTpDVG35KbrpSaYSgQwjnIajQI+yQmYF+/m7KofBgbjYTrZ71VgAjXXd/zXw+Z+kN/CyxDccd35oI/KlX5tIy/Qz3JIlHao1WWMM4cVN9dzJuGdFIi+QBsv2nOzNaCvCGdvguhhWLM1gaXGgVHasoZcNedPasteabg2GJjsQTbc82XXWLkAcDVhrRjvG2sfOTXskneDhZhahavrjs5LE8eq3JsfjVUCJLIK3YyS7T6vN6CAzv3y1r47sshjisG9b3E9L4MDZCKZ2YViaA+oHoEemxOC08m5SaGXJX8tt68MIP9pwva5ESZdwS9pbRjQg7QzIDg6nMRSgw/KleZ7g/vtk/5IxEVtK0vbhjFOjDfY8XzPXEYkxkxmsCytKoGnRFmtTHTNJ/vC0Dz6+KTwRJiF1ZjQzbFHEEo/scs82mx4EXxD6XnpPQkAHmQYTOloUevXX2zrx3rDbfQ== cardno:000609501258
+        # '');
       };
     })
 
@@ -164,21 +178,9 @@ in
         controlPersist = "yes";
 
         extraConfig = ''
-          # Host keys the client accepts - order here is honored by OpenSSH
-          ${optionalString (cfg.hostKeyAlgorithms != [ ])
-              ("HostKeyAlgorithms " + (concatStringsSep "," cfg.hostKeyAlgorithms))}
-
-          ${optionalString (cfg.kexAlgorithms != [ ])
-              ("KexAlgorithms " + (concatStringsSep "," cfg.kexAlgorithms))}
-          ${optionalString (cfg.macs != [ ])
-              ("MACs " + (concatStringsSep "," cfg.macs))}
-          ${optionalString (cfg.ciphers != [ ])
-              ("Ciphers " + (concatStringsSep "," cfg.ciphers))}
-
-          # Offer only explicit keys. But by default, offer by my Yubikey.
           IdentitiesOnly=${yesOrNo cfg.identitiesOnly}
           ${optionalString (cfg.identityFiles != [ ])
-          concatStringsSep "\n" (map (f: "IdentityFile ${toString f}") cfg.identityFiles)
+          (concatStringsSep " " (map (f: "IdentityFile ${f}") cfg.identityFiles))
           }
         '';
 
