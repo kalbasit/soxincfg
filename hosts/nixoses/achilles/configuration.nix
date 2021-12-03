@@ -1,5 +1,9 @@
-{ config, soxincfg, ... }:
+{ config, lib, soxincfg, ... }:
 let
+  inherit (lib)
+    mkForce
+    ;
+
   sopsFile = ./secrets.sops.yaml;
 in
 {
@@ -27,6 +31,12 @@ in
   security.pam.services.login.fprintAuth = true;
   security.pam.services.xscreensaver.fprintAuth = true;
   security.pam.services.sudo.fprintAuth = true;
+
+  # XXX: Temporally disable remote build until SSH is fully configured.
+  soxincfg.settings.nix.distributed-builds.enable = mkForce false;
+
+  # XXX: Temporally disable GnuPG signing until it's fully configured.
+  soxincfg.programs.git.enableGpgSigningKey = mkForce false;
 
   system.stateVersion = "20.09";
 }
