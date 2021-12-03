@@ -56,8 +56,8 @@ function gcim() {
 		fi
 
 		if [[ "${GIT_DISABLE_GPG_SIGN:-}" != "" ]]; then
-			@git_bin@ commit --no-sign -m "${message}${story}"
-		else
+			@git_bin@ commit --no-gpg-sign -m "${message}${story}"
+		elt
 			@git_bin@ commit -m "${message}${story}"
 		fi
 	} always {
