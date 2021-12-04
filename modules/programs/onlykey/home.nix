@@ -6,7 +6,6 @@ let
     mkDefault
     mkIf
     mkMerge
-    optionalAttrs
     singleton
     ;
 
@@ -18,10 +17,6 @@ let
 
 
   cfg = config.soxincfg.programs.onlykey;
-
-  home = config.users.users.yl.home;
-  owner = config.users.users.yl.name;
-  sopsFile = ./secrets.sops.yaml;
 in
 {
   config = mkIf cfg.enable (mkMerge [

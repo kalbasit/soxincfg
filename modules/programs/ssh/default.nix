@@ -55,6 +55,17 @@ in
 
       hashKnownHosts = mkEnableOption "hash known hosts";
 
+      addKeysToAgent = mkOption {
+        apply = v: if builtins.isBool v then yesOrNo v else v;
+        type = types.either types.bool (types.enum [ "ask" "confirm" ]);
+        default = cfg.enableSSHAgent;
+        description = ''
+          Whether to automatically add a private key that is used during
+          authentication to ssh-agent if it is running (with confirmation
+          enabled if set to 'confirm'.
+        '';
+      };
+
       hostKeyAlgorithms = mkOption {
         type = with types; types.listOf types.str;
         default = [
@@ -173,6 +184,8 @@ in
           ${optionalString (cfg.identityFiles != [ ])
           (concatStringsSep "\n" (map (f: "IdentityFile ${f}") cfg.identityFiles))
           }
+
+          AddKeysToAgent=${cfg.addKeysToAgent}
         '';
 
         matchBlocks = {

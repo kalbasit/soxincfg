@@ -5,7 +5,6 @@ let
   inherit (lib)
     mkIf
     mkMerge
-    optionalAttrs
     ;
 
   cfg = config.soxincfg.programs.onlykey;
