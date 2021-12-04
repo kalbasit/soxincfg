@@ -8,13 +8,17 @@ let
     mkIf
     mkMerge
     optionalAttrs
+    optionals
     singleton
     ;
 
   cfg = config.soxincfg.programs.onlykey;
 in
 {
-  imports = [ ./nixos.nix ./home.nix ];
+  imports =
+    [ ]
+    ++ optionals (optionalAttrs (mode == "NixOS")) [ ./nixos.nix ]
+    ++ optionals (optionalAttrs (mode == "home-manager")) [ ./home.nix ];
 
   options.soxincfg.programs.onlykey = {
     enable = mkEnableOption "programs.onlykey";

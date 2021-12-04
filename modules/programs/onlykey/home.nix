@@ -24,7 +24,7 @@ let
   sopsFile = ./secrets.sops.yaml;
 in
 {
-  config = optionalAttrs (mode == "home-manager") (mkIf cfg.enable (mkMerge [
+  config = mkIf cfg.enable (mkMerge [
     { home.packages = [ onlykey onlykey-agent onlykey-cli ]; }
 
     (mkIf cfg.ssh-support.enable {
@@ -33,5 +33,5 @@ in
         identityFiles = singleton "~/.ssh/id_ed25519_sk_rk";
       };
     })
-  ]));
+  ]);
 }

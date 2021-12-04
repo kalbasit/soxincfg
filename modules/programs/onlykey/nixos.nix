@@ -15,7 +15,7 @@ let
   sopsFile = ./secrets.sops.yaml;
 in
 {
-  config = optionalAttrs (mode == "NixOS") (mkIf cfg.enable (mkMerge [
+  config = mkIf cfg.enable (mkMerge [
     { hardware.onlykey.enable = true; }
 
     (mkIf cfg.ssh-support.enable {
@@ -24,5 +24,5 @@ in
         path = "${home}/.ssh/id_ed25519_sk_rk";
       };
     })
-  ]));
+  ]);
 }
