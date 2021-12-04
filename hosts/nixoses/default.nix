@@ -15,7 +15,7 @@ in
     in
     {
       inherit channelName system;
-      modules = [ ./achilles/configuration.nix ];
+      modules = [ ./achilles/nixos.nix ];
     };
 
   hades =
@@ -24,7 +24,7 @@ in
     in
     {
       inherit channelName system;
-      modules = [ ./hades/configuration.nix ];
+      modules = [ ./hades/nixos.nix ];
     };
 
   x86-64-linux-0 =
@@ -33,7 +33,7 @@ in
     in
     {
       inherit channelName system;
-      modules = [ ./x86-64-linux-0/configuration.nix ];
+      modules = [ ./x86-64-linux-0/nixos.nix ];
 
       deploy = {
         hostname = "x86-64-linux-0.yl.ktdev.io";
@@ -51,7 +51,7 @@ in
     in
     {
       inherit channelName system;
-      modules = [ ./zeus/configuration.nix ];
+      modules = [ ./zeus/nixos.nix ];
 
       deploy = {
         hostname = "zeus.admin.nasreddine.com";
@@ -73,7 +73,7 @@ in
     in
     {
       inherit channelName system;
-      modules = [ ./aarch64-linux-0/configuration.nix ];
+      modules = [ ./aarch64-linux-0/nixos.nix ];
 
       deploy = {
         hostname = "aarch64-linux-0.yl.ktdev.io";
@@ -91,7 +91,7 @@ in
     in
     {
       inherit channelName system;
-      modules = [ ./kore/configuration.nix ];
+      modules = [ ./kore/nixos.nix ];
 
       deploy = {
         hostname = "kore.admin.nasreddine.com";

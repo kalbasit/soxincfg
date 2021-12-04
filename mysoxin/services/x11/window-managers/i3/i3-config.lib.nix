@@ -209,6 +209,10 @@ in
         # sleep support
         "XF86PowerOff" = "exec ${nosid} ${locker} && systemctl suspend";
 
+        # lock support
+        # TODO: conflicts
+        # "${meta}+l" = "exec ${nosid} ${locker}";
+
         # clipboard history
         "${meta}+${alt}+c" = "exec CM_LAUNCHER=rofi ${getBin pkgs.clipmenu}/bin/clipmenu";
 
