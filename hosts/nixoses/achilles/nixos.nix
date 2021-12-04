@@ -26,10 +26,10 @@ in
   services.xserver.libinput.touchpad.accelSpeed = "0.5";
 
   # enable fingerprint reader
-  # services.fprintd.enable = true;
-  # security.pam.services.login.fprintAuth = true;
-  # security.pam.services.xscreensaver.fprintAuth = true;
-  # security.pam.services.sudo.fprintAuth = true;
+  services.fprintd.enable = true;
+  security.pam.services.login.fprintAuth = true;
+  security.pam.services.xscreensaver.fprintAuth = true;
+  security.pam.services.sudo.fprintAuth = true;
 
   # store u2f for onlykey
   security.pam.u2f.authFile = pkgs.writeText "u2f-mappings" ''
