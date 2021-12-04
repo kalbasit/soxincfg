@@ -42,6 +42,7 @@ in
 
   # XXX: Temporally disable GnuPG signing until it's fully configured.
   soxincfg.programs.git.enableGpgSigningKey = mkForce false;
+  soxin.programs.git.gpgSigningKey = mkForce null;
 
   system.stateVersion = "20.09";
 }
