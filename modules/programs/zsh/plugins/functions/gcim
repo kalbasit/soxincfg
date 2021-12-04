@@ -9,6 +9,8 @@ function gcim() {
 			print_info "${log_depth}" "USAGE: gcim [options] <message>"
 			print_info "${log_depth}" "\t -h, --help        - this message"
 			print_info "${log_depth}" "\t     --log-depth   - change the depth of the log Default: ${log_depth}"
+			print_info "${log_depth}" ""
+			print_info "${log_depth}" "\texport GIT_DISABLE_GPG_SIGN=1 to disable GPG sigining of the commit"
 		}
 
 		local log_depth=0
@@ -53,8 +55,8 @@ function gcim() {
 			story=" (${story})"
 		fi
 
-		if [[ "${SSH_AUTH_SOCK:-}" != "${HOME}/.gnupg/S.gpg-agent.ssh" ]]; then
-			@git_bin@ commit --no-sign -m "${message}${story}"
+		if [[ "${GIT_DISABLE_GPG_SIGN:-}" != "" ]]; then
+			@git_bin@ commit --no-gpg-sign -m "${message}${story}"
 		else
 			@git_bin@ commit -m "${message}${story}"
 		fi
