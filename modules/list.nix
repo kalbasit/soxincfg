@@ -1,4 +1,7 @@
 {
+  # hardware
+  yubikey = ./hardware/yubikey.nix;
+
   # programs
   android = ./programs/android.nix;
   autorandr = ./programs/autorandr.nix;
