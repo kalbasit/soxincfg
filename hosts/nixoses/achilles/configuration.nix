@@ -1,4 +1,4 @@
-{ config, lib, soxincfg, ... }:
+{ config, lib, soxincfg, pkgs, ... }:
 let
   inherit (lib)
     mkForce
@@ -31,6 +31,11 @@ in
   security.pam.services.login.fprintAuth = true;
   security.pam.services.xscreensaver.fprintAuth = true;
   security.pam.services.sudo.fprintAuth = true;
+
+  # store u2f for onlykey
+  security.pam.u2f.authFile = pkgs.writeText "u2f-mappings" ''
+    yl:KCQByPiHmtoaiz1uEbLam0MfKQFM42j0oKs5tu5aiW90Zw5eJFrDYiPc2DzEg+BVHIRQdwr9ZPrlfVc9OifrYVKjA1flAA==,/Xd63dtwo3k7W/ob8ZgaSdQF64ycxk3whm9xMjLXCLP+AO/ZlnlxqM4vBPbetPRqaT7jCm7L4+sk6Xs3fNktaA==,es256,+presence
+  '';
 
   # XXX: Temporally disable remote build until SSH is fully configured.
   soxincfg.settings.nix.distributed-builds.enable = mkForce false;
