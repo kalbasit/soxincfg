@@ -15,7 +15,10 @@ in
     ./hardware-configuration.nix
   ];
 
-  sops.secrets._etc_NetworkManager_system-connections_Nasreddine-VPN_nmconnection = { inherit sopsFile; path = "/etc/NetworkManager/system-connections/Nasreddine-VPN.nmconnection"; };
+  sops.secrets._etc_NetworkManager_system-connections_Nasreddine-VPN_nmconnection = {
+    inherit sopsFile;
+    path = "/etc/NetworkManager/system-connections/Nasreddine-VPN.nmconnection";
+  };
 
   # load YL's home-manager configuration
   home-manager.users.yl = import ./home.nix { inherit soxincfg; };
@@ -44,5 +47,5 @@ in
   soxincfg.programs.git.enableGpgSigningKey = mkForce false;
   soxin.programs.git.gpgSigningKey = mkForce null;
 
-  system.stateVersion = "20.09";
+  system.stateVersion = "21.05";
 }
