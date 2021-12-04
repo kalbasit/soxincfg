@@ -38,6 +38,7 @@
         nixpkgs = {
           # Channel specific overlays
           overlaysBuilder = channels: [
+            # Set Jetbrains to v2020.2.4
             (final: prev: {
               jetbrains = channels.nixpkgs-unstable.jetbrains // {
                 idea-ultimate = channels.nixpkgs-unstable.jetbrains.idea-ultimate.overrideAttrs (oa: rec {
@@ -49,6 +50,12 @@
                   };
                 });
               };
+            })
+
+            # Use bitwarden from unstable
+            (final: prev: {
+              bitwarden = channels.nixpkgs-unstable.bitwarden;
+              bitwarden-cli = channels.nixpkgs-unstable.bitwarden-cli;
             })
           ];
 
