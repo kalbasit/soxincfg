@@ -5,14 +5,7 @@
 with lib;
 
 {
-  imports = [
-    soxincfg.nixosModules.profiles.myself
-    soxincfg.nixosModules.profiles.work.ulta
-    soxincfg.nixosModules.profiles.workstation.nixos.local
-  ];
-
-  # Setup the name of the wireless interface in Polybar
-  soxin.services.xserver.windowManager.bar.modules.network.wlan = singleton "wlp82s0";
+  imports = [ ./soxincfg.nix ];
 
   # HiDPI
   soxin.programs.rofi.dpi = 196;
