@@ -22,6 +22,7 @@ fi
 
 case "${action}" in
     build)
+        >&2 echo "Building $host"
         if [[ $os == "nixos" ]]; then
             nix build ".#nixosConfigurations.${host}.config.system.build.toplevel" --show-trace
         else
@@ -29,6 +30,7 @@ case "${action}" in
         fi
         ;;
     test)
+        >&2 echo "Testing $host"
         if [[ $os == "nixos" ]]; then
             sudo nixos-rebuild --flake ".#${host}" test --show-trace
         else
@@ -37,13 +39,15 @@ case "${action}" in
         fi
         ;;
     switch)
+        >&2 echo "Switching $host"
         if [[ $os == "nixos" ]]; then
-            sudo nixos-rebuild --flake ".#${host}" test --show-trace
+            sudo nixos-rebuild --flake ".#${host}" switch --show-trace
         else
             home-manager switch --flake ".#${host}"
         fi
         ;;
     boot)
+        >&2 echo "Booting $host"
         if [[ $os == "nixos" ]]; then
             sudo nixos-rebuild --flake ".#${host}" boot --show-trace
         else
