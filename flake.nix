@@ -52,10 +52,13 @@
               };
             })
 
-            # Use bitwarden from unstable
+            # Packages from unstable
+            # TODO: Refactor this!
             (final: prev: {
               bitwarden = channels.nixpkgs-unstable.bitwarden;
               bitwarden-cli = channels.nixpkgs-unstable.bitwarden-cli;
+
+              signal-desktop = channels.nixpkgs-unstable.signal-desktop;
             })
           ];
 
