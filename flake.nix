@@ -58,6 +58,10 @@
               bitwarden = channels.nixpkgs-unstable.bitwarden;
               bitwarden-cli = channels.nixpkgs-unstable.bitwarden-cli;
 
+              onlykey = channels.nixpkgs-unstable.onlykey;
+              onlykey-agent = channels.nixpkgs-unstable.onlykey-agent;
+              onlykey-cli = channels.nixpkgs-unstable.onlykey-cli;
+
               signal-desktop = channels.nixpkgs-unstable.signal-desktop;
             })
           ];
