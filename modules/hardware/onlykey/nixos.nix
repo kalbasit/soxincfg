@@ -7,7 +7,7 @@ let
     mkMerge
     ;
 
-  cfg = config.soxincfg.programs.onlykey;
+  cfg = config.soxincfg.hardware.onlykey;
 
   home = config.users.users.yl.home;
   owner = config.users.users.yl.name;
