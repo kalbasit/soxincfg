@@ -72,21 +72,19 @@
     },
     "home-manager": {
       "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
+        "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1622917919,
-        "narHash": "sha256-9gAIwbQyLhK78bEV648k4tfLK6JkYiPk9QdTECpLuOE=",
-        "owner": "nix-community",
+        "lastModified": 1639860152,
+        "narHash": "sha256-0yE8IdubWhkUECJQozX6EtEVfYe8986Tdidg4NscYxg=",
+        "owner": "kalbasit",
         "repo": "home-manager",
-        "rev": "148d85ee8303444fb0116943787aa0b1b25f94df",
+        "rev": "7be7865d33946022e3e085c8b2412dcb9e486b46",
         "type": "github"
       },
       "original": {
-        "owner": "nix-community",
-        "ref": "release-21.05",
+        "owner": "kalbasit",
+        "ref": "next",
         "repo": "home-manager",
         "type": "github"
       }
@@ -142,6 +140,19 @@
       "locked": {
         "lastModified": 1632701959,
         "narHash": "sha256-CKh3O7CW+bowtTqmz5I1tfOk1Dcte3HxR3wiBxn+GP4=",
+        "path": "/nix/store/mw64pz465wi1f3cib2icrfappmcy6wys-source",
+        "rev": "8e1306519d5d820c3144089a3bbbc16991f4c1e3",
+        "type": "path"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "type": "indirect"
+      }
+    },
+    "nixpkgs_3": {
+      "locked": {
+        "lastModified": 1632701959,
+        "narHash": "sha256-CKh3O7CW+bowtTqmz5I1tfOk1Dcte3HxR3wiBxn+GP4=",
         "owner": "NixOS",
         "repo": "nixpkgs",
         "rev": "8e1306519d5d820c3144089a3bbbc16991f4c1e3",
@@ -154,7 +165,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_3": {
+    "nixpkgs_4": {
       "locked": {
         "lastModified": 1613917044,
         "narHash": "sha256-YvBBwtvrnove51SXQ67OVQHctYjEEpFu6GEzRe0pp5I=",
@@ -189,8 +200,9 @@
       "inputs": {
         "deploy-rs": "deploy-rs",
         "flake-utils-plus": "flake-utils-plus",
+        "home-manager": "home-manager",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs_2",
+        "nixpkgs": "nixpkgs_3",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nur": "nur",
         "soxin": "soxin"
@@ -198,7 +210,7 @@
     },
     "sops-nix": {
       "inputs": {
-        "nixpkgs": "nixpkgs_3"
+        "nixpkgs": "nixpkgs_4"
       },
       "locked": {
         "lastModified": 1618840526,
@@ -222,7 +234,9 @@
         "flake-utils-plus": [
           "flake-utils-plus"
         ],
-        "home-manager": "home-manager",
+        "home-manager": [
+          "home-manager"
+        ],
         "nixpkgs": [
           "nixpkgs"
         ],
