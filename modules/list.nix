@@ -1,6 +1,7 @@
 {
   # hardware
-  yubikey = ./hardware/yubikey.nix;
+  onlykey = ./hardware/onlykey;
+  yubikey = ./hardware/yubikey;
 
   # programs
   android = ./programs/android.nix;
@@ -12,7 +13,6 @@
   git = ./programs/git;
   mosh = ./programs/mosh;
   neovim = ./programs/neovim;
-  onlykey = ./programs/onlykey;
   pet = ./programs/pet;
   ssh = ./programs/ssh;
   starship = ./programs/starship.nix;
