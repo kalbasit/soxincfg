@@ -40,11 +40,6 @@ mkMerge [
       services = {
         caffeine.enable = true;
         dunst.enable = true;
-        gpgAgent = {
-          enable = true;
-          extra-socket = true;
-          ssh-support.enable = false;
-        };
         locker = {
           enable = true;
           color = "ffa500";
@@ -72,13 +67,59 @@ mkMerge [
 
     soxincfg = {
       hardware = {
-        yubikey = {
+        onlykey = {
           enable = true;
-          ssh-public-certificate-pem = ''
-            ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC+Pe+dPmFXssGgCYUmKwOHLL7gAlbvUxt64D0C8xL64GI+yjzOaF+zlXVkvpKpwwIwgUwtZLABTsgKfkzEzKZbIPEt9jn8eba/82mKF//TKup2dnpunfux6wMJQAQA/1m9tKtSFJOBbNXkZmtQ3Ewm4T/dJPOr7RnX/eyIIBrfJ9NQoMmSU8MJ8ii2V6nrFi1srZAHb5KVpSSSJJOM9jZs9DQ4FJ5YLTpDVG35KbrpSaYSgQwjnIajQI+yQmYF+/m7KofBgbjYTrZ71VgAjXXd/zXw+Z+kN/CyxDccd35oI/KlX5tIy/Qz3JIlHao1WWMM4cVN9dzJuGdFIi+QBsv2nOzNaCvCGdvguhhWLM1gaXGgVHasoZcNedPasteabg2GJjsQTbc82XXWLkAcDVhrRjvG2sfOTXskneDhZhahavrjs5LE8eq3JsfjVUCJLIK3YyS7T6vN6CAzv3y1r47sshjisG9b3E9L4MDZCKZ2YViaA+oHoEemxOC08m5SaGXJX8tt68MIP9pwva5ESZdwS9pbRjQg7QzIDg6nMRSgw/KleZ7g/vtk/5IxEVtK0vbhjFOjDfY8XzPXEYkxkxmsCytKoGnRFmtTHTNJ/vC0Dz6+KTwRJiF1ZjQzbFHEEo/scs82mx4EXxD6XnpPQkAHmQYTOloUevXX2zrx3rDbfQ== cardno:000609501258
-          '';
+
+          ssh-support.enable = true;
+
+          gnupg-support = {
+            enable = true;
+
+            default-key = "kalbasit@pm.me";
+
+            decryption-key-public = ''
+              -----BEGIN PGP PUBLIC KEY BLOCK-----
+              Version: GnuPG v2
+
+              mDMEAAAAABYJKwYBBAHaRw8BAQdADvQ/0JzWUkbBaK/XP+/brxSSmkIT0k8tgSUz
+              mOAmz7m0DmthbGJhc2l0QHBtLm1liIAEExYIABwFAgAAAAACCwkCGwMEFQgJCgQW
+              AgMBAheAAh4BABYJEEDGXK00GdidCxpUUkVaT1ItR1BH0B4A/ih6bylUpWBQkX8K
+              ljuS6i53of8ZfeBzvMmg9yJtZQuRAP46e64HTixFLg5R7dlUnCJgiMA0+UTS3Zw7
+              2wvJbM4jArg4BAAAAAASCisGAQQBl1UBBQEBB0AyoiXs7Vh/br5zFMWkIjfVqMXK
+              DzfcHEm3z96Fu0YLQwMBCAeIbQQYFggACQUCAAAAAAIbDAAWCRBAxlytNBnYnQsa
+              VFJFWk9SLUdQR37VAP9KXabWEj6mt0KMJxWZJ4Yl87rCqyon+SbxyZhSTXGDHAEA
+              yG+iXMhIOaXK6D+W2FMzNXiISTSNWXGESv93G3tUBgc=
+              =/0wb
+              -----END PGP PUBLIC KEY BLOCK-----
+            '';
+            decryption-key-slot = 132;
+            decryption-key-trust = "ultimate";
+
+            signing-key-slot = 132;
+            # signing key is the same as decryption key so no need to add it
+            # to trust.
+          };
+        };
+
+        yubikey = {
+          enable = false; # using Onlykey now
+
+
+          gnupg-support = {
+            enable = true;
+            extra-socket = true;
+            default-key = "0x7ED8B6DE75BADCF9";
+
+            ssh-support = {
+              enable = true;
+              public-certificate-pem = ''
+                ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC+Pe+dPmFXssGgCYUmKwOHLL7gAlbvUxt64D0C8xL64GI+yjzOaF+zlXVkvpKpwwIwgUwtZLABTsgKfkzEzKZbIPEt9jn8eba/82mKF//TKup2dnpunfux6wMJQAQA/1m9tKtSFJOBbNXkZmtQ3Ewm4T/dJPOr7RnX/eyIIBrfJ9NQoMmSU8MJ8ii2V6nrFi1srZAHb5KVpSSSJJOM9jZs9DQ4FJ5YLTpDVG35KbrpSaYSgQwjnIajQI+yQmYF+/m7KofBgbjYTrZ71VgAjXXd/zXw+Z+kN/CyxDccd35oI/KlX5tIy/Qz3JIlHao1WWMM4cVN9dzJuGdFIi+QBsv2nOzNaCvCGdvguhhWLM1gaXGgVHasoZcNedPasteabg2GJjsQTbc82XXWLkAcDVhrRjvG2sfOTXskneDhZhahavrjs5LE8eq3JsfjVUCJLIK3YyS7T6vN6CAzv3y1r47sshjisG9b3E9L4MDZCKZ2YViaA+oHoEemxOC08m5SaGXJX8tt68MIP9pwva5ESZdwS9pbRjQg7QzIDg6nMRSgw/KleZ7g/vtk/5IxEVtK0vbhjFOjDfY8XzPXEYkxkxmsCytKoGnRFmtTHTNJ/vC0Dz6+KTwRJiF1ZjQzbFHEEo/scs82mx4EXxD6XnpPQkAHmQYTOloUevXX2zrx3rDbfQ== cardno:000609501258
+              '';
+            };
+          };
         };
       };
+
       programs = {
         android.enable = true;
         autorandr.enable = true;
@@ -89,10 +130,6 @@ mkMerge [
         git.enable = true;
         mosh.enable = true;
         neovim.enable = true;
-        onlykey = {
-          enable = true;
-          ssh-support.enable = true;
-        };
         pet.enable = true;
         ssh.enable = true;
         starship.enable = true;
@@ -191,82 +228,6 @@ mkMerge [
     # files
     home.file = {
       ".npmrc".text = "prefix=${config.home.homeDirectory}/.filesystem";
-
-      ".gnupg/gpg.conf".text = ''
-        # NOTE: https://github.com/jclement/dotfiles/blob/master/other/gpg.conf
-        #
-        # This is an implementation of the Riseup OpenPGP Best Practices
-        # https://help.riseup.net/en/security/message-security/openpgp/best-practices
-        #
-
-        #-----------------------------
-        # default key
-        #-----------------------------
-
-        # The default key to sign with. If this option is not used, the default key is
-        # the first key found in the secret keyring
-
-        default-key 0x7ED8B6DE75BADCF9
-
-        #-----------------------------
-        # behavior
-        #-----------------------------
-
-        # Disable inclusion of the version string in ASCII armored output
-        no-emit-version
-
-        # Disable comment string in clear text signatures and ASCII armored messages
-        no-comments
-
-        # Disable auto-starting the agent. On hosts that I'm using the GnuPG, I'd like
-        # to have home-manager start the agent on login.
-        no-autostart
-
-        # Display long key IDs
-        keyid-format 0xlong
-
-        # List all keys (or the specified ones) along with their fingerprints
-        with-fingerprint
-
-        # Display the calculated validity of user IDs during key listings
-        list-options show-uid-validity
-        verify-options show-uid-validity
-
-        #-----------------------------
-        # keyserver
-        #-----------------------------
-
-        # This is the server that --recv-keys, --send-keys, and --search-keys will
-        # communicate with to receive keys from, send keys to, and search for keys on
-        keyserver hkps://hkps.pool.sks-keyservers.net
-
-        # When using --refresh-keys, if the key in question has a preferred keyserver
-        # URL, then disable use of that preferred keyserver to refresh the key from
-        keyserver-options no-honor-keyserver-url
-
-        # When searching for a key with --search-keys, include keys that are marked on
-        # the keyserver as revoked
-        keyserver-options include-revoked
-
-        #-----------------------------
-        # algorithm and ciphers
-        #-----------------------------
-
-        # list of personal digest preferences. When multiple digests are supported by
-        # all recipients, choose the strongest one
-        personal-cipher-preferences AES256 AES192 AES CAST5
-
-        # list of personal digest preferences. When multiple ciphers are supported by
-        # all recipients, choose the strongest one
-        personal-digest-preferences SHA512 SHA384 SHA256 SHA224
-
-        # message digest algorithm used when signing a key
-        cert-digest-algo SHA512
-
-        # This preference list is used for new keys and becomes the default for
-        # "setpref" in the edit menu
-        default-preference-list SHA512 SHA384 SHA256 SHA224 AES256 AES192 AES CAST5 ZLIB BZIP2 ZIP Uncompressed
-      '';
     };
 
     home.packages = with pkgs; [
