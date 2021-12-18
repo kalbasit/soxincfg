@@ -133,6 +133,9 @@ mkMerge [
         # Enable TailScale for zero-config VPN service.
         services.tailscale.enable = true;
 
+        # Feed the kernel some entropy
+        services.haveged.enable = true;
+
         services.logind = {
           lidSwitch = "hybrid-sleep";
           lidSwitchDocked = "ignore";
