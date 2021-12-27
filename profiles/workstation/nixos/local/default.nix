@@ -122,7 +122,6 @@ mkMerge [
         yubikey = {
           enable = false; # using Onlykey now
 
-
           gnupg-support = {
             enable = true;
             extra-socket = true;
