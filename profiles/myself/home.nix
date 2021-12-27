@@ -13,7 +13,7 @@ in
       "gitlab.com" = {
         extraOptions = {
           IdentityFile =
-            "~/.ssh/per-site/gitlab.com_rsa";
+            "~/.ssh/per-host/gitlab.com_rsa";
         };
       };
     };
