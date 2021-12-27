@@ -87,10 +87,10 @@ in
   };
 
   config = mkIf cfg.enable {
-    soxincfg.programs.ssh = mkIf cfg.ssh-support.enable {
+    soxincfg.programs.ssh = mkIf cfg.gnupg-support.ssh-support.enable {
       identitiesOnly = mkDefault true;
-      identityFiles = mkIf (cfg.ssh-support.public-certificate-pem != null)
-        (singleton (pkgs.writeText "id_rsa.pub" cfg.ssh-support.public-certificate-pem));
+      identityFiles = mkIf (cfg.gnupg-support.ssh-support.public-certificate-pem != null)
+        (singleton (pkgs.writeText "id_rsa.pub" cfg.gnupg-support.ssh-support.public-certificate-pem));
     };
   };
 }
