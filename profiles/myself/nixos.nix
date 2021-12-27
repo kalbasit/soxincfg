@@ -29,7 +29,7 @@ in
       _local_share_remmina_my_network_vnc_vanya-macbook_ro_remmina = { inherit owner sopsFile; path = "${yl_home}/.local/share/remmina/my-network_vnc_vanya-macbook-ro.remmina"; };
       _netrc = { inherit owner sopsFile; path = "${yl_home}/.netrc"; };
       _ssh_config_include_myself = { inherit owner sopsFile; path = "${yl_home}/.ssh/config_include_myself"; };
-      _ssh_per-site_gitlab_com_rsa = { inherit owner sopsFile; path = "${yl_home}/.ssh/per-site/gitlab.com_rsa"; };
+      _ssh_per-host_gitlab_com_rsa = { inherit owner sopsFile; path = "${yl_home}/.ssh/per-host/gitlab.com_rsa"; };
       _zsh_profiles_opensource_zsh = { inherit owner sopsFile; path = "${yl_home}/.zsh/profiles/opensource.zsh"; };
       _zsh_profiles_personal_zsh = { inherit owner sopsFile; path = "${yl_home}/.zsh/profiles/personal.zsh"; };
     };
