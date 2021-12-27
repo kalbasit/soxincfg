@@ -1,5 +1,7 @@
 { config, soxincfg, nixos-hardware, pkgs, ... }:
 let
+  yl_home = config.users.users.yl.home;
+  owner = config.users.users.yl.name;
   sopsFile = ./secrets.sops.yaml;
 in
 {
@@ -17,7 +19,12 @@ in
     ./win10.nix
   ];
 
-  sops.secrets._etc_NetworkManager_system-connections_Nasreddine-VPN_nmconnection = { inherit sopsFile; path = "/etc/NetworkManager/system-connections/Nasreddine-VPN.nmconnection"; };
+  sops.secrets = {
+    _etc_NetworkManager_system-connections_Nasreddine-VPN_nmconnection = { inherit sopsFile; path = "/etc/NetworkManager/system-connections/Nasreddine-VPN.nmconnection"; };
+    _yl_bw_session_session = { inherit owner sopsFile; mode = "0400"; path = "${yl_home}/.bw_session"; };
+  };
+
+  # load YL's home-manager configuration
 
   # load YL's home-manager configuration
   home-manager.users.yl = import ./home.nix { inherit soxincfg; };
