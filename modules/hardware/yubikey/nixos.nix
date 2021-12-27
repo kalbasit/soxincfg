@@ -28,7 +28,7 @@ in
     programs.gnupg.agent = mkIf cfg.gnupg-support.enable {
       enable = true;
 
-      enableSSHSupport = cfg.ssh-support.enable;
+      enableSSHSupport = cfg.gnupg-support.ssh-support.enable;
       enableExtraSocket = cfg.gnupg-support.extra-socket;
     };
 
