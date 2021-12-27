@@ -30,6 +30,7 @@ in
       _netrc = { inherit owner sopsFile; path = "${yl_home}/.netrc"; };
       _ssh_config_include_myself = { inherit owner sopsFile; path = "${yl_home}/.ssh/config_include_myself"; };
       _ssh_per-host_gitlab_com_rsa = { inherit owner sopsFile; path = "${yl_home}/.ssh/per-host/gitlab.com_rsa"; };
+      _ssh_per-host_serial_nasreddine_com_rsa = { inherit owner sopsFile; path = "${yl_home}/.ssh/per-host/serial.nasreddine.com_rsa"; };
       _zsh_profiles_opensource_zsh = { inherit owner sopsFile; path = "${yl_home}/.zsh/profiles/opensource.zsh"; };
       _zsh_profiles_personal_zsh = { inherit owner sopsFile; path = "${yl_home}/.zsh/profiles/personal.zsh"; };
     };

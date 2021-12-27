@@ -16,6 +16,20 @@ in
             "~/.ssh/per-host/gitlab.com_rsa";
         };
       };
+
+      "serial.nasreddine.com" = {
+        extraOptions = {
+          IdentityFile =
+            "~/.ssh/per-host/serial.nasreddine.com_rsa";
+        };
+      };
+
+      "serial" = {
+        extraOptions = {
+          IdentityFile =
+            "~/.ssh/per-host/serial.nasreddine.com_rsa";
+        };
+      };
     };
   };
 }
