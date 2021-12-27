@@ -12,9 +12,8 @@ in
     ./soxincfg.nix
   ];
 
-  sops.secrets._etc_NetworkManager_system-connections_Nasreddine-VPN_nmconnection = {
-    inherit sopsFile;
-    path = "/etc/NetworkManager/system-connections/Nasreddine-VPN.nmconnection";
+  sops.secrets = {
+    _etc_NetworkManager_system-connections_Nasreddine-VPN_nmconnection = { inherit sopsFile; path = "/etc/NetworkManager/system-connections/Nasreddine-VPN.nmconnection"; };
   };
 
   # load YL's home-manager configuration
