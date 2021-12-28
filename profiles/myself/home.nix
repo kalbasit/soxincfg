@@ -10,6 +10,13 @@ in
     '';
 
     matchBlocks = {
+      "bitbucket.org" = {
+        extraOptions = {
+          IdentityFile =
+            "~/.ssh/per-host/bitbucket.org_rsa";
+        };
+      };
+
       "gitlab.com" = {
         extraOptions = {
           IdentityFile =
