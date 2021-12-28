@@ -16,13 +16,12 @@ with lib;
   soxin.services.xserver.windowManager.bar.modules.network.wlan = singleton "wlp110s0";
 
   # Make sure GnuPG is able to pick up the right card (Yubikey)
-  home.file = mkIf (config.soxincfg.hardware.yubikey.enable && config.soxincfg.hardware.yubikey.gnupg-support.enable) {
-    ".gnupg/scdaemon.conf".text = ''
-      reader-port Yubico YubiKey FIDO+CCID 01 00
-      disable-ccid
-      card-timeout 5
-    '';
-  };
+  programs.gpg.scdaemonSettings =
+    mkIf (config.soxincfg.hardware.yubikey.enable && config.soxincfg.hardware.yubikey.gnupg-support.enable) {
+      reader-port = "Yubico YubiKey FIDO+CCID 01 00";
+      disable-ccid = true;
+      card-timeout = "5";
+    };
 
   # Setup autorandr postswitch
   soxincfg.programs.autorandr.postswitch.move-workspaces-to-main = ''
@@ -62,7 +61,7 @@ with lib;
         eDP-1.enable = false;
 
         DP-3 = {
-          # crtc = 2;
+          crtc = 2;
           enable = true;
           position = "0x0";
           mode = "1920x1200";
