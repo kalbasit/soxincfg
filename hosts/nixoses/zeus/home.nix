@@ -13,11 +13,12 @@ with lib;
   ];
 
   # Make sure GnuPG is able to pick up the right card (Yubikey)
-  home.file.".gnupg/scdaemon.conf".text = ''
-    reader-port Yubico YubiKey FIDO+CCID 01 00
-    disable-ccid
-    card-timeout 5
-  '';
+  programs.gpg.scdaemonSettings =
+    mkIf (config.soxincfg.hardware.yubikey.enable && config.soxincfg.hardware.yubikey.gnupg-support.enable) {
+      reader-port = "Yubico YubiKey FIDO+CCID 01 00";
+      disable-ccid = true;
+      card-timeout = "5";
+    };
 
   # Setup autorandr postswitch
   soxincfg.programs.autorandr.postswitch.move-workspaces-to-main = ''

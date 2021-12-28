@@ -184,6 +184,9 @@ mkMerge [
 
         services.gnome.gnome-keyring.enable = true;
 
+        # Enable dconf required by most guis
+        programs.dconf.enable = true;
+
         # Enable TailScale for zero-config VPN service.
         services.tailscale.enable = true;
 
