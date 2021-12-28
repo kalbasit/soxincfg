@@ -4,14 +4,14 @@
   inputs = {
     deploy-rs.url = "github:serokell/deploy-rs";
     flake-utils-plus.url = "github:gytis-ivaskevicius/flake-utils-plus/v1.1.0";
-    home-manager.url = "github:kalbasit/home-manager/next";
+    home-manager.url = "github:nix-community/home-manager/release-21.11";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs.url = "github:NixOS/nixpkgs/release-21.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/release-21.11";
     nur.url = "github:nix-community/NUR";
 
     soxin = {
-      url = "github:SoxinOS/soxin/release-21.05";
+      url = "github:SoxinOS/soxin";
       inputs = {
         deploy-rs.follows = "deploy-rs";
         flake-utils-plus.follows = "flake-utils-plus";
@@ -39,34 +39,7 @@
       channels = {
         nixpkgs = {
           # Channel specific overlays
-          overlaysBuilder = channels: [
-            # Set Jetbrains to v2020.2.4
-            (final: prev: {
-              jetbrains = channels.nixpkgs-unstable.jetbrains // {
-                idea-ultimate = channels.nixpkgs-unstable.jetbrains.idea-ultimate.overrideAttrs (oa: rec {
-                  name = "idea-ultimate-${version}";
-                  version = "2020.2.4";
-                  src = prev.fetchurl {
-                    url = "https://download.jetbrains.com/idea/ideaIU-${version}-no-jbr.tar.gz";
-                    sha256 = "sha256-/pYbEN7vExfgXEuQy+Sc97h2HzxPlJ3im7VjraJEGRc=";
-                  };
-                });
-              };
-            })
-
-            # Packages from unstable
-            # TODO: Refactor this!
-            (final: prev: {
-              bitwarden = channels.nixpkgs-unstable.bitwarden;
-              bitwarden-cli = channels.nixpkgs-unstable.bitwarden-cli;
-
-              onlykey = channels.nixpkgs-unstable.onlykey;
-              onlykey-agent = channels.nixpkgs-unstable.onlykey-agent;
-              onlykey-cli = channels.nixpkgs-unstable.onlykey-cli;
-
-              signal-desktop = channels.nixpkgs-unstable.signal-desktop;
-            })
-          ];
+          overlaysBuilder = channels: [ ];
 
           # Channel specific configuration. Overwrites `channelsConfig` argument
           config = { };
