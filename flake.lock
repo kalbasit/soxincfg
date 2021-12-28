@@ -249,12 +249,9 @@
         "sops-nix": "sops-nix"
       },
       "locked": {
-        "lastModified": 1640654366,
-        "narHash": "sha256-IoiQwe7uqi38vHua8d6ToOmHgbc+8PM24IWciogtdF8=",
-        "owner": "SoxinOS",
-        "repo": "soxin",
-        "rev": "6ea04d7b8791412c36ce104c8e86b90a5036074f",
-        "type": "github"
+        "narHash": "sha256-6Tivrju4/ZvlsX7J9+98k02GLU/2H9Do+Mnyl0tEBIo=",
+        "path": "/yl/code/stories/personal/soxin/update/flake-utils/plus/github.com/SoxinOS/soxin",
+        "type": "path"
       },
       "original": {
         "owner": "SoxinOS",
