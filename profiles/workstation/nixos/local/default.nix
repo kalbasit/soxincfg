@@ -40,15 +40,6 @@ mkMerge [
       services = {
         caffeine.enable = true;
         dunst.enable = true;
-        locker = {
-          enable = true;
-          color = "ffa500";
-          extraArgs = [
-            "--clock"
-            "--show-failed-attempts"
-            "--datestr='%A %Y-%m-%d'"
-          ];
-        };
         networkmanager.enable = true;
         openssh.enable = true;
         printing = {
@@ -244,6 +235,12 @@ mkMerge [
     # services
     services.clipmenu.enable = true;
     services.flameshot.enable = true;
+    services.betterlockscreen = {
+      enable = true;
+      arguments = [
+        "--show-layout"
+      ];
+    };
 
     # files
     home.file = {
