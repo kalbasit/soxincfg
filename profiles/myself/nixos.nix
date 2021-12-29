@@ -32,6 +32,7 @@ in
       _ssh_per-host_bitbucket_org_rsa = { inherit owner sopsFile; path = "${yl_home}/.ssh/per-host/bitbucket.org_rsa"; };
       _ssh_per-host_gitlab_com_rsa = { inherit owner sopsFile; path = "${yl_home}/.ssh/per-host/gitlab.com_rsa"; };
       _ssh_per-host_serial_nasreddine_com_rsa = { inherit owner sopsFile; path = "${yl_home}/.ssh/per-host/serial.nasreddine.com_rsa"; };
+      _ssh_per-host_unifi_nasreddine_com_rsa = { inherit owner sopsFile; path = "${yl_home}/.ssh/per-host/unifi.nasreddine.com_rsa"; };
       _zsh_profiles_opensource_zsh = { inherit owner sopsFile; path = "${yl_home}/.zsh/profiles/opensource.zsh"; };
       _zsh_profiles_personal_zsh = { inherit owner sopsFile; path = "${yl_home}/.zsh/profiles/personal.zsh"; };
     };
