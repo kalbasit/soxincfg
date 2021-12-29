@@ -1,6 +1,10 @@
-{ config, ... }:
+{ config, lib, ... }:
 
 let
+  inherit (lib)
+    concatStringsSep
+    ;
+
   yl_home = config.users.users.yl.home;
 in
 {
@@ -12,30 +16,59 @@ in
     matchBlocks = {
       "bitbucket.org" = {
         extraOptions = {
-          IdentityFile =
-            "~/.ssh/per-host/bitbucket.org_rsa";
+          IdentityFile = "~/.ssh/per-host/bitbucket.org_rsa";
         };
       };
 
       "gitlab.com" = {
         extraOptions = {
-          IdentityFile =
-            "~/.ssh/per-host/gitlab.com_rsa";
+          IdentityFile = "~/.ssh/per-host/gitlab.com_rsa";
         };
       };
 
       "host.invalid" = {
         extraOptions = {
-          IdentityFile =
-            "~/.ssh/per-host/host.invalid_rsa";
+          IdentityFile = "~/.ssh/per-host/host.invalid_rsa";
         };
       };
 
       "serial" = {
         extraOptions = {
-          IdentityFile =
-            "~/.ssh/per-host/host.invalid_rsa";
+          IdentityFile = "~/.ssh/per-host/host.invalid_rsa";
         };
+      };
+
+      "unifi-usg" = {
+        hostname = "192.0.2.1";
+        extraOptions = {
+          IdentityFile = "~/.ssh/per-host/host.invalid_rsa";
+          # Unifi is still using hmac-sha1, enabling it only for these hosts.
+          MACs = "+hmac-sha1";
+          PubkeyAcceptedKeyTypes = "+ssh-rsa";
+        };
+        user = "admin";
+      };
+
+      "unifi-switch" = {
+        hostname = "192.0.2.1";
+        extraOptions = {
+          IdentityFile = "~/.ssh/per-host/host.invalid_rsa";
+          # Unifi is still using hmac-sha1, enabling it only for these hosts.
+          MACs = "+hmac-sha1";
+          PubkeyAcceptedKeyTypes = "+ssh-rsa";
+        };
+        user = "admin";
+      };
+
+      "unifi-ap0" = {
+        hostname = "192.0.2.1";
+        extraOptions = {
+          IdentityFile = "~/.ssh/per-host/host.invalid_rsa";
+          # Unifi is still using hmac-sha1, enabling it only for these hosts.
+          MACs = "+hmac-sha1";
+          PubkeyAcceptedKeyTypes = "+ssh-rsa";
+        };
+        user = "admin";
       };
     };
   };
