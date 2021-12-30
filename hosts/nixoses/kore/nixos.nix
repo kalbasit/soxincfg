@@ -94,10 +94,6 @@ in
     ip46tables -w -t nat -I PREROUTING -p tcp --dport 443 -j REDIRECT --to-ports 8443 -i ifcadmin
   '';
 
-  # TODO(high): For some reason, when the firewall is enabled, I can't seem to connect via SSH or unifi
-  # THIS WORKS ON ZEUS BUT NOT HERE!
-  # networking.firewall.enable = mkForce false;
-
   # Setup the builder account
   nix.trustedUsers = [ "root" "@wheel" "@builders" ];
   users.users = {

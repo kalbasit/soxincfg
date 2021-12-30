@@ -280,7 +280,6 @@ in
 
       startup = [
         { command = "${getBin pkgs.xlibs.xset}/bin/xset r rate 300 30"; always = false; notification = false; }
-        { command = "${getBin pkgs.xcape}/bin/xcape -e 'Control_L=Escape'"; always = false; notification = false; }
         { command = "i3-msg \"workspace personal; exec ${nosid} ${getBin pkgs.wezterm}/bin/wezterm\""; always = false; notification = true; }
       ];
     };
@@ -336,10 +335,8 @@ in
           bindsym Escape mode "$launcher"
         }
 
-      set $daemon_mode Daemons: (g)reenclip, (x)cape
+      set $daemon_mode Daemons: (x)cape
       mode "$daemon_mode" {
-        bindsym x exec ${nosid} ${getBin pkgs.xcape}/bin/xcape -e 'Control_L=Escape', mode default
-
         bindsym Escape mode "$launcher"
       }
 

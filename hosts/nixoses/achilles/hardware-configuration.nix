@@ -35,7 +35,6 @@ with lib;
   # HiDPI settings
   console.font = "${pkgs.terminus_font}/share/consolefonts/ter-v32n.psf.gz";
   console.earlySetup = true; # Needed when typing in passwords for full disk encryption
-  fonts.fontconfig.dpi = 196;
   services.xserver.dpi = 196;
   services.xserver.synaptics.minSpeed = "1.0";
   services.xserver.synaptics.maxSpeed = "1.5";
