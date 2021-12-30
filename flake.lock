@@ -38,11 +38,11 @@
     },
     "flake-utils": {
       "locked": {
-        "lastModified": 1638122382,
-        "narHash": "sha256-sQzZzAbvKEqN9s0bzWuYmRaA03v40gaJ4+iL1LXjaeI=",
+        "lastModified": 1618217525,
+        "narHash": "sha256-WGrhVczjXTiswQaoxQ+0PTfbLNeOQM6M36zvLn78AYg=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "74f7e4319258e287b0f9cb95426c9853b282730b",
+        "rev": "c6169a2772643c4a93a0b5ac1c61e296cba68544",
         "type": "github"
       },
       "original": {
@@ -56,16 +56,16 @@
         "flake-utils": "flake-utils"
       },
       "locked": {
-        "lastModified": 1638172912,
-        "narHash": "sha256-jxhQGNEsZTdop/Br3JPS+xmBf6t9cIWRzVZFxbT76Rw=",
+        "lastModified": 1619358717,
+        "narHash": "sha256-FkEOIW82ClvUBtD8aqPediM8FERldsOyjPIyapVa65I=",
         "owner": "gytis-ivaskevicius",
         "repo": "flake-utils-plus",
-        "rev": "166d6ebd9f0de03afc98060ac92cba9c71cfe550",
+        "rev": "e7ae270a23695b50fbb6b72759a7fb1e3340ca86",
         "type": "github"
       },
       "original": {
         "owner": "gytis-ivaskevicius",
-        "ref": "v1.3.1",
+        "ref": "v1.1.0",
         "repo": "flake-utils-plus",
         "type": "github"
       }
@@ -151,11 +151,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1640644201,
-        "narHash": "sha256-LtW5u3cMT2ingNUwVLqLUh/VxzgH48/TJDEy4SAXaIs=",
+        "lastModified": 1640667740,
+        "narHash": "sha256-XFbdtfLEKTS5fCuhtUCm4iv3payWEu9kbNiKWanCkrw=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "e2ef8c5427b29e8cfad33534335bd574ac96e977",
+        "rev": "45048df9e98b35f6b1d1adc270fdbe1895c904c6",
         "type": "github"
       },
       "original": {
@@ -183,11 +183,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1640653060,
-        "narHash": "sha256-tLhqEBXYyXIgv3KoUgxF8PvswMB5tZS2+DPEpw+nvVY=",
+        "lastModified": 1640664486,
+        "narHash": "sha256-HhOFfuJkTSzMamFd1QJ8rFdHSxOxlb7phybUkbazObI=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "e894c4b5414ebabc5f0fb9c856e7609f9b8312e3",
+        "rev": "bd18169e3cd558063bd2bfae14f7bd3aea50a881",
         "type": "github"
       },
       "original": {
@@ -249,9 +249,12 @@
         "sops-nix": "sops-nix"
       },
       "locked": {
-        "narHash": "sha256-6Tivrju4/ZvlsX7J9+98k02GLU/2H9Do+Mnyl0tEBIo=",
-        "path": "/yl/code/stories/personal/soxin/update/flake-utils/plus/github.com/SoxinOS/soxin",
-        "type": "path"
+        "lastModified": 1640654366,
+        "narHash": "sha256-IoiQwe7uqi38vHua8d6ToOmHgbc+8PM24IWciogtdF8=",
+        "owner": "SoxinOS",
+        "repo": "soxin",
+        "rev": "6ea04d7b8791412c36ce104c8e86b90a5036074f",
+        "type": "github"
       },
       "original": {
         "owner": "SoxinOS",
