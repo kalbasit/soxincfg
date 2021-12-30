@@ -18,10 +18,7 @@ in
     { hardware.onlykey.enable = true; }
 
     (mkIf cfg.ssh-support.enable {
-      sops.secrets._ssh_id_ed25519_sk_rk = {
-        inherit owner sopsFile;
-        path = "${home}/.ssh/id_ed25519_sk_rk";
-      };
+      sops.secrets._ssh_id_ed25519_sk_rk = { inherit owner sopsFile; path = "${home}/.ssh/id_ed25519_sk_rk"; };
     })
   ]);
 }
