@@ -20,7 +20,7 @@ in
         autoRepeatInterval = 30;
 
         xkbOptions = concatStringsSep "," [
-          "ctrl:nocaps"
+          "backspace:nocaps"
         ];
 
         libinput.enable = true;

@@ -49,7 +49,7 @@ in
             setxkbmap -layout us -variant colemak
 
             log "Setting up the options"
-            setxkbmap -option ctrl:nocaps
+            setxkbmap -option backspace:nocaps
 
             zsa_id=
             retries=0
@@ -81,7 +81,7 @@ in
             setxkbmap -layout us -variant colemak
 
             log "Setting up the options"
-            setxkbmap -option ctrl:nocaps
+            setxkbmap -option backspace:nocaps
           '';
         in
         {
