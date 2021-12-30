@@ -28,7 +28,6 @@ in
         libinput.touchpad.naturalScrolling = true;
 
         displayManager = {
-          defaultSession = "none+i3";
           lightdm.enable = true;
           autoLogin = {
             enable = true;
@@ -36,18 +35,15 @@ in
           };
         };
 
-        # videoDrivers = [
-        #   "radeon"
-        #   "cirrus"
-        #   "vesa"
-        #   "vmware"
-        #   "modesetting"
-        #   "intel"
-        # ];
-
-        windowManager = {
-          i3.enable = true;
-        };
+        desktopManager.session = [
+          {
+            name = "home-manager";
+            start = ''
+              ${pkgs.runtimeShell} $HOME/.hm-xsession &
+              waitPID=$!
+            '';
+          }
+        ];
       };
     })
   ]);
