@@ -18,5 +18,4 @@ if ! [[ -f "${homeManagerService}" ]]; then
     exit 1
 fi
 
-awk '/^ExecStart=/ { split($1, a, /=/); print a[2] }' "${homeManagerService}" |
-    xargs cat | awk '/^exec / {print $2}' | xargs dirname
+awk '/ExecStart=/ {print $2}' "${homeManagerService}"
