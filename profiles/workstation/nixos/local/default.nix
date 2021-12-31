@@ -22,6 +22,7 @@ mkMerge [
           enable = true;
           setMimeList = true;
           browsers = {
+            "vivaldi@personal" = home-manager.lib.hm.dag.entryBefore [ "firefox@personal" ] { };
             "firefox@personal" = home-manager.lib.hm.dag.entryBefore [ "brave@personal" ] { };
             "brave@personal" = home-manager.lib.hm.dag.entryBefore [ "firefox@private" ] { };
             "firefox@private" = home-manager.lib.hm.dag.entryBefore [ "firefox@anya" ] { };
@@ -331,6 +332,10 @@ mkMerge [
       #
       # Linux applications
       #
+
+      vivaldi
+      vivaldi-ffmpeg-codecs
+      vivaldi-widevine
 
       # XXX: Failing to compile on Darwin
       gotop
