@@ -6,8 +6,9 @@ with lib;
   config = mkMerge [
     {
       soxin.programs.rbrowser.browsers = {
-        "chromium@keeptruckin" = home-manager.lib.hm.dag.entryBetween [ "brave@personal" ] [ "firefox@keeptruckin" ] { };
-        "firefox@keeptruckin" = home-manager.lib.hm.dag.entryAfter [ "firefox@personal" ] { };
+        "vivaldi@keeptruckin" = home-manager.lib.hm.dag.entryAfter [ "vivaldi@personal" ] { };
+        "firefox@keeptruckin" = home-manager.lib.hm.dag.entryAfter [ "vivaldi@keeptruckin" ] { };
+        "chromium@keeptruckin" = home-manager.lib.hm.dag.entryAfter [ "firefox@keeptruckin" ] { };
       };
     }
 

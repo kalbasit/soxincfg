@@ -7,8 +7,9 @@ in
   config = mkMerge [
     {
       soxin.programs.rbrowser.browsers = {
-        "chromium@ulta" = home-manager.lib.hm.dag.entryBetween [ "brave@personal" ] [ "firefox@ulta" ] { };
-        "firefox@ulta" = home-manager.lib.hm.dag.entryAfter [ "firefox@personal" ] { };
+        "vivaldi@ulta" = home-manager.lib.hm.dag.entryAfter [ "vivaldi@personal" ] { };
+        "firefox@ulta" = home-manager.lib.hm.dag.entryAfter [ "vivaldi@ulta" ] { };
+        "chromium@ulta" = home-manager.lib.hm.dag.entryAfter [ "firefox@ulta" ] { };
       };
     }
 
