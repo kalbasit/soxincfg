@@ -252,6 +252,8 @@ mkMerge [
       zulip
       zulip-term
 
+      obsidian
+
       # Switch your X keyboard layouts from the command line
       xkb-switch
 
