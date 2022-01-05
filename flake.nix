@@ -39,7 +39,13 @@
       channels = {
         nixpkgs = {
           # Channel specific overlays
-          overlaysBuilder = channels: [ ];
+          overlaysBuilder = channels: [
+            (_: super: {
+              inherit (channels.nixpkgs-unstable)
+                obsidian
+                ;
+            })
+          ];
 
           # Channel specific configuration. Overwrites `channelsConfig` argument
           config = { };

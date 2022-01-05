@@ -5,7 +5,7 @@ let
     optionals
     ;
 in
-  {
+{
   # programs
   programs.bat.enable = true;
   programs.direnv.enable = true;
