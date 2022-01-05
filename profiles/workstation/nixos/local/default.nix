@@ -1,9 +1,22 @@
 { config, home-manager, lib, mode, pkgs, ... }:
 
-with lib;
+let
+  inherit (lib)
+    optionals
+    ;
 
-mkMerge [
-  {
+  inherit (home-manager.lib.hm.dag)
+    entryBefore
+    entryAnywhere
+    ;
+in
+{
+  imports =
+    [ ]
+    ++ optionals (mode == "NixOS") [ ./nixos.nix ]
+    ++ optionals (mode == "home-manager") [ ./home.nix ];
+
+  config = {
     soxin = {
       hardware = {
         bluetooth.enable = true;
@@ -22,14 +35,14 @@ mkMerge [
           enable = true;
           setMimeList = true;
           browsers = {
-            "vivaldi@personal" = home-manager.lib.hm.dag.entryBefore [ "firefox@personal" ] { };
-            "firefox@personal" = home-manager.lib.hm.dag.entryBefore [ "brave@personal" ] { };
-            "brave@personal" = home-manager.lib.hm.dag.entryBefore [ "firefox@private" ] { };
-            "firefox@private" = home-manager.lib.hm.dag.entryBefore [ "firefox@anya" ] { };
-            "firefox@anya" = home-manager.lib.hm.dag.entryBefore [ "firefox@vanya" ] { };
-            "firefox@vanya" = home-manager.lib.hm.dag.entryBefore [ "firefox@tanya" ] { };
-            "firefox@tanya" = home-manager.lib.hm.dag.entryBefore [ "firefox@ihab" ] { };
-            "firefox@ihab" = home-manager.lib.hm.dag.entryAnywhere { };
+            "vivaldi@personal" = entryBefore [ "firefox@personal" ] { };
+            "firefox@personal" = entryBefore [ "brave@personal" ] { };
+            "brave@personal" = entryBefore [ "firefox@private" ] { };
+            "firefox@private" = entryBefore [ "firefox@anya" ] { };
+            "firefox@anya" = entryBefore [ "firefox@vanya" ] { };
+            "firefox@vanya" = entryBefore [ "firefox@tanya" ] { };
+            "firefox@tanya" = entryBefore [ "firefox@ihab" ] { };
+            "firefox@ihab" = entryAnywhere { };
           };
         };
         rofi = {
@@ -158,202 +171,5 @@ mkMerge [
         nix.distributed-builds.enable = true;
       };
     };
-  }
-
-  (optionalAttrs (mode == "NixOS")
-    (
-      let
-        sopsFile = ./secrets.sops.yaml;
-      in
-      {
-        environment.homeBinInPath = true;
-
-        # allow the store to be accessed for store paths via SSH
-        nix.sshServe = {
-          enable = true;
-          keys = config.soxincfg.settings.users.users.yl.sshKeys;
-        };
-
-        services.gnome.gnome-keyring.enable = true;
-
-        # Enable dconf required by most guis
-        programs.dconf.enable = true;
-
-        # Enable TailScale for zero-config VPN service.
-        services.tailscale.enable = true;
-
-        # Feed the kernel some entropy
-        services.haveged.enable = true;
-
-        services.logind = {
-          lidSwitch = "hybrid-sleep";
-          lidSwitchDocked = "ignore";
-          lidSwitchExternalPower = "hybrid-sleep";
-          extraConfig = ''
-            HandlePowerKey=suspend
-          '';
-        };
-
-        # Require Password and U2F to login
-        security.pam.u2f = {
-          enable = true;
-          cue = true;
-          control = "required";
-        };
-
-        # Redshift
-        location.latitude = 34.42;
-        location.longitude = -122.11;
-        services.redshift = {
-          brightness.day = "1.0";
-          brightness.night = "0.6";
-          enable = true;
-          temperature.day = 5900;
-          temperature.night = 3700;
-        };
-
-        # TODO: fix this!
-        system.extraSystemBuilderCmds = ''ln -sfn /yl/.surfingkeys.js $out/.surfingkeys.js'';
-
-        # L2TP VPN does not connect without the presence of this file!
-        # https://github.com/NixOS/nixpkgs/issues/64965
-        system.activationScripts.ipsec-secrets = ''
-          touch $out/etc/ipsec.secrets
-        '';
-
-        sops.secrets._etc_NetworkManager_system-connections_Nasreddine_nmconnection = { inherit sopsFile; path = "/etc/NetworkManager/system-connections/Nasreddine.nmconnection"; };
-        sops.secrets._etc_NetworkManager_system-connections_Nasreddine-ADMIN_nmconnection = { inherit sopsFile; path = "/etc/NetworkManager/system-connections/Nasreddine-ADMIN.nmconnection"; };
-        sops.secrets._etc_NetworkManager_system-connections_Ellipsis_Jetpack_4976_nmconnection = { inherit sopsFile; path = "/etc/NetworkManager/system-connections/Ellipsis_Jetpack_4976.nmconnection"; };
-        sops.secrets._etc_NetworkManager_system-connections_Wired_connection_nmconnection = { inherit sopsFile; path = "/etc/NetworkManager/system-connections/Wired_connection.nmconnection"; };
-      }
-    ))
-
-  (optionalAttrs (mode == "home-manager") {
-    # programs
-    programs.bat.enable = true;
-    programs.direnv.enable = true;
-
-    # services
-    services.clipmenu.enable = true;
-    services.flameshot.enable = true;
-    services.betterlockscreen = {
-      enable = true;
-      arguments = [
-        "--show-layout"
-      ];
-    };
-
-    # files
-    home.file = {
-      ".npmrc".text = "prefix=${config.home.homeDirectory}/.filesystem";
-    };
-
-    home.packages = with pkgs; [
-      zulip
-      zulip-term
-
-      obsidian
-
-      # Switch your X keyboard layouts from the command line
-      xkb-switch
-
-      remmina
-
-      file
-
-      dnsutils # for dig
-
-      dosbox
-      (retroarch.override {
-        cores = with libretro; [
-          beetle-psx
-          beetle-psx-hw
-          beetle-snes
-        ];
-      })
-
-      imagemagick # for convert
-
-      binutils # for strings
-
-      weechat
-
-      xsel
-
-      eternal-terminal
-
-      # zoom for meetings
-      zoom-us
-
-      libnotify
-
-      amazon-ecr-credential-helper
-      docker-credential-gcr
-
-      filezilla
-
-      bitwarden-cli
-
-      gdb
-
-      gist
-
-      gnupg
-
-      go
-
-      jq
-
-      jrnl
-
-      killall
-
-      lastpass-cli
-
-      lazygit
-
-      mercurial
-
-      nur.repos.kalbasit.nixify
-
-      nix-index
-
-      nix-review
-
-      # curses-based file manager
-      lf
-
-      nur.repos.kalbasit.swm
-
-      vgo2nix
-
-      unzip
-
-      nix-zsh-completions
-    ] ++ (optionals stdenv.isLinux [
-      #
-      # Linux applications
-      #
-
-      vivaldi
-      vivaldi-ffmpeg-codecs
-      vivaldi-widevine
-
-      # XXX: Failing to compile on Darwin
-      gotop
-
-      jetbrains.idea-ultimate
-      jetbrains.goland
-      bazel
-
-      slack
-
-      glances
-
-      # Games
-      _2048-in-terminal
-
-      protonvpn-cli
-    ]);
-  })
-]
+  };
+}
