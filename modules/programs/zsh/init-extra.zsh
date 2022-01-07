@@ -686,6 +686,10 @@ if [[ -z "${ZSH_PROFILE}" || -z "${SWM_STORY_NAME}" ]]; then
 			[[ -z "${SWM_STORY_NAME}" ]] && export SWM_STORY_NAME="$(echo "${active_workspace}" | tr @ /)"
 		fi
 
+		if [[ "$active_workspace" == "slack" ]]; then
+			[[ -z "${SWM_STORY_NAME}" ]] && export SWM_STORY_NAME="global/$active_workspace"
+		fi
+
 		if [[ -z "${ZSH_PROFILE}" ]] && [[ -r "@home_path@/.zsh/profiles/${active_workspace}.zsh" ]]; then
 			 export ZSH_PROFILE="${active_workspace}"
 		fi
