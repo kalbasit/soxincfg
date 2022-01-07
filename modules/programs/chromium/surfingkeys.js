@@ -1,5 +1,32 @@
 // vim:ft=javascript:foldmethod=marker:foldlevel=0:
 
+// TODO: Complete the migration to v1.0
+// https://github.com/brookhong/Surfingkeys/wiki/Migrate-your-settings-from-0.9.74-to-1.0
+const {
+	Clipboard,
+	Front,
+	Hints,
+	RUNTIME,
+	Visual,
+	aceVimMap,
+	addSearchAlias,
+	addVimMapKey,
+	cmap,
+	getClickableElements,
+	imap,
+	imapkey,
+	iunmap,
+	map,
+	mapkey,
+	readText,
+	removeSearchAlias,
+	tabOpenLink,
+	unmap,
+	vmap,
+	vmapkey,
+	vunmap
+} = api;
+
 //////////////////////////////////////
 // Settings {{{
 
@@ -7,7 +34,7 @@
 settings.hintAlign = "left";
 
 // hint characters for Colemak
-Hints.characters = "arstneio";
+Hints.setCharacters('arstneio');
 
 // intercept all error pages so Surfing keys can work on them
 settings.interceptedErrors = ["*"];
@@ -169,328 +196,6 @@ vunmap("_h");
 vunmap("_j");
 vunmap("_k");
 vunmap("_l");
-
-// END Colemak bindings }}}
-//////////////////////////////////////
-
-//////////////////////////////////////
-// AceVim Colemak bindings {{{
-
-// change the default layout of the AceVim keyboard
-addVimMapKey(
-	// left
-	{
-		keys: 'n',
-		type: 'motion',
-		motion: 'moveByCharacters',
-		motionArgs: {
-			forward: false
-		}
-	},
-
-	// down
-	{
-		keys: 'e',
-		type: 'motion',
-		motion: 'moveByLines',
-		motionArgs: {
-			forward: true,
-			linewise: true
-		}
-	},
-
-	// up
-	{
-		keys: 'i',
-		type: 'motion',
-		motion: 'moveByLines',
-		motionArgs: {
-			forward: false,
-			linewise: true
-		}
-	},
-
-	// right
-	{
-		keys: 'o',
-		type: 'motion',
-		motion: 'moveByCharacters',
-		motionArgs: {
-			forward: true
-		}
-	},
-
-	// movement by word
-	{
-		keys: 'y',
-		type: 'motion',
-		motion: 'moveByWords',
-		motionArgs: {
-			forward: true,
-			wordEnd: false
-		}
-	},
-	{
-		keys: 'Y',
-		type: 'motion',
-		motion: 'moveByWords',
-		motionArgs: {
-			forward: true,
-			wordEnd: false,
-			bigWord: true
-		}
-	},
-	{
-		keys: 'u',
-		type: 'motion',
-		motion: 'moveByWords',
-		motionArgs: {
-			forward: true,
-			wordEnd: true,
-			inclusive: true
-		}
-	},
-	{
-		keys: 'U',
-		type: 'motion',
-		motion: 'moveByWords',
-		motionArgs: {
-			forward: true,
-			wordEnd: true,
-			bigWord: true,
-			inclusive: true
-		}
-	},
-	{
-		keys: 'l',
-		type: 'motion',
-		motion: 'moveByWords',
-		motionArgs: {
-			forward: false,
-			wordEnd: false
-		}
-	},
-	{
-		keys: 'L',
-		type: 'motion',
-		motion: 'moveByWords',
-		motionArgs: {
-			forward: false,
-			wordEnd: false,
-			bigWord: true
-		}
-	},
-
-	// find next
-	{
-		keys: 'k',
-		type: 'motion',
-		motion: 'findNext',
-		motionArgs: {
-			forward: true,
-			toJumplist: true
-		}
-	},
-
-	// find previous
-	{
-		keys: 'K',
-		type: 'motion',
-		motion: 'findNext',
-		motionArgs: {
-			forward: false,
-			toJumplist: true
-		}
-	},
-
-	// copying
-	{
-		keys: 'c',
-		type: 'operator',
-		operator: 'yank'
-	},
-	{
-		keys: 'C',
-		type: 'operatorMotion',
-		operator: 'yank',
-		motion: 'moveToEol',
-		motionArgs: {
-			inclusive: true
-		},
-		context: 'normal'
-	},
-	{
-		keys: 'C',
-		type: 'operator',
-		operator: 'yank',
-		operatorArgs: {
-			linewise: true
-		},
-		context: 'visual'
-	},
-
-	// paste
-	{
-		keys: 'v',
-		type: 'action',
-		action: 'paste',
-		isEdit: true,
-		actionArgs: {
-			after: true,
-			isEdit: true
-		}
-	},
-	{
-		keys: 'V',
-		type: 'action',
-		action: 'paste',
-		isEdit: true,
-		actionArgs: {
-			after: false,
-			isEdit: true
-		}
-	},
-
-	// change
-	{
-		keys: 'w',
-		type: 'operator',
-		operator: 'change'
-	},
-	{
-		keys: 'W',
-		type: 'operatorMotion',
-		operator: 'change',
-		motion: 'moveToEol',
-		motionArgs: {
-			inclusive: true
-		},
-		context: 'normal'
-	},
-	{
-		keys: 'W',
-		type: 'operator',
-		operator: 'change',
-		operatorArgs: {
-			linewise: true
-		},
-		context: 'visual'
-	},
-
-	// visual
-	{
-		keys: 'a',
-		type: 'action',
-		action: 'toggleVisualMode'
-	},
-	{
-		keys: 'A',
-		type: 'action',
-		action: 'toggleVisualMode',
-		actionArgs: {
-			linewise: true
-		}
-	},
-
-	// open new line
-	{
-		keys: 'h',
-		type: 'action',
-		action: 'newLineAndEnterInsertMode',
-		isEdit: true,
-		interlaceInsertRepeat: true,
-		actionArgs: {
-			after: true
-		},
-		context: 'normal'
-	},
-	{
-		keys: 'H',
-		type: 'action',
-		action: 'newLineAndEnterInsertMode',
-		isEdit: true,
-		interlaceInsertRepeat: true,
-		actionArgs: {
-			after: false
-		},
-		context: 'normal'
-	},
-
-	// insert
-	{
-		keys: 's',
-		type: 'action',
-		action: 'enterInsertMode',
-		isEdit: true,
-		actionArgs: {
-			insertAt: 'inplace'
-		},
-		context: 'normal'
-	},
-	{
-		keys: 'S',
-		type: 'action',
-		action: 'enterInsertMode',
-		isEdit: true,
-		actionArgs: {
-			insertAt: 'firstNonBlank'
-		},
-		context: 'normal'
-	},
-	{
-		keys: 'S',
-		type: 'action',
-		action: 'enterInsertMode',
-		isEdit: true,
-		actionArgs: {
-			insertAt: 'startOfSelectedArea'
-		},
-		context: 'visual'
-	},
-	{
-		keys: 't',
-		type: 'action',
-		action: 'enterInsertMode',
-		isEdit: true,
-		actionArgs: {
-			insertAt: 'charAfter'
-		},
-		context: 'normal'
-	},
-	{
-		keys: 'T',
-		type: 'action',
-		action: 'enterInsertMode',
-		isEdit: true,
-		actionArgs: {
-			insertAt: 'eol'
-		},
-		context: 'normal'
-	},
-	{
-		keys: 'T',
-		type: 'action',
-		action: 'enterInsertMode',
-		isEdit: true,
-		actionArgs: {
-			insertAt: 'endOfSelectedArea'
-		},
-		context: 'visual'
-	},
-
-	// undo/redo
-	{
-		keys: 'z',
-		type: 'action',
-		action: 'undo',
-		context: 'normal'
-	},
-	{
-		keys: 'Z',
-		type: 'action',
-		action: 'redo'
-	}
-);
 
 // END Colemak bindings }}}
 //////////////////////////////////////
