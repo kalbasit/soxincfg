@@ -26,11 +26,9 @@ with lib;
 
   # Setup autorandr postswitch
   soxincfg.programs.autorandr.postswitch.move-workspaces-to-main = ''
-    # Move the TV workspace to the left screen
+    # Move the TV workspace to the right screen
+    >&2 echo "Moving TV workspace to the monitor on the right (DP-3)"
     ${getBin pkgs.i3}/bin/i3-msg "workspace tv; move workspace to output DP-3"
-
-    # Go to my personal workspace
-    ${getBin pkgs.i3}/bin/i3-msg "workspace personal"
   '';
 
   programs.autorandr.profiles = {
