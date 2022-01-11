@@ -9,8 +9,11 @@ let
 
   subVolumes =
     {
-      # NixOS
+      # YL's storage
       "/yl/storage" = { device = storgeDevice; subvol = "@home-kalbasit-storage"; };
+
+      # libvirt data
+      "/var/lib/libvirt" = { device = storgeDevice; subvol = "@var-lib-libvirt"; };
     };
 
   mkBtrfsSubvolume = mountPoint: { device, subvol, options ? [ ] }:
