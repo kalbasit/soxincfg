@@ -38,7 +38,6 @@ in
     efiSupport = true;
     enable = true;
     enableCryptodisk = true;
-    useOSProber = true;
   };
 
   # enable focusrite Gen3 support.
