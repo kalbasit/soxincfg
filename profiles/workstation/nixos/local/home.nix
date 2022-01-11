@@ -31,6 +31,13 @@ in
 
     obsidian
 
+    todoist
+    todoist-electron
+
+    hexyl # hex viewer with nice colors
+    duf   # du replacement on steroids
+    fx    # JSON viewer
+
     # Switch your X keyboard layouts from the command line
     xkb-switch
 
