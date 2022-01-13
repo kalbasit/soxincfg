@@ -34,6 +34,8 @@ in
     todoist
     todoist-electron
 
+    libreoffice
+
     hexyl # hex viewer with nice colors
     duf # du replacement on steroids
     fx # JSON viewer
