@@ -6,20 +6,11 @@ let
   cfg = config.soxincfg.programs.chromium;
 in
 {
+  imports =
+    [ ]
+    ++ optionals (mode == "NixOS") [ ./nixos.nix ]
+    ++ optionals (mode == "home-manager") [ ./home.nix ];
+
   options.soxincfg.programs.chromium.enable = mkEnableOption "Install and configure Chromium";
   options.soxincfg.programs.chromium.surfingkeys.enable = mkEnableOption "Install and configure Surfingkeys";
-
-  config = mkIf cfg.enable (mkMerge [
-    (optionalAttrs (mode == "home-manager") {
-      home.packages = with pkgs; [ chromium ];
-    })
-
-    (mkIf cfg.surfingkeys.enable (optionalAttrs (mode == "home-manager") {
-      home.file.".surfingkeys.js".text = builtins.readFile (pkgs.substituteAll {
-        src = ./surfingkeys.js;
-
-        home_dir = "${config.home.homeDirectory}";
-      });
-    }))
-  ]);
 }
