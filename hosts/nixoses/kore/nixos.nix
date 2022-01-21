@@ -70,8 +70,8 @@ in
     });
   };
   systemd.services.unifi.preStart = ''
-    mkdir -p ${config.services.unifi.dataDir}/sites/default
-    ln -nsf ${unifi_config_gateway} ${config.services.unifi.dataDir}/sites/default/config.gateway.json
+    mkdir -p /var/lib/unifi/data/sites/default
+    ln -nsf ${unifi_config_gateway} /var/lib/unifi/data/sites/default/config.gateway.json
   '';
 
   # nixpkgs.config.allowUnfree = true;
