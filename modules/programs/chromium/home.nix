@@ -6,7 +6,7 @@ let
     mkMerge
     ;
 
-    inherit (pkgs)
+  inherit (pkgs)
     chromium
     ;
 

@@ -42,7 +42,9 @@
           overlaysBuilder = channels: [
             (_: super: {
               inherit (channels.nixpkgs-unstable)
+                cura
                 obsidian
+                prusa-slicer
                 ;
             })
           ];
