@@ -59,15 +59,17 @@ in
   services.unifi = {
     enable = true;
     jrePackage = pkgs.jre8_headless;
-    unifiPackage = pkgs.unifiStable.overrideAttrs (oa: rec {
-      version = "6.0.43";
-      name = "unifi-controller-${version}";
-
-      src = pkgs.fetchurl {
-        url = "https://dl.ubnt.com/unifi/${version}/unifi_sysvinit_all.deb";
-        sha256 = "sha256-fsqjA61JAIEeLiADAkOjI2ynmD93kNXDkiRfIBzhN7U=";
-      };
-    });
+    unifiPackage = pkgs.unifiStable;
+    # XXX: Leaving this in case I need to update it again.
+    # unifiPackage = pkgs.unifiStable.overrideAttrs (oa: rec {
+    #   version = "6.0.43";
+    #   name = "unifi-controller-${version}";
+    #
+    #   src = pkgs.fetchurl {
+    #     url = "https://dl.ubnt.com/unifi/${version}/unifi_sysvinit_all.deb";
+    #     sha256 = "sha256-fsqjA61JAIEeLiADAkOjI2ynmD93kNXDkiRfIBzhN7U=";
+    #   };
+    # });
   };
   systemd.services.unifi.preStart = ''
     mkdir -p /var/lib/unifi/data/sites/default
