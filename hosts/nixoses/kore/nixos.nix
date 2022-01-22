@@ -76,6 +76,9 @@ in
     ln -nsf ${unifi_config_gateway} /var/lib/unifi/data/sites/default/config.gateway.json
   '';
 
+  # enable Octoprint for printing on my 3D printer remotely.
+  services.octoprint.enable = true;
+
   # nixpkgs.config.allowUnfree = true;
   nixpkgs.system = "aarch64-linux";
 
@@ -87,9 +90,17 @@ in
   systemd.services.sshd = { after = [ "network-interfaces.target" ]; serviceConfig.RestartSec = "5"; };
 
   # Allow unifi/ssh on the admin interface only.
-  networking.firewall.interfaces.ifcadmin.allowedTCPPorts = [ 22 8443 ];
+  networking.firewall.interfaces.ifcadmin.allowedTCPPorts = [
+    22 # ssh
+    8443 # unifi
+  ];
 
-  # Forward port 443 to unifi internally.
+  # Allow Octoprint an all networking interfaces
+  networking.firewall.allowedTCPPorts = [
+    5000 # octoprint
+  ];
+
+  # Forward externalport 443 to unifi internally.
   # We don't need to allow access to port 443 here because it gets re-routed to
   # port 8443 which itself we allow.
   networking.firewall.extraCommands = ''
