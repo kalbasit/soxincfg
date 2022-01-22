@@ -84,8 +84,12 @@ in
 
   # configure OpenSSH server to listen on the ADMIN interface
   services.openssh = {
-    listenAddresses = [{ addr = "192.168.2.5"; port = 22; }];
+    # do not automatically open firewall to control the interfaces.
     openFirewall = false;
+    listenAddresses = [
+      { addr = "192.168.2.5"; port = 22; } # ssh-in from within my network only from Admin network
+      # TODO: Add support for SSH from Tailscale!
+    ];
   };
   systemd.services.sshd = { after = [ "network-interfaces.target" ]; serviceConfig.RestartSec = "5"; };
 
