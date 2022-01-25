@@ -72,7 +72,9 @@
     },
     "home-manager": {
       "inputs": {
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": [
+          "nixpkgs"
+        ]
       },
       "locked": {
         "lastModified": 1639871969,
@@ -138,19 +140,6 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1641407671,
-        "narHash": "sha256-iqweLohuk4yheKuUZr4iFN3VI+l2RyM/hDrbI7sAhZ0=",
-        "path": "/nix/store/l2dmh4xhvvgzvxb6d8n20k0j6ql35b7v-source",
-        "rev": "ab4d4f144e9c6896c06dba64131366dd12470ac7",
-        "type": "path"
-      },
-      "original": {
-        "id": "nixpkgs",
-        "type": "indirect"
-      }
-    },
-    "nixpkgs_3": {
-      "locked": {
         "lastModified": 1641423937,
         "narHash": "sha256-iIBSDySeZ79FDFiI5but9EtOIRc5Ncu/gq27Hg/yXjo=",
         "owner": "NixOS",
@@ -165,7 +154,7 @@
         "type": "github"
       }
     },
-    "nixpkgs_4": {
+    "nixpkgs_3": {
       "locked": {
         "lastModified": 1613917044,
         "narHash": "sha256-YvBBwtvrnove51SXQ67OVQHctYjEEpFu6GEzRe0pp5I=",
@@ -202,7 +191,7 @@
         "flake-utils-plus": "flake-utils-plus",
         "home-manager": "home-manager",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs_3",
+        "nixpkgs": "nixpkgs_2",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nur": "nur",
         "soxin": "soxin"
@@ -210,7 +199,7 @@
     },
     "sops-nix": {
       "inputs": {
-        "nixpkgs": "nixpkgs_4"
+        "nixpkgs": "nixpkgs_3"
       },
       "locked": {
         "lastModified": 1618840526,
