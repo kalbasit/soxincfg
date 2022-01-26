@@ -35,6 +35,7 @@ in
           enable = true;
           setMimeList = true;
           browsers = {
+            "chromium@personal" = entryBefore [ "vivaldi@personal" ] { };
             "vivaldi@personal" = entryBefore [ "firefox@personal" ] { };
             "firefox@personal" = entryBefore [ "brave@personal" ] { };
             "brave@personal" = entryBefore [ "firefox@private" ] { };
