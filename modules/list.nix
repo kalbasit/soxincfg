@@ -14,6 +14,7 @@
   mosh = ./programs/mosh;
   neovim = ./programs/neovim;
   pet = ./programs/pet;
+  rofi = ./programs/rofi;
   ssh = ./programs/ssh;
   starship = ./programs/starship.nix;
   termite = ./programs/termite.nix;
