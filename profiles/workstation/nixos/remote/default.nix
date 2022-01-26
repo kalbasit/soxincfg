@@ -36,7 +36,12 @@ mkMerge [
         mosh.enable = true;
         neovim.enable = true;
         pet.enable = true;
-        ssh.enable = true;
+        ssh = {
+          enable = true;
+
+          # XXX: Remote machines do not have any keys (or shouldn't) and must use my SSH agent instead.
+          identitiesOnly = mkForce false;
+        };
         starship.enable = true;
         tmux.enable = true;
         zsh.enable = true;
