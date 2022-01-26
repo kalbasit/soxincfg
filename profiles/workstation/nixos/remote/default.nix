@@ -26,7 +26,13 @@ mkMerge [
     soxincfg = {
       programs = {
         fzf.enable = true;
-        git.enable = true;
+        git = {
+          enable = true;
+
+          # No need to attempt to sign commits via GnuPG as it really does not
+          # work well, yet.
+          enableGpgSigningKey = mkForce false;
+        };
         mosh.enable = true;
         neovim.enable = true;
         pet.enable = true;
