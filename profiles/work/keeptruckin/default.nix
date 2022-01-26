@@ -17,9 +17,9 @@ in
 
   config = {
     soxin.programs.rbrowser.browsers = {
-      "vivaldi@keeptruckin" = entryAfter [ "vivaldi@personal" ] { };
+      "chromium@keeptruckin" = entryAfter [ "chromium@personal" ] { };
+      "vivaldi@keeptruckin" = entryAfter [ "chromium@keeptruckin" ] { };
       "firefox@keeptruckin" = entryAfter [ "vivaldi@keeptruckin" ] { };
-      "chromium@keeptruckin" = entryAfter [ "firefox@keeptruckin" ] { };
     };
   };
 }
