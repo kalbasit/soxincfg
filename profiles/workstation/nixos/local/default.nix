@@ -46,10 +46,6 @@ in
             "firefox@ihab" = entryAnywhere { };
           };
         };
-        rofi = {
-          enable = true;
-          i3.enable = true;
-        };
       };
 
       services = {
@@ -154,6 +150,7 @@ in
         mosh.enable = true;
         neovim.enable = true;
         pet.enable = true;
+        rofi.enable = true;
         ssh.enable = true;
         starship.enable = true;
         termite.enable = true;
