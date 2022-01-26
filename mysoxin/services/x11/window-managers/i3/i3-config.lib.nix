@@ -153,21 +153,24 @@ in
         # rbrowser
         "${meta}+b" = "exec rbrowser";
 
+        # Emoji
+        "${meta}+${alt}+e" = "exec rofi -show emoji";
+
         # rofi run
-        "${meta}+r" = "exec ${pkgs.rofi}/bin/rofi -show run";
+        "${meta}+r" = "exec rofi -show run";
 
         # list open windows to switch to
-        "${alt}+Tab" = "exec ${pkgs.rofi}/bin/rofi -show window";
+        "${alt}+Tab" = "exec rofi -show window";
 
         # switch between the current and the previously focused one
         "${meta}+Tab" = "workspace back_and_forth";
         "${meta}+${shift}+Tab" = "move container to workspace back_and_forth";
 
         # dynamic workspaces
-        "${meta}+space" = "exec ${pkgs.rofi}/bin/rofi -show i3SwapWorkspaces";
-        "${alt}+space" = "exec ${pkgs.rofi}/bin/rofi -show i3Workspaces";
-        "${meta}+${shift}+space" = "exec ${pkgs.rofi}/bin/rofi -show i3MoveContainer";
-        "${meta}+${alt}+space" = "exec ${pkgs.rofi}/bin/rofi -show i3RenameWorkspace";
+        "${meta}+space" = "exec rofi -show i3SwapWorkspaces";
+        "${alt}+space" = "exec rofi -show i3Workspaces";
+        "${meta}+${shift}+space" = "exec rofi -show i3MoveContainer";
+        "${meta}+${alt}+space" = "exec rofi -show i3RenameWorkspace";
 
         # focus the parent container
         "${meta}+a" = "focus parent";
