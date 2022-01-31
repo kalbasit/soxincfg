@@ -38,6 +38,7 @@ in
 
     cura # slicing software for 3d printers
     prusa-slicer # slicing software for 3d printers
+    blender # 3d modeling software
 
     hexyl # hex viewer with nice colors
     duf # du replacement on steroids
