@@ -27,6 +27,24 @@ in
       modules = [ ./hades/nixos.nix ];
     };
 
+  prometheus =
+    let
+      system = "x86_64-linux";
+    in
+    {
+      inherit channelName system;
+      modules = [ ./prometheus/nixos.nix ];
+
+      deploy = {
+        hostname = "prometheus.office.nasreddine.com";
+        profiles.system = {
+          sshUser = "root";
+          user = "root";
+          path = deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.prometheus;
+        };
+      };
+    };
+
   x86-64-linux-0 =
     let
       system = "x86_64-linux";

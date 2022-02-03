@@ -16,11 +16,7 @@ mkMerge [
       };
 
       services = { openssh.enable = true; };
-
-      virtualisation = {
-        docker.enable = true;
-        libvirtd.enable = true;
-      };
+      virtualisation = { docker.enable = true; };
     };
 
     soxincfg = {
