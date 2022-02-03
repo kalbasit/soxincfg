@@ -15,6 +15,7 @@ with lib;
   soxin.services.openssh.enable = true;
 
   # Enable eternal-terminal
+  # TODO: I have not used this. Do I need it?
   networking.firewall.allowedTCPPorts = singleton config.services.eternal-terminal.port;
   services.eternal-terminal.enable = true;
 
