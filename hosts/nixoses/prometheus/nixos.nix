@@ -44,10 +44,13 @@ in
       ];
   };
 
+  services.mjpg-streamer.enable = true;
+
   # Configure firewall
   networking.firewall = {
     allowedTCPPorts = [
-      5000 # For: services.octoprint
+      config.services.octoprint.port
+      5050 # For: services.mjpg-streamer
     ];
   };
 
