@@ -51,6 +51,7 @@
                 cura
                 obsidian
                 prusa-slicer
+                octoprint
                 ;
             })
           ];
