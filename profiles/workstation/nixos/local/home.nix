@@ -26,6 +26,9 @@ in
   };
 
   home.packages = with pkgs; [
+    arduino
+    arduino-cli
+
     zulip
     zulip-term
 
