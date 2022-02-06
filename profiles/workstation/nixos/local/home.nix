@@ -29,6 +29,8 @@ in
     arduino
     arduino-cli
 
+    git-quick-stats
+
     zulip
     zulip-term
 
