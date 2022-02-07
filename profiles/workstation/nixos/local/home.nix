@@ -26,8 +26,10 @@ in
   };
 
   home.packages = with pkgs; [
+    # boards
     arduino
     arduino-cli
+    esptool
 
     git-quick-stats
 
