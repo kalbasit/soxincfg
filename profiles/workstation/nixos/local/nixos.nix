@@ -18,7 +18,8 @@ in
   programs.dconf.enable = true;
 
   # Enable TailScale for zero-config VPN service.
-  services.tailscale.enable = true;
+  # TODO: I keep losing DNS not sure why
+  # services.tailscale.enable = true;
 
   # Feed the kernel some entropy
   services.haveged.enable = true;
