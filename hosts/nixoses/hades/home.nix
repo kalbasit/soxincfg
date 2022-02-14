@@ -9,6 +9,7 @@ with lib;
     soxincfg.nixosModules.profiles.myself
     soxincfg.nixosModules.profiles.work.arklight
     soxincfg.nixosModules.profiles.work.keeptruckin
+    soxincfg.nixosModules.profiles.work.onetouchpoint
     soxincfg.nixosModules.profiles.work.ulta
     soxincfg.nixosModules.profiles.workstation.nixos.local
   ];
