@@ -31,6 +31,10 @@ in
     arduino-cli
     esptool
 
+    # video recording/editing
+    obs-studio
+    kdenlive
+
     git-quick-stats
 
     zulip
