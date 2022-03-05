@@ -25,6 +25,7 @@ in
       _local_share_remmina_my_network_vnc_athena_athena_general_nasreddine_com_remmina = { inherit owner sopsFile; path = "${yl_home}/.local/share/remmina/my-network_vnc_athena_athena-general-nasreddine-com.remmina"; };
       _local_share_remmina_my_network_vnc_poseidon_poseidon_admin_nasreddine_com_remmina = { inherit owner sopsFile; path = "${yl_home}/.local/share/remmina/my-network_vnc_poseidon_poseidon-admin-nasreddine-com.remmina"; };
       _local_share_remmina_my_network_vnc_poseidon_poseidon_general_nasreddine_com_remmina = { inherit owner sopsFile; path = "${yl_home}/.local/share/remmina/my-network_vnc_poseidon_poseidon-general-nasreddine-com.remmina"; };
+      _local_share_remmina_my_network_vnc_saturn_saturn_general_nasreddine_com_remmina = { inherit owner sopsFile; path = "${yl_home}/.local/share/remmina/my-network_vnc_saturn_saturn-general-nasreddine-com.remmina"; };
       _local_share_remmina_my_network_vnc_vanya-macbook_remmina = { inherit owner sopsFile; path = "${yl_home}/.local/share/remmina/my-network_vnc_vanya-macbook.remmina"; };
       _local_share_remmina_my_network_vnc_vanya-macbook_ro_remmina = { inherit owner sopsFile; path = "${yl_home}/.local/share/remmina/my-network_vnc_vanya-macbook-ro.remmina"; };
       _netrc = { inherit owner sopsFile; path = "${yl_home}/.netrc"; };
