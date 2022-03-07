@@ -31,6 +31,9 @@ in
     arduino-cli
     esptool
 
+    # GitHub command line client
+    gh
+
     # video recording/editing
     obs-studio
     kdenlive
