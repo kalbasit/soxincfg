@@ -118,6 +118,10 @@ in
           };
         };
 
+        credential."https://github.com" = {
+          helper = "${pkgs.gh}/bin/gh auth git-credential";
+        };
+
         diff-so-fancy = {
           markEmptyLines = false;
         };
