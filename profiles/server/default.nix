@@ -1,28 +1,60 @@
-{ config, lib, pkgs, ... }:
+{ soxincfg, lib, mode, ... }:
 
-with lib;
-
+let
+  inherit (lib)
+    mkDefault
+    mkEnableOption
+    mkIf
+    optionalAttrs
+    optionals
+    ;
+in
 {
-  # Enable the installation of my neovim
-  # TODO: Need a minimal neovim with just my keybindings
-  # soxincfg.programs.neovim.enable = true;
-  environment.systemPackages = with pkgs; [ neovim ];
+  imports =
+    [ ]
+    ++ optionals (mode == "NixOS") [ ./nixos.nix ]
+    ++ optionals (mode == "home-manager") [ ./home.nix ];
 
-  # Enable TailScale for zero-config VPN service.
-  services.tailscale.enable = true;
+  config = {
+    soxin = {
+      hardware = {
+        fwupd.enable = true;
+      };
 
-  # Enable SSH server
-  soxin.services.openssh.enable = true;
+      programs = {
+        keybase = {
+          enable = true;
+          enableFs = true;
+        };
+        less.enable = true;
+      };
 
-  # Enable eternal-terminal
-  # TODO: I have not used this. Do I need it?
-  networking.firewall.allowedTCPPorts = singleton config.services.eternal-terminal.port;
-  services.eternal-terminal.enable = true;
+      services = {
+        openssh.enable = true;
+      };
 
-  # Setup my keyboard layout
-  soxin.settings.keyboard = {
-    layouts = [
-      { console = { keyMap = "colemak"; }; }
-    ];
+      virtualisation = {
+        docker.enable = true;
+        libvirtd.enable = true;
+      };
+    };
+
+    soxincfg = {
+      programs = {
+        fzf.enable = true;
+        git.enable = true;
+        mosh.enable = true;
+        neovim.enable = true;
+        pet.enable = true;
+        ssh.enable = true;
+        starship.enable = true;
+        tmux.enable = true;
+        zsh.enable = true;
+      };
+
+      settings = {
+        nix.distributed-builds.enable = true;
+      };
+    };
   };
 }

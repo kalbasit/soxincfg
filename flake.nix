@@ -50,8 +50,8 @@
               inherit (channels.nixpkgs-unstable)
                 cura
                 obsidian
-                prusa-slicer
                 octoprint
+                prusa-slicer
                 ;
             })
           ];
