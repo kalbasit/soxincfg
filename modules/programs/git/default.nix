@@ -51,6 +51,8 @@ in
         # git reviewone foo.js bar.js
         reviewone = ''!nvim -p +"tabdo Gdiff ''${REVIEW_BASE:-master}"'';
 
+        show-pointer = ''!f() { git cat-file blob "HEAD:$1" }; f'';
+
         branches = ''
           ! # go to shell command mode
           bo() {
