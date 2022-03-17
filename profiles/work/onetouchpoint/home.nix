@@ -3,5 +3,5 @@
 let
 in
 {
-  config = {};
+  config = { };
 }
