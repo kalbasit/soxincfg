@@ -135,14 +135,37 @@ resource "aws_route53_record" "jad-nasreddine-com-cname" {
   ]
 }
 
-resource "aws_route53_record" "vpn-nasreddine-com-cname" {
+### Tailscale-driven services
+
+resource "aws_route53_record" "prometheus-office-tailscale-nasreddine-com-a" {
   zone_id = aws_route53_zone.nasreddine-com.zone_id
-  name    = "vpn.nasreddine.com"
+  name    = "prometheus.office.tailscale.nasreddine.com"
   type    = "A"
-  ttl     = "60"
+  ttl     = "3600"
 
   records = [
-    "52.53.238.139",
+    "100.119.172.117",
   ]
 }
 
+resource "aws_route53_record" "prometheus-office-tailscale-nasreddine-com-aaa" {
+  zone_id = aws_route53_zone.nasreddine-com.zone_id
+  name    = "prometheus.office.tailscale.nasreddine.com"
+  type    = "AAAA"
+  ttl     = "3600"
+
+  records = [
+    "fd7a:115c:a1e0:ab12:4843:cd96:6277:ac75",
+  ]
+}
+
+resource "aws_route53_record" "ha-nasreddine-com-cname" {
+  zone_id = aws_route53_zone.nasreddine-com.zone_id
+  name    = "ha.nasreddine.com"
+  type    = "CNAME"
+  ttl     = "60"
+
+  records = [
+    "prometheus.office.tailscale.nasreddine.com",
+  ]
+}
