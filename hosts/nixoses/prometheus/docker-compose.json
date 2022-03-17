@@ -1,0 +1,82 @@
+{
+    "services": {
+        "homeassistant": {
+            "depends_on": [
+                "zwavejs2mqtt"
+            ],
+            "environment": {
+                "TZ": "America/Los_Angeles"
+            },
+            "image": "ghcr.io/home-assistant/home-assistant:stable@sha256:526120826f55aeb712208db5964fc621ceb11cf192ecfd057794451b27c50457",
+            "ports": [
+                "8123:8123"
+            ],
+            "restart": "unless-stopped",
+            "sysctls": {},
+            "volumes": [
+                "/persistence/home-assistant:/config"
+            ]
+        },
+        "nginx-proxy-manager": {
+            "depends_on": [
+                "homeassistant"
+            ],
+            "environment": {},
+            "image": "docker.io/jc21/nginx-proxy-manager@sha256:0a9d4155c6b3b453149fc48aadb561227d0f79bddb97004aea50c51cd1995e13",
+            "ports": [
+                "80:80",
+                "81:81",
+                "443:443"
+            ],
+            "restart": "unless-stopped",
+            "sysctls": {},
+            "volumes": [
+                "/persistence/nginx-proxy-manager/data:/data",
+                "/persistence/nginx-proxy-manager/letsencrypt:/etc/letsencrypt"
+            ]
+        },
+        "zwavejs2mqtt": {
+            "devices": [
+                "/dev/serial/by-id/usb-0658_0200-if00:/dev/zwave"
+            ],
+            "environment": {
+                "TZ": "America/Los_Angeles"
+            },
+            "image": "zwavejs/zwavejs2mqtt:latest@sha256:6ce9ecede861d937532153e5e47570f3c5669f9e93c12870279a5048a4e0686f",
+            "ports": [
+                "8091:8091",
+                "3000:3000"
+            ],
+            "restart": "unless-stopped",
+            "sysctls": {},
+            "volumes": [
+                "/persistence/zwavejs2mqtt:/usr/src/app/store"
+            ]
+        }
+    },
+    "version": "3.4",
+    "x-arion": {
+        "images": [],
+        "project": {
+            "name": null
+        },
+        "serviceInfo": {
+            "homeassistant": {
+                "defaultExec": [
+                    "/bin/sh"
+                ]
+            },
+            "nginx-proxy-manager": {
+                "defaultExec": [
+                    "/bin/sh"
+                ]
+            },
+            "zwavejs2mqtt": {
+                "defaultExec": [
+                    "/bin/sh"
+                ]
+            }
+        }
+    }
+}
+
