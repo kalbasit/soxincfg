@@ -100,6 +100,13 @@
         "x86_64-darwin"
       ];
 
+      devShellBuilder = channels: with channels.nixpkgs; mkShell {
+        buildInputs = [
+          arion
+          terraform
+        ];
+      };
+
       # pull in all hosts
       hosts = import ./hosts inputs;
 
