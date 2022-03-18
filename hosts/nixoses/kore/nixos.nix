@@ -15,46 +15,6 @@ in
     ./hardware-configuration.nix
   ];
 
-  # Enable dnsmasq
-  networking.firewall.allowedUDPPorts = singleton 53;
-  networking.firewall.interfaces.ifcadmin.allowedUDPPorts = singleton 53;
-  networking.firewall.interfaces.eth0.allowedUDPPorts = singleton 53;
-  soxincfg.services.dnsmasq = { enable = true; blockAds = true; };
-  services.dnsmasq = {
-    servers = [ "192.168.2.1" "192.168.10.1" "192.168.11.1" ];
-    extraConfig =
-      let
-        apollo_ip = "192.168.50.2";
-        apollo_hosts = [
-          "apollo.nasreddine.com"
-          "gitlab.nasreddine.com"
-          # "nix-cache.corp.ktdev.io"
-          "plex.nasreddine.com"
-          "soxincfg.nix-binary-cache.nasreddine.com"
-
-          # "cache.nixos.org"
-          # "risson.cachix.org"
-          # "yl.cachix.org"
-        ];
-
-        hole_ip = "0.0.0.0";
-        hole_hosts = [ ];
-
-        kore_ip = "192.168.2.5";
-        kore_hosts = [ "unifi.nasreddine.com" ];
-
-        zeus_ip = "192.168.50.3";
-        zeus_hosts = [
-          "nextcloud.nasreddine.com"
-        ];
-      in
-      builtins.concatStringsSep "\n"
-        ((map (host: "address=/${host}/${apollo_ip}") apollo_hosts)
-          ++ (map (host: "address=/${host}/${hole_ip}") hole_hosts)
-          ++ (map (host: "address=/${host}/${kore_ip}") kore_hosts)
-          ++ (map (host: "address=/${host}/${zeus_ip}") zeus_hosts));
-  };
-
   # enable unifi and open the remote port
   services.unifi = {
     enable = true;
@@ -96,12 +56,10 @@ in
     8443 # unifi
   ];
 
-  # Forward externalport 443 to unifi internally.
-  # We don't need to allow access to port 443 here because it gets re-routed to
-  # port 8443 which itself we allow.
-  networking.firewall.extraCommands = ''
-    ip46tables -w -t nat -I PREROUTING -p tcp --dport 443 -j REDIRECT --to-ports 8443 -i ifcadmin
-  '';
+  # Allow only unifi on the office interface only.
+  networking.firewall.interfaces.ifcoffice.allowedTCPPorts = [
+    8443 # unifi
+  ];
 
   # Setup the builder account
   nix.trustedUsers = [ "root" "@wheel" "@builders" ];
@@ -120,18 +78,24 @@ in
   boot.kernel.sysctl."net.ipv4.ip_forward" = "1";
 
   networking.vlans = {
-    # The ADMIN interface
     ifcadmin = {
       id = 2;
+      interface = "eth0";
+    };
+    ifcoffice = {
+      id = 12;
       interface = "eth0";
     };
   };
 
   networking.interfaces = {
-    # The ADMIN interface
     ifcadmin = {
       useDHCP = true;
       macAddress = "b8:27:eb:a8:5e:02";
+    };
+    ifcoffice = {
+      useDHCP = true;
+      macAddress = "b8:27:eb:a8:5e:03";
     };
   };
 
@@ -139,5 +103,5 @@ in
   # compatible, in order to avoid breaking some software such as database
   # servers. You should change this only after NixOS release notes say you
   # should.
-  system.stateVersion = "19.09"; # Did you read the comment?
+  system.stateVersion = "21.11"; # Did you read the comment?
 }

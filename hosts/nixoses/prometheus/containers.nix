@@ -61,10 +61,10 @@ in
 
     containers.nginx-proxy-manager = {
       extraOptions = [
-         "--network=web_network_default"
-         "--health-cmd=/bin/check-health"
-         "--health-interval=10s"
-         "--health-timeout=3s"
+        "--network=web_network_default"
+        "--health-cmd=/bin/check-health"
+        "--health-interval=10s"
+        "--health-timeout=3s"
       ];
       image = "docker.io/jc21/nginx-proxy-manager@sha256:0a9d4155c6b3b453149fc48aadb561227d0f79bddb97004aea50c51cd1995e13";
       ports = [ "80:80" "443:443" ];
