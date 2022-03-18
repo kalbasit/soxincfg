@@ -137,26 +137,20 @@ resource "aws_route53_record" "jad-nasreddine-com-cname" {
 
 ### Tailscale-driven services
 
-resource "aws_route53_record" "prometheus-office-tailscale-nasreddine-com-a" {
+resource "aws_route53_record" "prometheus-tailscale-nasreddine-com-a" {
   zone_id = aws_route53_zone.nasreddine-com.zone_id
-  name    = "prometheus.office.tailscale.nasreddine.com"
+  name    = "prometheus.tailscale.nasreddine.com"
   type    = "A"
   ttl     = "3600"
-
-  records = [
-    "100.119.172.117",
-  ]
+  records = ["100.119.172.117"]
 }
 
-resource "aws_route53_record" "prometheus-office-tailscale-nasreddine-com-aaa" {
+resource "aws_route53_record" "prometheus-tailscale-nasreddine-com-aaaa" {
   zone_id = aws_route53_zone.nasreddine-com.zone_id
-  name    = "prometheus.office.tailscale.nasreddine.com"
+  name    = "prometheus.tailscale.nasreddine.com"
   type    = "AAAA"
   ttl     = "3600"
-
-  records = [
-    "fd7a:115c:a1e0:ab12:4843:cd96:6277:ac75",
-  ]
+  records = ["fd7a:115c:a1e0:ab12:4843:cd96:6277:ac75"]
 }
 
 resource "aws_route53_record" "ha-nasreddine-com-cname" {
@@ -164,8 +158,37 @@ resource "aws_route53_record" "ha-nasreddine-com-cname" {
   name    = "ha.nasreddine.com"
   type    = "CNAME"
   ttl     = "60"
+  records = ["prometheus.tailscale.nasreddine.com"]
+}
 
-  records = [
-    "prometheus.office.tailscale.nasreddine.com",
-  ]
+resource "aws_route53_record" "octoprint-nasreddine-com-cname" {
+  zone_id = aws_route53_zone.nasreddine-com.zone_id
+  name    = "octoprint.nasreddine.com"
+  type    = "CNAME"
+  ttl     = "60"
+  records = ["prometheus.tailscale.nasreddine.com"]
+}
+
+resource "aws_route53_record" "octoprint-webcam-nasreddine-com-cname" {
+  zone_id = aws_route53_zone.nasreddine-com.zone_id
+  name    = "octoprint-webcam.nasreddine.com"
+  type    = "CNAME"
+  ttl     = "60"
+  records = ["prometheus.tailscale.nasreddine.com"]
+}
+
+resource "aws_route53_record" "nginx-proxy-manager-nasreddine-com-cname" {
+  zone_id = aws_route53_zone.nasreddine-com.zone_id
+  name    = "nginx-proxy-manager.nasreddine.com"
+  type    = "CNAME"
+  ttl     = "60"
+  records = ["prometheus.tailscale.nasreddine.com"]
+}
+
+resource "aws_route53_record" "unifi-nasreddine-com-cname" {
+  zone_id = aws_route53_zone.nasreddine-com.zone_id
+  name    = "unifi.nasreddine.com"
+  type    = "CNAME"
+  ttl     = "60"
+  records = ["prometheus.tailscale.nasreddine.com"]
 }
