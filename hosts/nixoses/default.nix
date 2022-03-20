@@ -36,7 +36,7 @@ in
       modules = [ ./prometheus/nixos.nix ];
 
       deploy = {
-        hostname = "prometheus.office.nasreddine.com";
+        hostname = "prometheus.wael-nasreddine.gmail.com.beta.tailscale.net";
         profiles.system = {
           sshUser = "root";
           user = "root";
@@ -54,7 +54,7 @@ in
       modules = [ ./x86-64-linux-0/nixos.nix ];
 
       deploy = {
-        hostname = "x86-64-linux-0.yl.ktdev.io";
+        hostname = "x86-64-linux-0.wael-nasreddine.gmail.com.beta.tailscale.net";
         profiles.system = {
           sshUser = "root";
           user = "root";
@@ -112,7 +112,7 @@ in
       modules = [ ./kore/nixos.nix ];
 
       deploy = {
-        hostname = "kore.admin.nasreddine.com";
+        hostname = "kore.wael-nasreddine.gmail.com.beta.tailscale.net";
         profiles.system = {
           sshUser = "root";
           user = "root";
