@@ -49,6 +49,7 @@
             (_: super: {
               inherit (channels.nixpkgs-unstable)
                 cura
+                displaylink
                 obsidian
                 octoprint
                 prusa-slicer
@@ -61,6 +62,10 @@
 
           # Yep, you see it first folks - you can patch nixpkgs!
           patches = [ ];
+        };
+
+        nixpkgs-unstable = {
+          patches = [ ./165001.patch ];
         };
       };
 
