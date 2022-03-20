@@ -1,11 +1,15 @@
 { config, soxincfg, nixos-hardware, pkgs, ... }:
 let
+  yl_home = config.users.users.yl.home;
+  owner = config.users.users.yl.name;
   sopsFile = ./secrets.sops.yaml;
 in
 {
   imports = [
     soxincfg.nixosModules.profiles.myself
+    soxincfg.nixosModules.profiles.work.arklight
     soxincfg.nixosModules.profiles.work.keeptruckin
+    soxincfg.nixosModules.profiles.work.onetouchpoint
     soxincfg.nixosModules.profiles.work.ulta
     soxincfg.nixosModules.profiles.workstation.nixos.local
 
@@ -17,7 +21,12 @@ in
     ./win10.nix
   ];
 
-  sops.secrets._etc_NetworkManager_system-connections_Nasreddine-VPN_nmconnection = { inherit sopsFile; path = "/etc/NetworkManager/system-connections/Nasreddine-VPN.nmconnection"; };
+  sops.secrets = {
+    _etc_NetworkManager_system-connections_Nasreddine-VPN_nmconnection = { inherit sopsFile; path = "/etc/NetworkManager/system-connections/Nasreddine-VPN.nmconnection"; };
+    _yl_bw_session_session = { inherit owner sopsFile; mode = "0400"; path = "${yl_home}/.bw_session"; };
+  };
+
+  # load YL's home-manager configuration
 
   # load YL's home-manager configuration
   home-manager.users.yl = import ./home.nix { inherit soxincfg; };
@@ -58,5 +67,10 @@ in
     '';
   };
 
-  system.stateVersion = "20.09";
+  # store u2f for onlykey
+  security.pam.u2f.authFile = pkgs.writeText "u2f-mappings" ''
+    yl:*,4uA7dsphf1nPxyQ6ncgKrOGi3qwGxHnzq9bweBisoz1Dl5ocpv9r8EnJX/GOWGrNtoXodSlSAhZ25CZOghx0Xw==,es256,+presence
+  '';
+
+  system.stateVersion = "21.11";
 }

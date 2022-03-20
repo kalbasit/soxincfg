@@ -16,21 +16,28 @@ mkMerge [
       };
 
       services = { openssh.enable = true; };
-
-      virtualisation = {
-        docker.enable = true;
-        libvirtd.enable = true;
-      };
+      virtualisation = { docker.enable = true; };
     };
 
     soxincfg = {
       programs = {
         fzf.enable = true;
-        git.enable = true;
+        git = {
+          enable = true;
+
+          # No need to attempt to sign commits via GnuPG as it really does not
+          # work well, yet.
+          enableGpgSigningKey = mkForce false;
+        };
         mosh.enable = true;
         neovim.enable = true;
         pet.enable = true;
-        ssh.enable = true;
+        ssh = {
+          enable = true;
+
+          # XXX: Remote machines do not have any keys (or shouldn't) and must use my SSH agent instead.
+          identitiesOnly = mkForce false;
+        };
         starship.enable = true;
         tmux.enable = true;
         zsh.enable = true;

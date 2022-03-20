@@ -31,7 +31,7 @@ mapAttrs
     in
     {
       inherit channelName system;
-      modules = [ ./achilles/configuration.nix ];
+      modules = [ ./achilles/nixos.nix ];
     };
 
   hades =
@@ -40,7 +40,25 @@ mapAttrs
     in
     {
       inherit channelName system;
-      modules = [ ./hades/configuration.nix ];
+      modules = [ ./hades/nixos.nix ];
+    };
+
+  prometheus =
+    let
+      system = "x86_64-linux";
+    in
+    {
+      inherit channelName system;
+      modules = [ ./prometheus/nixos.nix ];
+
+      deploy = {
+        hostname = "prometheus.office.nasreddine.com";
+        profiles.system = {
+          sshUser = "root";
+          user = "root";
+          path = deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.prometheus;
+        };
+      };
     };
 
   x86-64-linux-0 =
@@ -49,7 +67,7 @@ mapAttrs
     in
     {
       inherit channelName system;
-      modules = [ ./x86-64-linux-0/configuration.nix ];
+      modules = [ ./x86-64-linux-0/nixos.nix ];
 
       deploy = {
         hostname = "x86-64-linux-0.yl.ktdev.io";
@@ -67,7 +85,7 @@ mapAttrs
     in
     {
       inherit channelName system;
-      modules = [ ./zeus/configuration.nix ];
+      modules = [ ./zeus/nixos.nix ];
 
       deploy = {
         hostname = "zeus.admin.nasreddine.com";
@@ -89,7 +107,7 @@ mapAttrs
     in
     {
       inherit channelName system;
-      modules = [ ./aarch64-linux-0/configuration.nix ];
+      modules = [ ./aarch64-linux-0/nixos.nix ];
 
       deploy = {
         hostname = "aarch64-linux-0.yl.ktdev.io";
@@ -107,7 +125,7 @@ mapAttrs
     in
     {
       inherit channelName system;
-      modules = [ ./kore/configuration.nix ];
+      modules = [ ./kore/nixos.nix ];
 
       deploy = {
         hostname = "kore.admin.nasreddine.com";

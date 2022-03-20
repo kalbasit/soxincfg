@@ -5,14 +5,11 @@
   lowbatt = ./hardware/lowbatt.nix;
   serial_console = ./hardware/serial_console.nix;
   sound = ./hardware/sound.nix;
-  yubikey = ./hardware/yubikey.nix;
 
   # services
   caffeine = ./services/caffeine.nix;
   dunst = ./services/dunst.nix;
-  gpgAgent = ./services/gpg-agent.nix;
   i3 = ./services/x11/window-managers/i3;
-  locker = ./services/locker.nix;
   networkmanager = ./services/networking/networkmanager.nix;
   polybar = ./services/x11/window-managers/bar;
   printing = ./services/printing.nix;

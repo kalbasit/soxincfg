@@ -69,15 +69,17 @@ fi
 
 case "${action}" in
     build)
+        >&2 echo "Building $host"
         if isNixOS; then
             nix build ".#nixosConfigurations.${host}.config.system.build.toplevel" --show-trace
         elif isDarwin; then
             nix build ".#darwinConfigurations.${host}.system" --show-trace
         else
-            home-manager build --flake ".#${host}" --show-trace
+            home-manager build --flake ".#${host}" # --show-trace
         fi
         ;;
     test)
+        >&2 echo "Testing $host"
         if isNixOS; then
             sudo nixos-rebuild --flake ".#${host}" test --show-trace
         elif isDarwin; then
@@ -89,6 +91,7 @@ case "${action}" in
         fi
         ;;
     switch)
+        >&2 echo "Switching $host"
         if isNixOS; then
             sudo nixos-rebuild --flake ".#${host}" test --show-trace
         elif isDarwin; then
@@ -100,6 +103,7 @@ case "${action}" in
         fi
         ;;
     boot)
+        >&2 echo "Booting $host"
         if isNixOS; then
             sudo nixos-rebuild --flake ".#${host}" boot --show-trace
         elif isDarwin; then

@@ -1,10 +1,15 @@
 { config, soxincfg, lib, nixos-hardware, pkgs, ... }:
-with lib;
+let
+  inherit (lib)
+    mkForce
+    ;
+in
 {
   imports = [
     soxincfg.nixosModules.profiles.myself
     soxincfg.nixosModules.profiles.work.keeptruckin
-    soxincfg.nixosModules.profiles.workstation.nixos.remote
+    soxincfg.nixosModules.profiles.work.ulta
+    soxincfg.nixosModules.profiles.workstation.nixos.local
 
     nixos-hardware.nixosModules.common-cpu-intel
     nixos-hardware.nixosModules.common-pc-ssd
@@ -12,15 +17,16 @@ with lib;
     ./hardware-configuration.nix
   ];
 
+  # force the keyboard to be us on the console to work correctly with my zsa
+  console.keyMap = mkForce "us";
+
   # load YL's home-manager configuration
   home-manager.users.yl = import ./home.nix { inherit soxincfg; };
 
-  soxin.hardware.intelBacklight.enable = true;
-
-  soxincfg.services.nextcloud.enable = true;
+  # soxincfg.services.nextcloud.enable = true;
 
   # Enable iscsid to create disks over on my NAS
-  # soxincfg.services.iscsid.enable = true;
+  soxincfg.services.iscsid.enable = true;
 
   # Setup the builder account
   nix.trustedUsers = [ "root" "@wheel" "@builders" ];
@@ -102,5 +108,5 @@ with lib;
     ifcsn0.useDHCP = true;
   };
 
-  system.stateVersion = "20.09";
+  system.stateVersion = "21.05";
 }

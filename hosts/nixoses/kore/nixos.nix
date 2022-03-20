@@ -1,0 +1,107 @@
+{ config, lib, pkgs, soxincfg, ... }:
+
+with lib;
+let
+  unifi_config_gateway =
+    let
+      config = { };
+    in
+    pkgs.writeText "config.gateway.json" (builtins.toJSON config);
+in
+{
+  imports = [
+    soxincfg.nixosModules.profiles.server
+
+    ./hardware-configuration.nix
+  ];
+
+  # enable unifi and open the remote port
+  services.unifi = {
+    enable = true;
+    jrePackage = pkgs.jre8_headless;
+    unifiPackage = pkgs.unifiStable;
+    # XXX: Leaving this in case I need to update it again.
+    # unifiPackage = pkgs.unifiStable.overrideAttrs (oa: rec {
+    #   version = "6.0.43";
+    #   name = "unifi-controller-${version}";
+    #
+    #   src = pkgs.fetchurl {
+    #     url = "https://dl.ubnt.com/unifi/${version}/unifi_sysvinit_all.deb";
+    #     sha256 = "sha256-fsqjA61JAIEeLiADAkOjI2ynmD93kNXDkiRfIBzhN7U=";
+    #   };
+    # });
+  };
+  systemd.services.unifi.preStart = ''
+    mkdir -p /var/lib/unifi/data/sites/default
+    ln -nsf ${unifi_config_gateway} /var/lib/unifi/data/sites/default/config.gateway.json
+  '';
+
+  # nixpkgs.config.allowUnfree = true;
+  nixpkgs.system = "aarch64-linux";
+
+  # configure OpenSSH server to listen on the ADMIN interface
+  services.openssh = {
+    # do not automatically open firewall to control the interfaces.
+    openFirewall = false;
+    listenAddresses = [
+      { addr = "192.168.2.5"; port = 22; } # ssh-in from within my network only from Admin network
+      # TODO: Add support for SSH from Tailscale!
+    ];
+  };
+  systemd.services.sshd = { after = [ "network-interfaces.target" ]; serviceConfig.RestartSec = "5"; };
+
+  # Allow unifi/ssh on the admin interface only.
+  networking.firewall.interfaces.ifcadmin.allowedTCPPorts = [
+    22 # ssh
+    8443 # unifi
+  ];
+
+  # Allow only unifi on the office interface only.
+  networking.firewall.interfaces.ifcoffice.allowedTCPPorts = [
+    8443 # unifi
+  ];
+
+  # Setup the builder account
+  nix.trustedUsers = [ "root" "@wheel" "@builders" ];
+  users.users = {
+    builder = {
+      extraGroups = [ "builders" ];
+      openssh.authorizedKeys.keys = [
+        "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDKBOvTyKSvp4vENrpyFKkZ+OfBBeSXRvR7CWhPBHbGD19Xev+gAF/D1y5zqdaEK6sZuSmWoBfLHatbfWjiz6Yj1uygYtDilyqSaw0tkdsOMihMHtqvkdNugrzPyfyeugdGUPG50tnXbkTyp8QOfxhkqdpwku0NMLMnMDMOKjGzdYlEFvdPANnjiS2FTrDRbTvb4B64t9OgQ0d/tUpuTMRvRSoTLBtlJC5nNFhNKnhDl6lZDMTQyTZSg8iA25W2C2KQVs5IKJ+E+LMS7golD3t1i/S9kN4guo7yoEU5lQ8xGBqDX5Gnqwl1wriKJP1roIS0tqi9yHCSX18oeyotY7Y3mWg5lIwotgOBYJ3X5IIH1L0oG92aK5dyGedoDUUMZ8GcRX98PqW8WUa0lZRaYyPfmpN5tzhJpKaqwtdKhxgMyESx0UUFTmUwPPgTVvd4gb0P989BguwKKggx591FzGOHVpWwoYcR9S4q+3F+bSzxKFAOet8CARPP2f3v3ULG6pjSycrvy16BMnzIr1kUmlzBQfhFhqa0HR6I9VQu1ND2SOZPz11wTE7zdOWMV68A47tvvemCOM9GSHLATbTeDnZNWwVAICUslkYiiLULTev07bh5OuwQfY+IK0IeCZ4Wsvy52nWz1YsVmLcwPqPCpsi0oqyhEFzBpfhMwATWlaSiQw== Kore Builder"
+      ];
+      isNormalUser = true;
+    };
+  };
+
+  # enable port forwarding as this host act as my home OpenVPN client
+  # forwarding network requests to and from my home devices.
+  boot.kernel.sysctl."net.ipv4.ip_forward" = "1";
+
+  networking.vlans = {
+    ifcadmin = {
+      id = 2;
+      interface = "eth0";
+    };
+    ifcoffice = {
+      id = 12;
+      interface = "eth0";
+    };
+  };
+
+  networking.interfaces = {
+    ifcadmin = {
+      useDHCP = true;
+      macAddress = "b8:27:eb:a8:5e:02";
+    };
+    ifcoffice = {
+      useDHCP = true;
+      macAddress = "b8:27:eb:a8:5e:03";
+    };
+  };
+
+  # This value determines the NixOS release with which your system is to be
+  # compatible, in order to avoid breaking some software such as database
+  # servers. You should change this only after NixOS release notes say you
+  # should.
+  system.stateVersion = "21.11"; # Did you read the comment?
+}

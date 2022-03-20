@@ -51,6 +51,8 @@ in
         # git reviewone foo.js bar.js
         reviewone = ''!nvim -p +"tabdo Gdiff ''${REVIEW_BASE:-master}"'';
 
+        show-pointer = ''!f() { git cat-file blob "HEAD:$1" }; f'';
+
         branches = ''
           ! # go to shell command mode
           bo() {
@@ -116,6 +118,10 @@ in
             old = "red bold";
             whitespace = "red reverse";
           };
+        };
+
+        credential."https://github.com" = {
+          helper = "${pkgs.gh}/bin/gh auth git-credential";
         };
 
         diff-so-fancy = {

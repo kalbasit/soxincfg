@@ -1,4 +1,8 @@
 {
+  # hardware
+  onlykey = ./hardware/onlykey;
+  yubikey = ./hardware/yubikey;
+
   # programs
   android = ./programs/android.nix;
   autorandr = ./programs/autorandr.nix;
@@ -9,13 +13,14 @@
   git = ./programs/git;
   mosh = ./programs/mosh;
   neovim = ./programs/neovim;
-  onlykey = ./programs/onlykey;
   pet = ./programs/pet;
+  rofi = ./programs/rofi;
   ssh = ./programs/ssh;
   starship = ./programs/starship.nix;
   termite = ./programs/termite.nix;
   tmux = ./programs/tmux;
   weechat = ./programs/weechat;
+  wezterm = ./programs/wezterm;
   zsh = ./programs/zsh;
 
   # services
@@ -30,4 +35,5 @@
   keyboard = ./settings/keyboard;
   nix = ./settings/nix;
   users = ./settings/users;
+  home-manager-settings = ./settings/home-manager;
 }

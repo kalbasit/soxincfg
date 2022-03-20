@@ -1,4 +1,4 @@
-{ mode, config, pkgs, lib, ... }:
+{ mode, config, options, pkgs, lib, ... }:
 
 with lib;
 let
@@ -13,11 +13,8 @@ let
     "video"
   ];
 
-  makeUser = userName: { uid, isAdmin ? false, home ? "/home/${userName}", hashedPassword ? "", sshKeys ? [ ] }: nameValuePair
-    userName
+  makeUser = userName: { isAdmin, sshKeys, ... }@user:
     {
-      inherit home uid hashedPassword;
-
       group = "mine";
       extraGroups =
         defaultGroups
@@ -28,7 +25,8 @@ let
       isNormalUser = true;
 
       openssh.authorizedKeys.keys = sshKeys;
-    };
+    }
+    // (builtins.removeAttrs user [ "isAdmin" "isNixTrustedUser" "sshKeys" ]);
 
 in
 {
@@ -47,6 +45,29 @@ in
       description = ''
         The list of users to create.
       '';
+
+      # for each user, first use the default, then make sure the name is always
+      # set and finally pass the user. Each step will override attributes from
+      # the previous one, so it's important the passed-in value is evaluated
+      # last.
+      apply = users:
+        let
+          defaults = {
+            hashedPassword = "";
+            home = "/home/${userName}";
+            isAdmin = false;
+            isNixTrustedUser = false;
+            sshKeys = [ ];
+          };
+        in
+        mapAttrs
+          (name: user:
+            defaults
+            // { inherit name; }
+            // builtins.removeAttrs user [ "homeFunc" ]
+            // { home = user.homeFunc { inherit pkgs; }; }
+          )
+          users;
     };
 
     groups = mkOption {
@@ -68,8 +89,16 @@ in
           mine = { gid = 2000; };
         };
 
-        users = mapAttrs' makeUser config.soxincfg.settings.users.users;
+        users = mapAttrs makeUser config.soxincfg.settings.users.users;
       };
+
+      nix.trustedUsers =
+        let
+          user_list = builtins.attrValues config.soxincfg.settings.users.users;
+          trustedUsers = filter (user: user.isNixTrustedUser) user_list;
+        in
+        options.nix.trustedUsers.default
+        ++ map (user: user.name) trustedUsers;
     })
   ]);
 }

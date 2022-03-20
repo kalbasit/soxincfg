@@ -153,26 +153,24 @@ in
         # rbrowser
         "${meta}+b" = "exec rbrowser";
 
+        # Emoji
+        "${meta}+${alt}+e" = "exec rofi -show emoji";
+
         # rofi run
-        "${meta}+r" = "exec ${pkgs.rofi}/bin/rofi -show run";
+        "${meta}+r" = "exec rofi -show run";
 
         # list open windows to switch to
-        "${alt}+Tab" = "exec ${pkgs.rofi}/bin/rofi -show window";
+        "${alt}+Tab" = "exec rofi -show window";
 
         # switch between the current and the previously focused one
         "${meta}+Tab" = "workspace back_and_forth";
         "${meta}+${shift}+Tab" = "move container to workspace back_and_forth";
 
         # dynamic workspaces
-        "${meta}+space" = "exec ${pkgs.rofi}/bin/rofi -show i3SwapWorkspaces";
-        "${alt}+space" = "exec ${pkgs.rofi}/bin/rofi -show i3Workspaces";
-        "${meta}+${shift}+space" = "exec ${pkgs.rofi}/bin/rofi -show i3MoveContainer";
-        "${meta}+${alt}+space" = "exec ${pkgs.rofi}/bin/rofi -show i3RenameWorkspace";
-
-        # change container layout (stacked, tabbed, toggle split)
-        "${meta}+l" = "layout stacking";
-        "${meta}+u" = "layout tabbed";
-        "${meta}+y" = "layout toggle split";
+        "${meta}+space" = "exec rofi -show i3SwapWorkspaces";
+        "${alt}+space" = "exec rofi -show i3Workspaces";
+        "${meta}+${shift}+space" = "exec rofi -show i3MoveContainer";
+        "${meta}+${alt}+space" = "exec rofi -show i3RenameWorkspace";
 
         # focus the parent container
         "${meta}+a" = "focus parent";
@@ -209,12 +207,15 @@ in
         # sleep support
         "XF86PowerOff" = "exec ${nosid} ${locker} && systemctl suspend";
 
+        # lock support
+        "${meta}+l" = "exec ${nosid} ${locker}";
+
         # clipboard history
         "${meta}+${alt}+c" = "exec CM_LAUNCHER=rofi ${getBin pkgs.clipmenu}/bin/clipmenu";
 
         # Terminals
-        "${meta}+Return" = "exec ${getBin pkgs.termite}/bin/termite";
-        "${meta}+${shift}+Return" = "exec ${getBin pkgs.alacritty}/bin/alacritty";
+        "${meta}+Return" = "exec ${getBin pkgs.wezterm}/bin/wezterm";
+        "${meta}+${shift}+Return" = "exec ${getBin pkgs.termite}/bin/termite";
 
         # Modes
         "${meta}+${alt}+r" = "mode resize";
@@ -282,8 +283,7 @@ in
 
       startup = [
         { command = "${getBin pkgs.xlibs.xset}/bin/xset r rate 300 30"; always = false; notification = false; }
-        { command = "${getBin pkgs.xcape}/bin/xcape -e 'Control_L=Escape'"; always = false; notification = false; }
-        { command = "i3-msg \"workspace personal; exec ${nosid} ${getBin pkgs.termite}/bin/termite\""; always = false; notification = true; }
+        { command = "i3-msg \"workspace personal; exec ${nosid} ${getBin pkgs.wezterm}/bin/wezterm\""; always = false; notification = true; }
       ];
     };
 
@@ -301,12 +301,14 @@ in
     # Modes #
     #########
 
-    set $launcher Launch: (a)pps, (d)aemons, (p)ower, (s)ettings
+    set $launcher Launch: (a)pps, (d)aemons, (l)ayout, (p)ower, (s)ettings, (w)indow manager
     mode "$launcher" {
       bindsym a mode "$app_mode"
       bindsym d mode "$daemon_mode"
+      bindsym l mode "$layout_mode"
       bindsym p mode "$power_mode"
       bindsym s mode "$settings_mode"
+      bindsym w mode "$wm_mode"
 
       # back to normal: Enter or Escape
       bindsym Return mode default
@@ -336,18 +338,36 @@ in
           bindsym Escape mode "$launcher"
         }
 
-      set $daemon_mode Daemons: (g)reenclip, (x)cape
+      set $daemon_mode Daemons: (x)cape
       mode "$daemon_mode" {
-        bindsym x exec ${nosid} ${getBin pkgs.xcape}/bin/xcape -e 'Control_L=Escape', mode default
+        bindsym Escape mode "$launcher"
+      }
+
+      set $layout_mode Layout: (s)tacking, (t)abbed, (x)toggle split
+      mode "$layout_mode" {
+        bindsym s layout stacking, mode default
+        bindsym t layout tabbed, mode default
+        bindsym x layout toggle split, mode default
 
         bindsym Escape mode "$launcher"
       }
 
-      set $settings_mode Settings: (c)pu, (d)isplay, (w)indow manager
+      set $power_mode System: (l)ock, L(o)gout, (s)uspend, (h)ibernate, (r)eboot, (${shift}+s)hutdown
+      mode "$power_mode" {
+        bindsym l exec ${nosid} ${locker}, mode default
+        bindsym o exit
+        bindsym s exec ${nosid} ${locker} && systemctl suspend, mode default
+        bindsym h exec ${nosid} ${locker} && systemctl hibernate, mode default
+        bindsym r exec ${nosid} systemctl reboot
+        bindsym ${shift}+s exec ${nosid} systemctl poweroff -i
+
+        bindsym Escape mode "$launcher"
+      }
+
+      set $settings_mode Settings: (c)pu, (d)isplay
       mode "$settings_mode" {
         bindsym c mode "$cpu_mode"
         bindsym d mode "$display_mode"
-        bindsym w mode "$wm_mode"
 
         bindsym Escape mode "$launcher"
       }
@@ -368,22 +388,10 @@ in
           bindsym Escape mode "$settings_mode"
         }
 
-        set $wm_mode WM: (r)eload i3, R(e)start i3
-        mode "$wm_mode" {
-          bindsym r reload; exec ${nosid} ${getBin pkgs.libnotify}/bin/notify-send 'i3 configuration reloaded', mode default
-          bindsym e restart; exec ${nosid} ${getBin pkgs.libnotify}/bin/notify-send 'i3 restarted', mode default
-
-          bindsym Escape mode "$settings_mode"
-        }
-
-      set $power_mode System: (l)ock, L(o)gout, (s)uspend, (h)ibernate, (r)eboot, (${shift}+s)hutdown
-      mode "$power_mode" {
-        bindsym l exec ${nosid} ${locker}, mode default
-        bindsym o exit
-        bindsym s exec ${nosid} ${locker} && systemctl suspend, mode default
-        bindsym h exec ${nosid} ${locker} && systemctl hibernate, mode default
-        bindsym r exec ${nosid} systemctl reboot
-        bindsym ${shift}+s exec ${nosid} systemctl poweroff -i
+      set $wm_mode WM: (r)eload i3, R(e)start i3
+      mode "$wm_mode" {
+        bindsym r reload; exec ${nosid} ${getBin pkgs.libnotify}/bin/notify-send 'i3 configuration reloaded', mode default
+        bindsym e restart; exec ${nosid} ${getBin pkgs.libnotify}/bin/notify-send 'i3 restarted', mode default
 
         bindsym Escape mode "$launcher"
       }

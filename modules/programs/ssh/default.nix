@@ -1,7 +1,20 @@
 { mode, config, pkgs, lib, ... }:
 
-with lib;
 let
+  inherit (lib)
+    concatStringsSep
+    isString
+    mkDefault
+    mkEnableOption
+    mkIf
+    mkMerge
+    mkOption
+    optionalAttrs
+    optionalString
+    singleton
+    types
+    ;
+
   cfg = config.soxincfg.programs.ssh;
 
   yesOrNo = v: if v then "yes" else "no";
@@ -14,10 +27,47 @@ in
     soxincfg.programs.ssh = {
       enable = mkEnableOption "enable SSH client";
 
+      enableSSHAgent = mkEnableOption "enable SSH client";
+
+      identitiesOnly = mkOption {
+        type = types.bool;
+        default = false;
+        # TODO: document the man references with docbook
+        description = ''
+          Specifies that ssh(1) should only use the configured authentication
+          identity and certificate files (either the default files, or those
+          explicitly configured in the ssh_config files or passed on the ssh(1)
+          command-line), even if ssh- agent(1) or a PKCS11Provider or
+          SecurityKeyProvider offers more identities. The argument to this
+          keyword must be yes or no (the default). This option is intended for
+          situations where ssh-agent offers many different identities.
+        '';
+      };
+
+      identityFiles = mkOption {
+        apply = list: map (path: if isString path then path else toString path) list;
+        type = types.listOf (types.either types.path types.str);
+        default = [ ];
+        description = ''
+          The identity files to offer all hosts.
+        '';
+      };
+
       hashKnownHosts = mkEnableOption "hash known hosts";
 
+      addKeysToAgent = mkOption {
+        apply = v: if builtins.isBool v then yesOrNo v else v;
+        type = types.either types.bool (types.enum [ "ask" "confirm" ]);
+        default = cfg.enableSSHAgent;
+        description = ''
+          Whether to automatically add a private key that is used during
+          authentication to ssh-agent if it is running (with confirmation
+          enabled if set to 'confirm'.
+        '';
+      };
+
       hostKeyAlgorithms = mkOption {
-        type = with types; listOf str;
+        type = with types; types.listOf types.str;
         default = [
           "ssh-ed25519-cert-v01@openssh.com"
           "ssh-rsa-cert-v01@openssh.com"
@@ -89,9 +139,21 @@ in
       programs.ssh = {
         extraConfig = ''
           PubkeyAuthentication yes
+
           # Ensure KnownHosts are unreadable if leaked - it is otherwise
           # easier to know which hosts your keys have access to.
           HashKnownHosts ${yesOrNo cfg.hashKnownHosts}
+
+          # Host keys the client accepts - order here is honored by OpenSSH
+          ${optionalString (cfg.hostKeyAlgorithms != [ ])
+              ("HostKeyAlgorithms " + (concatStringsSep "," cfg.hostKeyAlgorithms))}
+
+          ${optionalString (cfg.kexAlgorithms != [ ])
+              ("KexAlgorithms " + (concatStringsSep "," cfg.kexAlgorithms))}
+          ${optionalString (cfg.macs != [ ])
+              ("MACs " + (concatStringsSep "," cfg.macs))}
+          ${optionalString (cfg.ciphers != [ ])
+              ("Ciphers " + (concatStringsSep "," cfg.ciphers))}
         '';
       };
     })
@@ -103,6 +165,8 @@ in
           kexAlgorithms
           macs
           ciphers;
+
+        startAgent = cfg.enableSSHAgent;
       };
     })
 
@@ -116,16 +180,12 @@ in
         controlPersist = "yes";
 
         extraConfig = ''
-          # Host keys the client accepts - order here is honored by OpenSSH
-          ${optionalString (cfg.hostKeyAlgorithms != [ ])
-              ("HostKeyAlgorithms " + (concatStringsSep "," cfg.hostKeyAlgorithms))}
+          IdentitiesOnly=${yesOrNo cfg.identitiesOnly}
+          ${optionalString (cfg.identityFiles != [ ])
+          (concatStringsSep "\n" (map (f: "IdentityFile ${f}") cfg.identityFiles))
+          }
 
-          ${optionalString (cfg.kexAlgorithms != [ ])
-              ("KexAlgorithms " + (concatStringsSep "," cfg.kexAlgorithms))}
-          ${optionalString (cfg.macs != [ ])
-              ("MACs " + (concatStringsSep "," cfg.macs))}
-          ${optionalString (cfg.ciphers != [ ])
-              ("Ciphers " + (concatStringsSep "," cfg.ciphers))}
+          AddKeysToAgent=${cfg.addKeysToAgent}
         '';
 
         matchBlocks = {

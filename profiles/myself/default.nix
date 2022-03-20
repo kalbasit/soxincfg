@@ -1,23 +1,17 @@
 { soxincfg, lib, mode, ... }:
-with lib;
 
+let
+  inherit (lib)
+    mkDefault
+    mkEnableOption
+    mkIf
+    optionalAttrs
+    optionals
+    ;
+in
 {
-  imports = [ ./home-secrets.nix ];
-
-  config = mkMerge [
-    (optionalAttrs (mode == "NixOS") {
-      soxincfg.settings.users = {
-        # allow my user to access secrets
-        groups = [ "keys" ];
-
-        users = {
-          yl = {
-            inherit (soxincfg.vars.users.yl) hashedPassword sshKeys uid;
-            isAdmin = true;
-            home = "/yl";
-          };
-        };
-      };
-    })
-  ];
+  imports =
+    [ ]
+    ++ optionals (mode == "NixOS") [ ./nixos.nix ]
+    ++ optionals (mode == "home-manager") [ ./home.nix ];
 }

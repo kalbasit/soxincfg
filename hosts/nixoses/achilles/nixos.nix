@@ -1,22 +1,24 @@
-{ config, soxincfg, ... }:
+{ config, lib, soxincfg, pkgs, ... }:
 let
+  inherit (lib)
+    mkForce
+    ;
+
   sopsFile = ./secrets.sops.yaml;
 in
 {
   imports = [
-    soxincfg.nixosModules.profiles.myself
-    soxincfg.nixosModules.profiles.work.ulta
-    soxincfg.nixosModules.profiles.workstation.nixos.local
-
     ./hardware-configuration.nix
+    ./soxincfg.nix
   ];
 
-  sops.secrets._etc_NetworkManager_system-connections_Nasreddine-VPN_nmconnection = { inherit sopsFile; path = "/etc/NetworkManager/system-connections/Nasreddine-VPN.nmconnection"; };
+  sops.secrets = {
+    _etc_NetworkManager_system-connections_Nasreddine-VPN_nmconnection = { inherit sopsFile; path = "/etc/NetworkManager/system-connections/Nasreddine-VPN.nmconnection"; };
+  };
 
   # load YL's home-manager configuration
   home-manager.users.yl = import ./home.nix { inherit soxincfg; };
 
-  soxin.hardware.intelBacklight.enable = true;
 
   # speed up the trackpad
   services.xserver.libinput.enable = true;
@@ -28,5 +30,10 @@ in
   security.pam.services.xscreensaver.fprintAuth = true;
   security.pam.services.sudo.fprintAuth = true;
 
-  system.stateVersion = "20.09";
+  # store u2f for onlykey
+  security.pam.u2f.authFile = pkgs.writeText "u2f-mappings" ''
+    yl:*,EsrzBknqN1TYiIZcvawKOa0ZfLYABVEHwQrhJpEdAnYK4tiACptJmdUjDKuLabJDK9aDlPHXOJ/AqpdxsBH1dw==,es256,+presence
+  '';
+
+  system.stateVersion = "21.11";
 }

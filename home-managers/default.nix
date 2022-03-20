@@ -1,4 +1,4 @@
-inputs@{ soxin, nixpkgs, ... }:
+inputs@{ ... }:
 
 let
   # inherit (lib)

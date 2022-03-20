@@ -9,8 +9,11 @@ let
 
   subVolumes =
     {
-      # NixOS
+      # YL's storage
       "/yl/storage" = { device = storgeDevice; subvol = "@home-kalbasit-storage"; };
+
+      # libvirt data
+      "/var/lib/libvirt" = { device = storgeDevice; subvol = "@var-lib-libvirt"; };
     };
 
   mkBtrfsSubvolume = mountPoint: { device, subvol, options ? [ ] }:
@@ -38,14 +41,16 @@ in
     efiSupport = true;
     enable = true;
     enableCryptodisk = true;
-    useOSProber = true;
   };
+
+  # enable focusrite Gen3 support.
+  soxin.hardware.sound.focusRiteGen3Support = true;
 
   boot.loader.efi.canTouchEfiVariables = true;
 
   boot.loader.systemd-boot.enable = false;
 
-  nix.maxJobs = 12;
+  nix.maxJobs = 1;
 
   powerManagement.cpuFreqGovernor = "powersave";
 
