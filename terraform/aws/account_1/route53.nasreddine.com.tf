@@ -153,9 +153,9 @@ resource "aws_route53_record" "prometheus-tailscale-nasreddine-com-aaaa" {
   records = ["fd7a:115c:a1e0:ab12:4843:cd96:6277:ac75"]
 }
 
-resource "aws_route53_record" "ha-nasreddine-com-cname" {
+resource "aws_route53_record" "hass-nasreddine-com-cname" {
   zone_id = aws_route53_zone.nasreddine-com.zone_id
-  name    = "ha.nasreddine.com"
+  name    = "hass.nasreddine.com"
   type    = "CNAME"
   ttl     = "60"
   records = ["prometheus.tailscale.nasreddine.com"]
