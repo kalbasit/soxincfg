@@ -1,4 +1,4 @@
-{ config, soxincfg, nixos-hardware, pkgs, lib, ... }:
+{ config, soxincfg, nixos-hardware, pkgs, ... }:
 let
   yl_home = config.users.users.yl.home;
   owner = config.users.users.yl.name;
@@ -38,12 +38,6 @@ in
     # allow synergy on port 24800
     24800
   ];
-
-  environment.systemPackages = [ pkgs.displaylink ];
-  services.xserver.videoDrivers = [ "displaylink" ];
-  services.xserver.displayManager.sessionCommands = ''
-    ${lib.getBin pkgs.xorg.xrandr}/bin/xrandr --setprovideroutputsource 2 0
-  '';
 
   soxin.hardware.intelBacklight.enable = true;
 
