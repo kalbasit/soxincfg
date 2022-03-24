@@ -264,7 +264,6 @@ mkMerge [
 
       # jetbrains.idea-ultimate
       # jetbrains.goland
-      # bazel
 
       slack
 

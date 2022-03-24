@@ -148,7 +148,6 @@ in
 
     jetbrains.idea-ultimate
     jetbrains.goland
-    bazel
 
     slack
 
