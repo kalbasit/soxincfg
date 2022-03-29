@@ -263,7 +263,7 @@
         "sops-nix": "sops-nix"
       },
       "locked": {
-        "narHash": "sha256-XJAbiM5vVnga0R3sBB1n7k1DLKg2BuTZMhY6bAiDEDI=",
+        "narHash": "sha256-38V761iVoFWZU9/ycrD/kITczWoqPd1zhMwi37XzDXs=",
         "path": "/Users/yl/code/repositories/github.com/SoxinOS/soxin",
         "type": "path"
       },
