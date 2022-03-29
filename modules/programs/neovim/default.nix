@@ -66,12 +66,12 @@ in
         LanguageClient-neovim
         PreserveNoEOL
         ack-vim
-        ale
+        # ale
         auto-pairs
         caw
         csv-vim
-        deoplete-go
-        deoplete-nvim
+        # deoplete-go
+        # deoplete-nvim
         direnv-vim
         easy-align
         easymotion
