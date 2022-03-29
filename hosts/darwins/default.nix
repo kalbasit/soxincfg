@@ -48,10 +48,10 @@ mapAttrs
     in
     {
       inherit
-        channelName
         system
         ;
 
+      channelName = "nixpkgs-unstable";
       modules = [ ./saturn/configuration.nix ];
     };
 }
