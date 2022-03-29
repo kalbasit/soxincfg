@@ -81,8 +81,6 @@ in
     # XXX: Failing to compile on Darwin
     gotop
 
-    bazel
-
     glances
 
     # Games
