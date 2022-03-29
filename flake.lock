@@ -1,5 +1,26 @@
 {
   "nodes": {
+    "darwin": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1647173930,
+        "narHash": "sha256-8oca3Pc68VrCp8HeOtHmzs5g0rdQnPO9beDEEZJ02W0=",
+        "owner": "lnl7",
+        "repo": "nix-darwin",
+        "rev": "17fbc68a6110edbff67e55f7450230a697ecb17e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "lnl7",
+        "ref": "master",
+        "repo": "nix-darwin",
+        "type": "github"
+      }
+    },
     "deploy-rs": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -187,6 +208,7 @@
     },
     "root": {
       "inputs": {
+        "darwin": "darwin",
         "deploy-rs": "deploy-rs",
         "flake-utils-plus": "flake-utils-plus",
         "home-manager": "home-manager",
@@ -217,6 +239,9 @@
     },
     "soxin": {
       "inputs": {
+        "darwin": [
+          "darwin"
+        ],
         "deploy-rs": [
           "deploy-rs"
         ],
@@ -238,12 +263,9 @@
         "sops-nix": "sops-nix"
       },
       "locked": {
-        "lastModified": 1640865013,
-        "narHash": "sha256-4RFNgKWuwL5u/JgTY6eTC+HRf2rMNzhdjNpqBVcyBHY=",
-        "owner": "SoxinOS",
-        "repo": "soxin",
-        "rev": "3a03cbfb16ea8c30db4723686041d2e2b47bb9ee",
-        "type": "github"
+        "narHash": "sha256-XJAbiM5vVnga0R3sBB1n7k1DLKg2BuTZMhY6bAiDEDI=",
+        "path": "/Users/yl/code/repositories/github.com/SoxinOS/soxin",
+        "type": "path"
       },
       "original": {
         "owner": "SoxinOS",

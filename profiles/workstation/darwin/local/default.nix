@@ -5,11 +5,11 @@ with lib;
 mkMerge [
   {
     soxin = {
-      hardware = {
-        fwupd.enable = true;
-        sound.enable = true;
-        yubikey.enable = true;
-      };
+      # hardware = {
+      #   fwupd.enable = true;
+      #   sound.enable = true;
+      #   yubikey.enable = true;
+      # };
 
       programs = {
         less.enable = true;

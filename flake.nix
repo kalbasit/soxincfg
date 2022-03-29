@@ -100,6 +100,7 @@
       # Supported systems, used for packages, apps, devShell and multiple other definitions. Defaults to `flake-utils.lib.defaultSystems`
       supportedSystems = [
         "aarch64-linux"
+        "aarch64-darwin"
         "x86_64-linux"
         "x86_64-darwin"
       ];
