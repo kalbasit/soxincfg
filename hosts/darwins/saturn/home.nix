@@ -10,4 +10,6 @@ with lib;
     # soxincfg.nixosModules.profiles.work.keeptruckin
     soxincfg.nixosModules.profiles.workstation.darwin.local
   ];
+
+  soxincfg.programs.neovim.enable = true;
 }

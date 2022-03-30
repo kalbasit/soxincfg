@@ -75,7 +75,7 @@ in
         direnv-vim
         easy-align
         easymotion
-        editorconfig-vim
+        # editorconfig-vim
         emmet-vim
         fzf-vim
         fzfWrapper

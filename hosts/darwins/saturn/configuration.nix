@@ -17,6 +17,8 @@ in
 
   environment.systemPath = singleton "/etc/profiles/per-user/yl/bin";
 
+  soxincfg.programs.neovim.enable = true;
+
   nix = {
     # package = inputs.nixpkgs-unstable.nixVersions.stable;
     # package = inputs.nixpkgs-unstable.nixStable;

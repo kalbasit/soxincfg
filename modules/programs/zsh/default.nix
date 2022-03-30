@@ -10,6 +10,9 @@ let
     src = ./plugins/functions;
     phases = [ "installPhase" ];
     installPhase = builtins.concatStringsSep "\n\n" [
+      # substituteInPlace $out/jspp \
+      #   --subst-var-by js-beautify_bin ${getBin python3Packages.jsbeautifier}/bin/js-beautify
+
       ''
         mkdir $out
 
@@ -26,9 +29,6 @@ let
         substituteInPlace $out/jsonpp \
           --subst-var-by python_bin ${getBin python3Full}/bin/python \
           --subst-var-by pygmentize_bin ${getBin python3Packages.pygments}/bin/pygmentize
-
-        substituteInPlace $out/jspp \
-          --subst-var-by js-beautify_bin ${getBin python3Packages.jsbeautifier}/bin/js-beautify
 
         substituteInPlace $out/kcc \
           --subst-var-by kubectl ${getBin kubectl}/bin/kubectl
@@ -192,12 +192,16 @@ in
 
     (optionalAttrs (mode == "nix-darwin") (mkIf pkgs.stdenv.hostPlatform.isDarwin {
       # TODO: swm should parse a configuration file in order to ignore these
-      environment.shellAliases.swm = ''swm --ignore-pattern ".Spotlight-V100|.Trashes|.fseventsd"'';
+      environment.shellAliases.swm = ''
+        swm --ignore-pattern '.Spotlight-V100|.Trashes|.fseventsd'
+      '';
     }))
 
     (optionalAttrs (mode == "home-manager") (mkIf pkgs.stdenv.hostPlatform.isDarwin {
       # TODO: swm should parse a configuration file in order to ignore these
-      programs.zsh.shellAliases.swm = ''swm --ignore-pattern ".Spotlight-V100|.Trashes|.fseventsd"'';
+      programs.zsh.shellAliases.swm = ''
+        swm --ignore-pattern '.Spotlight-V100|.Trashes|.fseventsd'
+      '';
     }))
 
     (optionalAttrs (mode == "NixOS") {

@@ -16,8 +16,8 @@ in
 
     # configure NixOS
     (optionalAttrs (mode == "NixOS") {
-      # enable the Nix sandbox but only on Linux
-      nix.useSandbox = pkgs.stdenv.hostPlatform.isLinux;
+      # enable the Nix sandbox
+      nix.useSandbox = true;
 
       # setup NIX_PATH to allow users to access the nixpkgs that built the system
       nix.nixPath = [
@@ -45,6 +45,9 @@ in
 
     # configure Darwin
     (optionalAttrs (mode == "nix-darwin") {
+      # enable the Nix sandbox
+      nix.useSandbox = true;
+
       # setup NIX_PATH to allow users to access the nixpkgs that built the system
       nix.nixPath = [
         "nixpkgs-unstable=${inputs.nixpkgs-unstable}"
