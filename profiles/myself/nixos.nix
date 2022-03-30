@@ -21,8 +21,6 @@ in
       _github_token = { inherit owner sopsFile; path = "${yl_home}/.github_token"; };
       _jrnl_config = { inherit owner sopsFile; path = "${yl_home}/.jrnl_config"; };
       _local_share_remmina_my_network_vnc_athena_tailscale_nasreddine_com_remmina = { inherit owner sopsFile; path = "${yl_home}/.local/share/remmina/my_network_vnc_athena_tailscale_nasreddine_com.remmina"; };
-      _local_share_remmina_my_network_vnc_poseidon_tailscale_nasreddine_com_remmina = { inherit owner sopsFile; path = "${yl_home}/.local/share/remmina/my_network_vnc_poseidon_tailscale_nasreddine_com.remmina"; };
-      _local_share_remmina_my_network_vnc_saturn_tailscale_nasreddine_com_remmina = { inherit owner sopsFile; path = "${yl_home}/.local/share/remmina/my_network_vnc_saturn_tailscale_nasreddine_com.remmina"; };
       _local_share_remmina_my_network_vnc_vanya-macbook_remmina = { inherit owner sopsFile; path = "${yl_home}/.local/share/remmina/my-network_vnc_vanya-macbook.remmina"; };
       _local_share_remmina_my_network_vnc_vanya-macbook_ro_remmina = { inherit owner sopsFile; path = "${yl_home}/.local/share/remmina/my-network_vnc_vanya-macbook-ro.remmina"; };
       _netrc = { inherit owner sopsFile; path = "${yl_home}/.netrc"; };
