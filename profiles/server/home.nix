@@ -16,76 +16,44 @@ in
   };
 
   home.packages = with pkgs; [
-    gh
-
-    git-quick-stats
-
-    hexyl # hex viewer with nice colors
-    duf # du replacement on steroids
-    fx # JSON viewer
-
-    file
-
-    dnsutils # for dig
-
-    imagemagick # for convert
-
-    binutils # for strings
-
     amazon-ecr-credential-helper
-    docker-credential-gcr
-
+    binutils # for strings
     bitwarden-cli
-
+    dnsutils # for dig
+    docker-credential-gcr
+    duf # du replacement on steroids
+    file
+    fx # JSON viewer
     gdb
-
+    gh
     gist
-
+    git-quick-stats
     gnupg
-
     go
-
+    hexyl # hex viewer with nice colors
+    imagemagick # for convert
     jq
-
     jrnl
-
     killall
-
     lastpass-cli
-
     lazygit
-
+    lf # curses-based file manager
     mercurial
-
-    nur.repos.kalbasit.nixify
-
     nix-index
-
     nix-review
-
-    # curses-based file manager
-    lf
-
-    nur.repos.kalbasit.swm
-
-    vgo2nix
-
-    unzip
-
     nix-zsh-completions
+    nur.repos.kalbasit.nixify
+    nur.repos.kalbasit.swm
+    unzip
+    vgo2nix
   ] ++ (optionals stdenv.isLinux [
     #
     # Linux applications
     #
 
-    # XXX: Failing to compile on Darwin
-    gotop
-
-    glances
-
-    # Games
     _2048-in-terminal
-
+    glances
+    gotop
     protonvpn-cli
   ]);
 }

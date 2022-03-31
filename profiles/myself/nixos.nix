@@ -1,4 +1,4 @@
-{ config, soxincfg, ... }:
+{ config, lib, mode, soxincfg, ... }:
 
 let
   yl_home = config.users.users.yl.home;
@@ -37,7 +37,7 @@ in
       # allow my user to access secrets
       groups = [ "keys" ];
 
-      inherit (soxincfg.vars) users;
+      users = soxincfg.vars.users { inherit lib mode; };
     };
   };
 }

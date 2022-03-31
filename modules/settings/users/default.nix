@@ -1,35 +1,20 @@
-{ mode, config, options, pkgs, lib, ... }:
+{ mode, config, lib, ... }:
 
-with lib;
 let
   cfg = config.soxincfg.settings.users;
 
-  defaultGroups = [
-    "builders"
-    "dialout"
-    "fuse"
-    "plugdev" # to access ZSA keyboards.
-    "users"
-    "video"
-  ];
-
-  makeUser = userName: { isAdmin, sshKeys, ... }@user:
-    {
-      group = "mine";
-      extraGroups =
-        defaultGroups
-        ++ cfg.groups
-        ++ (optionals isAdmin [ "wheel" ]);
-
-      shell = pkgs.zsh;
-      isNormalUser = true;
-
-      openssh.authorizedKeys.keys = sshKeys;
-    }
-    // (builtins.removeAttrs user [ "isAdmin" "isNixTrustedUser" "sshKeys" ]);
-
+  inherit (lib)
+    mapAttrs
+    mkOption
+    optionals
+    types
+    ;
 in
 {
+  imports =
+    [ ]
+    ++ optionals (mode == "NixOS") [ ./nixos.nix ];
+
   options.soxincfg.settings.users = {
     enable = mkOption {
       type = types.bool;
@@ -37,37 +22,6 @@ in
       description = ''
         Enable the management of users and groups.
       '';
-    };
-
-    users = mkOption {
-      type = types.attrs;
-      default = { };
-      description = ''
-        The list of users to create.
-      '';
-
-      # for each user, first use the default, then make sure the name is always
-      # set and finally pass the user. Each step will override attributes from
-      # the previous one, so it's important the passed-in value is evaluated
-      # last.
-      apply = users:
-        let
-          defaults = {
-            hashedPassword = "";
-            home = "/home/${userName}";
-            isAdmin = false;
-            isNixTrustedUser = false;
-            sshKeys = [ ];
-          };
-        in
-        mapAttrs
-          (name: user:
-            defaults
-            // { inherit name; }
-            // builtins.removeAttrs user [ "homeFunc" ]
-            // { home = user.homeFunc { inherit pkgs; }; }
-          )
-          users;
     };
 
     groups = mkOption {
@@ -78,27 +32,4 @@ in
       '';
     };
   };
-
-  config = mkIf cfg.enable (mkMerge [
-    (optionalAttrs (mode == "NixOS") {
-      users = {
-        mutableUsers = false;
-
-        groups = {
-          builders = { gid = 1999; };
-          mine = { gid = 2000; };
-        };
-
-        users = mapAttrs makeUser config.soxincfg.settings.users.users;
-      };
-
-      nix.trustedUsers =
-        let
-          user_list = builtins.attrValues config.soxincfg.settings.users.users;
-          trustedUsers = filter (user: user.isNixTrustedUser) user_list;
-        in
-        options.nix.trustedUsers.default
-        ++ map (user: user.name) trustedUsers;
-    })
-  ]);
 }
