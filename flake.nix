@@ -13,7 +13,8 @@
     darwin.inputs.nixpkgs.follows = "nixpkgs";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-21.11";
+      # url = "github:nix-community/home-manager/release-21.11";
+      url = "github:nix-community/home-manager/sudo_i_to_sudo_s";
       inputs = {
         nixpkgs.follows = "nixpkgs";
       };

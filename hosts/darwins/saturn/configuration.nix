@@ -20,7 +20,7 @@ in
   soxincfg.programs.neovim.enable = true;
 
   # TODO: Make gpg work, and re-enable this.
-  soxincfg.programs.git.enableGpgSigningKey=true;
+  soxincfg.programs.git.enableGpgSigningKey = false;
 
   nix = {
     # package = inputs.nixpkgs-unstable.nixVersions.stable;

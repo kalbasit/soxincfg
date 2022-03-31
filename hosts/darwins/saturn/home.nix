@@ -12,4 +12,7 @@ with lib;
   ];
 
   soxincfg.programs.neovim.enable = true;
+
+  # TODO: Make gpg work, and re-enable this.
+  soxincfg.programs.git.enableGpgSigningKey = false;
 }
