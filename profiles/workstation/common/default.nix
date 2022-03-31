@@ -1,4 +1,4 @@
-{ mode, lib, ... }:
+{ config, lib, mode, ... }:
 
 let
   inherit (lib)
@@ -10,10 +10,4 @@ in
     [ ]
     ++ optionals (mode == "NixOS") [ ./nixos.nix ]
     ++ optionals (mode == "home-manager") [ ./home.nix ];
-
-  # configure the keyboard
-  soxincfg.settings.keyboard.enable = true;
-
-  # configure the theme
-  soxin.settings.theme = "gruvbox-dark";
 }

@@ -1,4 +1,4 @@
-{ config, home-manager, lib, mode, pkgs, ... }:
+{ config, home-manager, lib, mode, pkgs, soxincfg, ... }:
 
 let
   inherit (lib)
@@ -12,7 +12,7 @@ let
 in
 {
   imports =
-    [ ]
+    [ soxincfg.nixosModules.profiles.workstation.common ]
     ++ optionals (mode == "NixOS") [ ./nixos.nix ]
     ++ optionals (mode == "home-manager") [ ./home.nix ];
 
