@@ -7,7 +7,7 @@ let
     ;
 
   # the default channel to follow.
-  channelName = "nixpkgs";
+  channelName = "nixpkgs-unstable";
 
   # the operating mode of Soxin
   mode = "nix-darwin";
@@ -48,10 +48,10 @@ mapAttrs
     in
     {
       inherit
+        channelName
         system
         ;
 
-      channelName = "nixpkgs-unstable";
       modules = [ ./saturn/configuration.nix ];
     };
 }
