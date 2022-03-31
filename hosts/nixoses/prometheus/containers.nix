@@ -54,7 +54,10 @@ let
   '';
 in
 {
+  # define the network interface
   environment.etc."cni/net.d/88-podman-web-bridge.conflist".source = podman-web-bridge;
+  # the network interface needs the dnsname plugin
+  virtualisation.containers.containersConf.cniPlugins = [ pkgs.dnsname-cni ];
 
   virtualisation.oci-containers = {
     backend = "podman";
