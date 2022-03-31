@@ -27,7 +27,7 @@ in
     file
     fx # JSON viewer
     gdb
-    gh# GitHub command line client
+    gh # GitHub command line client
     gist
     git-quick-stats
     gnupg

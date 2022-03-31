@@ -1,12 +1,6 @@
-{ config, lib, pkgs, ... }:
+{ config, ... }:
 
-let
-  inherit (lib)
-    optionals
-    ;
-in
 {
-  # services
   services.clipmenu.enable = true;
   services.flameshot.enable = true;
   services.betterlockscreen = {
