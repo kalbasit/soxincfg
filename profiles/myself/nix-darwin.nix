@@ -40,7 +40,7 @@ in
 
     soxincfg.settings.users = {
       # allow my user to access secrets
-      groups = [ "keys" ];
+      # groups = [ "keys" ];
 
       users = soxincfg.vars.users { inherit lib mode; };
     };

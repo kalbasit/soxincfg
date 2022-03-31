@@ -56,10 +56,10 @@ in
 
   config = mkIf cfg.enable {
     users = {
-      groups = {
-        builders = { gid = 1999; };
-        mine = { gid = 2000; };
-      };
+      # groups = {
+      #   builders = { gid = 1999; };
+      #   mine = { gid = 2000; };
+      # };
 
       users = mapAttrs makeUser config.soxincfg.settings.users.users;
     };
