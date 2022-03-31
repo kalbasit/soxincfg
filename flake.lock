@@ -98,16 +98,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1648745933,
-        "narHash": "sha256-aeABI4LiLG9LygmvUaYKOnOo6lBsJvOhKD+iUkSjZ0U=",
-        "owner": "kalbasit",
+        "lastModified": 1647175256,
+        "narHash": "sha256-7H+veXPM7IwdN1DoZqliwb9sghlN56koV5dnCu1kpsc=",
+        "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "4866b4e295793ec40c26529b4a21b7d80650fcc4",
+        "rev": "a8d00f5c038cf7ec54e7dac9c57b171c1217f008",
         "type": "github"
       },
       "original": {
-        "owner": "kalbasit",
-        "ref": "toonn-sudo-s-activate",
+        "owner": "nix-community",
+        "ref": "release-21.11",
         "repo": "home-manager",
         "type": "github"
       }
