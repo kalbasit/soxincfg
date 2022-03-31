@@ -4,7 +4,7 @@ let
   podman-web-bridge = pkgs.writeText "88-podman-web-bridge.conflist" ''
     {
        "cniVersion": "0.4.0",
-       "name": "web_network_default",
+       "name": "${network_name}",
        "plugins": [
           {
              "type": "bridge",
@@ -52,6 +52,8 @@ let
        ]
     }
   '';
+
+  network_name = "web_network_default";
 in
 {
   # define the network interface
@@ -64,10 +66,11 @@ in
 
     containers.nginx-proxy-manager = {
       extraOptions = [
-        "--network=web_network_default"
+        "--network=${network_name}"
         "--health-cmd=/bin/check-health"
         "--health-interval=10s"
         "--health-timeout=3s"
+        "--health-start-period=20s"
       ];
       image = "docker.io/jc21/nginx-proxy-manager@sha256:0a9d4155c6b3b453149fc48aadb561227d0f79bddb97004aea50c51cd1995e13";
       ports = [ "80:80" "443:443" ];
@@ -81,7 +84,7 @@ in
         CAMERA_DEV = "/dev/camera";
       };
       extraOptions = [
-        "--network=web_network_default"
+        "--network=${network_name}"
         "--device=/dev/v4l/by-id/usb-046d_HD_Pro_Webcam_C920_CA58666F-video-index0:/dev/camera"
         "--device=/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0:/dev/printer"
       ];
@@ -92,16 +95,23 @@ in
     containers.homeassistant = {
       dependsOn = [ "zwave2mqtt" ];
       environment.TZ = config.time.timeZone;
-      extraOptions = [ "--network=web_network_default" ];
+      extraOptions = [ "--network=${network_name}" ];
       image = "ghcr.io/home-assistant/home-assistant:stable@sha256:526120826f55aeb712208db5964fc621ceb11cf192ecfd057794451b27c50457";
       volumes = [ "/persistence/home-assistant:/config" ];
     };
 
     containers.zwave2mqtt = {
       environment.TZ = config.time.timeZone;
-      extraOptions = [ "--network=web_network_default" "--device=/dev/serial/by-id/usb-0658_0200-if00:/dev/zwave" ];
+      extraOptions = [ "--network=${network_name}" "--device=/dev/serial/by-id/usb-0658_0200-if00:/dev/zwave" ];
       image = "zwavejs/zwavejs2mqtt:latest@sha256:6ce9ecede861d937532153e5e47570f3c5669f9e93c12870279a5048a4e0686f";
       volumes = [ "/persistence/zwavejs2mqtt:/usr/src/app/store" ];
+    };
+
+    containers.signal-cli-rest-api = {
+      image = "bbernhard/signal-cli-rest-api:latest@sha256:dd5365eabb0e70b791bf0ec00b087310efb2d75fbed9f58df56f7f2763aca913";
+      extraOptions = [ "--network=${network_name}" ];
+      environment.MODE = "json-rpc";
+      volumes = [ "/persistence/signal-cli-rest-api:/home/.local/share/signal-cli" ];
     };
   };
 }
