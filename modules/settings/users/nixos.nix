@@ -1,8 +1,17 @@
-{ mode, config, options, pkgs, lib, ... }:
+{ config, options, pkgs, lib, ... }:
 
-with lib;
 let
   cfg = config.soxincfg.settings.users;
+
+  inherit (lib)
+    filter
+    mapAttrs
+    mkIf
+    mkOption
+    optionals
+    recursiveUpdate
+    types
+    ;
 
   defaultGroups = [
     "builders"
@@ -43,17 +52,16 @@ in
     # last.
     apply = users:
       let
-        defaults = user: {
+        defaults = name: {
+          inherit name;
           hashedPassword = "";
-          home = "/home/${user.name}";
+          home = "/home/${name}";
           isAdmin = false;
           isNixTrustedUser = false;
           sshKeys = [ ];
         };
       in
-      mapAttrs
-        (name: user: (defaults user) // { inherit name; })
-        users;
+      mapAttrs (name: user: recursiveUpdate (defaults name) user) users;
   };
 
   config = mkIf cfg.enable {
@@ -73,7 +81,6 @@ in
         user_list = builtins.attrValues config.soxincfg.settings.users.users;
         trustedUsers = filter (user: user.isNixTrustedUser) user_list;
       in
-      options.nix.trustedUsers.default
-      ++ map (user: user.name) trustedUsers;
+      options.nix.trustedUsers.default ++ map (user: user.name) trustedUsers;
   };
 }

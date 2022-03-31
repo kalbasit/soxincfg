@@ -27,5 +27,6 @@ in
     // optionalAttrs (mode == "nix-darwin")
       {
         home = "/Users/yl";
-      };
+      }
+  ;
 }
