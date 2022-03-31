@@ -200,3 +200,11 @@ resource "aws_route53_record" "apollo-nasreddine-com-cname" {
   ttl     = "60"
   records = ["prometheus.tailscale.nasreddine.com"]
 }
+
+resource "aws_route53_record" "signal-nasreddine-com-cname" {
+  zone_id = aws_route53_zone.nasreddine-com.zone_id
+  name    = "signal.nasreddine.com"
+  type    = "CNAME"
+  ttl     = "60"
+  records = ["prometheus.tailscale.nasreddine.com"]
+}
