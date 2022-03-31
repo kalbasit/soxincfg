@@ -107,7 +107,7 @@
 
       devShellBuilder = channels: with channels.nixpkgs; mkShell {
         buildInputs = [
-          arion
+          # arion
           terraform_0_12
         ];
       };
