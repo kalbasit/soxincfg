@@ -34,6 +34,7 @@ in
             symbol = "✍  ";
           };
           kubernetes.disabled = false;
+          time.disabled = false;
         };
       };
     })
