@@ -41,17 +41,16 @@ in
     # last.
     apply = users:
       let
-        defaults = user: {
+        defaults = name: {
+          inherit name;
           # hashedPassword = "";
-          # home = "/home/${user.name}";
+          home = "/Users/${name}";
           # isAdmin = false;
           # isNixTrustedUser = false;
           # sshKeys = [ ];
         };
       in
-      mapAttrs
-        (name: user: (defaults user) // { inherit name; })
-        users;
+      mapAttrs (name: user: recursiveUpdate (defaults name) user) users;
   };
 
   config = mkIf cfg.enable {

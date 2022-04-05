@@ -5,6 +5,7 @@ let
     mkDefault
     mkIf
     mkMerge
+    optionals
     singleton
     ;
 
@@ -13,6 +14,10 @@ let
     onlykey-agent
     onlykey-cli
     writeShellScript
+    ;
+
+  inherit (pkgs.hostPlatform)
+    isLinux
     ;
 
   cfg = config.soxincfg.hardware.onlykey;
@@ -31,7 +36,13 @@ let
 in
 {
   config = mkIf cfg.enable (mkMerge [
-    { home.packages = [ onlykey onlykey-agent onlykey-cli ]; }
+    {
+      home.packages =
+        [
+          onlykey-agent
+          onlykey-cli
+        ] ++ optionals (isLinux) [ onlykey ];
+    }
 
     (mkIf cfg.ssh-support.enable {
       soxincfg.programs.ssh = {

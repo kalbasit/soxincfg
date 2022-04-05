@@ -26,10 +26,7 @@ in
       };
 
       programs = {
-        keybase = {
-          enable = true;
-          enableFs = true;
-        };
+        keybase.enable = true;
         less.enable = true;
         rbrowser = {
           enable = true;
