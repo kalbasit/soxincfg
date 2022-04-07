@@ -40,10 +40,11 @@ in
             "firefox@personal" = entryBefore [ "brave@personal" ] { };
             "brave@personal" = entryBefore [ "firefox@private" ] { };
             "firefox@private" = entryBefore [ "firefox@anya" ] { };
-            "firefox@anya" = entryBefore [ "firefox@vanya" ] { };
-            "firefox@vanya" = entryBefore [ "firefox@tanya" ] { };
-            "firefox@tanya" = entryBefore [ "firefox@ihab" ] { };
+            "firefox@anya" = entryAnywhere { };
+            "firefox@vanya" = entryAnywhere { };
+            "firefox@tanya" = entryAnywhere { };
             "firefox@ihab" = entryAnywhere { };
+            "firefox@sahar" = entryAnywhere { };
           };
         };
       };
