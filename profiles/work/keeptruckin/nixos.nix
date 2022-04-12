@@ -28,6 +28,7 @@ in
     _etc_NetworkManager_system-connections_KeepTruckin_nmconnection = { inherit sopsFile; path = "/etc/NetworkManager/system-connections/KeepTruckin.nmconnection"; };
     _local_share_remmina_keeptruckin_vnc_mac-devprod_remmina = { inherit owner sopsFile; path = "${yl_home}/.local/share/remmina/keeptruckin_vnc_mac-devprod.remmina"; };
     _local_share_remmina_keeptruckin_vnc_poseidon_tailscale_nasreddine_com_remmina = { inherit owner sopsFile; path = "${yl_home}/.local/share/remmina/keeptruckin_vnc_poseidon_tailscale_nasreddine_com.remmina"; };
+    _local_share_remmina_keeptruckin_vnc_semele_tailscale_nasreddine_com_remmina = { inherit owner sopsFile; path = "${yl_home}/.local/share/remmina/keeptruckin_vnc_semele_tailscale_nasreddine_com.remmina"; };
     _local_share_remmina_keeptruckin_vnc_saturn_tailscale_nasreddine_com_remmina = { inherit owner sopsFile; path = "${yl_home}/.local/share/remmina/keeptruckin_vnc_saturn_tailscale_nasreddine_com.remmina"; };
     _ssh_per-host_ktdev_io_rsa = { inherit owner sopsFile; path = "${yl_home}/.ssh/per-host/ktdev.io_rsa"; };
     _ssh_config_include_work_keeptruckin = { inherit owner sopsFile; path = "${yl_home}/.ssh/config_include_work_keeptruckin"; };
