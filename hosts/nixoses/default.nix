@@ -94,7 +94,7 @@ in
       modules = [ ./aarch64-linux-0/nixos.nix ];
 
       deploy = {
-        hostname = "aarch64-linux-0.yl.ktdev.io";
+        hostname = "aarch64-linux-0.wael-nasreddine.gmail.com.beta.tailscale.net";
         profiles.system = {
           sshUser = "root";
           user = "root";
