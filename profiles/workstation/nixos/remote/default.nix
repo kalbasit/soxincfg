@@ -2,6 +2,7 @@
 
 let
   inherit (lib)
+    mkForce
     optionals
     ;
 
