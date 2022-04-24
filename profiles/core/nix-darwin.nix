@@ -13,6 +13,11 @@
 
   security.pki.certificates = [ soxincfg.vars.assets.nasreddineCA ];
 
+  nix.extraOptions = ''
+    extra-platforms = x86_64-darwin aarch64-darwin
+  '';
+  # system = x86_64-darwin
+
   # set the timeZone
   time.timeZone = "America/Los_Angeles";
 }
