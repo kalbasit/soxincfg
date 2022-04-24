@@ -1,8 +1,12 @@
-{ config, soxincfg, nixos-hardware, pkgs, ... }:
+{ config, soxincfg, nixos-hardware, pkgs, lib, ... }:
 let
   yl_home = config.users.users.yl.home;
   owner = config.users.users.yl.name;
   sopsFile = ./secrets.sops.yaml;
+
+  inherit (lib)
+    mkForce
+    ;
 in
 {
   imports = [
@@ -20,6 +24,12 @@ in
     ./hardware-configuration.nix
     ./win10.nix
   ];
+
+  # TODO: Remove this once I can work out:
+  #   - How to ssh into my machine if U2F is required.
+  #   - How make 'sudo' ask for password before U2F because Onlykey makes me
+  #     wait 3 seconds between U2F presence check and accepting password tap.
+  security.pam.u2f.enable = mkForce false;
 
   sops.secrets = {
     _etc_NetworkManager_system-connections_Nasreddine-VPN_nmconnection = { inherit sopsFile; path = "/etc/NetworkManager/system-connections/Nasreddine-VPN.nmconnection"; };
