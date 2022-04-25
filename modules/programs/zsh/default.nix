@@ -192,16 +192,16 @@ in
 
     (optionalAttrs (mode == "nix-darwin") (mkIf pkgs.stdenv.hostPlatform.isDarwin {
       # TODO: swm should parse a configuration file in order to ignore these
-      environment.shellAliases.swm = ''
-        swm --ignore-pattern '.Spotlight-V100|.Trashes|.fseventsd'
-      '';
+      # environment.shellAliases.swm = ''
+      #   swm --ignore-pattern '.Spotlight-V100|.Trashes|.fseventsd'
+      # '';
     }))
 
     (optionalAttrs (mode == "home-manager") (mkIf pkgs.stdenv.hostPlatform.isDarwin {
       # TODO: swm should parse a configuration file in order to ignore these
-      programs.zsh.shellAliases.swm = ''
-        swm --ignore-pattern '.Spotlight-V100|.Trashes|.fseventsd'
-      '';
+      # programs.zsh.shellAliases.swm = ''
+      #   swm --ignore-pattern '.Spotlight-V100|.Trashes|.fseventsd'
+      # '';
 
       programs.zsh.initExtra = ''
         if [[ -d /opt/homebrew ]]; then
@@ -210,7 +210,7 @@ in
 
         # Use the SSH agent from Homebrew for support of Onlykey-resident ED25519-sk key.
         # https://aditsachde.com/posts/yubikey-ssh/
-        export SSH_AUTH_SOCK="~/.ssh/agent"
+        # export SSH_AUTH_SOCK="~/.ssh/agent"
       '';
     }))
 
