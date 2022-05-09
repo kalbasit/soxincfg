@@ -32,7 +32,7 @@ case "${action}" in
     test)
         >&2 echo "Testing $host"
         if [[ $os == "nixos" ]]; then
-            sudo nixos-rebuild --flake ".#${host}" test # --show-trace
+            nixos-rebuild --use-remote-sudo --flake ".#${host}" test # --show-trace
         else
             >&2 echo test is not support on home-manager
             exit 1
@@ -41,7 +41,7 @@ case "${action}" in
     switch)
         >&2 echo "Switching $host"
         if [[ $os == "nixos" ]]; then
-            sudo nixos-rebuild --flake ".#${host}" switch # --show-trace
+            nixos-rebuild --use-remote-sudo --flake ".#${host}" switch # --show-trace
         else
             home-manager switch --flake ".#${host}"
         fi
@@ -49,7 +49,7 @@ case "${action}" in
     boot)
         >&2 echo "Booting $host"
         if [[ $os == "nixos" ]]; then
-            sudo nixos-rebuild --flake ".#${host}" boot # --show-trace
+            nixos-rebuild --use-remote-sudo --flake ".#${host}" boot # --show-trace
         else
             >&2 echo boot is not support on home-manager
             exit 1
