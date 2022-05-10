@@ -95,6 +95,9 @@ in
         vissort-vim
         webapi-vim # required for vim-gist
         zoomwintab-vim
+
+        # treesitter, enable for all grammers
+        (nvim-treesitter.withPlugins (plugins: pkgs.tree-sitter.allGrammars))
       ]
       ++ (optionals (keyboardLayout == "colemak") [ vim-colemak ]);
     };
