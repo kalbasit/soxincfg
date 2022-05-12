@@ -70,6 +70,7 @@ in
     gotop
     jetbrains.goland
     jetbrains.idea-ultimate
+    jetbrains.ruby-mine
     kdenlive # video editing
     libreoffice
     obs-studio # video recording
