@@ -124,6 +124,13 @@ in
               }
             '' else ""}
 
+            ${if cfg.lsp.languages.go then ''
+              lspconfig.dockerls.setup{
+                ${if cfg.completion.enable then "capabilities = capabilities;" else ""}
+                cmd = {'${pkgs.gopls}/bin/gopls'}
+              }
+            '' else ""}
+
             ${if cfg.lsp.languages.html then ''
               lspconfig.html.setup{
                 ${if cfg.completion.enable then "capabilities = capabilities;" else ""}
