@@ -124,6 +124,7 @@ in
             map <Leader>/ :Ack<space>
           '';
         }
+
         {
           plugin = auto-pairs;
           config =
@@ -137,12 +138,14 @@ in
               let g:AutoPairsShortcutJump = ""
             '');
         }
+
         {
           plugin = easy-align;
           config = ''
             vmap ga <Plug>(EasyAlign)
           '';
         }
+
         {
           plugin = easymotion;
           config = ''
@@ -150,6 +153,7 @@ in
             map \\ <Plug>(easymotion-prefix)
           '';
         }
+
         {
           plugin = fzf-vim;
           config = ''
@@ -195,6 +199,7 @@ in
             let g:airline#extensions#tabline#enabled = 1
           '';
         }
+
         {
           plugin = vim-better-whitespace;
           config = ''
@@ -204,6 +209,7 @@ in
             let g:better_whitespace_filetypes_blacklist=['gitsendemail', 'diff', 'gitcommit', 'unite', 'qf', 'help', 'mail']
           '';
         }
+
         {
           plugin = vim-fugitive;
           config = ''
