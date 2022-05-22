@@ -10,7 +10,7 @@
     nur.url = "github:nix-community/NUR";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-21.11";
+      url = "github:nix-community/home-manager";
       inputs = {
         nixpkgs.follows = "nixpkgs";
       };

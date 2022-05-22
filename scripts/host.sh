@@ -24,7 +24,7 @@ case "${action}" in
     build)
         >&2 echo "Building $host"
         if [[ $os == "nixos" ]]; then
-            nix build ".#nixosConfigurations.${host}.config.system.build.toplevel"  --show-trace
+            nix build ".#nixosConfigurations.${host}.config.system.build.toplevel" # --show-trace
         else
             home-manager build --flake ".#${host}" # --show-trace
         fi
