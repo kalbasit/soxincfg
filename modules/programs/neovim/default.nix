@@ -18,10 +18,17 @@ let
     in
     keyboardLayout == "colemak";
 
-  treesitter = pkgs.vimPlugins.nvim-treesitter.withPlugins (plugins: pkgs.tree-sitter.allGrammars);
+  # TODO: extract to its own file
+  treesitter-plugins = with pkgs.vimPlugins;[
+    (nvim-treesitter.withPlugins (plugins: pkgs.tree-sitter.allGrammars))
+    nvim-treesitter-context
+  ];
 in
 {
-  imports = [ ./lsp.nix ];
+  imports = [
+    ./completion.nix
+    ./lsp.nix
+  ];
 
   options.soxincfg.programs.neovim = {
     enable = mkEnableOption "programs.neovim";
@@ -48,7 +55,6 @@ in
         rhubarb # GitHub support for Fugitive
         sleuth # shiftwidth/expandtab settings. Replaces EditorConfig.
         traces-vim
-        treesitter # declared above
         vim-airline-themes
         vim-eunuch
         vim-nix
@@ -74,6 +80,7 @@ in
             nmap ws  <Plug>Csurround
           '';
         }
+
         {
           plugin = multiple-cursors;
           config = ''
@@ -88,12 +95,14 @@ in
             let g:multi_cursor_quit_key            = '<Esc>'
           '';
         }
+
         {
           plugin = gundo-vim;
           config = ''
             nmap <Leader>go :GundoToggle<CR>
           '';
         }
+
         {
           plugin = vim-gist;
           config = ''
@@ -102,6 +111,7 @@ in
             let g:gist_post_private = 1
           '';
         }
+
         {
           plugin = ack-vim;
           config = ''
@@ -205,6 +215,7 @@ in
           '';
         }
       ]
+      ++ treesitter-plugins
       ++ (optionals isColemak [ vim-colemak ]);
     };
   };
