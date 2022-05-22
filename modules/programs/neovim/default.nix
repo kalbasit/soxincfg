@@ -1,12 +1,28 @@
 { config, lib, mode, pkgs, ... }:
 
-with lib;
 let
+  inherit (lib)
+    concatStringsSep
+    getBin
+    mkEnableOption
+    mkIf
+    optionalString
+    optionals
+    ;
+
   cfg = config.soxincfg.programs.neovim;
 
-  keyboardLayout = config.soxin.settings.keyboard.defaultLayout.console.keyMap;
+  isColemak =
+    let
+      keyboardLayout = config.soxin.settings.keyboard.defaultLayout.console.keyMap;
+    in
+    keyboardLayout == "colemak";
+
+  treesitter = pkgs.vimPlugins.nvim-treesitter.withPlugins (plugins: pkgs.tree-sitter.allGrammars);
 in
 {
+  imports = [ ./lsp.nix ];
+
   options.soxincfg.programs.neovim = {
     enable = mkEnableOption "programs.neovim";
   };
@@ -15,141 +31,181 @@ in
     soxin.programs.neovim = {
       inherit (cfg) enable;
 
-      extraConfig = builtins.concatStringsSep "\n" [
+      extraConfig = concatStringsSep "\n" [
         (pkgs.callPackage ./customrc.nix { })
-
-        (optionalString (keyboardLayout == "colemak") ''
-          "" AutoPairs{{{
-
-          " disable shortcuts, <A-n> conflicts with Colemak movement
-          let g:AutoPairsShortcutJump = ""
-
-          " }}}
-          "" Golang{{{
-          ""
-
-          " configure vim-go to show errors in the quickfix window and not the location list.
-          let g:go_list_type = "quickfix"
-
-          " disable the default mapping {if} and {af}, conflicts with Colemak
-          " See mappings.vim for remapping
-          let g:go_textobj_enabled = 0
-
-          " disable go doc mappings
-          let g:go_doc_keywordprg_enabled = 0
-
-          " disable go def mappings
-          let g:go_def_mapping_enabled = 0
-
-          if has("autocmd")
-            " Go
-            au FileType go nmap <Leader>gc <Plug>(go-doc)
-            au FileType go nmap <Leader>gd <Plug>(go-def)
-            au FileType go nmap <Leader>sgd <Plug>(go-def-split)
-            au FileType go nmap <Leader>vgd <Plug>(go-def-vertical)
-            au FileType go nmap <Leader>gi <Plug>(go-info)
-          endif
-
-          " }}}
-          "" Ruby{{{
-          ""
-
-          " disable the default mapping {if} and {af}, conflicts with Colemak
-          " See mappings.vim for remapping
-          let g:no_ruby_maps = 1
-
-          " }}}
-        '')
       ];
 
       plugins = with pkgs.vimPlugins; [
         # repeat # is this still needed?
-        LanguageClient-neovim
+
         PreserveNoEOL
-        ack-vim
-        auto-pairs
         caw
         csv-vim
         direnv-vim
-        easy-align
-        easymotion
         emmet-vim
-        fzf-vim
-        fzfWrapper
         goyo # :Goyo for distraction-free writin
-        gundo-vim
-        multiple-cursors
         registers-nvim
         rhubarb # GitHub support for Fugitive
         sleuth # shiftwidth/expandtab settings. Replaces EditorConfig.
-        surround
         traces-vim
-        vim-airline
+        treesitter # declared above
         vim-airline-themes
-        vim-better-whitespace
         vim-eunuch
-        vim-fugitive
-        vim-gist
+        vim-nix
         vim-signify
         vim-speeddating
         vissort-vim
         webapi-vim # required for vim-gist
-        zoomwintab-vim
+
         {
-          plugin = nvim-lspconfig;
+          plugin = zoomwintab-vim;
           config = ''
-            -- Mappings.
-            -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-            --local opts = { noremap=true, silent=true }
-            --vim.api.nvim_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-            --vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
-            --vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
-            --vim.api.nvim_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
-
-            -- Use an on_attach function to only map the following keys
-            -- after the language server attaches to the current buffer
-            local on_attach = function(client, bufnr)
-              -- Enable completion triggered by <c-x><c-o>
-              vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-              -- Mappings.
-              -- See `:help vim.lsp.*` for documentation on any of the below functions
-              vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-              vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-              vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-              vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-              vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-              vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-              vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-              vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-              vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-              vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-              vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-              vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-              vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-            end
-
-            -- Use a loop to conveniently call 'setup' on multiple servers and
-            -- map buffer local keybindings when the language server attaches
-            --local servers = { 'pyright', 'rust_analyzer', 'tsserver' }
-            local servers = { 'gopls' }
-            for _, lsp in pairs(servers) do
-              require('lspconfig')[lsp].setup {
-                on_attach = on_attach,
-                flags = {
-                  -- This will be the default in neovim 0.7+
-                  debounce_text_changes = 150,
-                }
-              }
-            end
+            nmap <Leader>zo :ZoomWinTabToggle<CR>
           '';
-          type = "lua";
         }
 
-        # treesitter, enable for all grammers
-        (nvim-treesitter.withPlugins (plugins: pkgs.tree-sitter.allGrammars))
+        {
+          plugin = surround;
+          config = ''
+            let g:surround_no_mappings = 1
+
+            " Copied from https://github.com/tpope/vim-surround/blob/e49d6c2459e0f5569ff2d533b4df995dd7f98313/plugin/surround.vim#L578-L596
+            " TODO: complete as needed
+            nmap ws  <Plug>Csurround
+          '';
+        }
+        {
+          plugin = multiple-cursors;
+          config = ''
+            let g:multi_cursor_use_default_mapping=0
+
+            " Default mapping
+            let g:multi_cursor_start_word_key      = '<C-n>'
+            let g:multi_cursor_start_key           = 'g<C-n>'
+            let g:multi_cursor_next_key            = '<C-n>'
+            let g:multi_cursor_prev_key            = '<C-p>'
+            let g:multi_cursor_skip_key            = '<C-x>'
+            let g:multi_cursor_quit_key            = '<Esc>'
+          '';
+        }
+        {
+          plugin = gundo-vim;
+          config = ''
+            nmap <Leader>go :GundoToggle<CR>
+          '';
+        }
+        {
+          plugin = vim-gist;
+          config = ''
+            let g:gist_clip_command = '${getBin pkgs.xsel}/bin/xsel -bi'
+            let g:gist_show_privates = 1
+            let g:gist_post_private = 1
+          '';
+        }
+        {
+          plugin = ack-vim;
+          config = ''
+            let g:ackprg = '${getBin pkgs.ag}/bin/ag --vimgrep --smart-case'
+            cnoreabbrev ag Ack
+            cnoreabbrev aG Ack
+            cnoreabbrev Ag Ack
+            cnoreabbrev AG Ack
+
+            map <Leader>/ :Ack<space>
+          '';
+        }
+        {
+          plugin = auto-pairs;
+          config =
+            ''
+              " do not jump to the next line if there's only whitespace after the closing
+              " pair
+              let g:AutoPairsMultilineClose = 0
+            '' +
+            (optionalString isColemak ''
+              " disable shortcuts, <A-n> conflicts with Colemak movement
+              let g:AutoPairsShortcutJump = ""
+            '');
+        }
+        {
+          plugin = easy-align;
+          config = ''
+            vmap ga <Plug>(EasyAlign)
+          '';
+        }
+        {
+          plugin = easymotion;
+          config = ''
+            " change the default prefix to \\
+            map \\ <Plug>(easymotion-prefix)
+          '';
+        }
+        {
+          plugin = fzf-vim;
+          config = ''
+            " [Buffers] Jump to the existing window if possible
+            let g:fzf_buffers_jump = 1
+
+            let g:fzf_action = {
+                  \ 'ctrl-t': 'tab split',
+                  \ 'ctrl-s': 'split',
+                  \ 'ctrl-v': 'vsplit' }
+
+            function! s:fzf_statusline()
+              " Override statusline as you like
+              highlight fzf1 ctermfg=161 ctermbg=251
+              highlight fzf2 ctermfg=23 ctermbg=251
+              highlight fzf3 ctermfg=237 ctermbg=251
+              setlocal statusline=%#fzf1#\ >\ %#fzf2#fz%#fzf3#f
+            endfunction
+
+            autocmd! User FzfStatusLine call <SID>fzf_statusline()
+
+            " mapping for files and buffers
+            nmap <Leader>f :Files<CR>
+            nmap <Leader>b :Buffers<CR>
+
+            " Mapping selecting mappings
+            nmap <leader><tab> <plug>(fzf-maps-n)
+            xmap <leader><tab> <plug>(fzf-maps-x)
+            omap <leader><tab> <plug>(fzf-maps-o)
+
+            " Insert mode completion
+            imap <c-x><c-k> <plug>(fzf-complete-word)
+            imap <c-x><c-f> <plug>(fzf-complete-path)
+            imap <c-x><c-j> <plug>(fzf-complete-file-ag)
+            imap <c-x><c-l> <plug>(fzf-complete-line)
+          '';
+        }
+
+        {
+          plugin = vim-airline;
+          config = ''
+            " show tabline
+            let g:airline#extensions#tabline#enabled = 1
+          '';
+        }
+        {
+          plugin = vim-better-whitespace;
+          config = ''
+            let g:better_whitespace_enabled=1
+            let g:strip_whitespace_on_save=1
+            let g:strip_whitespace_confirm=0
+            let g:better_whitespace_filetypes_blacklist=['gitsendemail', 'diff', 'gitcommit', 'unite', 'qf', 'help', 'mail']
+          '';
+        }
+        {
+          plugin = vim-fugitive;
+          config = ''
+            " ask Fugitive to not set any mappings
+            let g:fugitive_no_maps = 1
+
+            " Delete certain buffers in order to not cluttering up the buffer list
+            au BufReadPost fugitive://* set bufhidden=delete
+          '';
+        }
       ]
-      ++ (optionals (keyboardLayout == "colemak") [ vim-colemak ]);
+      ++ (optionals isColemak [ vim-colemak ]);
     };
   };
 }

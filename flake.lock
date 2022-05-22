@@ -237,7 +237,7 @@
         "sops-nix": "sops-nix"
       },
       "locked": {
-        "narHash": "sha256-KGFQ8znGYc7M4qa7ccE1uaeUwH9a2spMP8/CKQSizFk=",
+        "narHash": "sha256-aZaz7JztYYNiTru5xBZsmYRDCjJy35ShKHPHi4Jxn0o=",
         "path": "/yl/code/stories/personal/soxincfg/revamp-neovim/github.com/SoxinOS/soxin",
         "type": "path"
       },

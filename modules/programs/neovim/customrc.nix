@@ -1,10 +1,4 @@
-{ ag
-, gocode
-, lib
-, xsel
-}:
-
-with lib;
+{ lib }:
 
 ''
   "" Settings{{{
@@ -107,136 +101,15 @@ with lib;
   " off and the line continues beyond the left of the screen
 
   " }}}
-  "" Ack{{{
-
-  let g:ackprg = '${getBin ag}/bin/ag --vimgrep --smart-case'
-  cnoreabbrev ag Ack
-  cnoreabbrev aG Ack
-  cnoreabbrev Ag Ack
-  cnoreabbrev AG Ack
-
-  map <Leader>/ :Ack<space>
-
-  "" }}}
-  "" Airline{{{
-
-  " show tabline
-  let g:airline#extensions#tabline#enabled = 1
-
-  "" }}}
   "" Auto Commands{{{
   ""
 
-  if has("autocmd")
-    " Remember last location in file, but not for commit messages.
-    " see :help last-position-jump
-    au BufReadPost * if &filetype !~ '^git\c' && line("'\"") > 0 && line("'\"") <= line("$")
-      \| exe "normal! g`\"" | endif
-
-    " Delete certain buffers in order to not cluttering up the buffer list
-    au BufReadPost fugitive://* set bufhidden=delete
-  endif
+  " Remember last location in file, but not for commit messages.
+  " see :help last-position-jump
+  au BufReadPost * if &filetype !~ '^git\c' && line("'\"") > 0 && line("'\"") <= line("$")
+    \| exe "normal! g`\"" | endif
 
   " }}}
-  "" AutoPairs{{{
-
-  " do not jump to the next line if there's only whitespace after the closing
-  " pair
-  let g:AutoPairsMultilineClose = 0
-
-  "}}}
-  "" BetterWhitespace{{{
-
-  let g:better_whitespace_enabled=1
-  let g:strip_whitespace_on_save=1
-  let g:strip_whitespace_confirm=0
-  let g:better_whitespace_filetypes_blacklist=['gitsendemail', 'diff', 'gitcommit', 'unite', 'qf', 'help', 'mail']
-
-  "}}}
-  "" EasyAlign{{{
-  vmap ga <Plug>(EasyAlign)
-  "" }}}
-  "" EasyMotion{{{
-  ""
-
-  " change the default prefix to \\
-  map \\ <Plug>(easymotion-prefix)
-
-  " }}}
-  "" FZF {{{
-
-  " [Buffers] Jump to the existing window if possible
-  let g:fzf_buffers_jump = 1
-
-  let g:fzf_action = {
-        \ 'ctrl-t': 'tab split',
-        \ 'ctrl-s': 'split',
-        \ 'ctrl-v': 'vsplit' }
-
-  function! s:fzf_statusline()
-    " Override statusline as you like
-    highlight fzf1 ctermfg=161 ctermbg=251
-    highlight fzf2 ctermfg=23 ctermbg=251
-    highlight fzf3 ctermfg=237 ctermbg=251
-    setlocal statusline=%#fzf1#\ >\ %#fzf2#fz%#fzf3#f
-  endfunction
-
-  autocmd! User FzfStatusLine call <SID>fzf_statusline()
-
-  "" }}}
-  "" Fugitive {{{
-
-  " ask Fugitive to not set any mappings
-  let g:fugitive_no_maps = 1
-
-  "" }}}
-  "" Gist{{{
-  ""
-
-  let g:gist_clip_command = '${getBin xsel}/bin/xsel -bi'
-  let g:gist_show_privates = 1
-  let g:gist_post_private = 1
-
-  " }}}
-  "" Gundo{{{
-  nmap <Leader>go :GundoToggle<CR>
-  "" }}}
-  "" Multiple cursors{{{
-
-  let g:multi_cursor_use_default_mapping=0
-
-  " Default mapping
-  let g:multi_cursor_start_word_key      = '<C-n>'
-  let g:multi_cursor_start_key           = 'g<C-n>'
-  let g:multi_cursor_next_key            = '<C-n>'
-  let g:multi_cursor_prev_key            = '<C-p>'
-  let g:multi_cursor_skip_key            = '<C-x>'
-  let g:multi_cursor_quit_key            = '<Esc>'
-
-  " Prevent conflict with deoplete
-  " Called once right before you start selecting multiple cursors
-  func! Multiple_cursors_before()
-    if deoplete#is_enabled()
-      call deoplete#disable()
-      let g:deoplete_is_enable_before_multi_cursors = 1
-    else
-      let g:deoplete_is_enable_before_multi_cursors = 0
-    endif
-  endfunc
-  " Called once only when the multiple selection is canceled (default <Esc>)
-  func! Multiple_cursors_after()
-    if g:deoplete_is_enable_before_multi_cursors
-      call deoplete#enable()
-    endif
-  endfunc
-
-  "" }}}
-  "" Surround{{{
-  let g:surround_no_mappings = 1
-  "}}}
-  "" ZoomWinTab{{{
-  nmap <Leader>zo :ZoomWinTabToggle<CR>
-  "" }}}
   "" Command-Line Mappings {{{
   ""
 
@@ -248,33 +121,6 @@ with lib;
   " }}}
   "" General Mappings (Normal, Visual, Operator-pending) {{{
   ""
-
-  """"""""""""
-  " Surround "
-  """"""""""""
-
-  " Copied from https://github.com/tpope/vim-surround/blob/e49d6c2459e0f5569ff2d533b4df995dd7f98313/plugin/surround.vim#L578-L596
-  " TODO: complete as needed
-  nmap ws  <Plug>Csurround
-
-  """""""
-  " FZF "
-  """""""
-
-  " mapping for files and buffers
-  nmap <Leader>f :Files<CR>
-  nmap <Leader>b :Buffers<CR>
-
-  " Mapping selecting mappings
-  nmap <leader><tab> <plug>(fzf-maps-n)
-  xmap <leader><tab> <plug>(fzf-maps-x)
-  omap <leader><tab> <plug>(fzf-maps-o)
-
-  " Insert mode completion
-  imap <c-x><c-k> <plug>(fzf-complete-word)
-  imap <c-x><c-f> <plug>(fzf-complete-path)
-  imap <c-x><c-j> <plug>(fzf-complete-file-ag)
-  imap <c-x><c-l> <plug>(fzf-complete-line)
 
   """"""""""
   " Custom "
@@ -336,10 +182,6 @@ with lib;
   " Add/Remove lineend from listchars
   nmap <leader>sle :set listchars+=eol:$<CR>
   nmap <leader>hle :set listchars-=eol:$<CR>
-
-  " }}}
-  "" Functions {{{
-  ""
 
   " }}}
 ''
