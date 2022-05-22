@@ -1,9 +1,10 @@
-{ config, lib, mode, pkgs, ... }:
+{ config, lib, mode, pkgs, inputs, ... }:
 
 let
   inherit (lib)
     mkEnableOption
     mkIf
+    optionals
     ;
 
   cfg = config.soxincfg.programs.neovim;
@@ -125,7 +126,7 @@ in
             '' else ""}
 
             ${if cfg.lsp.languages.go then ''
-              lspconfig.dockerls.setup{
+              lspconfig.gopls.setup{
                 ${if cfg.completion.enable then "capabilities = capabilities;" else ""}
                 cmd = {'${pkgs.gopls}/bin/gopls'}
               }
@@ -192,6 +193,22 @@ in
           type = "lua";
         }
 
+        # TODO: I can't access this from my module, why?
+        # inputs.nvim-which-key
+        (
+          let
+            src = builtins.fetchTarball {
+              url = "https://github.com/folke/which-key.nvim/archive/bd4411a2ed4dd8bb69c125e339d837028a6eea71.tar.gz";
+                sha256 = "sha256:0vf685xgdb967wmvffk1pfrvbhg1jkvzp1kb7r0vs90mg8gpv1aj";
+            };
+          in
+          pkgs.vimUtils.buildVimPluginFrom2Nix {
+            inherit src;
+            pname = "nvim-which-key";
+            version = "master";
+          }
+        )
+
         {
           plugin = nvim-treesitter-context;
           config = ''
@@ -214,7 +231,9 @@ in
           '';
           type = "lua";
         }
-
+      ]
+      ++ optionals (cfg.completion.enable) [
+        cmp-nvim-lsp
       ];
     };
   };

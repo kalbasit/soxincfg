@@ -184,6 +184,22 @@
         "type": "github"
       }
     },
+    "nvim-which-key": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1651651877,
+        "narHash": "sha256-UoV9H3oVJL1BPmuG+/eU4cG1s7thOrcrPyat9npBxm0=",
+        "owner": "folke",
+        "repo": "which-key.nvim",
+        "rev": "bd4411a2ed4dd8bb69c125e339d837028a6eea71",
+        "type": "github"
+      },
+      "original": {
+        "owner": "folke",
+        "repo": "which-key.nvim",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "deploy-rs": "deploy-rs",
@@ -193,6 +209,7 @@
         "nixpkgs": "nixpkgs_2",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nur": "nur",
+        "nvim-which-key": "nvim-which-key",
         "soxin": "soxin"
       }
     },
