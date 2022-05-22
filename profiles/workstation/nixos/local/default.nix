@@ -149,7 +149,11 @@ in
         fzf.enable = true;
         git.enable = true;
         mosh.enable = true;
-        neovim.enable = true;
+        neovim = {
+          enable = true;
+          completion.enable = true;
+          lsp.enable = true;
+        };
         pet.enable = true;
         rofi.enable = true;
         ssh.enable = true;

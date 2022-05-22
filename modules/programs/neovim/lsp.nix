@@ -186,7 +186,7 @@ in
         }
 
         {
-          plugin = pkgs.nvim-treesitter-context;
+          plugin = nvim-treesitter-context;
           config = ''
             local wk = require("which-key")
             wk.register({
