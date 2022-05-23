@@ -27,8 +27,6 @@
         nur.follows = "nur";
       };
     };
-
-    nvim-which-key = { url = "github:folke/which-key.nvim"; flake = false; };
   };
 
   outputs = inputs@{ flake-utils-plus, nixos-hardware, nixpkgs, self, soxin, ... }:
