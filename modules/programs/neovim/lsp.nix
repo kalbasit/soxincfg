@@ -57,6 +57,7 @@ in
               }
             }
           '';
+          type = "lua";
         })
 
         {
@@ -199,7 +200,7 @@ in
           let
             src = builtins.fetchTarball {
               url = "https://github.com/folke/which-key.nvim/archive/bd4411a2ed4dd8bb69c125e339d837028a6eea71.tar.gz";
-                sha256 = "sha256:0vf685xgdb967wmvffk1pfrvbhg1jkvzp1kb7r0vs90mg8gpv1aj";
+              sha256 = "sha256:0vf685xgdb967wmvffk1pfrvbhg1jkvzp1kb7r0vs90mg8gpv1aj";
             };
           in
           pkgs.vimUtils.buildVimPluginFrom2Nix {
