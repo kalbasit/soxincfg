@@ -49,7 +49,6 @@ in
         direnv-vim
         emmet-vim
         goyo # :Goyo for distraction-free writin
-        registers-nvim
         rhubarb # GitHub support for Fugitive
         sleuth # shiftwidth/expandtab settings. Replaces EditorConfig.
         traces-vim
@@ -59,7 +58,6 @@ in
         vim-signify
         vim-speeddating
         vissort-vim
-        webapi-vim # required for vim-gist
 
         {
           plugin = zoomwintab-vim;
