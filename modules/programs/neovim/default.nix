@@ -43,8 +43,6 @@ in
       ];
 
       plugins = with pkgs.vimPlugins; [
-        # repeat # is this still needed?
-
         PreserveNoEOL
         caw
         csv-vim

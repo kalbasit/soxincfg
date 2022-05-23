@@ -13,6 +13,7 @@ in
   options.soxincfg.programs.neovim.lsp = {
     enable = mkEnableOption "programs.neovim.lsp.enable";
     lightbulb = mkEnableOption "Enable Light Bulb";
+    # TODO: merge these with Soxin
     languages = {
       bash = mkEnableOption "Enable Bash Language support";
       clang = mkEnableOption "Enable C/C++ with clang";
