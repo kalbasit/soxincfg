@@ -237,12 +237,9 @@
         "sops-nix": "sops-nix"
       },
       "locked": {
-        "lastModified": 1653327149,
-        "narHash": "sha256-ONeQPozwV4E/zs6thdI5pO+2QdQ1xpPf9OxnIeMILl4=",
-        "owner": "SoxinOS",
-        "repo": "soxin",
-        "rev": "6d48240a9551c9a6549cbe179b240197a1c62e45",
-        "type": "github"
+        "narHash": "sha256-m5VUZA5zBiS74/gNm2xJC9m8TnL4I7+kG4V4zzzOsCE=",
+        "path": "/yl/code/stories/personal/soxincfg/revamp-neovim/github.com/SoxinOS/soxin",
+        "type": "path"
       },
       "original": {
         "owner": "SoxinOS",

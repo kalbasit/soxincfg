@@ -18,12 +18,13 @@ in
       plugins = with pkgs.vimPlugins; [
         cmp-buffer
         cmp-cmdline
+        cmp-latex-symbols
         cmp-path
 
-        # TODO: The configuration is actually for nvim-cmp BUT the current plugin
-        # configuration simply does not support both regular config and lua config.
+        # TODO: Merge this with the one below. I only did this because I have
+        # config in two different languages.
         {
-          plugin = cmp-latex-symbols;
+          plugin = nvim-cmp;
           config = ''
             set completeopt=menu,menuone,noselect
           '';
@@ -52,7 +53,7 @@ in
                 { name = 'nvim_lsp' },
                 { name = 'path' },
                 { name = 'buffer' },
-                  { name = 'latex_symbols' },
+                { name = 'latex_symbols' },
               },
               experimental = { native_menu = true, },
             }
