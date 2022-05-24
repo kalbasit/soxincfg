@@ -114,7 +114,7 @@ in
         {
           plugin = ack-vim;
           config = ''
-            let g:ackprg = '${getBin pkgs.ag}/bin/ag --vimgrep --smart-case'
+            let g:ackprg = '${getBin pkgs.silver-searcher}/bin/ag --vimgrep --smart-case'
             cnoreabbrev ag Ack
             cnoreabbrev aG Ack
             cnoreabbrev Ag Ack
