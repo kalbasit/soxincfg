@@ -48,10 +48,6 @@
           overlaysBuilder = channels: [
             (_: super: {
               inherit (channels.nixpkgs-unstable)
-                cura
-                obsidian
-                octoprint
-                prusa-slicer
                 ;
             })
           ];
@@ -101,10 +97,7 @@
       ];
 
       devShellBuilder = channels: with channels.nixpkgs; mkShell {
-        buildInputs = [
-          arion
-          terraform_0_12
-        ];
+        buildInputs = [ arion ];
       };
 
       # pull in all hosts
