@@ -3,7 +3,7 @@
 
   inputs = {
     deploy-rs.url = "github:serokell/deploy-rs";
-    flake-utils-plus.url = "github:gytis-ivaskevicius/flake-utils-plus/v1.3.1";
+    flake-utils-plus.url = "github:gytis-ivaskevicius/flake-utils-plus";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs.url = "github:NixOS/nixpkgs/release-22.05";

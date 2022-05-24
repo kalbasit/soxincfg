@@ -81,6 +81,6 @@ in
         user_list = builtins.attrValues config.soxincfg.settings.users.users;
         trustedUsers = filter (user: user.isNixTrustedUser) user_list;
       in
-      options.nix.trustedUsers.default ++ map (user: user.name) trustedUsers;
+      /*options.nix.trustedUsers.default ++*/ map (user: user.name) trustedUsers;
   };
 }

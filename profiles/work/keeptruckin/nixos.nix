@@ -16,7 +16,7 @@ in
     binaryCachePublicKeys = [ "nix-cache.corp.ktdev.io:/xiDfugzrYzUtdUEIvdYBHy48O0169WYHYb/zMdWgLA=" ];
   };
 
-  networking.networkmanager.packages = with pkgs; [ networkmanager-fortisslvpn ];
+  networking.networkmanager.plugins = with pkgs; [ networkmanager-fortisslvpn ];
 
   sops.secrets = {
     _aws_configure_profile_keeptruckin_sh = { inherit owner sopsFile; mode = "0500"; };

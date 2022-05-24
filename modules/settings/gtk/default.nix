@@ -13,7 +13,7 @@ in
 
   config = mkIf cfg.enable (mkMerge [
     (optionalAttrs (mode == "NixOS") {
-      services.dbus.packages = [ pkgs.gnome3.dconf ];
+      services.dbus.packages = [ pkgs.dconf ];
     })
 
     (optionalAttrs (mode == "home-manager") {
