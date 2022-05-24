@@ -3,14 +3,14 @@
 
   inputs = {
     deploy-rs.url = "github:serokell/deploy-rs";
-    flake-utils-plus.url = "github:gytis-ivaskevicius/flake-utils-plus/v1.3.1";
+    flake-utils-plus.url = "github:gytis-ivaskevicius/flake-utils-plus";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs.url = "github:NixOS/nixpkgs/release-21.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/release-22.05";
     nur.url = "github:nix-community/NUR";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-21.11";
+      url = "github:nix-community/home-manager";
       inputs = {
         nixpkgs.follows = "nixpkgs";
       };
@@ -48,10 +48,6 @@
           overlaysBuilder = channels: [
             (_: super: {
               inherit (channels.nixpkgs-unstable)
-                cura
-                obsidian
-                octoprint
-                prusa-slicer
                 ;
             })
           ];
@@ -101,10 +97,7 @@
       ];
 
       devShellBuilder = channels: with channels.nixpkgs; mkShell {
-        buildInputs = [
-          arion
-          terraform_0_12
-        ];
+        buildInputs = [ arion ];
       };
 
       # pull in all hosts

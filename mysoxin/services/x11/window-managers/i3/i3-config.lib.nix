@@ -214,7 +214,7 @@ in
         "${meta}+${alt}+c" = "exec CM_LAUNCHER=rofi ${getBin pkgs.clipmenu}/bin/clipmenu";
 
         # Terminals
-        "${meta}+Return" = "exec ${getBin pkgs.wezterm}/bin/wezterm";
+        "${meta}+Return" = "exec ${nosid} ${getBin pkgs.wezterm}/bin/wezterm";
         "${meta}+${shift}+Return" = "exec ${getBin pkgs.termite}/bin/termite";
 
         # Modes
@@ -282,7 +282,7 @@ in
       };
 
       startup = [
-        { command = "${getBin pkgs.xlibs.xset}/bin/xset r rate 300 30"; always = false; notification = false; }
+        { command = "${getBin pkgs.xorg.xset}/bin/xset r rate 300 30"; always = false; notification = false; }
         { command = "i3-msg \"workspace personal; exec ${nosid} ${getBin pkgs.wezterm}/bin/wezterm\""; always = false; notification = true; }
       ];
     };
@@ -375,8 +375,8 @@ in
         # CPU governor selection
         set $cpu_mode CPU Scaling governor: (p)erformance, P(o)wersave
         mode "$cpu_mode" {
-          bindsym p exec ${nosid} ${getBin pkgs.gksu}/bin/gksudo -- ${getBin pkgs.linuxPackages.cpupower}/bin/cpupower frequency-set --governor performance, mode default
-          bindsym o exec ${nosid} ${getBin pkgs.gksu}/bin/gksudo -- ${getBin pkgs.linuxPackages.cpupower}/bin/cpupower frequency-set --governor powersave, mode default
+          bindsym p exec ${nosid} pkexec -- ${getBin pkgs.linuxPackages.cpupower}/bin/cpupower frequency-set --governor performance, mode default
+          bindsym o exec ${nosid} pkexec -- ${getBin pkgs.linuxPackages.cpupower}/bin/cpupower frequency-set --governor powersave, mode default
 
           bindsym Escape mode "$settings_mode"
         }
