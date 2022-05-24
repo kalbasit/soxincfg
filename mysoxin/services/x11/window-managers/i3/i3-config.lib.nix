@@ -214,7 +214,7 @@ in
         "${meta}+${alt}+c" = "exec CM_LAUNCHER=rofi ${getBin pkgs.clipmenu}/bin/clipmenu";
 
         # Terminals
-        "${meta}+Return" = "exec ${getBin pkgs.wezterm}/bin/wezterm";
+        "${meta}+Return" = "exec ${nosid} ${getBin pkgs.wezterm}/bin/wezterm";
         "${meta}+${shift}+Return" = "exec ${getBin pkgs.termite}/bin/termite";
 
         # Modes
