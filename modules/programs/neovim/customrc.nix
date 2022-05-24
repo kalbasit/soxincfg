@@ -4,9 +4,6 @@
   "" Settings{{{
   ""
 
-  " set the mapleader
-  let mapleader = ","
-
   " the height of the command line, giving it a high number can prevent the "Hit
   " ENTER to continue" but will shorten the editor.
   set cmdheight=2

@@ -42,6 +42,9 @@ in
         (pkgs.callPackage ./customrc.nix { })
       ];
 
+      # set the mapleader
+      mapleader = ",";
+
       plugins = with pkgs.vimPlugins; [
         PreserveNoEOL
         caw
