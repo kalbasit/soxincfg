@@ -1,4 +1,4 @@
-{ config, options, pkgs, lib, ... }:
+{ config,  pkgs, lib, ... }:
 
 let
   cfg = config.soxincfg.settings.users;
@@ -76,11 +76,11 @@ in
       users = mapAttrs makeUser config.soxincfg.settings.users.users;
     };
 
-    nix.trustedUsers =
+    nix.settings.trusted-users =
       let
         user_list = builtins.attrValues config.soxincfg.settings.users.users;
-        trustedUsers = filter (user: user.isNixTrustedUser) user_list;
+        trusted-users = filter (user: user.isNixTrustedUser) user_list;
       in
-      /*options.nix.trustedUsers.default ++*/ map (user: user.name) trustedUsers;
+      [ "root" ] ++ map (user: user.name) trusted-users;
   };
 }
