@@ -12,7 +12,10 @@ let
 in
 {
   imports =
-    [ soxincfg.nixosModules.profiles.workstation.common ]
+    [
+      soxincfg.nixosModules.profiles.neovim
+      soxincfg.nixosModules.profiles.workstation.common
+    ]
     ++ optionals (mode == "NixOS") [ ./nixos.nix ]
     ++ optionals (mode == "home-manager") [ ./home.nix ];
 
@@ -149,29 +152,6 @@ in
         fzf.enable = true;
         git.enable = true;
         mosh.enable = true;
-        neovim = {
-          enable = true;
-          completion.enable = true;
-          lsp = {
-            enable = true;
-            lightbulb = true;
-            languages = {
-              bash = true;
-              clang = true;
-              css = true;
-              docker = true;
-              go = true;
-              html = true;
-              json = true;
-              nix = true;
-              python = true;
-              tex = true;
-              typescript = true;
-              vimscript = true;
-              yaml = true;
-            };
-          };
-        };
         pet.enable = true;
         rofi.enable = true;
         ssh.enable = true;

@@ -12,7 +12,10 @@ let
 in
 {
   imports =
-    [ soxincfg.nixosModules.profiles.workstation.common ]
+    [
+      soxincfg.nixosModules.profiles.neovim
+      soxincfg.nixosModules.profiles.workstation.common
+    ]
     ++ optionals (mode == "NixOS") [ ./nixos.nix ]
     ++ optionals (mode == "home-manager") [ ./home.nix ];
 
@@ -87,7 +90,6 @@ in
       fzf.enable = true;
       git = { enable = true; enableGpgSigningKey = false; };
       mosh.enable = true;
-      neovim.enable = true;
       pet.enable = true;
       ssh.enable = true;
       starship.enable = true;
