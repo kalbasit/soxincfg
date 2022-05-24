@@ -225,11 +225,9 @@ in
           config = ''
             local wk = require("which-key")
             wk.register({
-              K = {"Code hover"},
               g = {
                 D = {"Go to declaration"},
                 d = {"Go to definition"},
-                i = {"Go to implementation"},
               }
             }, {});
             wk.register({
@@ -240,14 +238,6 @@ in
                 b = {"Open Buffers"},
               },
             },{ prefix = "<leader>" })
-
-            -- wk.register({
-            --   ca = {"Code action"},
-            --   rn = {"Code rename"},
-            --   f  = {"Code format"},
-            --   k  = {"Code go to previous error"},
-            --   j  = {"Code go to next error"},
-            -- },{ prefix = "<leader>" })
           '';
           type = "lua";
         }

@@ -20,6 +20,8 @@ in
         cmp-cmdline
         cmp-latex-symbols
         cmp-path
+        cmp-vsnip
+        vim-vsnip
 
         # TODO: Merge this with the one below. I only did this because I have
         # config in two different languages.
@@ -41,6 +43,10 @@ in
                 vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
                 end,
               },
+              window = {
+                completion = cmp.config.window.bordered(),
+                documentation = cmp.config.window.bordered(),
+              },
               mapping = {
                 ['<C-b>'] = cmp.mapping.scroll_docs(-4),
                 ['<C-f>'] = cmp.mapping.scroll_docs(4),
@@ -53,10 +59,20 @@ in
                 { name = 'nvim_lsp' },
                 { name = 'path' },
                 { name = 'buffer' },
-                { name = 'latex_symbols' },
               },
-              experimental = { native_menu = true, },
             }
+
+            cmp.setup.cmdline(':', {
+              sources = {
+                { name = 'cmdline' }
+              }
+            })
+
+            require'cmp'.setup.cmdline('/', {
+              sources = {
+                { name = 'buffer' }
+              }
+            })
           '';
           type = "lua";
         }
