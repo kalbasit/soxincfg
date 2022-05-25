@@ -11,7 +11,7 @@ let
 in
 {
   imports =
-    [ ]
+    [ soxincfg.nixosModules.profiles.neovim ]
     ++ optionals (mode == "NixOS") [ ./nixos.nix ]
     ++ optionals (mode == "home-manager") [ ./home.nix ];
 
@@ -44,7 +44,6 @@ in
         fzf.enable = true;
         git.enable = true;
         mosh.enable = true;
-        neovim.enable = true;
         pet.enable = true;
         ssh.enable = true;
         starship.enable = true;
