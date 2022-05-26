@@ -113,19 +113,6 @@ in
         }
 
         {
-          plugin = ack-vim;
-          config = ''
-            let g:ackprg = '${getBin pkgs.silver-searcher}/bin/ag --vimgrep --smart-case'
-            cnoreabbrev ag Ack
-            cnoreabbrev aG Ack
-            cnoreabbrev Ag Ack
-            cnoreabbrev AG Ack
-
-            map <Leader>/ :Ack<space>
-          '';
-        }
-
-        {
           plugin = auto-pairs;
           config =
             ''
