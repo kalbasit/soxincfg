@@ -28,6 +28,7 @@ in
   imports = [
     ./completion.nix
     ./lsp.nix
+    ./telescope.nix
   ];
 
   options.soxincfg.programs.neovim = {
@@ -150,45 +151,6 @@ in
           config = ''
             " change the default prefix to \\
             map \\ <Plug>(easymotion-prefix)
-          '';
-        }
-
-        {
-          plugin = fzf-vim;
-          config = ''
-            " [Buffers] Jump to the existing window if possible
-            let g:fzf_buffers_jump = 1
-
-            let g:fzf_action = {
-                  \ 'ctrl-t': 'tab split',
-                  \ 'ctrl-s': 'split',
-                  \ 'ctrl-v': 'vsplit' }
-
-            function! s:fzf_statusline()
-              " Override statusline as you like
-              highlight fzf1 ctermfg=161 ctermbg=251
-              highlight fzf2 ctermfg=23 ctermbg=251
-              highlight fzf3 ctermfg=237 ctermbg=251
-              setlocal statusline=%#fzf1#\ >\ %#fzf2#fz%#fzf3#f
-            endfunction
-
-            autocmd! User FzfStatusLine call <SID>fzf_statusline()
-
-            " mapping for files and buffers
-            nnoremap <Leader>ff :Files<CR>
-            nnoremap <Leader>fb :Buffers<CR>
-            nnoremap <Leader>fr :History<CR>
-
-            " Mapping selecting mappings
-            nnoremap <leader><tab> <plug>(fzf-maps-n)
-            xnoremap <leader><tab> <plug>(fzf-maps-x)
-            onoremap <leader><tab> <plug>(fzf-maps-o)
-
-            " Insert mode completion
-            inoremap <c-x><c-k> <plug>(fzf-complete-word)
-            inoremap <c-x><c-f> <plug>(fzf-complete-path)
-            inoremap <c-x><c-j> <plug>(fzf-complete-file-ag)
-            inoremap <c-x><c-l> <plug>(fzf-complete-line)
           '';
         }
 

@@ -21,5 +21,6 @@
         yaml = true;
       };
     };
+    telescope.enable = true;
   };
 }
