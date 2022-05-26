@@ -22,5 +22,6 @@
       };
     };
     telescope.enable = true;
+    treesitter.enable = true;
   };
 }
