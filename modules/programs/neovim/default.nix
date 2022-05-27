@@ -2,7 +2,6 @@
 
 let
   inherit (lib)
-    concatStringsSep
     mkEnableOption
     mkIf
     ;
@@ -26,11 +25,7 @@ in
     soxin.programs.neovim = {
       inherit (cfg) enable;
 
-      extraConfig = concatStringsSep "\n" [
-        (pkgs.callPackage ./customrc.nix { })
-      ];
-
-      # set the mapleader
+      extraConfig = pkgs.callPackage ./customrc.nix { };
       mapleader = ",";
     };
   };
