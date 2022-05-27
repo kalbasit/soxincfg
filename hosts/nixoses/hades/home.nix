@@ -173,22 +173,21 @@ with lib;
         };
 
         config = {
-          eDP-1 = {
+          DP-3 = {
             enable = true;
             primary = true;
             position = "0x0";
             mode = "1920x1080";
             gamma = "1.0:0.909:0.909";
-            rate = "60.03";
+            rate = "59.95";
           };
 
-          DP-3 = {
-            # crtc = 2;
+          eDP-1 = {
             enable = true;
             position = "1920x0";
             mode = "1920x1080";
             gamma = "1.0:0.909:0.909";
-            rate = "59.95";
+            rate = "60.03";
           };
         };
       };
