@@ -39,7 +39,6 @@ in
     {
       home.packages =
         [
-          onlykey-agent
           onlykey-cli
         ] ++ optionals (isLinux) [ onlykey ];
     }
@@ -60,6 +59,8 @@ in
         source = gpg-agent-program;
         executable = true;
       };
+
+      home.packages = singleton onlykey-agent;
 
       programs.gpg = {
         enable = true;

@@ -44,7 +44,8 @@ in
         ssh-support.enable = true;
 
         gnupg-support = {
-          enable = true;
+          # TODO: the onlykey-agent no longer builds on darwin
+          enable = false;
 
           default-key = "kalbasit@pm.me";
 
