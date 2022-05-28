@@ -2,18 +2,15 @@
   description = "SoxinCFG by Wael";
 
   inputs = {
-    darwin.url = "github:lnl7/nix-darwin/master";
     deploy-rs.url = "github:serokell/deploy-rs";
-    flake-utils-plus.url = "github:gytis-ivaskevicius/flake-utils-plus/v1.3.1";
+    flake-utils-plus.url = "github:gytis-ivaskevicius/flake-utils-plus";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs.url = "github:NixOS/nixpkgs/release-21.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/release-22.05";
     nur.url = "github:nix-community/NUR";
 
-    darwin.inputs.nixpkgs.follows = "nixpkgs";
-
     home-manager = {
-      url = "github:nix-community/home-manager/release-21.11";
+      url = "github:nix-community/home-manager";
       inputs = {
         nixpkgs.follows = "nixpkgs";
       };
@@ -22,7 +19,6 @@
     soxin = {
       url = "github:SoxinOS/soxin";
       inputs = {
-        darwin.follows = "darwin";
         deploy-rs.follows = "deploy-rs";
         flake-utils-plus.follows = "flake-utils-plus";
         home-manager.follows = "home-manager";
@@ -52,10 +48,6 @@
           overlaysBuilder = channels: [
             (_: super: {
               inherit (channels.nixpkgs-unstable)
-                cura
-                obsidian
-                octoprint
-                prusa-slicer
                 ;
             })
           ];
@@ -100,16 +92,12 @@
       # Supported systems, used for packages, apps, devShell and multiple other definitions. Defaults to `flake-utils.lib.defaultSystems`
       supportedSystems = [
         "aarch64-linux"
-        "aarch64-darwin"
         "x86_64-linux"
         "x86_64-darwin"
       ];
 
       devShellBuilder = channels: with channels.nixpkgs; mkShell {
-        buildInputs = [
-          # arion
-          terraform_0_12
-        ];
+        buildInputs = [ arion ];
       };
 
       # pull in all hosts

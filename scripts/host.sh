@@ -81,7 +81,7 @@ case "${action}" in
     test)
         >&2 echo "Testing $host"
         if isNixOS; then
-            sudo nixos-rebuild --flake ".#${host}" test --show-trace
+            nixos-rebuild --use-remote-sudo --flake ".#${host}" test # --show-trace
         elif isDarwin; then
             >&2 echo test is not support on nix-darwin
             exit 1
@@ -93,7 +93,7 @@ case "${action}" in
     switch)
         >&2 echo "Switching $host"
         if isNixOS; then
-            sudo nixos-rebuild --flake ".#${host}" test --show-trace
+            nixos-rebuild --use-remote-sudo --flake ".#${host}" switch # --show-trace
         elif isDarwin; then
             "$0" build "$host"
             sudo ./result/activate
@@ -105,7 +105,7 @@ case "${action}" in
     boot)
         >&2 echo "Booting $host"
         if isNixOS; then
-            sudo nixos-rebuild --flake ".#${host}" boot --show-trace
+            nixos-rebuild --use-remote-sudo --flake ".#${host}" boot # --show-trace
         elif isDarwin; then
             >&2 echo boot is not support on nix-darwin
             exit 1

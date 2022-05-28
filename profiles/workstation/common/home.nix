@@ -70,6 +70,7 @@ in
     gotop
     jetbrains.goland
     jetbrains.idea-ultimate
+    jetbrains.ruby-mine
     kdenlive # video editing
     libreoffice
     obs-studio # video recording
@@ -80,7 +81,7 @@ in
     todoist-electron
     vivaldi
     vivaldi-ffmpeg-codecs
-    vivaldi-widevine
+    # vivaldi-widevine # TODO: Not working on 22.05
     xkb-switch # Switch your X keyboard layouts from the command line
     zoom-us
   ]);
