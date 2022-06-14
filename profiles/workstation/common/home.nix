@@ -75,7 +75,6 @@ in
     libreoffice
     obs-studio # video recording
     protonvpn-cli
-    prusa-slicer # slicing software for 3d printers
     remmina
     slack
     todoist-electron
