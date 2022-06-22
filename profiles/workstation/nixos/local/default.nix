@@ -38,16 +38,13 @@ in
           enable = true;
           setMimeList = true;
           browsers = {
-            "chromium@personal" = entryBefore [ "vivaldi@personal" ] { };
-            "vivaldi@personal" = entryBefore [ "firefox@personal" ] { };
-            "firefox@personal" = entryBefore [ "brave@personal" ] { };
-            "brave@personal" = entryBefore [ "chromium@private" ] { };
-            "chromium@private" = entryBefore [ "firefox@anya" ] { };
-            "firefox@anya" = entryAnywhere { };
-            "firefox@vanya" = entryAnywhere { };
-            "firefox@tanya" = entryAnywhere { };
-            "firefox@ihab" = entryAnywhere { };
-            "firefox@sahar" = entryAnywhere { };
+            "chromium@personal" = entryBefore [ "chromium@private" ] { };
+            "chromium@private" = entryBefore [ "chromium@anya" ] { };
+            "chromium@anya" = entryAnywhere { };
+            "chromium@vanya" = entryAnywhere { };
+            "chromium@tanya" = entryAnywhere { };
+            "chromium@ihab" = entryAnywhere { };
+            "chromium@sahar" = entryAnywhere { };
           };
         };
       };
