@@ -30,5 +30,9 @@ in
         "cjpalhdlnbpafiamejdnhcphjbkeiagm" # uBlock Origin
       ]
       ++ optional cfg.surfingkeys.enable "gfbliohnnapiefjpjlpjnehglfpaknnc";
+
+      programs.chromium.extraOpts = {
+        BasicAuthOverHttpEnabled = false;
+      };
     };
 }
