@@ -41,8 +41,8 @@ in
             "chromium@personal" = entryBefore [ "vivaldi@personal" ] { };
             "vivaldi@personal" = entryBefore [ "firefox@personal" ] { };
             "firefox@personal" = entryBefore [ "brave@personal" ] { };
-            "brave@personal" = entryBefore [ "firefox@private" ] { };
-            "firefox@private" = entryBefore [ "firefox@anya" ] { };
+            "brave@personal" = entryBefore [ "chromium@private" ] { };
+            "chromium@private" = entryBefore [ "firefox@anya" ] { };
             "firefox@anya" = entryAnywhere { };
             "firefox@vanya" = entryAnywhere { };
             "firefox@tanya" = entryAnywhere { };
