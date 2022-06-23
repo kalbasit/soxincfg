@@ -205,7 +205,7 @@ in
         "${shift}+XF86MonBrightnessDown" = "exec ${nosid} ${getBin pkgs.brightnessctl}/bin/brightnessctl s 1%-";
 
         # sleep support
-        "XF86PowerOff" = "exec ${nosid} ${locker} && systemctl suspend";
+        "XF86PowerOff" = "exec ${nosid} systemctl suspend";
 
         # lock support
         "${meta}+l" = "exec ${nosid} ${locker}";
@@ -356,8 +356,8 @@ in
       mode "$power_mode" {
         bindsym l exec ${nosid} ${locker}, mode default
         bindsym o exit
-        bindsym s exec ${nosid} ${locker} && systemctl suspend, mode default
-        bindsym h exec ${nosid} ${locker} && systemctl hibernate, mode default
+        bindsym s exec ${nosid} systemctl suspend, mode default
+        bindsym h exec ${nosid} systemctl hibernate, mode default
         bindsym r exec ${nosid} systemctl reboot
         bindsym ${shift}+s exec ${nosid} systemctl poweroff -i
 
