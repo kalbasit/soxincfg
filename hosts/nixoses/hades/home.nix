@@ -56,6 +56,38 @@ with lib;
         };
       };
 
+      "internal+wide" = {
+        fingerprint = { inherit eDP-1 DP-2; };
+
+        config = {
+          eDP-1.enable = false;
+
+          DP-2 = {
+            enable = true;
+            gamma = "1.0:0.909:0.909";
+            mode = "3440x1440";
+            position = "0x320";
+            primary = true;
+            rate = "59.97";
+          };
+        };
+      };
+
+      "wide" = {
+        fingerprint = { inherit DP-2; };
+
+        config = {
+          DP-2 = {
+            enable = true;
+            gamma = "1.0:0.909:0.909";
+            mode = "3440x1440";
+            position = "0x320";
+            primary = true;
+            rate = "59.97";
+          };
+        };
+      };
+
       "wide+vertical" = {
         fingerprint = { inherit DP-2 DP-3; };
 
@@ -108,7 +140,7 @@ with lib;
         };
       };
 
-      "wide_pbp+verticale" = {
+      "wide_pbp+vertical" = {
         fingerprint = {
           DP-2 = DP-2_pbp;
           inherit DP-3;
