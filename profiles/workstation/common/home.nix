@@ -77,6 +77,7 @@ in
     protonvpn-cli
     remmina
     slack
+    teams
     todoist-electron
     vivaldi
     vivaldi-ffmpeg-codecs
