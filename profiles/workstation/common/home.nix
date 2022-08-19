@@ -52,6 +52,7 @@ in
     unzip
     vgo2nix
     weechat
+    synology-drive-client
     xsel
   ] ++ (optionals stdenv.isLinux [
     #
