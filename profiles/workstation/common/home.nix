@@ -81,6 +81,7 @@ in
     teams
     todoist-electron
     vivaldi
+    go-mtpfs
     vivaldi-ffmpeg-codecs
     # vivaldi-widevine # TODO: Not working on 22.05
     xkb-switch # Switch your X keyboard layouts from the command line
