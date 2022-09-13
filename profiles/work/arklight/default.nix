@@ -17,8 +17,6 @@ in
   config = {
     soxin.programs.rbrowser.browsers = {
       "chromium@arklight" = entryAfter [ "chromium@personal" ] { };
-      "vivaldi@arklight" = entryAfter [ "chromium@arklight" ] { };
-      "firefox@arklight" = entryAfter [ "vivaldi@arklight" ] { };
     };
   };
 }

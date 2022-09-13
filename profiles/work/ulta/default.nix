@@ -17,8 +17,6 @@ in
   config = {
     soxin.programs.rbrowser.browsers = {
       "chromium@ulta" = entryAfter [ "chromium@personal" ] { };
-      "vivaldi@ulta" = entryAfter [ "chromium@ulta" ] { };
-      "firefox@ulta" = entryAfter [ "vivaldi@ulta" ] { };
     };
   };
 }

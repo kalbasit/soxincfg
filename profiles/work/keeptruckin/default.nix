@@ -18,8 +18,6 @@ in
   config = {
     soxin.programs.rbrowser.browsers = {
       "chromium@keeptruckin" = entryAfter [ "chromium@personal" ] { };
-      "vivaldi@keeptruckin" = entryAfter [ "chromium@keeptruckin" ] { };
-      "firefox@keeptruckin" = entryAfter [ "vivaldi@keeptruckin" ] { };
     };
   };
 }
