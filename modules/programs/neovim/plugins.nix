@@ -31,6 +31,7 @@ in
         traces-vim
         vim-airline-themes
         vim-eunuch
+        vim-go
         vim-nix
         vim-signify
         vim-speeddating
