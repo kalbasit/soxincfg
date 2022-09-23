@@ -9,7 +9,7 @@ with lib;
 
   # HiDPI
   soxin.programs.rofi.dpi = 196;
-  xsession.pointerCursor = {
+  home.pointerCursor = {
     package = pkgs.vanilla-dmz;
     name = "Vanilla-DMZ";
     size = 128;
