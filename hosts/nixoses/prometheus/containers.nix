@@ -96,7 +96,7 @@ in
       dependsOn = [ "zwave2mqtt" ];
       environment.TZ = config.time.timeZone;
       extraOptions = [ "--network=${network_name}" ];
-      image = "ghcr.io/home-assistant/home-assistant:stable@sha256:526120826f55aeb712208db5964fc621ceb11cf192ecfd057794451b27c50457";
+      image = "ghcr.io/home-assistant/home-assistant:stable@sha256:13821043c6428b08a0a62273b68d76abb81bfc7bd387453f2ed8aa80de72d962";
       volumes = [ "/persistence/home-assistant:/config" ];
     };
 
