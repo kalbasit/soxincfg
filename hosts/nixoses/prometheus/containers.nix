@@ -72,7 +72,7 @@ in
         "--health-timeout=3s"
         "--health-start-period=20s"
       ];
-      image = "docker.io/jc21/nginx-proxy-manager@sha256:0a9d4155c6b3b453149fc48aadb561227d0f79bddb97004aea50c51cd1995e13";
+      image = "docker.io/jc21/nginx-proxy-manager:2.9.18@sha256:7364018f10033930d25d80db4c418c7c92ae3611569b61ebfeda978f8e51b1cc";
       ports = [ "80:80" "443:443" ];
       volumes = [ "/persistence/nginx-proxy-manager/data:/data" "/persistence/nginx-proxy-manager/letsencrypt:/etc/letsencrypt" ];
     };
