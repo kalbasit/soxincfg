@@ -103,7 +103,7 @@ in
     containers.zwave2mqtt = {
       environment.TZ = config.time.timeZone;
       extraOptions = [ "--network=${network_name}" "--device=/dev/serial/by-id/usb-0658_0200-if00:/dev/zwave" ];
-      image = "zwavejs/zwavejs2mqtt:latest@sha256:6ce9ecede861d937532153e5e47570f3c5669f9e93c12870279a5048a4e0686f";
+      image = "zwavejs/zwavejs2mqtt:8.0.1@sha256:c8fd5c959eb249cb039e7871973fd38e4345043d2d883457b257daefe33b0caa";
       volumes = [ "/persistence/zwavejs2mqtt:/usr/src/app/store" ];
     };
 
