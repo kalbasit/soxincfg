@@ -108,7 +108,7 @@ in
     };
 
     containers.signal-cli-rest-api = {
-      image = "bbernhard/signal-cli-rest-api:latest@sha256:dd5365eabb0e70b791bf0ec00b087310efb2d75fbed9f58df56f7f2763aca913";
+      image = "bbernhard/signal-cli-rest-api:0.62@sha256:cdcd3d6f16e5057601e0912e0eb05ae657b7065e5c5347de27c95170accd5da3";
       extraOptions = [ "--network=${network_name}" ];
       environment.MODE = "json-rpc";
       volumes = [ "/persistence/signal-cli-rest-api:/home/.local/share/signal-cli" ];
