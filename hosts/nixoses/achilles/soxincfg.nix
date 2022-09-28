@@ -8,6 +8,7 @@ in
 {
   imports = [
     soxincfg.nixosModules.profiles.myself
+    soxincfg.nixosModules.profiles.work.arklight
     soxincfg.nixosModules.profiles.work.ulta
     soxincfg.nixosModules.profiles.workstation.nixos.local
   ];
