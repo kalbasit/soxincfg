@@ -25,6 +25,10 @@ in
     ./win10.nix
   ];
 
+  # enable twingate
+  # TODO: https://github.com/NixOS/nixpkgs/pull/144455
+  soxincfg.services.twingate.enable = true;
+
   services.foldingathome = {
     enable = true;
     user = "Wael_Nasreddine";
