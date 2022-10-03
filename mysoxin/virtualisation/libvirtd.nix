@@ -24,6 +24,9 @@ in
         qemu.runAsRoot = false;
       };
 
+      # libvirtd now requires polkit
+      security.polkit.enable = true;
+
       soxincfg.settings.users.groups = optional cfg.addAdminUsersToGroup "libvirtd";
 
       environment.systemPackages = with pkgs; [ virt-manager spice-gtk ];
