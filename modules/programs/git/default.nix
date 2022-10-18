@@ -54,14 +54,7 @@ in
         show-pointer = ''!f() { git cat-file blob "HEAD:$1" }; f'';
 
         branches = ''
-          ! # go to shell command mode
-          bo() {
-            local branch
-            for branch in $(git branch | sed s/^..//); do
-              echo -e "$(git log -1 --pretty=format:"%Cgreen%ci %Cblue%cr%Creset" "''${branch}")\t''${branch}"
-            done | sort -r
-          }
-          bo
+          for-each-ref --sort=-committerdate --format='%(committerdate:short) %(refname:short) %(authorname) %(authoremail)' refs/heads refs/remotes
         '';
 
         # bunch of different helpful aliases
