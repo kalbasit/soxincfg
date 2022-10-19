@@ -56,7 +56,7 @@ in
 
             while [[ -z "$zsa_id" ]] && [[ $retries -lt 20 ]]; do
               log "Getting the ID of the keyboard"
-              zsa_id="$( xinput list | grep 'ZSA Technology Labs Inc ErgoDox EZ Glow' | grep keyboard | grep -v 'Glow Consumer\|Glow System\|Glow Keyboard' | awk -F'=' '{print $2}' | awk '{print $1}' || true )"
+              zsa_id="$( xinput list | grep 'ZSA Technology Labs ErgoDox EZ Glow' | grep keyboard | grep -v 'Glow Consumer\|Glow System\|Glow Keyboard' | awk -F'=' '{print $2}' | awk '{print $1}' || true )"
               retries=$(( retries + 1 ))
               sleep 1
             done
