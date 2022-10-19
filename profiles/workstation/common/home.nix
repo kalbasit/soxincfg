@@ -48,6 +48,7 @@ in
     nur.repos.kalbasit.nixify
     nur.repos.kalbasit.swm
     obsidian
+    signal-cli
     todoist
     unzip
     vgo2nix
