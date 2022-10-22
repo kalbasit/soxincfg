@@ -13,7 +13,7 @@ let
   meh = "${alt}+${shift}+${ctrl}";
 
   nosid = "--no-startup-id";
-  locker = "xset s activate";
+  locker = "${getBin pkgs.xautolock}/bin/xautolock -locknow && sleep 1";
 
   jrnlEntry = pkgs.writeScript "jrnl-entry.sh" ''
     #!/usr/bin/env bash
