@@ -30,10 +30,27 @@ in
 
     (optionalAttrs (mode == "home-manager") (mkIf cfg.zsa.enable {
       home.packages = with pkgs; [ wally-cli ];
+
+      # Force the actual keyboard layout to be standard QWERTY.
+      # This is really annoying but neither my keyboard (ErgoDox EZ) nor my
+      # Onlykey support Colemak keymap so they're configured to write in US
+      # layout but I still need NeoVim and everything else to configure
+      # themselves as if it's Colemak layout as they rely on Soxin's
+      # configuration for that.
+      home.keyboard.variant = mkForce "";
     }))
 
     (optionalAttrs (mode == "NixOS") (mkIf cfg.zsa.enable {
       hardware.keyboard.zsa.enable = true;
+
+      # Force the actual keyboard layout to be standard QWERTY.
+      # This is really annoying but neither my keyboard (ErgoDox EZ) nor my
+      # Onlykey support Colemak keymap so they're configured to write in US
+      # layout but I still need NeoVim and everything else to configure
+      # themselves as if it's Colemak layout as they rely on Soxin's
+      # configuration for that.
+      services.xserver.xkbVariant = mkForce "";
+      console.keyMap = mkForce "us";
     }))
   ]);
 }
