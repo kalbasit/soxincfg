@@ -52,6 +52,7 @@
             (_: super: {
               inherit (channels.nixpkgs-unstable)
                 bitwarden
+                bitwarden-cli
                 signal-cli
                 ;
             })
