@@ -51,6 +51,7 @@
           overlaysBuilder = channels: [
             (_: super: {
               inherit (channels.nixpkgs-unstable)
+                bitwarden
                 signal-cli
                 ;
             })
