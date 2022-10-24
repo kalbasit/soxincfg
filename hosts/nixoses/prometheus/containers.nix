@@ -1,68 +1,32 @@
 { config, pkgs, lib, ... }:
 
 let
-  podman-web-bridge = pkgs.writeText "88-podman-web-bridge.conflist" ''
-    {
-       "cniVersion": "0.4.0",
-       "name": "${network_name}",
-       "plugins": [
-          {
-             "type": "bridge",
-             "bridge": "cni-podman3",
-             "isGateway": true,
-             "ipMasq": true,
-             "hairpinMode": true,
-             "ipam": {
-                "type": "host-local",
-                "routes": [
-                   {
-                      "dst": "0.0.0.0/0"
-                   }
-                ],
-                "ranges": [
-                   [
-                      {
-                         "subnet": "10.89.1.0/24",
-                         "gateway": "10.89.1.1"
-                      }
-                   ]
-                ]
-             }
-          },
-          {
-             "type": "portmap",
-             "capabilities": {
-                "portMappings": true
-             }
-          },
-          {
-             "type": "firewall",
-             "backend": ""
-          },
-          {
-             "type": "tuning"
-          },
-          {
-             "type": "dnsname",
-             "domainName": "dns.podman",
-             "capabilities": {
-                "aliases": true
-             }
-          }
-       ]
-    }
-  '';
-
-  network_name = "web_network_default";
+  network_name = "web_network-br";
 in
 {
-  # define the network interface
-  environment.etc."cni/net.d/88-podman-web-bridge.conflist".source = podman-web-bridge;
-  # the network interface needs the dnsname plugin
-  virtualisation.containers.containersConf.cniPlugins = [ pkgs.dnsname-cni ];
+  systemd.services.init-filerun-network-and-files = {
+    description = "Create the network bridge ${network_name}.";
+    after = [ "network.target" ];
+    wantedBy = [ "multi-user.target" ];
+
+    serviceConfig.Type = "oneshot";
+    script =
+      let dockercli = "${config.virtualisation.docker.package}/bin/docker";
+      in
+      ''
+        # Put a true at the end to prevent getting non-zero return code, which will
+        # crash the whole service.
+        check=$(${dockercli} network ls | grep "${network_name}" || true)
+        if [ -z "$check" ]; then
+          ${dockercli} network create ${network_name}
+        else
+          echo "${network_name} already exists in docker"
+        fi
+      '';
+  };
 
   virtualisation.oci-containers = {
-    backend = "podman";
+    backend = "docker";
 
     containers.nginx-proxy-manager = {
       extraOptions = [
