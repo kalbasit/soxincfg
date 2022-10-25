@@ -124,8 +124,8 @@
   """"""""""
 
   " base64 encode/decode
-  vnoremap <leader>d64 y:let @"=system('base64 -w 0', @")<cr>gvP
-  vnoremap <leader>e64 y:let @"=system('base64 --decode', @")<cr>gvP
+  vnoremap <leader>d64 y:let @"=system('base64 --decode', @")<cr>gvP
+  vnoremap <leader>e64 y:let @"=system('base64 -w 0', @")<cr>gvP
 
   " open a non-existant file
   noremap <leader>gf :e <cfile><cr>
