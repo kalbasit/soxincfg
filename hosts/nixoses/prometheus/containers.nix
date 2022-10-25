@@ -4,21 +4,6 @@ let
   network_name = "web_network-br";
 in
 {
-  networking.firewall.allowedTCPPorts = [
-    8443
-    8080
-    8843
-    8880
-    6789
-  ];
-
-  networking.firewall.allowedUDPPorts = [
-    1900
-    3478
-    10001
-    5514
-  ];
-
   systemd.services.init-filerun-network-and-files = {
     description = "Create the network bridge ${network_name}.";
     after = [ "network.target" ];
@@ -77,28 +62,6 @@ in
       extraOptions = [ "--network=${network_name}" ];
       image = "ghcr.io/home-assistant/home-assistant:stable@sha256:13821043c6428b08a0a62273b68d76abb81bfc7bd387453f2ed8aa80de72d962";
       volumes = [ "/persistence/home-assistant:/config" ];
-    };
-
-    containers.unifi = {
-      environment = {
-        PUID = "1000";
-        PGID = "1000";
-        TZ = config.time.timeZone;
-      };
-      extraOptions = [ "--network=${network_name}" ];
-      image = "linuxserver/unifi-controller:7.2.94@sha256:841f89fd96d3dfc8efb495c05c635a5f398f74e425a1711b33e0c11a20785689";
-      volumes = [ "/persistence/unifi:/config" ];
-      ports = [
-        "8443:8443"
-        "3478:3478/udp"
-        "10001:10001/udp"
-        "8080:8080"
-        "1900:1900/udp" #optional
-        "8843:8843" #optional
-        "8880:8880" #optional
-        "6789:6789" #optional
-        "5514:5514/udp" #optional
-      ];
     };
 
     containers.zwave2mqtt = {
