@@ -71,10 +71,6 @@ in
     };
   };
 
-  # enable port forwarding as this host act as my home OpenVPN client
-  # forwarding network requests to and from my home devices.
-  boot.kernel.sysctl."net.ipv4.ip_forward" = "1";
-
   networking.vlans = {
     ifcadmin = {
       id = 2;
