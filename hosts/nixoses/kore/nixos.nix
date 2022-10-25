@@ -50,13 +50,19 @@ in
   };
   systemd.services.sshd = { after = [ "network-interfaces.target" ]; serviceConfig.RestartSec = "5"; };
 
-  # Allow unifi/ssh on the admin interface only.
+  # Allow unifi/ssh on the admin interface.
   networking.firewall.interfaces.ifcadmin.allowedTCPPorts = [
     22 # ssh
     8443 # unifi
   ];
 
-  # Allow only unifi on the office interface only.
+  # Allow unifi/ssh on the tailscale interface.
+  networking.firewall.interfaces.tailscale0.allowedTCPPorts = [
+    22 # ssh
+    8443 # unifi
+  ];
+
+  # Allow unifi on the office interface.
   networking.firewall.interfaces.ifcoffice.allowedTCPPorts = [
     8443 # unifi
   ];
