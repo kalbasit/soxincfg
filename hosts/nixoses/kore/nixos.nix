@@ -39,16 +39,8 @@ in
   # nixpkgs.config.allowUnfree = true;
   nixpkgs.system = "aarch64-linux";
 
-  # configure OpenSSH server to listen on the ADMIN interface
-  services.openssh = {
-    # do not automatically open firewall to control the interfaces.
-    openFirewall = false;
-    listenAddresses = [
-      { addr = "192.168.2.5"; port = 22; } # ssh-in from within my network only from Admin network
-      # TODO: Add support for SSH from Tailscale!
-    ];
-  };
-  systemd.services.sshd = { after = [ "network-interfaces.target" ]; serviceConfig.RestartSec = "5"; };
+  # SSH do not automatically open firewall to control the interfaces.
+  services.openssh.openFirewall = false;
 
   # Allow unifi/ssh on the admin interface.
   networking.firewall.interfaces.ifcadmin.allowedTCPPorts = [
