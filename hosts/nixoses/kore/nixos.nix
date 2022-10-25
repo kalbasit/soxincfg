@@ -54,8 +54,8 @@ in
     8443 # unifi
   ];
 
-  # Allow unifi on the office interface.
-  networking.firewall.interfaces.ifcoffice.allowedTCPPorts = [
+  # Allow unifi on the server0 interface.
+  networking.firewall.interfaces.ifcsn0.allowedTCPPorts = [
     8443 # unifi
   ];
 
@@ -76,8 +76,8 @@ in
       id = 2;
       interface = "eth0";
     };
-    ifcoffice = {
-      id = 12;
+    ifcsn0= {
+      id = 50;
       interface = "eth0";
     };
   };
@@ -87,9 +87,9 @@ in
       useDHCP = true;
       macAddress = "b8:27:eb:a8:5e:02";
     };
-    ifcoffice = {
+    ifcsn0 = {
       useDHCP = true;
-      macAddress = "b8:27:eb:a8:5e:03";
+      macAddress = "b8:27:eb:a8:5e:04";
     };
   };
 
