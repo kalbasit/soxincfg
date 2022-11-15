@@ -79,6 +79,7 @@ in
     protonvpn-cli
     remmina
     slack
+    smartmontools
     teams
     todoist-electron
     go-mtpfs
