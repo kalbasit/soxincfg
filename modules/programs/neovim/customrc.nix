@@ -171,7 +171,8 @@
   nmap <silent> <leader>ww :wall<cr>
 
   " Wipe out all buffers
-  nmap <silent> <leader>wa :execute 'bdelete' join(filter(range(1, bufnr('$')), 'bufexists(v:val) && getbufvar(v:val, "&buftype") isnot# "terminal"'))<cr>
+  nmap <silent> <leader>wa :%bd<cr>
+  nmap <silent> <leader>fwa :%bd!<cr>
 
   " clear the search buffer when hitting return
   nnoremap <CR> :nohlsearch<cr>
