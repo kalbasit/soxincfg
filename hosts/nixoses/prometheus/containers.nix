@@ -72,9 +72,10 @@ in
     };
 
     containers.signal-cli-rest-api = {
-      image = "bbernhard/signal-cli-rest-api:0.62@sha256:cdcd3d6f16e5057601e0912e0eb05ae657b7065e5c5347de27c95170accd5da3";
+      image = "bbernhard/signal-cli-rest-api:0.64@sha256:db0ba824204bc8f12903e754bc93627c0c7c81f4ea65b87c2ef137a3abbbbada";
       extraOptions = [ "--network=${network_name}" ];
-      environment.MODE = "json-rpc";
+      environment.MODE = "native";
+      environment.AUTO_RECEIVE_SCHEDULE="0 22 * * *";
       volumes = [ "/persistence/signal-cli-rest-api:/home/.local/share/signal-cli" ];
     };
   };
