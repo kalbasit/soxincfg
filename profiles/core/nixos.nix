@@ -10,7 +10,7 @@ let
 in
 {
   # enable the Nix sandbox
-  nix.useSandbox = true;
+  nix.settings.sandbox = true;
 
   # setup NIX_PATH to allow users to access the nixpkgs that built the system
   nix.nixPath = [
