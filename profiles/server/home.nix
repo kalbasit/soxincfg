@@ -45,7 +45,6 @@ in
     nur.repos.kalbasit.nixify
     nur.repos.kalbasit.swm
     unzip
-    vgo2nix
   ] ++ (optionals stdenv.isLinux [
     #
     # Linux applications
