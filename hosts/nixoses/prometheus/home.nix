@@ -8,4 +8,6 @@
     soxincfg.nixosModules.profiles.myself
     soxincfg.nixosModules.profiles.server
   ];
+
+  home.stateVersion = "22.11";
 }
