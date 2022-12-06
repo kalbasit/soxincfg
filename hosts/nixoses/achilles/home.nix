@@ -26,4 +26,6 @@ with lib;
     "Mod4+Return" = mkForce "exec ${getBin pkgs.termite}/bin/termite";
     "Mod4+Shift+Return" = mkForce "exec ${getBin pkgs.wezterm}/bin/wezterm";
   };
+
+  home.stateVersion = "22.11";
 }

@@ -10,4 +10,6 @@ with lib;
     soxincfg.nixosModules.profiles.workstation.nixos.remote
     soxincfg.nixosModules.profiles.work.keeptruckin
   ];
+
+  home.stateVersion = "22.11";
 }

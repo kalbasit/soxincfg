@@ -17,6 +17,7 @@ with lib;
   # Setup the name of the wireless interface in Polybar
   soxin.services.xserver.windowManager.bar.modules.network.wlan = singleton "wlp110s0";
 
+
   # Make sure GnuPG is able to pick up the right card (Yubikey)
   programs.gpg.scdaemonSettings =
     mkIf (config.soxincfg.hardware.yubikey.enable && config.soxincfg.hardware.yubikey.gnupg-support.enable) {
@@ -250,4 +251,6 @@ with lib;
         };
       };
     };
+
+  home.stateVersion = "22.11";
 }
