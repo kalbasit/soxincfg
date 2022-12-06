@@ -51,7 +51,6 @@ in
     signal-cli
     todoist
     unzip
-    vgo2nix
     weechat
     synology-drive-client
     xsel
