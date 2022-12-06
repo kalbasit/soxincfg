@@ -11,9 +11,9 @@ in
     127.0.0.1 docker.keeptruckin.dev docker.keeptruckin.work
   '';
 
-  nix = {
-    binaryCaches = [ "http://cache.nixos.org" "https://nix-cache.corp.ktdev.io" ];
-    binaryCachePublicKeys = [ "nix-cache.corp.ktdev.io:/xiDfugzrYzUtdUEIvdYBHy48O0169WYHYb/zMdWgLA=" ];
+  nix.settings = {
+    substituters = [ "http://cache.nixos.org" "https://nix-cache.corp.ktdev.io" ];
+    trusted-public-keys = [ "nix-cache.corp.ktdev.io:/xiDfugzrYzUtdUEIvdYBHy48O0169WYHYb/zMdWgLA=" ];
   };
 
   networking.networkmanager.plugins = with pkgs; [ networkmanager-fortisslvpn ];
