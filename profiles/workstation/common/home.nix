@@ -83,6 +83,7 @@ in
     teams
     todoist-electron
     go-mtpfs
+    whatsapp-for-linux
     xkb-switch # Switch your X keyboard layouts from the command line
     zoom-us
   ]);
