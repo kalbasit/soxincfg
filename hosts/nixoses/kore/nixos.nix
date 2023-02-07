@@ -76,7 +76,7 @@ in
       id = 2;
       interface = "eth0";
     };
-    ifcsn0= {
+    ifcsn0 = {
       id = 50;
       interface = "eth0";
     };
