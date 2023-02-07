@@ -18,6 +18,8 @@ in
 
         alwaysKeepRunning = true; # do not allow the system to turn the service off
       };
+
+      networking.networkmanager.dns = "dnsmasq";
     })
 
     (optionalAttrs (mode == "NixOS") (mkIf cfg.blockAds

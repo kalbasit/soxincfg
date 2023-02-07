@@ -15,10 +15,7 @@ in
 
   config = mkIf cfg.enable (mkMerge [
     (optionalAttrs (mode == "NixOS") {
-      networking.networkmanager = {
-        enable = true;
-        dns = "dnsmasq";
-      };
+      networking.networkmanager.enable = true;
 
       programs.nm-applet.enable = true;
 
