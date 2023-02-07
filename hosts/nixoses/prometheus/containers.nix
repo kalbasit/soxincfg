@@ -75,7 +75,7 @@ in
       image = "bbernhard/signal-cli-rest-api:0.64@sha256:db0ba824204bc8f12903e754bc93627c0c7c81f4ea65b87c2ef137a3abbbbada";
       extraOptions = [ "--network=${network_name}" ];
       environment.MODE = "native";
-      environment.AUTO_RECEIVE_SCHEDULE="0 22 * * *";
+      environment.AUTO_RECEIVE_SCHEDULE = "0 22 * * *";
       volumes = [ "/persistence/signal-cli-rest-api:/home/.local/share/signal-cli" ];
     };
   };
