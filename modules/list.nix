@@ -34,6 +34,7 @@
   fonts = ./settings/fonts;
   gtk = ./settings/gtk;
   keyboard = ./settings/keyboard;
+  networking = ./settings/networking;
   nix = ./settings/nix;
   users = ./settings/users;
   home-manager-settings = ./settings/home-manager;

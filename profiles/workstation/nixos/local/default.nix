@@ -167,6 +167,7 @@ in
         fonts.enable = true;
         gtk.enable = true;
         nix.distributed-builds.enable = true;
+        networking.nextdns.enable = true;
       };
     };
   };
