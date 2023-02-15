@@ -54,6 +54,7 @@
                 bitwarden
                 bitwarden-cli
                 signal-cli
+                epson-escpr
                 ;
             })
 
