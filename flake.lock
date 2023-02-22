@@ -121,22 +121,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-twingate": {
-      "locked": {
-        "lastModified": 1663322995,
-        "narHash": "sha256-bt2y0J/aPC+iU/lUOx0GlnZtmWVwor13winIGciW3NU=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "87a5f86fb31888f9db6892bfebc4d9b5b9eb132e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "87a5f86fb31888f9db6892bfebc4d9b5b9eb132e",
-        "type": "github"
-      }
-    },
     "nixpkgs-unstable": {
       "locked": {
         "lastModified": 1676300157,
@@ -207,7 +191,6 @@
         "home-manager": "home-manager",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_2",
-        "nixpkgs-twingate": "nixpkgs-twingate",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nur": "nur",
         "soxin": "soxin"

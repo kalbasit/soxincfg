@@ -16,9 +16,6 @@
       };
     };
 
-    # For Twingate
-    nixpkgs-twingate.url = "github:NixOS/nixpkgs/87a5f86fb31888f9db6892bfebc4d9b5b9eb132e";
-
     soxin = {
       url = "github:SoxinOS/soxin";
       inputs = {
@@ -32,7 +29,7 @@
     };
   };
 
-  outputs = inputs@{ flake-utils-plus, nixos-hardware, nixpkgs, self, soxin, nixpkgs-twingate, ... }:
+  outputs = inputs@{ flake-utils-plus, nixos-hardware, nixpkgs, self, soxin, ... }:
     let
       # Enable deploy-rs support
       withDeploy = true;
@@ -55,11 +52,6 @@
                 bitwarden-cli
                 signal-cli
                 epson-escpr
-                ;
-            })
-
-            (_: super: {
-              inherit (channels.nixpkgs-twingate)
                 twingate
                 ;
             })
