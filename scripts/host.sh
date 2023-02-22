@@ -6,7 +6,7 @@ readonly action="${1:-}"
 readonly host="${2:-$(hostname)}"
 readonly os=$(awk -F= '/^ID=/ {print $2}' /etc/os-release | tr -d '\n')
 
-if [[ "$os" != "nixos" ]] && [[ "$os" != "debian" ]]; then
+if [[ "$os" != "nixos" ]] && [[ "$os" != "debian" ]] && [[ "$os" != "ubuntu" ]]; then
     echo "Sorry $os is not tested"
     exit 1
 fi
@@ -26,7 +26,7 @@ case "${action}" in
         if [[ $os == "nixos" ]]; then
             nix build ".#nixosConfigurations.${host}.config.system.build.toplevel" # --show-trace
         else
-            home-manager build --flake ".#${host}" # --show-trace
+            nix build ".#homeConfigurations.${host}.activationPackage"
         fi
         ;;
     test)
@@ -44,6 +44,7 @@ case "${action}" in
             nixos-rebuild --use-remote-sudo --flake ".#${host}" switch # --show-trace
         else
             home-manager switch --flake ".#${host}"
+            $(nix path-info ".#homeConfigurations.${host}.activationPackage")/activate
         fi
         ;;
     boot)
