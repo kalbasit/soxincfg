@@ -123,16 +123,16 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1677556609,
-        "narHash": "sha256-95v2D3odyOTGcAR9b1Hf9g3+BDW10u+81rs+e/fx4lE=",
-        "owner": "kalbasit",
+        "lastModified": 1677619511,
+        "narHash": "sha256-mxUywcE29Zc4pkuNASqgPjekY3aOfpEEYK1uUtAHJbk=",
+        "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "f7c15858327448bb363be66b5010afa405559998",
+        "rev": "2aea26edc2fe01cbd7a50328288b9d8a73933b28",
         "type": "github"
       },
       "original": {
-        "owner": "kalbasit",
-        "ref": "bitwarden-update",
+        "owner": "NixOS",
+        "ref": "master",
         "repo": "nixpkgs",
         "type": "github"
       }

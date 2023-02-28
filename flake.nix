@@ -6,7 +6,7 @@
     flake-utils-plus.url = "github:gytis-ivaskevicius/flake-utils-plus";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     # nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-unstable.url = "github:kalbasit/nixpkgs/bitwarden-update";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/master";
     nixpkgs.url = "github:NixOS/nixpkgs/release-22.05";
     nur.url = "github:nix-community/NUR";
 
