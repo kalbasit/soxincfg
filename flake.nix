@@ -51,8 +51,9 @@
               inherit (channels.nixpkgs-unstable)
                 bitwarden
                 bitwarden-cli
-                signal-cli
                 epson-escpr
+                signal-cli
+                signal-desktop
                 twingate
                 ;
             })
