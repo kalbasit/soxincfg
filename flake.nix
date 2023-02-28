@@ -52,6 +52,7 @@
                 bitwarden
                 bitwarden-cli
                 epson-escpr
+                nixpkgs-review
                 signal-cli
                 signal-desktop
                 twingate
