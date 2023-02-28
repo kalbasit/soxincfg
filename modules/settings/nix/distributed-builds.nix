@@ -33,14 +33,14 @@ in
           #   supportedFeatures = [ "big-parallel" ];
           # }
 
-          # {
-          #   hostName = "kore.admin.nasreddine.com";
-          #   maxJobs = 2;
-          #   sshKey = builtins.toString config.sops.secrets.ssh_key_kore.path;
-          #   sshUser = "builder";
-          #   system = "aarch64-linux";
-          #   supportedFeatures = [ ];
-          # }
+          {
+            hostName = "kore.wael-nasreddine.gmail.com.beta.tailscale.net";
+            maxJobs = 1;
+            sshKey = builtins.toString config.sops.secrets.ssh_key_kore.path;
+            sshUser = "builder";
+            system = "aarch64-linux";
+            supportedFeatures = [ ];
+          }
 
           # {
           #   hostName = "aarch64-linux-0.yl.ktdev.io";
