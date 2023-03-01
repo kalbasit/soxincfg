@@ -49,13 +49,7 @@
           overlaysBuilder = channels: [
             (_: super: {
               inherit (channels.nixpkgs-unstable)
-                bitwarden
-                bitwarden-cli
-                epson-escpr
-                nixpkgs-review
-                signal-cli
-                signal-desktop
-                twingate
+                # inherit packages from unstable.
                 ;
             })
           ];
