@@ -5,8 +5,7 @@
     deploy-rs.url = "github:serokell/deploy-rs";
     flake-utils-plus.url = "github:gytis-ivaskevicius/flake-utils-plus";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
-    # nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/master";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs.url = "github:NixOS/nixpkgs/release-22.11";
     nur.url = "github:nix-community/NUR";
 
@@ -49,13 +48,7 @@
           overlaysBuilder = channels: [
             (_: super: {
               inherit (channels.nixpkgs-unstable)
-                bitwarden
-                bitwarden-cli
-                epson-escpr
-                nixpkgs-review
-                signal-cli
-                signal-desktop
-                twingate
+                # inherit packages from unstable.
                 ;
             })
           ];
