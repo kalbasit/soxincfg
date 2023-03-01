@@ -23,18 +23,11 @@ in
         cmp-vsnip
         vim-vsnip
 
-        # TODO: Merge this with the one below. I only did this because I have
-        # config in two different languages.
         {
           plugin = nvim-cmp;
           config = ''
-            set completeopt=menu,menuone,noselect
-          '';
-        }
+            vim.o.completeopt = 'menu,menuone,noselect'
 
-        {
-          plugin = nvim-cmp;
-          config = ''
             local cmp = require 'cmp'
 
             cmp.setup {
@@ -76,7 +69,6 @@ in
           '';
           type = "lua";
         }
-
       ];
     };
   };
