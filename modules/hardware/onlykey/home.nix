@@ -21,7 +21,6 @@ let
     set -euo pipefail
 
     exec ${onlykey-agent}/bin/onlykey-gpg-agent \
-      -vv \
       --skey-slot=${toString cfg.gnupg-support.signing-key-slot} \
       --dkey-slot=${toString cfg.gnupg-support.decryption-key-slot} \
       $*
