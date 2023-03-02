@@ -17,8 +17,6 @@ let
 
   cfg = config.soxincfg.hardware.onlykey;
 
-  # TODO: Create a systemd user unit for this GnuPG agent.
-  # https://docs.crp.to/onlykey-agent.html#how-do-i-start-the-agent-as-a-systemd-unit
   gpg-agent-program = writeShellScript "run-onlykey-agent.sh" ''
     set -euo pipefail
 
@@ -50,11 +48,22 @@ in
         executable = true;
       };
 
+      systemd.user.services.gpg-agent = {
+        Unit = {
+          Description = "GnuPG cryptographic agent and passphrase cache";
+          Documentation = "man:gpg-agent(1)";
+          Requires = "gpg-agent.socket";
+        };
+
+        Service = {
+          ExecStart = toString gpg-agent-program;
+        };
+      };
+
       programs.gpg = {
         enable = true;
 
         settings = {
-          agent-program = toString gpg-agent-program;
           personal-digest-preferences = "SHA512";
           default-key = cfg.gnupg-support.default-key;
         };
