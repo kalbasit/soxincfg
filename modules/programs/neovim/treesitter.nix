@@ -19,7 +19,7 @@ in
 
   config = mkIf cfg.treesitter.enable {
     soxin.programs.neovim.plugins = with vimPlugins;[
-      (nvim-treesitter.withPlugins (plugins: pkgs.tree-sitter.allGrammars))
+      nvim-treesitter.withAllGrammars
       nvim-treesitter-context
     ];
   };
