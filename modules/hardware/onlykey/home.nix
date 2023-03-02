@@ -48,22 +48,11 @@ in
         executable = true;
       };
 
-      systemd.user.services.gpg-agent = {
-        Unit = {
-          Description = "GnuPG cryptographic agent and passphrase cache";
-          Documentation = "man:gpg-agent(1)";
-          Requires = "gpg-agent.socket";
-        };
-
-        Service = {
-          ExecStart = toString gpg-agent-program;
-        };
-      };
-
       programs.gpg = {
         enable = true;
 
         settings = {
+          agent-program = toString gpg-agent-program;
           personal-digest-preferences = "SHA512";
           default-key = cfg.gnupg-support.default-key;
         };
