@@ -57,7 +57,9 @@
           config = { };
 
           # Yep, you see it first folks - you can patch nixpkgs!
-          patches = [ ];
+          patches = [
+            ./patches/219211-patch-execs-in-libagent.patch
+          ];
         };
       };
 
