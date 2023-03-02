@@ -17,7 +17,7 @@
     };
 
     soxin = {
-      url = "github:SoxinOS/soxin";
+      url = "github:SoxinOS/soxin/personal/soxin/22.11";
       inputs = {
         deploy-rs.follows = "deploy-rs";
         flake-utils-plus.follows = "flake-utils-plus";
