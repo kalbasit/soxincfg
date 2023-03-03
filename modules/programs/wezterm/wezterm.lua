@@ -20,6 +20,13 @@ wezterm.on("update-right-status", function(window, pane)
 end)
 
 return {
+  set_environment_variables = {
+    TERMINFO_DIRS = '@terminfo_dirs@',
+    WSLENV = 'TERMINFO_DIRS',
+  },
+
+  term = 'wezterm',
+
   check_for_updates = false, -- since it's installed by Nix, let Nix manage its updates.
   color_scheme = "Gruvbox Dark",
   font_size = 10,
