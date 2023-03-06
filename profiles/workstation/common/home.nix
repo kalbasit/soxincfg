@@ -61,6 +61,8 @@ in
 
     (retroarch.override { cores = with libretro; [ beetle-psx beetle-psx-hw beetle-snes ]; })
     _2048-in-terminal
+    android-studio
+    android-tools
     arduino
     blender # 3d modeling software
     cura # slicing software for 3d printers
