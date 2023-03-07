@@ -48,6 +48,7 @@ in
     nur.repos.kalbasit.nixify
     nur.repos.kalbasit.swm
     obsidian
+    scrcpy # mirror Android device via USB
     signal-cli
     todoist
     unzip
