@@ -12,6 +12,9 @@ let
       # YL's storage
       "/yl/storage" = { device = storgeDevice; subvol = "@home-kalbasit-storage"; };
 
+      # KT Gerrit
+      "/yl/code/repositories/gerrit.corp.ktdev.io" = { device = storgeDevice; subvol = "@kt-gerrit"; };
+
       # libvirt data
       "/var/lib/libvirt" = { device = storgeDevice; subvol = "@var-lib-libvirt"; };
     };
