@@ -72,9 +72,9 @@ in
     filezilla
     glances
     gotop
-    jetbrains.goland
-    jetbrains.idea-ultimate
-    jetbrains.ruby-mine
+    # jetbrains.goland
+    # jetbrains.idea-ultimate
+    # jetbrains.ruby-mine
     kdenlive # video editing
     libreoffice
     obs-studio # video recording
@@ -82,12 +82,12 @@ in
     remmina
     slack
     smartmontools
-    teams
+    # teams
     todoist-electron
     go-mtpfs
     whatsapp-for-linux
     xkb-switch # Switch your X keyboard layouts from the command line
-    zoom-us
+    # zoom-us
   ]);
 }
 
