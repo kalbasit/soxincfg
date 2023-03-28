@@ -9,7 +9,7 @@ let
     singleton
     ;
 
-    inherit (pkgs)
+  inherit (pkgs)
     substituteAll
     wezterm
     ;
@@ -28,7 +28,7 @@ in
       home.packages = singleton pkgs.wezterm;
 
       xdg.configFile."wezterm/wezterm.lua".source = substituteAll {
-        src =./wezterm.lua;
+        src = ./wezterm.lua;
         terminfo_dirs = "${wezterm.terminfo}/share/terminfo";
       };
     })

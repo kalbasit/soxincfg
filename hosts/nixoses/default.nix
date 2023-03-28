@@ -27,6 +27,15 @@ in
       modules = [ ./hades/nixos.nix ];
     };
 
+  hercules =
+    let
+      system = "x86_64-linux";
+    in
+    {
+      inherit channelName system;
+      modules = [ ./hercules/nixos.nix ];
+    };
+
   prometheus =
     let
       system = "x86_64-linux";
