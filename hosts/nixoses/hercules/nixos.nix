@@ -19,6 +19,7 @@ in
     nixos-hardware.nixosModules.common-pc-ssd
 
     ./hardware-configuration.nix
+    ./prometheus.nix
   ];
 
   # enable twingate
