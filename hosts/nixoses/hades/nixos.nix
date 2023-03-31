@@ -22,6 +22,7 @@ in
     nixos-hardware.nixosModules.common-pc-ssd
 
     ./hardware-configuration.nix
+    ./prometheus.nix
     ./win10.nix
   ];
 
