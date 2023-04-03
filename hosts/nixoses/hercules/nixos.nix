@@ -27,6 +27,7 @@ in
   soxincfg.services.twingate.enable = true;
 
   services.foldingathome = {
+    daemonNiceLevel = 19;
     enable = true;
     user = "Wael_Nasreddine";
   };
