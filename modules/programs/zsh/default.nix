@@ -222,63 +222,25 @@ in
               src = fetchFromGitHub {
                 owner = "b4b4r07";
                 repo = "enhancd";
-                rev = "fd805158ea19d640f8e7713230532bc95d379ddc";
-                sha256 = "0pc19dkp5qah2iv92pzrgfygq83vjq1i26ny97p8dw6hfgpyg04l";
-              };
-            }
-            {
-              name = "gitit";
-              src = fetchFromGitHub {
-                owner = "peterhurford";
-                repo = "git-it-on.zsh";
-                rev = "4827030e1ead6124e3e7c575c0dd375a9c6081a2";
-                sha256 = "01xsqhygbxmv38vwfzvs7b16iq130d2r917a5dnx8l4aijx282j2";
-              };
-            }
-            {
-              name = "solarized-man";
-              src = fetchFromGitHub {
-                owner = "zlsun";
-                repo = "solarized-man";
-                rev = "a902b64696271efee95f37d45589078fdfbbddc5";
-                sha256 = "04gm4qm17s49s6h9klbifgilxv8i45sz3rg521dwm599gl3fgmnv";
+                rev = "v2.5.0";
+                sha256 = "sha256-6rurAVbSNqvqSaKVP1p8mHes/DK7uag+CmJmYYiKyHo=";
               };
             }
             {
               name = "zsh-completions";
-              src = fetchFromGitHub {
-                owner = "zsh-users";
-                repo = "zsh-completions";
-                rev = "0.27.0";
-                sha256 = "1c2xx9bkkvyy0c6aq9vv3fjw7snlm0m5bjygfk5391qgjpvchd29";
-              };
+              src = pkgs.zsh-completions;
             }
             {
               name = "zsh-history-substring-search";
-              src = fetchFromGitHub {
-                owner = "zsh-users";
-                repo = "zsh-history-substring-search";
-                rev = "47a7d416c652a109f6e8856081abc042b50125f4";
-                sha256 = "1mvilqivq0qlsvx2rqn6xkxyf9yf4wj8r85qrxizkf0biyzyy4hl";
-              };
+              src = pkgs.zsh-history-substring-search;
             }
             {
               name = "zsh-syntax-highlighting";
-              src = fetchFromGitHub {
-                owner = "zsh-users";
-                repo = "zsh-syntax-highlighting";
-                rev = "db6cac391bee957c20ff3175b2f03c4817253e60";
-                sha256 = "0d9nf3aljqmpz2kjarsrb5nv4rjy8jnrkqdlalwm2299jklbsnmw";
-              };
+              src = pkgs.zsh-syntax-highlighting;
             }
             {
               name = "nix-shell";
-              src = fetchFromGitHub {
-                owner = "chisui";
-                repo = "zsh-nix-shell";
-                rev = "03a1487655c96a17c00e8c81efdd8555829715f8";
-                sha256 = "1avnmkjh0zh6wmm87njprna1zy4fb7cpzcp8q7y03nw3aq22q4ms";
-              };
+              src = pkgs.zsh-nix-shell;
             }
             {
               name = "functions";
