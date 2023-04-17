@@ -222,25 +222,45 @@ in
               src = fetchFromGitHub {
                 owner = "b4b4r07";
                 repo = "enhancd";
-                rev = "v2.5.0";
-                sha256 = "sha256-6rurAVbSNqvqSaKVP1p8mHes/DK7uag+CmJmYYiKyHo=";
+                rev = "v2.5.1";
+                sha256 = "sha256-kaintLXSfLH7zdLtcoZfVNobCJCap0S/Ldq85wd3krI=";
               };
             }
             {
               name = "zsh-completions";
-              src = pkgs.zsh-completions;
+              src = fetchFromGitHub {
+                owner = "zsh-users";
+                repo = "zsh-completions";
+                rev = "0.34.0";
+                sha256 = "sha256-kaintLXSfLH7zdLtcoZfVNobCJCap0S/Ldq85wd3krI=";
+              };
             }
             {
               name = "zsh-history-substring-search";
-              src = pkgs.zsh-history-substring-search;
+              src = fetchFromGitHub {
+                owner = "zsh-users";
+                repo = "zsh-history-substring-search";
+                rev = "400e58a87f72ecec14f783fbd29bc6be4ff1641c";
+                sha256 = "sha256-GSEvgvgWi1rrsgikTzDXokHTROoyPRlU0FVpAoEmXG4=";
+              };
             }
             {
               name = "zsh-syntax-highlighting";
-              src = pkgs.zsh-syntax-highlighting;
+              src = fetchFromGitHub {
+                owner = "zsh-users";
+                repo = "zsh-syntax-highlighting";
+                rev = "754cefe0181a7acd42fdcb357a67d0217291ac47";
+                sha256 = "sha256-kWgPe7QJljERzcv4bYbHteNJIxCehaTu4xU9r64gUM4=";
+              };
             }
             {
               name = "nix-shell";
-              src = pkgs.zsh-nix-shell;
+              src = fetchFromGitHub {
+                owner = "chisui";
+                repo = "zsh-nix-shell";
+                rev = "v0.6.0";
+                sha256 = "sha256-B0mdmIqefbm5H8wSG1h41c/J4shA186OyqvivmSK42Q=";
+              };
             }
             {
               name = "functions";
