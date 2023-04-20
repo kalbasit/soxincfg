@@ -49,6 +49,7 @@ in
     nur.repos.kalbasit.swm
     obsidian
     scrcpy # mirror Android device via USB
+    screen # needed to open up terminal devices
     signal-cli
     todoist
     unzip
