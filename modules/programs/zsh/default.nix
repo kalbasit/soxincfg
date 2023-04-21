@@ -232,7 +232,7 @@ in
                 owner = "zsh-users";
                 repo = "zsh-completions";
                 rev = "0.34.0";
-                sha256 = "sha256-kaintLXSfLH7zdLtcoZfVNobCJCap0S/Ldq85wd3krI=";
+                sha256 = "sha256-qSobM4PRXjfsvoXY6ENqJGI9NEAaFFzlij6MPeTfT0o=";
               };
             }
             {
