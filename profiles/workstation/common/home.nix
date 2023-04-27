@@ -73,6 +73,7 @@ in
     filezilla
     glances
     gotop
+    inotify-tools
     # jetbrains.goland
     # jetbrains.idea-ultimate
     # jetbrains.ruby-mine
