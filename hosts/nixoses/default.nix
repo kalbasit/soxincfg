@@ -16,6 +16,15 @@ in
     {
       inherit channelName system;
       modules = [ ./achilles/nixos.nix ];
+
+      deploy = {
+        hostname = "achilles.wael-nasreddine.gmail.com.beta.tailscale.net";
+        profiles.system = {
+          sshUser = "root";
+          user = "root";
+          path = deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.achilles;
+        };
+      };
     };
 
   hades =
@@ -25,6 +34,15 @@ in
     {
       inherit channelName system;
       modules = [ ./hades/nixos.nix ];
+
+      deploy = {
+        hostname = "hades.wael-nasreddine.gmail.com.beta.tailscale.net";
+        profiles.system = {
+          sshUser = "root";
+          user = "root";
+          path = deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.hades;
+        };
+      };
     };
 
   hercules =
@@ -34,6 +52,15 @@ in
     {
       inherit channelName system;
       modules = [ ./hercules/nixos.nix ];
+
+      deploy = {
+        hostname = "hercules.wael-nasreddine.gmail.com.beta.tailscale.net";
+        profiles.system = {
+          sshUser = "root";
+          user = "root";
+          path = deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.hercules;
+        };
+      };
     };
 
   prometheus =
