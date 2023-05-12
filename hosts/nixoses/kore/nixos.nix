@@ -60,7 +60,7 @@ in
   ];
 
   # Setup the builder account
-  nix.trustedUsers = [ "root" "@wheel" "@builders" ];
+  nix.settings.trusted-users = [ "root" "@wheel" "@builders" ];
   users.users = {
     builder = {
       extraGroups = [ "builders" ];
