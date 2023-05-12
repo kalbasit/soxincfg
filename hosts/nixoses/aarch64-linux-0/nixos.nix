@@ -30,5 +30,5 @@
   # TODO: Getting an error because delve does not build on this arch which is required for NeoVim
   # home-manager.users.yl = import ./home.nix { inherit soxincfg; };
 
-  system.stateVersion = "20.09";
+  system.stateVersion = "22.11";
 }

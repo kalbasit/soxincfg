@@ -91,5 +91,5 @@ in
     yl:*,4uA7dsphf1nPxyQ6ncgKrOGi3qwGxHnzq9bweBisoz1Dl5ocpv9r8EnJX/GOWGrNtoXodSlSAhZ25CZOghx0Xw==,es256,+presence
   '';
 
-  system.stateVersion = "21.11";
+  system.stateVersion = "22.11";
 }
