@@ -86,7 +86,7 @@ in
     smartmontools
     xfce.thunar xfce.thunar-volman xfce.thunar-archive-plugin xfce.thunar-media-tags-plugin
     # teams
-    todoist-electron
+    # todoist-electron
     go-mtpfs
     whatsapp-for-linux
     xkb-switch # Switch your X keyboard layouts from the command line
