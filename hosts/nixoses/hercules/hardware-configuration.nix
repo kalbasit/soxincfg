@@ -51,7 +51,11 @@ in
 
   powerManagement.cpuFreqGovernor = "powersave";
 
-  services.xserver.videoDrivers = mkForce [ "modesetting" ];
+  services.xserver.videoDrivers = [ "nvidia" ];
+  hardware.opengl.enable = true;
+
+  # nvidia-drm.modeset=1 is required for some wayland compositors, e.g. sway
+  hardware.nvidia.modesetting.enable = true;
 
   console.font = "Lat2-Terminus16";
 
