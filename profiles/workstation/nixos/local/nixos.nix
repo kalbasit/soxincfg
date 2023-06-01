@@ -24,9 +24,9 @@ in
   services.haveged.enable = true;
 
   services.logind = {
-    lidSwitch = "hybrid-sleep";
+    lidSwitch = "ignore";
     lidSwitchDocked = "ignore";
-    lidSwitchExternalPower = "hybrid-sleep";
+    lidSwitchExternalPower = "ignore";
     extraConfig = ''
       HandlePowerKey=suspend
     '';
