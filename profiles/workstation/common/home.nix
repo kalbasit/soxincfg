@@ -84,7 +84,10 @@ in
     remmina
     slack
     smartmontools
-    xfce.thunar xfce.thunar-volman xfce.thunar-archive-plugin xfce.thunar-media-tags-plugin
+    xfce.thunar
+    xfce.thunar-volman
+    xfce.thunar-archive-plugin
+    xfce.thunar-media-tags-plugin
     # teams
     # todoist-electron
     go-mtpfs
