@@ -33,26 +33,26 @@ in
           #   supportedFeatures = [ "big-parallel" ];
           # }
 
-          {
-            hostName = "kore.wael-nasreddine.gmail.com.beta.tailscale.net";
-            maxJobs = 1;
-            sshKey = builtins.toString config.sops.secrets.ssh_key_kore.path;
-            sshUser = "builder";
-            system = "aarch64-linux";
-            supportedFeatures = [ ];
-          }
+          # {
+          #   hostName = "kore.wael-nasreddine.gmail.com.beta.tailscale.net";
+          #   maxJobs = 1;
+          #   sshKey = builtins.toString config.sops.secrets.ssh_key_kore.path;
+          #   sshUser = "builder";
+          #   system = "aarch64-linux";
+          #   supportedFeatures = [ ];
+          # }
 
           # {
-          #   hostName = "aarch64-linux-0.yl.ktdev.io";
+          #   hostName = "aarch64-linux-0.wael-nasreddine.gmail.com.beta.tailscale.net";
           #   maxJobs = 6;
           #   sshKey = builtins.toString config.sops.secrets.ssh_key_aarch64-linux-0.path;
           #   sshUser = "builder";
           #   system = "aarch64-linux";
           #   supportedFeatures = [ ];
           # }
-          #
+
           # {
-          #   hostName = "x86-64-linux-0.yl.ktdev.io";
+          #   hostName = "x86-64-linux-0.wael-nasreddine.gmail.com.beta.tailscale.net";
           #   maxJobs = 6;
           #   sshKey = builtins.toString config.sops.secrets.ssh_key_x86-64-linux-0.path;
           #   sshUser = "builder";
