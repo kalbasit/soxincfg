@@ -53,85 +53,10 @@ with lib;
       };
 
 
-      "internal+wide" = {
-        fingerprint = { inherit eDP-1 DP-2; };
-
-        config = {
-          eDP-1.enable = false;
-
-          DP-2 = {
-            enable = true;
-            gamma = "1.0:0.909:0.909";
-            mode = "3440x1440";
-            position = "0x320";
-            primary = true;
-            rate = "59.97";
-          };
-        };
-      };
-
-      "wide" = {
-        fingerprint = { inherit DP-2; };
-
-        config = {
-          DP-2 = {
-            enable = true;
-            gamma = "1.0:0.909:0.909";
-            mode = "3440x1440";
-            position = "0x320";
-            primary = true;
-            rate = "59.97";
-          };
-        };
-      };
-
-      "vertical" = {
-        fingerprint = { inherit HDMI-0; };
-
-        config = {
-          HDMI-0 = {
-            crtc = 2;
-            enable = true;
-            position = "0x0";
-            mode = "1920x1200";
-            gamma = "1.0:0.909:0.909";
-            rate = "59.95";
-            rotate = "left";
-          };
-        };
-      };
-
       "wide+vertical" = {
         fingerprint = { inherit DP-2 HDMI-0; };
 
         config = {
-          HDMI-0 = {
-            crtc = 2;
-            enable = true;
-            position = "3440x0";
-            mode = "1920x1200";
-            gamma = "1.0:0.909:0.909";
-            rate = "59.95";
-            rotate = "left";
-          };
-
-          DP-2 = {
-            enable = true;
-            gamma = "1.0:0.909:0.909";
-            mode = "3440x1440";
-            position = "0x320";
-            primary = true;
-            rate = "59.97";
-          };
-        };
-      };
-
-      "internal+wide+vertical" = {
-        fingerprint = { inherit eDP-1 DP-2 HDMI-0; };
-
-        config = {
-          eDP-1.enable = false;
-
           HDMI-0 = {
             crtc = 2;
             enable = true;
