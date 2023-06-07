@@ -207,7 +207,7 @@ in
         { enable = true; };
 
       programs.autorandr.hooks.postswitch.restart-polybar = ''
-        systemctl --user restart polybar.service
+        systemctl --no-block --user restart polybar.service
       '';
     })
   ]);
