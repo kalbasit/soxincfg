@@ -25,5 +25,5 @@
   # load YL's home-manager configuration
   home-manager.users.yl = import ./home.nix { inherit soxincfg; };
 
-  system.stateVersion = "22.11";
+  system.stateVersion = "23.05";
 }

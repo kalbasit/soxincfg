@@ -27,5 +27,5 @@ with lib;
     "Mod4+Shift+Return" = mkForce "exec ${getBin pkgs.wezterm}/bin/wezterm";
   };
 
-  home.stateVersion = "22.11";
+  home.stateVersion = "23.05";
 }

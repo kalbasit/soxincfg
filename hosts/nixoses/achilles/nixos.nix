@@ -35,5 +35,5 @@ in
     yl:*,EsrzBknqN1TYiIZcvawKOa0ZfLYABVEHwQrhJpEdAnYK4tiACptJmdUjDKuLabJDK9aDlPHXOJ/AqpdxsBH1dw==,es256,+presence
   '';
 
-  system.stateVersion = "22.11";
+  system.stateVersion = "23.05";
 }

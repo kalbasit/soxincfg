@@ -20,7 +20,7 @@ in
     "soxincfg=${soxincfg}"
   ];
 
-  boot.tmpOnTmpfs = true;
+  boot.tmp.useTmpfs = true;
 
   security.pki.certificates = [ nasreddineCA ];
 

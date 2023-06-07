@@ -11,5 +11,5 @@ with lib;
     soxincfg.nixosModules.profiles.work.keeptruckin
   ];
 
-  home.stateVersion = "22.11";
+  home.stateVersion = "23.05";
 }

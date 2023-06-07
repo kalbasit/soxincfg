@@ -18,7 +18,7 @@ in
     (optionalAttrs (mode == "NixOS") {
       services.openssh = {
         enable = true;
-        passwordAuthentication = false;
+        settings.PasswordAuthentication = false;
         extraConfig = ''
           StreamLocalBindUnlink yes
         '';

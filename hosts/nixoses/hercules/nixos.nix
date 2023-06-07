@@ -91,5 +91,5 @@ in
   # Default is overlay, and the docker image kartoza/postgis fails to boot.
   virtualisation.docker.storageDriver = "zfs";
 
-  system.stateVersion = "22.11";
+  system.stateVersion = "23.05";
 }

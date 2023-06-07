@@ -12,5 +12,5 @@ with lib;
     soxincfg.nixosModules.profiles.workstation.chromeos.local
   ];
 
-  home.stateVersion = "22.11";
+  home.stateVersion = "23.05";
 }
