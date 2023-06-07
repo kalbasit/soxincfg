@@ -55,59 +55,13 @@ with lib;
         };
       };
 
-      "internal+wide" = {
-        fingerprint = { inherit eDP-1 DP-2; };
+      "wide+vertical" = {
+        fingerprint = { inherit DP-2 DP-3; };
 
         config = {
           eDP-1.enable = false;
 
           DP-2 = {
-            enable = true;
-            gamma = "1.0:0.909:0.909";
-            mode = "3440x1440";
-            position = "0x320";
-            primary = true;
-            rate = "59.97";
-          };
-        };
-      };
-
-      "wide" = {
-        fingerprint = { inherit DP-2; };
-
-        config = {
-          DP-2 = {
-            enable = true;
-            gamma = "1.0:0.909:0.909";
-            mode = "3440x1440";
-            position = "0x320";
-            primary = true;
-            rate = "59.97";
-          };
-        };
-      };
-
-      "vertical" = {
-        fingerprint = { inherit DP-3; };
-
-        config = {
-          DP-3 = {
-            crtc = 2;
-            enable = true;
-            position = "0x0";
-            mode = "1920x1200";
-            gamma = "1.0:0.909:0.909";
-            rate = "59.95";
-            rotate = "left";
-          };
-        };
-      };
-
-      "wide+vertical" = {
-        fingerprint = { inherit DP-2 DP-3; };
-
-        config = {
-          DP-3 = {
             crtc = 2;
             enable = true;
             position = "3440x0";
@@ -117,7 +71,8 @@ with lib;
             rotate = "left";
           };
 
-          DP-2 = {
+          DP-3 = {
+            crtc = 0;
             enable = true;
             gamma = "1.0:0.909:0.909";
             mode = "3440x1440";
@@ -132,9 +87,16 @@ with lib;
         fingerprint = { inherit eDP-1 DP-2 DP-3; };
 
         config = {
-          eDP-1.enable = false;
+          eDP-1 = {
+            enable = true;
+            primary = true;
+            position = "760x1760";
+            mode = "1920x1080";
+            gamma = "1.0:0.909:0.909";
+            rate = "60.03";
+          };
 
-          DP-3 = {
+          DP-2 = {
             crtc = 2;
             enable = true;
             position = "3440x0";
@@ -144,7 +106,7 @@ with lib;
             rotate = "left";
           };
 
-          DP-2 = {
+          DP-3 = {
             enable = true;
             gamma = "1.0:0.909:0.909";
             mode = "3440x1440";
