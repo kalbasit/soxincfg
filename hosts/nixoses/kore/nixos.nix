@@ -42,6 +42,11 @@ in
   # SSH do not automatically open firewall to control the interfaces.
   services.openssh.openFirewall = false;
 
+  # Allow unifi controller inform on all interfaces
+  networking.firewall.allowedTCPPorts = [
+    8080 # Unifi Inform port
+  ];
+
   # Allow unifi/ssh on the admin interface.
   networking.firewall.interfaces.ifcadmin.allowedTCPPorts = [
     22 # ssh
