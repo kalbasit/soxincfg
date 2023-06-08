@@ -24,14 +24,14 @@ in
           #   mandatoryFeatures = [ ];
           # }
 
-          # {
-          #   hostName = "aarch64.nixos.community";
-          #   maxJobs = 64;
-          #   sshKey = builtins.toString ./../../../../keys/aarch64-build-box;
-          #   sshUser = "kalbasit";
-          #   system = "aarch64-linux";
-          #   supportedFeatures = [ "big-parallel" ];
-          # }
+          {
+            hostName = "aarch64.nixos.community";
+            maxJobs = 64;
+            sshKey = builtins.toString config.sops.secrets.ssh_key_aarch64_nixos_community.path;
+            sshUser = "kalbasit";
+            system = "aarch64-linux";
+            supportedFeatures = [ "big-parallel" ];
+          }
 
           # {
           #   hostName = "kore.wael-nasreddine.gmail.com.beta.tailscale.net";
@@ -63,8 +63,9 @@ in
       };
 
       sops.secrets.ssh_key_aarch64-linux-0.sopsFile = ./secrets.sops.yaml;
-      sops.secrets.ssh_key_x86-64-linux-0.sopsFile = ./secrets.sops.yaml;
+      sops.secrets.ssh_key_aarch64_nixos_community.sopsFile = ./secrets.sops.yaml;
       sops.secrets.ssh_key_kore.sopsFile = ./secrets.sops.yaml;
+      sops.secrets.ssh_key_x86-64-linux-0.sopsFile = ./secrets.sops.yaml;
       sops.secrets.ssh_key_zeus.sopsFile = ./secrets.sops.yaml;
     })
   ]);
