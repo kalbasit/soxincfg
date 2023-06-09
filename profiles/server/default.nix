@@ -21,21 +21,12 @@ in
         fwupd.enable = true;
       };
 
-      programs = {
-        keybase = {
-          enable = true;
-          enableFs = true;
-        };
-        less.enable = true;
-      };
-
       services = {
         openssh.enable = true;
       };
 
       virtualisation = {
         docker.enable = true;
-        libvirtd.enable = true;
       };
     };
 
@@ -44,7 +35,6 @@ in
         fzf.enable = true;
         git.enable = true;
         mosh.enable = true;
-        pet.enable = true;
         ssh.enable = true;
         starship.enable = true;
         tmux.enable = true;
