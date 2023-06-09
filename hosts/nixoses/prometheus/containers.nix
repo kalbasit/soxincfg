@@ -36,7 +36,7 @@ in
         "--health-timeout=3s"
         "--health-start-period=20s"
       ];
-      image = "docker.io/jc21/nginx-proxy-manager:2.9.18@sha256:7364018f10033930d25d80db4c418c7c92ae3611569b61ebfeda978f8e51b1cc";
+      image = "docker.io/jc21/nginx-proxy-manager:2.10.3@sha256:6d854b678025781c142952a49d1378789e566b92674180cafab20210a2cae9d6";
       ports = [ "80:80" "443:443" ];
       volumes = [ "/persistence/nginx-proxy-manager/data:/data" "/persistence/nginx-proxy-manager/letsencrypt:/etc/letsencrypt" ];
     };
@@ -52,7 +52,7 @@ in
         "--device=/dev/v4l/by-id/usb-046d_HD_Pro_Webcam_C920_CA58666F-video-index0:/dev/camera"
         "--device=/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0:/dev/printer"
       ];
-      image = "docker.io/octoprint/octoprint:1.8.2@sha256:5e2c3c6fbd077cc1f1407f97a36c77139d208015dd8a7d994e697b2e62728bca";
+      image = "docker.io/octoprint/octoprint:1.9.0@sha256:1ad8a9c24339291ad0b99d96b557a7475caa8fd2b5f6c772aeef0d3532b89035";
       volumes = [ "/persistence/octoprint:/octoprint" ];
     };
 
@@ -60,19 +60,19 @@ in
       dependsOn = [ "zwave2mqtt" ];
       environment.TZ = config.time.timeZone;
       extraOptions = [ "--network=${network_name}" ];
-      image = "ghcr.io/home-assistant/home-assistant:stable@sha256:13821043c6428b08a0a62273b68d76abb81bfc7bd387453f2ed8aa80de72d962";
+      image = "ghcr.io/home-assistant/home-assistant:2023.6.1@sha256:a29527b65f76ca36451aed4a4ae8859821c54e4c6d6ec70a7a6d547adb6fd2b9";
       volumes = [ "/persistence/home-assistant:/config" ];
     };
 
     containers.zwave2mqtt = {
       environment.TZ = config.time.timeZone;
       extraOptions = [ "--network=${network_name}" "--device=/dev/serial/by-id/usb-0658_0200-if00:/dev/zwave" ];
-      image = "zwavejs/zwavejs2mqtt:8.0.1@sha256:c8fd5c959eb249cb039e7871973fd38e4345043d2d883457b257daefe33b0caa";
+      image = "zwavejs/zwavejs2mqtt:8.18.0@sha256:87d6d5112f1505cdf43dbade87839a90f7fca40d3396286b64b9c9d90ac0dfa4";
       volumes = [ "/persistence/zwavejs2mqtt:/usr/src/app/store" ];
     };
 
     containers.signal-cli-rest-api = {
-      image = "bbernhard/signal-cli-rest-api:0.64@sha256:db0ba824204bc8f12903e754bc93627c0c7c81f4ea65b87c2ef137a3abbbbada";
+      image = "bbernhard/signal-cli-rest-api:0.66@sha256:2f898f58bad59c4ec65e65c44d7448713d12d1564ef3528d9143e57a9c972c0d";
       extraOptions = [ "--network=${network_name}" ];
       environment.MODE = "native";
       environment.AUTO_RECEIVE_SCHEDULE = "0 22 * * *";
