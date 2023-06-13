@@ -153,6 +153,7 @@ in
           sshUser = "root";
           user = "root";
           path = deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.kore;
+          confirmTimeout = 5 * 60;
         };
       };
     };

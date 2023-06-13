@@ -10,7 +10,7 @@ let
 in
 {
   imports = [
-    soxincfg.nixosModules.profiles.server
+    soxincfg.nixosModules.profiles.miniserver
 
     ./hardware-configuration.nix
   ];
