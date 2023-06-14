@@ -16,6 +16,8 @@ in
 
   soxin.hardware.lowbatt.enable = true;
 
+  environment.systemPackages = [ pkgs.speedtest-cli ];
+
   sops.secrets = {
     "networking.wireless.environmentFile" = { inherit sopsFile; };
   };
