@@ -31,8 +31,8 @@ in
     enable = true;
     environmentFile = "/run/secrets/networking.wireless.environmentFile";
     networks = {
-      "Nasreddine-Office" = {
-        psk = "@PSK_NASREDDINE_OFFICE@";
+      "Nasreddine" = {
+        psk = "@PSK_NASREDDINE@";
       };
     };
   };
