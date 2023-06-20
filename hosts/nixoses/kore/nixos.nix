@@ -47,12 +47,6 @@ in
     8080 # Unifi Inform port
   ];
 
-  # Allow unifi/ssh on the admin interface.
-  networking.firewall.interfaces.ifcadmin.allowedTCPPorts = [
-    22 # ssh
-    8443 # unifi
-  ];
-
   # Allow unifi/ssh on the tailscale interface.
   networking.firewall.interfaces.tailscale0.allowedTCPPorts = [
     22 # ssh
@@ -77,10 +71,6 @@ in
   };
 
   networking.vlans = {
-    ifcadmin = {
-      id = 2;
-      interface = "eth0";
-    };
     ifcsn0 = {
       id = 50;
       interface = "eth0";
@@ -88,10 +78,6 @@ in
   };
 
   networking.interfaces = {
-    ifcadmin = {
-      useDHCP = true;
-      macAddress = "b8:27:eb:a8:5e:02";
-    };
     ifcsn0 = {
       useDHCP = true;
       macAddress = "b8:27:eb:a8:5e:04";

@@ -56,22 +56,11 @@ in
   };
   systemd.services.sshd = { after = [ "network-interfaces.target" ]; serviceConfig.RestartSec = "5"; };
 
-  # Open the SSH/Eternal-Terminal ports
-  networking.firewall.interfaces.ifcadmin.allowedTCPPorts = [
-    config.services.eternal-terminal.port
-  ] ++ (map (c: c.port) config.services.openssh.listenAddresses);
-
   #
   # Network
   #
 
   networking.vlans = {
-    # The ADMIN interface
-    ifcadmin = {
-      id = 2;
-      interface = "enp0s31f6";
-    };
-
     # SN0 interface
     ifcsn0 = {
       id = 50;
@@ -100,9 +89,6 @@ in
     enp4s0f1 = { useDHCP = false; };
     # do not boot the bond interface itself
     ifcbond0 = { useDHCP = false; };
-
-    # The ADMIN interface
-    ifcadmin.useDHCP = true;
 
     # SN0 address
     ifcsn0.useDHCP = true;
