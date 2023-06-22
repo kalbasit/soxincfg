@@ -26,6 +26,13 @@ in
   # on my network and containers.
   systemd.services.tailscaled.restartIfChanged = false;
 
+  # Disable firewall for now
+  # TODO: Fix the issue and re-enable the firewall.
+  # When the firewall is open, I can't reach the right ports on the ifcsn0
+  # interface. It's possible that I need to define that on the interface
+  # directly.
+  networking.firewall.enable = false;
+
   # define the networking by hand
   networking.wireless = {
     enable = true;

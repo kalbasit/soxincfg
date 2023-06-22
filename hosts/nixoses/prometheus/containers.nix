@@ -57,7 +57,7 @@ in
     };
 
     containers.homeassistant = {
-      dependsOn = [ "zwave2mqtt" ];
+      dependsOn = [ "zwave-js" ];
       environment.TZ = config.time.timeZone;
       extraOptions = [ "--network=${network_name}" ];
       image = "ghcr.io/home-assistant/home-assistant:2023.6.1@sha256:a29527b65f76ca36451aed4a4ae8859821c54e4c6d6ec70a7a6d547adb6fd2b9";
