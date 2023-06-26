@@ -3,6 +3,7 @@
   fwupd = ./hardware/fwupd.nix;
   intelBacklight = ./hardware/intel-backlight.nix;
   lowbatt = ./hardware/lowbatt.nix;
+  rtl-sdr = ./hardware/rtl-sdr;
   serial_console = ./hardware/serial_console.nix;
   sound = ./hardware/sound.nix;
   zsa = ./hardware/zsa;
