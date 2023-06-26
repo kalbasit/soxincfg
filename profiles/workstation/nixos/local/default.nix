@@ -26,6 +26,7 @@ in
         fwupd.enable = true;
         lowbatt.enable = true;
         sound.enable = true;
+        zsa.enable = true;
       };
 
       programs = {
