@@ -16,6 +16,9 @@ in
   config = mkIf cfg.enable {
     hardware.rtl-sdr.enable = true;
     soxincfg.settings.users.defaultGroups = [ "plugdev" ];
-    environment.systemPackages = [ pkgs.rtl-sdr ];
+    environment.systemPackages = [
+      pkgs.rtl-sdr
+      pkgs.rtl_433
+    ];
   };
 }
