@@ -163,6 +163,7 @@ in
       };
 
       services = {
+        sleep-on-lan.enable = true;
         xserver.windowManager.i3.enable = true;
       };
 
