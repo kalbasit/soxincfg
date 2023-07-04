@@ -65,6 +65,7 @@ in
     };
 
     containers.zwave-js = {
+      environment.TZ = config.time.timeZone;
       extraOptions = [ "--network=${network_name}" "--device=/dev/serial/by-id/usb-0658_0200-if00:/dev/zwave" ];
       image = "zwavejs/zwave-js-ui:8.19.0@sha256:94d46355d3f930579d028114117b8339d8e88181c8ee1d6ed9b9bad74fb74708";
       volumes = [ "/persistence/zwave-js:/usr/src/app/store" ];
