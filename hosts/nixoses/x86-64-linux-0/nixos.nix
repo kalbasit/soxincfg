@@ -2,11 +2,11 @@
 {
   imports = [
     soxincfg.nixosModules.profiles.myself
-    soxincfg.nixosModules.profiles.work.keeptruckin
     soxincfg.nixosModules.profiles.workstation.nixos.remote
 
     "${modulesPath}/virtualisation/amazon-image.nix"
-  ];
+  ]
+  ++ (soxincfg.nixosModules.profiles.work.imports { hostName = "x86-64-linux-0"; });
 
   ec2.hvm = true;
 

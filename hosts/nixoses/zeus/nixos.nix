@@ -7,15 +7,14 @@ in
 {
   imports = [
     soxincfg.nixosModules.profiles.myself
-    soxincfg.nixosModules.profiles.work.keeptruckin
-    soxincfg.nixosModules.profiles.work.ulta
     soxincfg.nixosModules.profiles.workstation.nixos.local
 
     nixos-hardware.nixosModules.common-cpu-intel
     nixos-hardware.nixosModules.common-pc-ssd
 
     ./hardware-configuration.nix
-  ];
+  ]
+  ++ (soxincfg.nixosModules.profiles.work.imports { hostName = "zeus"; });
 
   # force the keyboard to be us on the console to work correctly with my zsa
   console.keyMap = mkForce "us";

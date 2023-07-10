@@ -19,7 +19,6 @@ in
   # load YL's home-manager configuration
   home-manager.users.yl = import ./home.nix { inherit soxincfg; };
 
-
   # speed up the trackpad
   services.xserver.libinput.enable = true;
   services.xserver.libinput.touchpad.accelSpeed = "0.5";

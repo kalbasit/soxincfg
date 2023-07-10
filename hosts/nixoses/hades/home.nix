@@ -7,12 +7,9 @@ with lib;
 {
   imports = [
     soxincfg.nixosModules.profiles.myself
-    soxincfg.nixosModules.profiles.work.arklight
-    soxincfg.nixosModules.profiles.work.keeptruckin
-    soxincfg.nixosModules.profiles.work.onetouchpoint
-    soxincfg.nixosModules.profiles.work.ulta
     soxincfg.nixosModules.profiles.workstation.nixos.local
-  ];
+  ]
+  ++ (soxincfg.nixosModules.profiles.work.imports { hostName = "hades"; });
 
   # Setup the name of the wireless interface in Polybar
   soxin.services.xserver.windowManager.bar.modules.network.wlan = singleton "wlp110s0";

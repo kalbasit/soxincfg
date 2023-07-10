@@ -11,10 +11,6 @@ in
 {
   imports = [
     soxincfg.nixosModules.profiles.myself
-    soxincfg.nixosModules.profiles.work.arklight
-    soxincfg.nixosModules.profiles.work.keeptruckin
-    soxincfg.nixosModules.profiles.work.onetouchpoint
-    soxincfg.nixosModules.profiles.work.ulta
     soxincfg.nixosModules.profiles.workstation.nixos.local
 
     nixos-hardware.nixosModules.common-cpu-intel
@@ -24,7 +20,8 @@ in
     ./hardware-configuration.nix
     ./prometheus.nix
     ./win10.nix
-  ];
+  ]
+  ++ (soxincfg.nixosModules.profiles.work.imports { hostName = "hades"; });
 
   # enable twingate
   # TODO: https://github.com/NixOS/nixpkgs/pull/144455

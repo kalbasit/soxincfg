@@ -8,8 +8,8 @@ with lib;
   imports = [
     soxincfg.nixosModules.profiles.myself
     soxincfg.nixosModules.profiles.workstation.nixos.remote
-    soxincfg.nixosModules.profiles.work.keeptruckin
-  ];
+  ]
+  ++ (soxincfg.nixosModules.profiles.work.imports { hostName = "aarch64-linux-0"; });
 
   home.stateVersion = "23.05";
 }
