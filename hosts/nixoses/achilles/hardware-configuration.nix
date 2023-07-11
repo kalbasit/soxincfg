@@ -48,6 +48,9 @@ with lib;
   fileSystems = {
     "/" = { device = "/dev/mapper/cryptroot"; fsType = "ext4"; };
     "/boot" = { device = "/dev/disk/by-uuid/AE56-BDC8"; fsType = "vfat"; };
+
+    # SoxinCFG secrets
+    "/yl/code/repositories/github.com/kalbasit/soxincfg/profiles/work/secret-store" = { device = "/yl/code/repositories/keybase/private/ylcodes/secrets/soxincfg/work/secret-store"; options = [ "bind" ]; };
   };
 
   swapDevices = [{ device = "/dev/mapper/cryptswap"; }];

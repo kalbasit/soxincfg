@@ -79,6 +79,9 @@ in
       # Storage
 
       "/mnt/volumes/storage" = { device = storgeDevice; fsType = "btrfs"; };
+
+      # SoxinCFG secrets
+      "/yl/code/repositories/github.com/kalbasit/soxincfg/profiles/work/secret-store" = { device = "/yl/code/repositories/keybase/private/ylcodes/secrets/soxincfg/work/secret-store"; options = [ "bind" ]; };
     };
 
   swapDevices = [{ device = swapDevice; }];
