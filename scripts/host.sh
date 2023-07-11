@@ -24,15 +24,15 @@ case "${action}" in
     build)
         >&2 echo "Building $host"
         if [[ $os == "nixos" ]]; then
-            nix build ".#nixosConfigurations.${host}.config.system.build.toplevel"
+            nix build "path:.#nixosConfigurations.${host}.config.system.build.toplevel"
         else
-            nix build ".#homeConfigurations.${host}.activationPackage"
+            nix build "path:.#homeConfigurations.${host}.activationPackage"
         fi
         ;;
     test)
         >&2 echo "Testing $host"
         if [[ $os == "nixos" ]]; then
-            nixos-rebuild --use-remote-sudo --flake ".#${host}" test # --show-trace
+            nixos-rebuild --use-remote-sudo --flake "path:.#${host}" test # --show-trace
         else
             >&2 echo test is not support on home-manager
             exit 1
@@ -41,16 +41,16 @@ case "${action}" in
     switch)
         >&2 echo "Switching $host"
         if [[ $os == "nixos" ]]; then
-            nixos-rebuild --use-remote-sudo --flake ".#${host}" switch # --show-trace
+            nixos-rebuild --use-remote-sudo --flake "path:.#${host}" switch # --show-trace
         else
-            home-manager switch --flake ".#${host}"
-            $(nix path-info ".#homeConfigurations.${host}.activationPackage")/activate
+            home-manager switch --flake "path:.#${host}"
+            $(nix path-info "path:.#homeConfigurations.${host}.activationPackage")/activate
         fi
         ;;
     boot)
         >&2 echo "Booting $host"
         if [[ $os == "nixos" ]]; then
-            nixos-rebuild --use-remote-sudo --flake ".#${host}" boot # --show-trace
+            nixos-rebuild --use-remote-sudo --flake "path:.#${host}" boot # --show-trace
         else
             >&2 echo boot is not support on home-manager
             exit 1
