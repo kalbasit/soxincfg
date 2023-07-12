@@ -52,7 +52,7 @@ in
         "--device=/dev/v4l/by-id/usb-046d_HD_Pro_Webcam_C920_CA58666F-video-index0:/dev/camera"
         "--device=/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0:/dev/printer"
       ];
-      image = "docker.io/octoprint/octoprint:1.9.0@sha256:1ad8a9c24339291ad0b99d96b557a7475caa8fd2b5f6c772aeef0d3532b89035";
+      image = "docker.io/octoprint/octoprint:1.9.1@sha256:01fdd384e4e4d6fec9a17c0852c2df23f168268e1ee37a596011e8b848e1b1d1";
       volumes = [ "/persistence/octoprint:/octoprint" ];
     };
 
@@ -67,7 +67,7 @@ in
       dependsOn = [ "mosquitto" "zwave-js" ];
       environment.TZ = config.time.timeZone;
       extraOptions = [ "--network=${network_name}" ];
-      image = "ghcr.io/home-assistant/home-assistant:2023.6.1@sha256:a29527b65f76ca36451aed4a4ae8859821c54e4c6d6ec70a7a6d547adb6fd2b9";
+      image = "ghcr.io/home-assistant/home-assistant:2023.7.1@sha256:f83cee1c4ccd9c25e89b24b520db5bed4bded4ed533aa89c2cd77b7a22a8fe3e";
       volumes = [ "/persistence/home-assistant:/config" ];
     };
 
@@ -77,12 +77,12 @@ in
         "--network=${network_name}"
         "--device=/dev/serial/by-id/usb-0658_0200-if00:/dev/zwave"
       ];
-      image = "zwavejs/zwave-js-ui:8.19.0@sha256:94d46355d3f930579d028114117b8339d8e88181c8ee1d6ed9b9bad74fb74708";
+      image = "zwavejs/zwave-js-ui:8.20.0@sha256:37777eb8713b935a14473bc9179045ce57372d3e67b471842ca38f05181d4487";
       volumes = [ "/persistence/zwave-js:/usr/src/app/store" ];
     };
 
     containers.signal-cli-rest-api = {
-      image = "bbernhard/signal-cli-rest-api:0.66@sha256:2f898f58bad59c4ec65e65c44d7448713d12d1564ef3528d9143e57a9c972c0d";
+      image = "bbernhard/signal-cli-rest-api:0.67@sha256:70871b504478a74e5ab30b6d94130d355d32300893ab2254e9aea63264121d31";
       extraOptions = [ "--network=${network_name}" ];
       environment.MODE = "native";
       environment.AUTO_RECEIVE_SCHEDULE = "0 22 * * *";
@@ -99,7 +99,7 @@ in
         "-Fmqtt://mosquitto:1883,retain=1"
       ];
       dependsOn = [ "mosquitto" ];
-      image = "hertzg/rtl_433:21.12@sha256:9751f2c1561af0069cbfb67b675d9000b1fb9a5fff8d24026c2b59f5959fda55";
+      image = "hertzg/rtl_433:22.11-alpine@sha256:56b1c0926f42b385b60257022be310454bae5e85fb4b93352dcbf24b80a45b36";
       extraOptions = [
         "--network=${network_name}"
         "--device=/dev/bus/usb/001/007"
