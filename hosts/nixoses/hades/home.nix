@@ -27,7 +27,7 @@ with lib;
   soxincfg.programs.autorandr.postswitch.move-workspaces-to-main = ''
     # Move the TV workspace to the right screen
     >&2 echo "Moving TV workspace to the monitor on the right (DP-3)"
-    ${getBin pkgs.i3}/bin/i3-msg "workspace tv; move workspace to output DP-3"
+    ${getBin pkgs.i3}/bin/i3-msg "workspace tv; move workspace to output DP-2"
   '';
 
   programs.autorandr.profiles =
@@ -86,7 +86,6 @@ with lib;
         config = {
           eDP-1 = {
             enable = true;
-            primary = true;
             position = "760x1760";
             mode = "1920x1080";
             gamma = "1.0:0.909:0.909";
