@@ -26,12 +26,6 @@ in
   # TODO: https://github.com/NixOS/nixpkgs/pull/144455
   soxincfg.services.twingate.enable = true;
 
-  services.foldingathome = {
-    daemonNiceLevel = 19;
-    enable = true;
-    user = "Wael_Nasreddine";
-  };
-
   # TODO: Remove this once I can work out:
   #   - How to ssh into my machine if U2F is required.
   #   - How make 'sudo' ask for password before U2F because Onlykey makes me
