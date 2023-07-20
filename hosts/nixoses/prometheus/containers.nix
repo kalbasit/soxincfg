@@ -68,6 +68,7 @@ in
       environment.TZ = config.time.timeZone;
       extraOptions = [ "--network=${network_name}" ];
       image = "ghcr.io/home-assistant/home-assistant:2023.7.1@sha256:f83cee1c4ccd9c25e89b24b520db5bed4bded4ed533aa89c2cd77b7a22a8fe3e";
+      ports = [ "5683:5683/udp" ];
       volumes = [ "/persistence/home-assistant:/config" ];
     };
 
