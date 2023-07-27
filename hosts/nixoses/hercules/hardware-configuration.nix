@@ -68,6 +68,17 @@ in
     nvidiaBusId = "PCI:0:1:0";
   };
 
+  # booting with external display
+  specialisation = {
+    external-display.configuration = {
+      system.nixos.tags = [ "external-display" ];
+      hardware.nvidia = {
+        prime.offload.enable = lib.mkForce false;
+        powerManagement.enable = lib.mkForce false;
+      };
+    };
+  };
+
   console.font = "Lat2-Terminus16";
 
   boot.initrd.luks.devices = {
