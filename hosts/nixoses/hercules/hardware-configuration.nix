@@ -57,17 +57,6 @@ in
   # nvidia-drm.modeset=1 is required for some wayland compositors, e.g. sway
   hardware.nvidia.modesetting.enable = true;
 
-  # https://nixos.wiki/wiki/Nvidia#offload_mode
-  hardware.nvidia.prime = {
-    offload = {
-      enable = true;
-      enableOffloadCmd = true;
-    };
-
-    intelBusId = "PCI:0:0:2";
-    nvidiaBusId = "PCI:0:1:0";
-  };
-
   console.font = "Lat2-Terminus16";
 
   boot.initrd.luks.devices = {
