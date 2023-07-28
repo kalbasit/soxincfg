@@ -56,10 +56,6 @@ in
   boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "vmd" "nvme" "usbhid" "usb_storage" "sd_mod" ];
   boot.kernelModules = [ "kvm-intel" ];
 
-  # fix the black screen on the console
-  # https://nixos.wiki/wiki/Nvidia#Fix_black_screen_on_a_system_with_an_integrated_GPU
-  boot.kernelParams = [ "module_blacklist=i915" ];
-
   boot.loader.grub = {
     configurationLimit = 30;
     device = "nodev";
