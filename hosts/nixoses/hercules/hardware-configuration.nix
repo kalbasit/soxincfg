@@ -29,6 +29,9 @@ in
   # ZFS requires a networking hostId
   networking.hostId = "4a92c82f";
 
+  # Enable hibernation
+  boot.zfs.allowHibernation = true;
+
   boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "vmd" "nvme" "usbhid" "usb_storage" "sd_mod" ];
   boot.kernelModules = [ "kvm-intel" ];
 
