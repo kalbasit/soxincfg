@@ -21,6 +21,30 @@ let
       (mountPoint)
       ({ inherit device; fsType = "zfs"; });
 
+  exports = [
+    # "Anime"
+    # "Cartoon"
+    # "Code"
+    # "Documentaries"
+    # "Downloads"
+    "Imported"
+    # "Mail"
+    # "Movies"
+    # "MusicVideos"
+    # "Plays"
+    # "Plex"
+    # "Stand-upComedy"
+    # "TVShows"
+    # "docker"
+    # "music"
+  ];
+
+  toFSEntry = export: lib.nameValuePair "/nas/${export}" {
+    device = "192.168.50.2:/volume1/${export}";
+    fsType = "nfs";
+  };
+
+  nfsFSEntries = builtins.listToAttrs (map toFSEntry exports);
 in
 {
   # Common firmware, i.e. for wifi cards
@@ -75,7 +99,7 @@ in
   };
 
   fileSystems = mergeAttrs
-    (mapAttrs' mkZFSDataSet datasets)
+    (mergeAttrs nfsFSEntries (mapAttrs' mkZFSDataSet datasets))
     {
       "/boot" = { device = bootDevice; fsType = "vfat"; };
 
