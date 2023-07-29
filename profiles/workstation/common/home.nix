@@ -18,6 +18,7 @@ in
   home.packages = with pkgs; [
     amazon-ecr-credential-helper
     arduino-cli
+    audacity
     binutils # for strings
     bitwarden-cli
     docker-credential-gcr
