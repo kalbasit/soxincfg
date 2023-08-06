@@ -35,6 +35,7 @@ in
     go
     hexyl # hex viewer with nice colors
     imagemagick # for convert
+    inetutils # for telnet
     jq
     jrnl
     killall
