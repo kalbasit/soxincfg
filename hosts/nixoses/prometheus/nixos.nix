@@ -9,6 +9,7 @@ in
 
     ./hardware-configuration.nix
     ./containers.nix
+    ./unifi.nix
   ];
 
   # load YL's home-manager configuration
