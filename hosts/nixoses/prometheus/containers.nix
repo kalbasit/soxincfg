@@ -102,10 +102,10 @@ in
       dependsOn = [ "mosquitto" ];
       image = "hertzg/rtl_433:22.11-alpine@sha256:56b1c0926f42b385b60257022be310454bae5e85fb4b93352dcbf24b80a45b36";
       extraOptions = [
+        "--privileged"
         "--network=${network_name}"
-        # TODO: put udev rule to give it a predictable path in /dev.
-        "--device=/dev/bus/usb/001/003"
       ];
+      volumes = ["/dev/bus/usb:/dev/bus/usb"];
     };
 
     containers.rtl-433-mqtt-autodiscovery = {
