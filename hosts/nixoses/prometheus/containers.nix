@@ -100,7 +100,7 @@ in
         "-Fmqtt://mosquitto:1883,retain=1"
       ];
       dependsOn = [ "mosquitto" ];
-      image = "hertzg/rtl_433:22.11-alpine@sha256:56b1c0926f42b385b60257022be310454bae5e85fb4b93352dcbf24b80a45b36";
+      image = "hertzg/rtl_433:22.11-alpine@sha256:6b5c681e507f5355f7c23bb7d662d63d80a15e13e1a73deb5bbcf1437a4fba25";
       extraOptions = [
         "--privileged"
         "--network=${network_name}"
