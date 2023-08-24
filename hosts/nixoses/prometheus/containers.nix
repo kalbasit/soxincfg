@@ -57,7 +57,7 @@ in
     };
 
     containers.mosquitto = {
-      image = "eclipse-mosquitto:2.0.15-openssl@sha256:9f39fb6724428c717e598522417010d5799409a761144175ed8f107e8827d381";
+      image = "eclipse-mosquitto:2.0.17-openssl@sha256:f6f7d1728a23dc0310266075c4baf8080ad0c12048a914dbaa89490657640af9";
       extraOptions = [ "--network=${network_name}" ];
       volumes = [ "/persistence/mosquitto:/mosquitto" ];
       ports = [ "1883:1883" ];
