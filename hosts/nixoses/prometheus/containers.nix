@@ -52,7 +52,7 @@ in
         "--device=/dev/v4l/by-id/usb-046d_HD_Pro_Webcam_C920_CA58666F-video-index0:/dev/camera"
         "--device=/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0:/dev/printer"
       ];
-      image = "docker.io/octoprint/octoprint:1.9.1@sha256:01fdd384e4e4d6fec9a17c0852c2df23f168268e1ee37a596011e8b848e1b1d1";
+      image = "docker.io/octoprint/octoprint:1.9.2@sha256:5fb961292d13d644849128ac54c778c370f70c9ca381c20792b5f3daeeb8bea2";
       volumes = [ "/persistence/octoprint:/octoprint" ];
     };
 
