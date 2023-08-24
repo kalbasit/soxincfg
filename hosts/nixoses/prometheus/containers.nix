@@ -78,7 +78,7 @@ in
         "--network=${network_name}"
         "--device=/dev/serial/by-id/usb-0658_0200-if00:/dev/zwave"
       ];
-      image = "zwavejs/zwave-js-ui:8.20.0@sha256:37777eb8713b935a14473bc9179045ce57372d3e67b471842ca38f05181d4487";
+      image = "zwavejs/zwave-js-ui:8.23.1@sha256:197d2ba19c2fdb86180441f2ba052df0ab6d562ef9b9e1ef41b25ca820729e41";
       volumes = [ "/persistence/zwave-js:/usr/src/app/store" ];
     };
 
