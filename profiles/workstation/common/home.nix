@@ -47,6 +47,7 @@ in
     nix-index
     nix-review
     nix-zsh-completions
+    nixos-generators
     nur.repos.kalbasit.nixify
     nur.repos.kalbasit.swm
     obsidian
