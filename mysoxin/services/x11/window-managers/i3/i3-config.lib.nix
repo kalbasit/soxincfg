@@ -13,7 +13,7 @@ let
   meh = "${alt}+${shift}+${ctrl}";
 
   nosid = "--no-startup-id";
-  locker = "${getBin pkgs.xautolock}/bin/xautolock -locknow && sleep 1";
+  locker = "xset s activate";
 
   jrnlEntry = pkgs.writeScript "jrnl-entry.sh" ''
     #!/usr/bin/env bash
@@ -93,6 +93,7 @@ in
         "element" = [{ class = "^Element$"; }];
         "keybase" = [{ class = "^Keybase$"; }];
         "signal" = [{ class = "^Signal$"; }];
+        "whatsapp" = [{ class = "^Whatsapp-for-linux$"; }];
         "slack" = [{ class = "^Slack$"; }];
         "studio" = [{ class = "^obs$"; }];
         "tor" = [{ class = "^Tor Browser"; }];
@@ -205,7 +206,7 @@ in
         "${shift}+XF86MonBrightnessDown" = "exec ${nosid} ${getBin pkgs.brightnessctl}/bin/brightnessctl s 1%-";
 
         # sleep support
-        "XF86PowerOff" = "exec ${nosid} ${locker} && systemctl suspend";
+        "XF86PowerOff" = "exec ${nosid} systemctl suspend";
 
         # lock support
         "${meta}+l" = "exec ${nosid} ${locker}";
@@ -284,6 +285,7 @@ in
       startup = [
         { command = "${getBin pkgs.xorg.xset}/bin/xset r rate 300 30"; always = false; notification = false; }
         { command = "i3-msg \"workspace personal; exec ${nosid} ${getBin pkgs.wezterm}/bin/wezterm\""; always = false; notification = true; }
+        { command = "${getBin pkgs.synology-drive-client}/bin/synology-drive"; always = false; notification = true; }
       ];
     };
 
@@ -327,13 +329,14 @@ in
         bindsym Escape mode "$launcher"
       }
 
-        set $social_mode Social: (d)iscord, (e)lement${optionalString config.soxin.programs.keybase.enable ", (k)eybase"}, S(l)ack, (s)ignal
+        set $social_mode Social: (d)iscord, (e)lement${optionalString config.soxin.programs.keybase.enable ", (k)eybase"}, S(l)ack, (s)ignal, (w)hats app
         mode "$social_mode" {
           bindsym d exec ${getBin pkgs.discord}/bin/Discord, mode default
           bindsym e exec ${getBin pkgs.element-desktop}/bin/element-desktop, mode default
           ${optionalString config.soxin.programs.keybase.enable "bindsym k exec ${getBin pkgs.keybase-gui}/bin/keybase-gui, mode default"}
           bindsym l exec ${getBin pkgs.slack}/bin/slack, mode default
           bindsym s exec ${getBin pkgs.signal-desktop}/bin/signal-desktop, mode default
+          bindsym w exec ${getBin pkgs.whatsapp-for-linux}/bin/whatsapp-for-linux, mode default
 
           bindsym Escape mode "$launcher"
         }
@@ -356,8 +359,8 @@ in
       mode "$power_mode" {
         bindsym l exec ${nosid} ${locker}, mode default
         bindsym o exit
-        bindsym s exec ${nosid} ${locker} && systemctl suspend, mode default
-        bindsym h exec ${nosid} ${locker} && systemctl hibernate, mode default
+        bindsym s exec ${nosid} systemctl suspend, mode default
+        bindsym h exec ${nosid} systemctl hibernate, mode default
         bindsym r exec ${nosid} systemctl reboot
         bindsym ${shift}+s exec ${nosid} systemctl poweroff -i
 

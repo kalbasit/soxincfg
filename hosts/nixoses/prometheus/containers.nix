@@ -1,68 +1,32 @@
 { config, pkgs, lib, ... }:
 
 let
-  podman-web-bridge = pkgs.writeText "88-podman-web-bridge.conflist" ''
-    {
-       "cniVersion": "0.4.0",
-       "name": "${network_name}",
-       "plugins": [
-          {
-             "type": "bridge",
-             "bridge": "cni-podman3",
-             "isGateway": true,
-             "ipMasq": true,
-             "hairpinMode": true,
-             "ipam": {
-                "type": "host-local",
-                "routes": [
-                   {
-                      "dst": "0.0.0.0/0"
-                   }
-                ],
-                "ranges": [
-                   [
-                      {
-                         "subnet": "10.89.1.0/24",
-                         "gateway": "10.89.1.1"
-                      }
-                   ]
-                ]
-             }
-          },
-          {
-             "type": "portmap",
-             "capabilities": {
-                "portMappings": true
-             }
-          },
-          {
-             "type": "firewall",
-             "backend": ""
-          },
-          {
-             "type": "tuning"
-          },
-          {
-             "type": "dnsname",
-             "domainName": "dns.podman",
-             "capabilities": {
-                "aliases": true
-             }
-          }
-       ]
-    }
-  '';
-
-  network_name = "web_network_default";
+  network_name = "web_network-br";
 in
 {
-  # define the network interface
-  environment.etc."cni/net.d/88-podman-web-bridge.conflist".source = podman-web-bridge;
-  # the network interface needs the dnsname plugin
-  virtualisation.containers.containersConf.cniPlugins = [ pkgs.dnsname-cni ];
+  systemd.services.init-filerun-network-and-files = {
+    description = "Create the network bridge ${network_name}.";
+    after = [ "network.target" ];
+    wantedBy = [ "multi-user.target" ];
+
+    serviceConfig.Type = "oneshot";
+    script =
+      let dockercli = "${config.virtualisation.docker.package}/bin/docker";
+      in
+      ''
+        # Put a true at the end to prevent getting non-zero return code, which will
+        # crash the whole service.
+        check=$(${dockercli} network ls | grep "${network_name}" || true)
+        if [ -z "$check" ]; then
+          ${dockercli} network create ${network_name}
+        else
+          echo "${network_name} already exists in docker"
+        fi
+      '';
+  };
 
   virtualisation.oci-containers = {
-    backend = "podman";
+    backend = "docker";
 
     containers.nginx-proxy-manager = {
       extraOptions = [
@@ -72,7 +36,7 @@ in
         "--health-timeout=3s"
         "--health-start-period=20s"
       ];
-      image = "docker.io/jc21/nginx-proxy-manager@sha256:0a9d4155c6b3b453149fc48aadb561227d0f79bddb97004aea50c51cd1995e13";
+      image = "docker.io/jc21/nginx-proxy-manager:2.10.4@sha256:3d1f678a0638a82abb88deb0cef710f77e5a9f5736d97a556cdd131512da5d3f";
       ports = [ "80:80" "443:443" ];
       volumes = [ "/persistence/nginx-proxy-manager/data:/data" "/persistence/nginx-proxy-manager/letsencrypt:/etc/letsencrypt" ];
     };
@@ -88,30 +52,69 @@ in
         "--device=/dev/v4l/by-id/usb-046d_HD_Pro_Webcam_C920_CA58666F-video-index0:/dev/camera"
         "--device=/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0:/dev/printer"
       ];
-      image = "docker.io/octoprint/octoprint@sha256:ffa5005afc33511df2c03780ef92727137661a917a213e9f03cb13040c1ac59c";
+      image = "docker.io/octoprint/octoprint:1.9.2@sha256:5fb961292d13d644849128ac54c778c370f70c9ca381c20792b5f3daeeb8bea2";
       volumes = [ "/persistence/octoprint:/octoprint" ];
     };
 
+    containers.mosquitto = {
+      image = "eclipse-mosquitto:2.0.17-openssl@sha256:f6f7d1728a23dc0310266075c4baf8080ad0c12048a914dbaa89490657640af9";
+      extraOptions = [ "--network=${network_name}" ];
+      volumes = [ "/persistence/mosquitto:/mosquitto" ];
+      ports = [ "1883:1883" ];
+    };
+
     containers.homeassistant = {
-      dependsOn = [ "zwave2mqtt" ];
+      dependsOn = [ "mosquitto" "zwave-js" ];
       environment.TZ = config.time.timeZone;
       extraOptions = [ "--network=${network_name}" ];
-      image = "ghcr.io/home-assistant/home-assistant:stable@sha256:526120826f55aeb712208db5964fc621ceb11cf192ecfd057794451b27c50457";
+      image = "ghcr.io/home-assistant/home-assistant:2023.8.4@sha256:60a9b90ef0075c0cfbb088abd6a5ff609166f4cc25d8c7a2d113dac010834a0f";
+      ports = [ "5683:5683/udp" ];
       volumes = [ "/persistence/home-assistant:/config" ];
     };
 
-    containers.zwave2mqtt = {
+    containers.zwave-js = {
       environment.TZ = config.time.timeZone;
-      extraOptions = [ "--network=${network_name}" "--device=/dev/serial/by-id/usb-0658_0200-if00:/dev/zwave" ];
-      image = "zwavejs/zwavejs2mqtt:latest@sha256:6ce9ecede861d937532153e5e47570f3c5669f9e93c12870279a5048a4e0686f";
-      volumes = [ "/persistence/zwavejs2mqtt:/usr/src/app/store" ];
+      extraOptions = [
+        "--network=${network_name}"
+        "--device=/dev/serial/by-id/usb-0658_0200-if00:/dev/zwave"
+      ];
+      image = "zwavejs/zwave-js-ui:8.23.1@sha256:197d2ba19c2fdb86180441f2ba052df0ab6d562ef9b9e1ef41b25ca820729e41";
+      volumes = [ "/persistence/zwave-js:/usr/src/app/store" ];
     };
 
     containers.signal-cli-rest-api = {
-      image = "bbernhard/signal-cli-rest-api:latest@sha256:dd5365eabb0e70b791bf0ec00b087310efb2d75fbed9f58df56f7f2763aca913";
+      image = "bbernhard/signal-cli-rest-api:0.67@sha256:70871b504478a74e5ab30b6d94130d355d32300893ab2254e9aea63264121d31";
       extraOptions = [ "--network=${network_name}" ];
-      environment.MODE = "json-rpc";
+      environment.MODE = "native";
+      environment.AUTO_RECEIVE_SCHEDULE = "0 22 * * *";
       volumes = [ "/persistence/signal-cli-rest-api:/home/.local/share/signal-cli" ];
+    };
+
+    containers.rtl-433 = {
+      cmd = [
+        "-Mtime:unix:usec:utc"
+        "-Mbits"
+        "-Mlevel"
+        "-Mprotocol"
+        "-Mstats:2:300"
+        "-Fmqtt://mosquitto:1883,retain=1"
+      ];
+      dependsOn = [ "mosquitto" ];
+      image = "hertzg/rtl_433:22.11-alpine@sha256:6b5c681e507f5355f7c23bb7d662d63d80a15e13e1a73deb5bbcf1437a4fba25";
+      extraOptions = [
+        "--privileged"
+        "--network=${network_name}"
+      ];
+      volumes = ["/dev/bus/usb:/dev/bus/usb"];
+    };
+
+    containers.rtl-433-mqtt-autodiscovery = {
+      dependsOn = [ "mosquitto" ];
+      image = "ghcr.io/pbkhrv/rtl_433-hass-addons-rtl_433_mqtt_autodiscovery-amd64:0.6.0@sha256:172e9636ed002bc5f8b6527ee4c488172ad14737a09e8b50f6f768e15f460774";
+      extraOptions = [ "--network=${network_name}" ];
+      environment.MQTT_HOST = "mosquitto";
+      environment.MQTT_PORT = "1883";
+      environment.DISCOVERY_INTERVAL = "60";
     };
   };
 }

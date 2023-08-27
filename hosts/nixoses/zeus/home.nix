@@ -7,10 +7,9 @@ with lib;
 {
   imports = [
     soxincfg.nixosModules.profiles.myself
-    soxincfg.nixosModules.profiles.work.keeptruckin
-    soxincfg.nixosModules.profiles.work.ulta
     soxincfg.nixosModules.profiles.workstation.nixos.local
-  ];
+  ]
+  ++ (soxincfg.nixosModules.profiles.work.imports { hostName = "zeus"; });
 
   # Make sure GnuPG is able to pick up the right card (Yubikey)
   programs.gpg.scdaemonSettings =
@@ -58,4 +57,6 @@ with lib;
     #   };
     # };
   };
+
+  home.stateVersion = "23.05";
 }

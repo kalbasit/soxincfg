@@ -9,12 +9,15 @@ in
 
     ./hardware-configuration.nix
     ./containers.nix
+    ./unifi.nix
   ];
 
   # load YL's home-manager configuration
   home-manager.users.yl = import ./home.nix { inherit soxincfg; };
 
   soxin.hardware.lowbatt.enable = true;
+
+  environment.systemPackages = [ pkgs.speedtest-cli ];
 
   sops.secrets = {
     "networking.wireless.environmentFile" = { inherit sopsFile; };
@@ -24,16 +27,37 @@ in
   # on my network and containers.
   systemd.services.tailscaled.restartIfChanged = false;
 
+  # Disable firewall for now
+  # TODO: Fix the issue and re-enable the firewall.
+  # When the firewall is open, I can't reach the right ports on the ifcsn0
+  # interface. It's possible that I need to define that on the interface
+  # directly.
+  networking.firewall.enable = false;
+
   # define the networking by hand
   networking.wireless = {
     enable = true;
     environmentFile = "/run/secrets/networking.wireless.environmentFile";
     networks = {
-      "Nasreddine-Office" = {
-        psk = "@PSK_NASREDDINE_OFFICE@";
+      "Nasreddine" = {
+        psk = "@PSK_NASREDDINE@";
       };
     };
   };
 
-  system.stateVersion = "21.11";
+  networking.vlans = {
+    ifcsn0 = {
+      id = 50;
+      interface = "enp0s31f6";
+    };
+  };
+
+  networking.interfaces = {
+    ifcsn0 = {
+      useDHCP = true;
+      macAddress = "e8:6a:64:cf:ff:8a";
+    };
+  };
+
+  system.stateVersion = "23.05";
 }

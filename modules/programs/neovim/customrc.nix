@@ -124,8 +124,8 @@
   """"""""""
 
   " base64 encode/decode
-  vnoremap <leader>d64 y:let @"=system('base64 -w 0', @")<cr>gvP
-  vnoremap <leader>e64 y:let @"=system('base64 --decode', @")<cr>gvP
+  vnoremap <leader>d64 y:let @"=system('base64 --decode', @")<cr>gvP
+  vnoremap <leader>e64 y:let @"=system('base64 -w 0', @")<cr>gvP
 
   " open a non-existant file
   noremap <leader>gf :e <cfile><cr>
@@ -171,7 +171,8 @@
   nmap <silent> <leader>ww :wall<cr>
 
   " Wipe out all buffers
-  nmap <silent> <leader>wa :execute 'bdelete' join(filter(range(1, bufnr('$')), 'bufexists(v:val) && getbufvar(v:val, "&buftype") isnot# "terminal"'))<cr>
+  nmap <silent> <leader>wa :%bd<cr>
+  nmap <silent> <leader>fwa :%bd!<cr>
 
   " clear the search buffer when hitting return
   nnoremap <CR> :nohlsearch<cr>

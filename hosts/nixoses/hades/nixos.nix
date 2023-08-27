@@ -11,10 +11,6 @@ in
 {
   imports = [
     soxincfg.nixosModules.profiles.myself
-    soxincfg.nixosModules.profiles.work.arklight
-    soxincfg.nixosModules.profiles.work.keeptruckin
-    soxincfg.nixosModules.profiles.work.onetouchpoint
-    soxincfg.nixosModules.profiles.work.ulta
     soxincfg.nixosModules.profiles.workstation.nixos.local
 
     nixos-hardware.nixosModules.common-cpu-intel
@@ -22,8 +18,20 @@ in
     nixos-hardware.nixosModules.common-pc-ssd
 
     ./hardware-configuration.nix
+    ./prometheus.nix
     ./win10.nix
-  ];
+  ]
+  ++ (soxincfg.nixosModules.profiles.work.imports { hostName = "hades"; });
+
+  # enable twingate
+  # TODO: https://github.com/NixOS/nixpkgs/pull/144455
+  soxincfg.services.twingate.enable = true;
+
+  services.foldingathome = {
+    daemonNiceLevel = 19;
+    enable = true;
+    user = "Wael_Nasreddine";
+  };
 
   # TODO: Remove this once I can work out:
   #   - How to ssh into my machine if U2F is required.
@@ -80,5 +88,5 @@ in
     yl:*,4uA7dsphf1nPxyQ6ncgKrOGi3qwGxHnzq9bweBisoz1Dl5ocpv9r8EnJX/GOWGrNtoXodSlSAhZ25CZOghx0Xw==,es256,+presence
   '';
 
-  system.stateVersion = "21.11";
+  system.stateVersion = "23.05";
 }

@@ -25,15 +25,6 @@ mapAttrs
   # x86_64-linux
   ###
 
-  achilles =
-    let
-      system = "x86_64-linux";
-    in
-    {
-      inherit channelName system;
-      modules = [ ./achilles/nixos.nix ];
-    };
-
   hades =
     let
       system = "x86_64-linux";
@@ -41,6 +32,33 @@ mapAttrs
     {
       inherit channelName system;
       modules = [ ./hades/nixos.nix ];
+
+      deploy = {
+        hostname = "hades.wael-nasreddine.gmail.com.beta.tailscale.net";
+        profiles.system = {
+          sshUser = "root";
+          user = "root";
+          path = deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.hades;
+        };
+      };
+    };
+
+  hercules =
+    let
+      system = "x86_64-linux";
+    in
+    {
+      inherit channelName system;
+      modules = [ ./hercules/nixos.nix ];
+
+      deploy = {
+        hostname = "hercules.wael-nasreddine.gmail.com.beta.tailscale.net";
+        profiles.system = {
+          sshUser = "root";
+          user = "root";
+          path = deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.hercules;
+        };
+      };
     };
 
   prometheus =
@@ -57,24 +75,6 @@ mapAttrs
           sshUser = "root";
           user = "root";
           path = deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.prometheus;
-        };
-      };
-    };
-
-  x86-64-linux-0 =
-    let
-      system = "x86_64-linux";
-    in
-    {
-      inherit channelName system;
-      modules = [ ./x86-64-linux-0/nixos.nix ];
-
-      deploy = {
-        hostname = "x86-64-linux-0.wael-nasreddine.gmail.com.beta.tailscale.net";
-        profiles.system = {
-          sshUser = "root";
-          user = "root";
-          path = deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.x86-64-linux-0;
         };
       };
     };
@@ -101,24 +101,6 @@ mapAttrs
   # aarch64-linux
   ###
 
-  aarch64-linux-0 =
-    let
-      system = "aarch64-linux";
-    in
-    {
-      inherit channelName system;
-      modules = [ ./aarch64-linux-0/nixos.nix ];
-
-      deploy = {
-        hostname = "aarch64-linux-0.wael-nasreddine.gmail.com.beta.tailscale.net";
-        profiles.system = {
-          sshUser = "root";
-          user = "root";
-          path = deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.aarch64-linux-0;
-        };
-      };
-    };
-
   kore =
     let
       system = "aarch64-linux";
@@ -133,6 +115,7 @@ mapAttrs
           sshUser = "root";
           user = "root";
           path = deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.kore;
+          confirmTimeout = 5 * 60;
         };
       };
     };

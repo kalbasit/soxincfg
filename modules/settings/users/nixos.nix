@@ -13,20 +13,11 @@ let
     types
     ;
 
-  defaultGroups = [
-    "builders"
-    "dialout"
-    "fuse"
-    "plugdev" # to access ZSA keyboards.
-    "users"
-    "video"
-  ];
-
   makeUser = userName: { isAdmin, sshKeys, ... }@user:
     {
       group = "mine";
       extraGroups =
-        defaultGroups
+        cfg.defaultGroups
         ++ cfg.groups
         ++ (optionals isAdmin [ "wheel" ]);
 
@@ -39,29 +30,46 @@ let
 
 in
 {
-  options.soxincfg.settings.users.users = mkOption {
-    type = types.attrs;
-    default = { };
-    description = ''
-      The list of users to create.
-    '';
+  options.soxincfg.settings.users = {
+    defaultGroups = mkOption {
+      type = with types; listOf string;
+      default = [
+        "builders"
+        "dialout"
+        "fuse"
+        "users"
+        "video"
+      ];
 
-    # for each user, first use the default, then make sure the name is always
-    # set and finally pass the user. Each step will override attributes from
-    # the previous one, so it's important the passed-in value is evaluated
-    # last.
-    apply = users:
-      let
-        defaults = name: {
-          inherit name;
-          hashedPassword = "";
-          home = "/home/${name}";
-          isAdmin = false;
-          isNixTrustedUser = false;
-          sshKeys = [ ];
-        };
-      in
-      mapAttrs (name: user: recursiveUpdate (defaults name) user) users;
+      description = ''
+        The list of groups to add Soxin users to by default.
+      '';
+    };
+
+    users = mkOption {
+      type = types.attrs;
+      default = { };
+      description = ''
+        The list of users to create.
+      '';
+
+      # for each user, first use the default, then make sure the name is always
+      # set and finally pass the user. Each step will override attributes from
+      # the previous one, so it's important the passed-in value is evaluated
+      # last.
+      apply = users:
+        let
+          defaults = name: {
+            inherit name;
+            hashedPassword = "";
+            home = "/home/${name}";
+            isAdmin = false;
+            isNixTrustedUser = false;
+            sshKeys = [ ];
+          };
+        in
+        mapAttrs (name: user: recursiveUpdate (defaults name) user) users;
+    };
   };
 
   config = mkIf cfg.enable {

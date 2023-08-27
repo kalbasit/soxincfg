@@ -28,11 +28,14 @@
   i3 = ./services/x11/window-managers/i3.nix;
   iscsid = ./services/iscsid.nix;
   nextcloud = ./services/nextcloud;
+  sleep-on-lan = ./services/sleep-on-lan;
+  twingate = ./services/networking/twingate.nix;
 
   # settings
   fonts = ./settings/fonts;
   gtk = ./settings/gtk;
   keyboard = ./settings/keyboard;
+  networking = ./settings/networking;
   nix = ./settings/nix;
   users = ./settings/users;
   home-manager-settings = ./settings/home-manager;

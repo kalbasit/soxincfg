@@ -25,7 +25,9 @@ in
         bluetooth.enable = true;
         fwupd.enable = true;
         lowbatt.enable = true;
+        rtl-sdr.enable = true;
         sound.enable = true;
+        zsa.enable = true;
       };
 
       programs = {
@@ -35,16 +37,14 @@ in
           enable = true;
           setMimeList = true;
           browsers = {
-            "chromium@personal" = entryBefore [ "vivaldi@personal" ] { };
-            "vivaldi@personal" = entryBefore [ "firefox@personal" ] { };
-            "firefox@personal" = entryBefore [ "brave@personal" ] { };
-            "brave@personal" = entryBefore [ "firefox@private" ] { };
-            "firefox@private" = entryBefore [ "firefox@anya" ] { };
-            "firefox@anya" = entryAnywhere { };
-            "firefox@vanya" = entryAnywhere { };
-            "firefox@tanya" = entryAnywhere { };
-            "firefox@ihab" = entryAnywhere { };
-            "firefox@sahar" = entryAnywhere { };
+            "chromium@personal" = entryBefore [ "firefox@personal" ] { };
+            "firefox@personal" = entryBefore [ "chromium@private" ] { };
+            "chromium@private" = entryBefore [ "chromium@anya" ] { };
+            "chromium@anya" = entryAnywhere { };
+            "chromium@vanya" = entryAnywhere { };
+            "chromium@tanya" = entryAnywhere { };
+            "chromium@ihab" = entryAnywhere { };
+            "chromium@sahar" = entryAnywhere { };
           };
         };
       };
@@ -160,6 +160,7 @@ in
       };
 
       services = {
+        sleep-on-lan.enable = true;
         xserver.windowManager.i3.enable = true;
       };
 
@@ -167,6 +168,7 @@ in
         fonts.enable = true;
         gtk.enable = true;
         nix.distributed-builds.enable = true;
+        networking.nextdns.enable = true;
       };
     };
   };

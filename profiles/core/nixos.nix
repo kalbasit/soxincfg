@@ -5,7 +5,7 @@ let
 in
 {
   # enable the Nix sandbox
-  nix.useSandbox = true;
+  nix.settings.sandbox = true;
 
   # setup NIX_PATH to allow users to access the nixpkgs that built the system
   nix.nixPath = [
@@ -15,7 +15,7 @@ in
     "soxincfg=${soxincfg}"
   ];
 
-  boot.tmpOnTmpfs = true;
+  boot.tmp.useTmpfs = true;
 
   security.pki.certificates = [ soxincfg.vars.assets.nasreddineCA ];
 

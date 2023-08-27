@@ -31,6 +31,7 @@ in
         traces-vim
         vim-airline-themes
         vim-eunuch
+        vim-go
         vim-nix
         vim-signify
         vim-speeddating
@@ -39,108 +40,122 @@ in
         {
           plugin = zoomwintab-vim;
           config = ''
-            nmap <Leader>zo :ZoomWinTabToggle<CR>
+            vim.keymap.set('n', '<Leader>zo', ':ZoomWinTabToggle<CR>')
           '';
+          type = "lua";
         }
 
         {
           plugin = surround;
           config = ''
-            let g:surround_no_mappings = 1
+            vim.g.surround_no_mappings = 1
 
-            " Copied from https://github.com/tpope/vim-surround/blob/e49d6c2459e0f5569ff2d533b4df995dd7f98313/plugin/surround.vim#L578-L596
-            " TODO: complete as needed
-            nmap ws  <Plug>Csurround
+            -- Copied from https://github.com/tpope/vim-surround/blob/e49d6c2459e0f5569ff2d533b4df995dd7f98313/plugin/surround.vim#L578-L596
+            -- TODO: complete as needed
+            vim.keymap.set('n', 'ws', '<Plug>Csurround')
           '';
+          type = "lua";
         }
 
         {
           plugin = multiple-cursors;
           config = ''
-            let g:multi_cursor_use_default_mapping=0
+            vim.g.multi_cursor_use_default_mapping = 0
 
-            " Default mapping
-            let g:multi_cursor_start_word_key      = '<C-n>'
-            let g:multi_cursor_start_key           = 'g<C-n>'
-            let g:multi_cursor_next_key            = '<C-n>'
-            let g:multi_cursor_prev_key            = '<C-p>'
-            let g:multi_cursor_skip_key            = '<C-x>'
-            let g:multi_cursor_quit_key            = '<Esc>'
+              -- Default mapping
+              vim.g.multi_cursor_start_word_key      = '<C-n>'
+              vim.g.multi_cursor_start_key           = 'g<C-n>'
+              vim.g.multi_cursor_next_key            = '<C-n>'
+              vim.g.multi_cursor_prev_key            = '<C-p>'
+              vim.g.multi_cursor_skip_key            = '<C-x>'
+              vim.g.multi_cursor_quit_key            = '<Esc>'
           '';
+          type = "lua";
         }
 
         {
           plugin = gundo-vim;
           config = ''
-            nmap <Leader>go :GundoToggle<CR>
+            vim.keymap.set('n', '<Leader>go', ':GundoToggle<CR>')
           '';
+          type = "lua";
         }
 
         {
           plugin = vim-gist;
           config = ''
-            let g:gist_clip_command = '${getBin pkgs.xsel}/bin/xsel -bi'
-            let g:gist_show_privates = 1
-            let g:gist_post_private = 1
+            vim.g.gist_clip_command = '${getBin pkgs.xsel}/bin/xsel -bi'
+            vim.g.gist_show_privates = 1
+            vim.g.gist_post_private = 1
           '';
+          type = "lua";
         }
 
         {
           plugin = auto-pairs;
           config =
             ''
-              " do not jump to the next line if there's only whitespace after the closing
-              " pair
-              let g:AutoPairsMultilineClose = 0
+              -- do not jump to the next line if there's only whitespace after the closing
+              -- pair
+              vim.g.AutoPairsMultilineClose = 0
             '' +
             (optionalString isColemak ''
-              " disable shortcuts, <A-n> conflicts with Colemak movement
-              let g:AutoPairsShortcutJump = ""
+              -- disable shortcuts, <A-n> conflicts with Colemak movement
+              vim.gAutoPairsShortcutJump = ""
             '');
+          type = "lua";
         }
 
         {
           plugin = easy-align;
           config = ''
-            vmap ga <Plug>(EasyAlign)
+            vim.keymap.set('v', 'ga', '<Plug>(EasyAlign)')
           '';
+          type = "lua";
         }
 
         {
           plugin = easymotion;
           config = ''
-            " change the default prefix to \\
-            map \\ <Plug>(easymotion-prefix)
+            -- change the default prefix to \\
+            vim.keymap.set(''', '\\\\', '<Plug>(easymotion-prefix)')
           '';
+          type = "lua";
         }
 
         {
           plugin = vim-airline;
           config = ''
-            " show tabline
-            let g:airline#extensions#tabline#enabled = 1
+            -- show tabline
+            vim.cmd 'let g:airline#extensions#tabline#enabled = 1'
           '';
+          type = "lua";
         }
 
         {
           plugin = vim-better-whitespace;
           config = ''
-            let g:better_whitespace_enabled=1
-            let g:strip_whitespace_on_save=1
-            let g:strip_whitespace_confirm=0
-            let g:better_whitespace_filetypes_blacklist=['gitsendemail', 'diff', 'gitcommit', 'unite', 'qf', 'help', 'mail']
+            vim.g.better_whitespace_enabled = 1
+            vim.g.strip_whitespace_on_save = 1
+            vim.g.strip_whitespace_confirm = 0
+            vim.cmd "let g:better_whitespace_filetypes_blacklist = ['gitsendemail', 'diff', 'gitcommit', 'unite', 'qf', 'help', 'mail']"
           '';
+          type = "lua";
         }
 
         {
           plugin = vim-fugitive;
           config = ''
-            " ask Fugitive to not set any mappings
-            let g:fugitive_no_maps = 1
+            -- ask Fugitive to not set any mappings
+            vim.g.fugitive_no_maps = 1
 
-            " Delete certain buffers in order to not cluttering up the buffer list
-            au BufReadPost fugitive://* set bufhidden=delete
+            -- Delete certain buffers in order to not cluttering up the buffer list
+            vim.api.nvim_create_autocmd('BufReadPost', {
+              pattern = 'fugitive://*',
+              command = 'set bufhidden=delete'
+            })
           '';
+          type = "lua";
         }
       ]
       ++ (optionals isColemak [ vim-colemak ]);

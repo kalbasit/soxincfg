@@ -18,6 +18,7 @@ in
   home.packages = with pkgs; [
     amazon-ecr-credential-helper
     arduino-cli
+    audacity
     binutils # for strings
     bitwarden-cli
     docker-credential-gcr
@@ -34,6 +35,7 @@ in
     go
     hexyl # hex viewer with nice colors
     imagemagick # for convert
+    inetutils # for telnet
     jq
     jrnl
     killall
@@ -45,13 +47,17 @@ in
     nix-index
     nix-review
     nix-zsh-completions
+    nixos-generators
     nur.repos.kalbasit.nixify
     nur.repos.kalbasit.swm
     obsidian
+    scrcpy # mirror Android device via USB
+    screen # needed to open up terminal devices
+    signal-cli
     todoist
     unzip
-    vgo2nix
     weechat
+    synology-drive-client
     xsel
   ] ++ (optionals stdenv.isLinux [
     #
@@ -60,6 +66,8 @@ in
 
     (retroarch.override { cores = with libretro; [ beetle-psx beetle-psx-hw beetle-snes ]; })
     _2048-in-terminal
+    android-studio
+    android-tools
     arduino
     blender # 3d modeling software
     cura # slicing software for 3d printers
@@ -68,20 +76,25 @@ in
     filezilla
     glances
     gotop
-    jetbrains.goland
-    jetbrains.idea-ultimate
-    jetbrains.ruby-mine
+    inotify-tools
+    # jetbrains.goland
+    # jetbrains.idea-ultimate
+    # jetbrains.ruby-mine
     kdenlive # video editing
     libreoffice
     obs-studio # video recording
     protonvpn-cli
-    prusa-slicer # slicing software for 3d printers
     remmina
     slack
-    todoist-electron
-    vivaldi
-    vivaldi-ffmpeg-codecs
-    # vivaldi-widevine # TODO: Not working on 22.05
+    smartmontools
+    xfce.thunar
+    xfce.thunar-volman
+    xfce.thunar-archive-plugin
+    xfce.thunar-media-tags-plugin
+    # teams
+    # todoist-electron
+    go-mtpfs
+    whatsapp-for-linux
     xkb-switch # Switch your X keyboard layouts from the command line
     zoom-us
   ]);

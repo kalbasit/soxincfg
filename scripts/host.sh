@@ -71,17 +71,17 @@ case "${action}" in
     build)
         >&2 echo "Building $host"
         if isNixOS; then
-            nix build ".#nixosConfigurations.${host}.config.system.build.toplevel" --show-trace
+            nix build "path:.#nixosConfigurations.${host}.config.system.build.toplevel"
         elif isDarwin; then
-            nix build ".#darwinConfigurations.${host}.system" --show-trace
+            nix build "path:.#darwinConfigurations.${host}.system" --show-trace
         else
-            home-manager build --flake ".#${host}" # --show-trace
+            nix build "path:.#homeConfigurations.${host}.activationPackage"
         fi
         ;;
     test)
         >&2 echo "Testing $host"
         if isNixOS; then
-            nixos-rebuild --use-remote-sudo --flake ".#${host}" test # --show-trace
+            nixos-rebuild --use-remote-sudo --flake "path:.#${host}" test # --show-trace
         elif isDarwin; then
             >&2 echo test is not support on nix-darwin
             exit 1
@@ -93,19 +93,20 @@ case "${action}" in
     switch)
         >&2 echo "Switching $host"
         if isNixOS; then
-            nixos-rebuild --use-remote-sudo --flake ".#${host}" switch # --show-trace
+            nixos-rebuild --use-remote-sudo --flake "path:.#${host}" switch # --show-trace
         elif isDarwin; then
             "$0" build "$host"
             sudo ./result/activate
             ./result/activate-user
         else
-            home-manager switch --flake ".#${host}"
+            home-manager switch --flake "path:.#${host}"
+            $(nix path-info "path:.#homeConfigurations.${host}.activationPackage")/activate
         fi
         ;;
     boot)
         >&2 echo "Booting $host"
         if isNixOS; then
-            nixos-rebuild --use-remote-sudo --flake ".#${host}" boot # --show-trace
+            nixos-rebuild --use-remote-sudo --flake "path:.#${host}" boot # --show-trace
         elif isDarwin; then
             >&2 echo boot is not support on nix-darwin
             exit 1

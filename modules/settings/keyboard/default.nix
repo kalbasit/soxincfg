@@ -30,81 +30,27 @@ in
 
     (optionalAttrs (mode == "home-manager") (mkIf cfg.zsa.enable {
       home.packages = with pkgs; [ wally-cli ];
+
+      # Force the actual keyboard layout to be standard QWERTY.
+      # This is really annoying but neither my keyboard (ErgoDox EZ) nor my
+      # Onlykey support Colemak keymap so they're configured to write in US
+      # layout but I still need NeoVim and everything else to configure
+      # themselves as if it's Colemak layout as they rely on Soxin's
+      # configuration for that.
+      home.keyboard.variant = mkForce "";
     }))
 
     (optionalAttrs (mode == "NixOS") (mkIf cfg.zsa.enable {
       hardware.keyboard.zsa.enable = true;
-      services.udev.packages = singleton soxincfg.packages.${pkgs.system}.zsa-auto-us-layout-switcher;
 
-      systemd.services.zsa-auto-us-layout-switcher =
-        let
-          auto-switcher-start = pkgs.writeShellScript "zsa-auto-us-layout-switcher-start" ''
-            set -euo pipefail
-
-            log() {
-              >&2 echo "[zsa-auto-us-layout-switcher] $@"
-            }
-
-            log "Setting the keyboard layout to colemak"
-            setxkbmap -layout us -variant colemak
-
-            log "Setting up the options"
-            setxkbmap -option backspace:nocaps
-
-            zsa_id=
-            retries=0
-
-            while [[ -z "$zsa_id" ]] && [[ $retries -lt 20 ]]; do
-              log "Getting the ID of the keyboard"
-              zsa_id="$( xinput list | grep 'ZSA Technology Labs Inc ErgoDox EZ Glow' | grep keyboard | grep -v 'Glow Consumer\|Glow System\|Glow Keyboard' | awk -F'=' '{print $2}' | awk '{print $1}' || true )"
-              retries=$(( retries + 1 ))
-              sleep 1
-            done
-
-            if [[ -n "$zsa_id" ]]; then
-              log "Setting up the US layout onto the keyboard $zsa_id"
-              setxkbmap -device "$zsa_id" -layout us
-            else
-              log "No ID were found for the ErgoDox EZ Glow"
-              exit 1
-            fi
-          '';
-
-          auto-switcher-stop = pkgs.writeShellScript "zsa-auto-us-layout-switcher-start" ''
-            set -euo pipefail
-
-            log() {
-              >&2 echo "[zsa-auto-us-layout-switcher] $@"
-            }
-
-            log "Setting the keyboard layout to colemak"
-            setxkbmap -layout us -variant colemak
-
-            log "Setting up the options"
-            setxkbmap -option backspace:nocaps
-          '';
-        in
-        {
-          after = [ "graphical-session.target" ];
-
-          environment = {
-            # TODO: This should be customizable
-            Xauthority = "/yl/.Xauthority";
-            # TODO: This should be customizable
-            DISPLAY = ":0";
-          };
-
-          path = with pkgs; [ gawk xorg.xinput xorg.setxkbmap ];
-
-          serviceConfig = {
-            ExecStart = auto-switcher-start;
-            ExecStop = auto-switcher-stop;
-            RemainAfterExit = true;
-            Type = "oneshot";
-            # TODO: This should be customizable
-            User = "yl";
-          };
-        };
+      # Force the actual keyboard layout to be standard QWERTY.
+      # This is really annoying but neither my keyboard (ErgoDox EZ) nor my
+      # Onlykey support Colemak keymap so they're configured to write in US
+      # layout but I still need NeoVim and everything else to configure
+      # themselves as if it's Colemak layout as they rely on Soxin's
+      # configuration for that.
+      services.xserver.xkbVariant = mkForce "";
+      console.keyMap = mkForce "us";
     }))
   ]);
 }

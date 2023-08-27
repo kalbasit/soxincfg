@@ -6,18 +6,11 @@
     flake-utils-plus.url = "github:gytis-ivaskevicius/flake-utils-plus";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs.url = "github:NixOS/nixpkgs/release-22.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/release-23.05";
     nur.url = "github:nix-community/NUR";
 
     home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-      };
-    };
-
-    darwin = {
-      url = "github:LnL7/nix-darwin";
+      url = "github:nix-community/home-manager/release-23.05";
       inputs = {
         nixpkgs.follows = "nixpkgs";
       };
@@ -26,7 +19,6 @@
     soxin = {
       url = "github:SoxinOS/soxin";
       inputs = {
-        darwin.follows = "darwin";
         deploy-rs.follows = "deploy-rs";
         flake-utils-plus.follows = "flake-utils-plus";
         home-manager.follows = "home-manager";
@@ -56,6 +48,7 @@
           overlaysBuilder = channels: [
             (_: super: {
               inherit (channels.nixpkgs-unstable)
+                # inherit packages from unstable.
                 ;
             })
           ];
@@ -84,47 +77,47 @@
       nixosModule = nixosModules.soxincfg;
 
     in
-    soxin.lib.mkFlake {
-      inherit channels channelsConfig inputs withDeploy withSops nixosModules nixosModule;
+    soxin.lib.mkFlake
+      {
+        inherit channels channelsConfig inputs withDeploy withSops nixosModules nixosModule;
 
-      # add Soxin's main module to all builders
-      extraGlobalModules = [
-        nixosModule
-        nixosModules.profiles.core
+        # add Soxin's main module to all builders
+        extraGlobalModules = [
+          nixosModule
+          nixosModules.profiles.core
 
-        # import mysoxin
-        # TODO: Get rid of this!
-        nixosModules.soxin
-      ];
+          # import mysoxin
+          # TODO: Get rid of this!
+          nixosModules.soxin
+        ];
 
-      # Supported systems, used for packages, apps, devShell and multiple other definitions. Defaults to `flake-utils.lib.defaultSystems`
-      supportedSystems = [
-        "aarch64-darwin"
-        "aarch64-linux"
-        "x86_64-linux"
-        "x86_64-darwin"
-      ];
+        # Supported systems, used for packages, apps, devShell and multiple other definitions. Defaults to `flake-utils.lib.defaultSystems`
+        supportedSystems = [
+          "aarch64-linux"
+          "x86_64-linux"
+          "x86_64-darwin"
+        ];
 
-      devShellBuilder = channels: with channels.nixpkgs; mkShell {
-        buildInputs = [ arion ];
+        devShellBuilder = channels: with channels.nixpkgs; mkShell {
+          buildInputs = [ arion ];
+        };
+
+        # pull in all hosts
+        hosts = import ./hosts inputs;
+
+        # create all home-managers
+        home-managers = import ./home-managers inputs;
+
+        # Evaluates to `packages.<system>.<pname> = <unstable-channel-reference>.<pname>`.
+        packagesBuilder = channels: flattenTree (import ./pkgs channels);
+
+        # declare the vars
+        vars = import ./vars inputs;
+
+        # include all overlays
+        overlay = import ./overlays;
+
+        # set the nixos specialArgs
+        nixosSpecialArgs = { inherit nixos-hardware; };
       };
-
-      # pull in all hosts
-      hosts = import ./hosts inputs;
-
-      # create all home-managers
-      home-managers = import ./home-managers inputs;
-
-      # Evaluates to `packages.<system>.<pname> = <unstable-channel-reference>.<pname>`.
-      packagesBuilder = channels: flattenTree (import ./pkgs channels);
-
-      # declare the vars
-      vars = import ./vars inputs;
-
-      # include all overlays
-      overlay = import ./overlays;
-
-      # set the nixos specialArgs
-      nixosSpecialArgs = { inherit nixos-hardware; };
-    };
 }

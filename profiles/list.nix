@@ -1,5 +1,6 @@
 {
   core = ./core;
+  miniserver = ./miniserver;
   myself = ./myself;
   neovim = ./neovim;
   server = ./server;

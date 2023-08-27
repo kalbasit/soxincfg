@@ -7,15 +7,14 @@ in
 {
   imports = [
     soxincfg.nixosModules.profiles.myself
-    soxincfg.nixosModules.profiles.work.keeptruckin
-    soxincfg.nixosModules.profiles.work.ulta
     soxincfg.nixosModules.profiles.workstation.nixos.local
 
     nixos-hardware.nixosModules.common-cpu-intel
     nixos-hardware.nixosModules.common-pc-ssd
 
     ./hardware-configuration.nix
-  ];
+  ]
+  ++ (soxincfg.nixosModules.profiles.work.imports { hostName = "zeus"; });
 
   # force the keyboard to be us on the console to work correctly with my zsa
   console.keyMap = mkForce "us";
@@ -29,7 +28,7 @@ in
   soxincfg.services.iscsid.enable = true;
 
   # Setup the builder account
-  nix.trustedUsers = [ "root" "@wheel" "@builders" ];
+  nix.settings.trusted-users = [ "root" "@wheel" "@builders" ];
   users.users = {
     builder = {
       extraGroups = [ "builders" ];
@@ -56,22 +55,11 @@ in
   };
   systemd.services.sshd = { after = [ "network-interfaces.target" ]; serviceConfig.RestartSec = "5"; };
 
-  # Open the SSH/Eternal-Terminal ports
-  networking.firewall.interfaces.ifcadmin.allowedTCPPorts = [
-    config.services.eternal-terminal.port
-  ] ++ (map (c: c.port) config.services.openssh.listenAddresses);
-
   #
   # Network
   #
 
   networking.vlans = {
-    # The ADMIN interface
-    ifcadmin = {
-      id = 2;
-      interface = "enp0s31f6";
-    };
-
     # SN0 interface
     ifcsn0 = {
       id = 50;
@@ -101,12 +89,9 @@ in
     # do not boot the bond interface itself
     ifcbond0 = { useDHCP = false; };
 
-    # The ADMIN interface
-    ifcadmin.useDHCP = true;
-
     # SN0 address
     ifcsn0.useDHCP = true;
   };
 
-  system.stateVersion = "21.05";
+  system.stateVersion = "23.05";
 }

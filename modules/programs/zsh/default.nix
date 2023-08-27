@@ -241,26 +241,8 @@ in
               src = fetchFromGitHub {
                 owner = "b4b4r07";
                 repo = "enhancd";
-                rev = "fd805158ea19d640f8e7713230532bc95d379ddc";
-                sha256 = "0pc19dkp5qah2iv92pzrgfygq83vjq1i26ny97p8dw6hfgpyg04l";
-              };
-            }
-            {
-              name = "gitit";
-              src = fetchFromGitHub {
-                owner = "peterhurford";
-                repo = "git-it-on.zsh";
-                rev = "4827030e1ead6124e3e7c575c0dd375a9c6081a2";
-                sha256 = "01xsqhygbxmv38vwfzvs7b16iq130d2r917a5dnx8l4aijx282j2";
-              };
-            }
-            {
-              name = "solarized-man";
-              src = fetchFromGitHub {
-                owner = "zlsun";
-                repo = "solarized-man";
-                rev = "a902b64696271efee95f37d45589078fdfbbddc5";
-                sha256 = "04gm4qm17s49s6h9klbifgilxv8i45sz3rg521dwm599gl3fgmnv";
+                rev = "v2.5.1";
+                sha256 = "sha256-kaintLXSfLH7zdLtcoZfVNobCJCap0S/Ldq85wd3krI=";
               };
             }
             {
@@ -268,8 +250,8 @@ in
               src = fetchFromGitHub {
                 owner = "zsh-users";
                 repo = "zsh-completions";
-                rev = "0.27.0";
-                sha256 = "1c2xx9bkkvyy0c6aq9vv3fjw7snlm0m5bjygfk5391qgjpvchd29";
+                rev = "0.34.0";
+                sha256 = "sha256-qSobM4PRXjfsvoXY6ENqJGI9NEAaFFzlij6MPeTfT0o=";
               };
             }
             {
@@ -277,8 +259,8 @@ in
               src = fetchFromGitHub {
                 owner = "zsh-users";
                 repo = "zsh-history-substring-search";
-                rev = "47a7d416c652a109f6e8856081abc042b50125f4";
-                sha256 = "1mvilqivq0qlsvx2rqn6xkxyf9yf4wj8r85qrxizkf0biyzyy4hl";
+                rev = "400e58a87f72ecec14f783fbd29bc6be4ff1641c";
+                sha256 = "sha256-GSEvgvgWi1rrsgikTzDXokHTROoyPRlU0FVpAoEmXG4=";
               };
             }
             {
@@ -286,8 +268,8 @@ in
               src = fetchFromGitHub {
                 owner = "zsh-users";
                 repo = "zsh-syntax-highlighting";
-                rev = "db6cac391bee957c20ff3175b2f03c4817253e60";
-                sha256 = "0d9nf3aljqmpz2kjarsrb5nv4rjy8jnrkqdlalwm2299jklbsnmw";
+                rev = "754cefe0181a7acd42fdcb357a67d0217291ac47";
+                sha256 = "sha256-kWgPe7QJljERzcv4bYbHteNJIxCehaTu4xU9r64gUM4=";
               };
             }
             {
@@ -295,8 +277,8 @@ in
               src = fetchFromGitHub {
                 owner = "chisui";
                 repo = "zsh-nix-shell";
-                rev = "03a1487655c96a17c00e8c81efdd8555829715f8";
-                sha256 = "1avnmkjh0zh6wmm87njprna1zy4fb7cpzcp8q7y03nw3aq22q4ms";
+                rev = "v0.6.0";
+                sha256 = "sha256-B0mdmIqefbm5H8wSG1h41c/J4shA186OyqvivmSK42Q=";
               };
             }
             {

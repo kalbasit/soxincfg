@@ -22,13 +22,10 @@ let
 
   cfg = config.soxincfg.hardware.onlykey;
 
-  # TODO: Create a systemd user unit for this GnuPG agent.
-  # https://docs.crp.to/onlykey-agent.html#how-do-i-start-the-agent-as-a-systemd-unit
   gpg-agent-program = writeShellScript "run-onlykey-agent.sh" ''
     set -euo pipefail
 
     exec ${onlykey-agent}/bin/onlykey-gpg-agent \
-      -vv \
       --skey-slot=${toString cfg.gnupg-support.signing-key-slot} \
       --dkey-slot=${toString cfg.gnupg-support.decryption-key-slot} \
       $*

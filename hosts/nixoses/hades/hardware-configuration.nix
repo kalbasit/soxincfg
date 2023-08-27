@@ -12,6 +12,9 @@ let
       # YL's storage
       "/yl/storage" = { device = storgeDevice; subvol = "@home-kalbasit-storage"; };
 
+      # KT Gerrit
+      "/yl/code/repositories/gerrit.corp.ktdev.io" = { device = storgeDevice; subvol = "@kt-gerrit"; };
+
       # libvirt data
       "/var/lib/libvirt" = { device = storgeDevice; subvol = "@var-lib-libvirt"; };
     };
@@ -50,7 +53,7 @@ in
 
   boot.loader.systemd-boot.enable = false;
 
-  nix.maxJobs = 1;
+  nix.settings.max-jobs = 1;
 
   powerManagement.cpuFreqGovernor = "powersave";
 
@@ -76,6 +79,9 @@ in
       # Storage
 
       "/mnt/volumes/storage" = { device = storgeDevice; fsType = "btrfs"; };
+
+      # SoxinCFG secrets
+      "/yl/code/repositories/github.com/kalbasit/soxincfg/profiles/work/secret-store" = { device = "/yl/code/repositories/keybase/private/ylcodes/secrets/soxincfg/work/secret-store"; options = [ "bind" ]; };
     };
 
   swapDevices = [{ device = swapDevice; }];

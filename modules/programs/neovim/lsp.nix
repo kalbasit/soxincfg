@@ -61,34 +61,23 @@ in
           type = "lua";
         })
 
-        # TODO: Merge this with the one below. I only did this because I have
-        # config in two different languages.
         {
           plugin = nvim-lspconfig;
           config = ''
-            " Use <Tab> and <S-Tab> to navigate through popup menu
-            inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-            inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+            vim.o.foldmethod = 'expr'
+            vim.o.foldlevel = 10
+            vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
 
-            set foldmethod=expr
-            set foldlevel=10
-            set foldexpr=nvim_treesitter#foldexpr()
+            vim.keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', { noremap = true })
+            vim.keymap.set('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', { noremap = true })
+            vim.keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', { noremap = true })
+            vim.keymap.set('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', { noremap = true })
+            vim.keymap.set('n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<cr>', { noremap = true })
+            vim.keymap.set('n', '<leader>rn', '<cmd>lua vim.lsp.buf.rename()<cr>', { noremap = true })
+            vim.keymap.set('n', '<leader>f', '<cmd>lua vim.lsp.buf.formatting()<CR>', { noremap = true })
+            vim.keymap.set('n', '<leader>k', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', { noremap = true })
+            vim.keymap.set('n', '<leader>j', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', { noremap = true })
 
-            nnoremap K <cmd>lua vim.lsp.buf.hover()<CR>
-            nnoremap gD <cmd>lua vim.lsp.buf.declaration()<CR>
-            nnoremap gd <cmd>lua vim.lsp.buf.definition()<CR>
-            nnoremap gi <cmd>lua vim.lsp.buf.implementation()<CR>
-            nnoremap <leader>ca <cmd>lua vim.lsp.buf.code_action()<cr>
-            nnoremap <leader>rn <cmd>lua vim.lsp.buf.rename()<cr>
-            nnoremap <leader>f <cmd>lua vim.lsp.buf.formatting()<CR>
-            nnoremap <leader>k <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
-            nnoremap <leader>j <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
-          '';
-        }
-
-        {
-          plugin = nvim-lspconfig;
-          config = ''
             local lspconfig = require'lspconfig'
 
             --Tree sitter config
@@ -119,7 +108,7 @@ in
             }
 
             ${if cfg.completion.enable then ''
-              local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+              local capabilities = require('cmp_nvim_lsp').default_capabilities()
             '' else ""}
 
             ${if cfg.lsp.languages.bash then ''

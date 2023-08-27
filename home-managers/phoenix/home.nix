@@ -7,8 +7,6 @@ with lib;
     # TODO: requires sops support
     # soxincfg.nixosModules.profiles.myself
 
-    # soxincfg.nixosModules.profiles.work.keeptruckin
-
-    soxincfg.nixosModules.profiles.workstation.chromeos.local
+    soxincfg.nixosModules.profiles.workstation.linux.local
   ];
 }
