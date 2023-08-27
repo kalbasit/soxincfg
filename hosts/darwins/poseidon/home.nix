@@ -7,7 +7,6 @@ with lib;
 {
   imports = [
     soxincfg.nixosModules.profiles.myself
-    soxincfg.nixosModules.profiles.work.keeptruckin
     soxincfg.nixosModules.profiles.workstation.darwin.local
   ];
 }
