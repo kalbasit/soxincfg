@@ -27,7 +27,6 @@ in
     eternal-terminal
     file
     fx # JSON viewer
-    gdb
     gh # GitHub command line client
     gist
     git-quick-stats
@@ -57,7 +56,6 @@ in
     todoist
     unzip
     weechat
-    synology-drive-client
     xsel
   ] ++ (optionals stdenv.isLinux [
     #
@@ -74,6 +72,7 @@ in
     dnsutils # for dig
     esptool
     filezilla
+    gdb
     glances
     gotop
     inotify-tools
@@ -85,6 +84,7 @@ in
     obs-studio # video recording
     protonvpn-cli
     remmina
+    synology-drive-client
     slack
     smartmontools
     xfce.thunar
