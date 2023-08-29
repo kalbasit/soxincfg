@@ -1,4 +1,4 @@
-{ config, lib, pkgs, soxincfg, ... }:
+{ config, lib, pkgs, inputs, soxincfg, ... }:
 
 let
   inherit (lib)
@@ -16,5 +16,14 @@ in
 
   environment.systemPath = singleton "/etc/profiles/per-user/yl/bin";
 
-  time.timeZone = "America/Los_Angeles";
+  soxincfg.programs.neovim.enable = true;
+
+  # TODO: Make gpg work, and re-enable this.
+  soxincfg.programs.git.enableGpgSigningKey = false;
+
+  nix = {
+    # package = inputs.nixpkgs-unstable.nixVersions.stable;
+    # package = inputs.nixpkgs-unstable.nixStable;
+    useDaemon = true;
+  };
 }
