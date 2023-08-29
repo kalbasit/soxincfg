@@ -105,7 +105,7 @@ in
         "--privileged"
         "--network=${network_name}"
       ];
-      volumes = ["/dev/bus/usb:/dev/bus/usb"];
+      volumes = [ "/dev/bus/usb:/dev/bus/usb" ];
     };
 
     containers.rtl-433-mqtt-autodiscovery = {
