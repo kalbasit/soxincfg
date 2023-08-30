@@ -174,14 +174,9 @@ if [[ "$OSTYPE" = linux* ]]; then
 	export CHROME_BIN="$(which chromium)"
 fi
 
-if [[ "$OSTYPE" = darwin* ]]; then
-	# export system-wide defined PATH
-	eval "$(/usr/libexec/path_helper -s)"
-
-	# Export Github's token if it's readable.
-	if [[ -o interactive ]] && [[ -r "@home_path@/.github_token" ]]; then
-		export HOMEBREW_GITHUB_API_TOKEN="$(head -1 "@home_path@/.github_token")"
-	fi
+# Export Github's token if it's readable.
+if [[ "$OSTYPE" = darwin* ]] && [[ -o interactive ]] && [[ -r "@home_path@/.github_token" ]]; then
+	export HOMEBREW_GITHUB_API_TOKEN="$(head -1 "@home_path@/.github_token")"
 fi
 
 # opsgenie
