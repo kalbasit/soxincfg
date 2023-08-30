@@ -19,7 +19,7 @@
   xserver = ./services/x11/xserver.nix;
 
   # virtualisation
-  docker = ./virtualisation/docker.nix;
+  docker = ./virtualisation/docker;
   libvirtd = ./virtualisation/libvirtd.nix;
   virtualbox = ./virtualisation/virtualbox.nix;
 }

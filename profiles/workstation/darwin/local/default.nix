@@ -25,9 +25,9 @@ in
       less.enable = true;
     };
 
-    # virtualisation = {
-    #   docker.enable = true;
-    # };
+    virtualisation = {
+      docker.enable = true;
+    };
   };
 
   soxincfg = {
