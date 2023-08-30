@@ -8,6 +8,7 @@ cask "goland"                     # Goland -- Go IDE
 cask "google-chrome"              # my browser of choice
 cask "iterm2"                     # my terminal of choice
 cask "keybase"                    # Keybase for accessing my encrypted repositories
+cask "signal"                     # Signal Desktop
 cask "sequel-pro"                 # MySQL frontend supporting connections through a tunnel
 cask "slack"                      # Team communication
 cask "tailscale"                  # Tailscale VPN

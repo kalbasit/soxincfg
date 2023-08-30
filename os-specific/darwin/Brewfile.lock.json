@@ -83,6 +83,12 @@
         "options": {
           "full_name": "whatsapp"
         }
+      },
+      "signal": {
+        "version": "6.29.1",
+        "options": {
+          "full_name": "signal"
+        }
       }
     }
   },
@@ -94,7 +100,7 @@
         "Homebrew/homebrew-core": "api",
         "CLT": "14.3.1.0.1.1683849156",
         "Xcode": "14.3",
-        "macOS": "13.4"
+        "macOS": "13.5.1"
       }
     }
   }
