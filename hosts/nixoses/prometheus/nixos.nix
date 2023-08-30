@@ -7,8 +7,9 @@ in
     soxincfg.nixosModules.profiles.myself
     soxincfg.nixosModules.profiles.server
 
-    ./hardware-configuration.nix
     ./containers.nix
+    ./hardware-configuration.nix
+    ./prometheus.nix
     ./unifi.nix
   ];
 
@@ -57,6 +58,13 @@ in
       useDHCP = true;
       macAddress = "e8:6a:64:cf:ff:8a";
     };
+  };
+
+  # TODO: Automatically add the uptime-kuma user to the docker group. I added
+  # interfaces manually this time to make it work.
+  services.uptime-kuma.enable = true;
+  services.uptime-kuma.settings = {
+    HOST = "0.0.0.0";
   };
 
   system.stateVersion = "23.05";
