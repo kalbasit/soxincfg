@@ -10,11 +10,11 @@ readonly color_red="\033[0;31m"
 readonly color_green="\033[0;32m"
 
 info() {
-	>&2 echo -e "[SHABKA] ${color_green}${@}${color_clear}"
+	>&2 echo -e "[SOXINCFG] ${color_green}${@}${color_clear}"
 }
 
 error() {
-	>&2 echo -e "[SHABKA] ${color_red}${@}${color_clear}"
+	>&2 echo -e "[SOXINCFG] ${color_red}${@}${color_clear}"
 }
 
 # Prompt for  sudo password & keep alive
