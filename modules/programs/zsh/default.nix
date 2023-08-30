@@ -92,18 +92,20 @@ let
   };
 
   shellInit = with pkgs; builtins.concatStringsSep "\n\n" [
-    (''
-      # source in the LS_COLORS
-      source "${nur.repos.kalbasit.ls-colors}/ls-colors/bourne-shell.sh"
+    (
+      ''
+        # source in the LS_COLORS
+        source "${nur.repos.kalbasit.ls-colors}/ls-colors/bourne-shell.sh"
 
-      # Enable Nix!
-      # This is idempotent so no need to check if Nix is already loaded.
-      if [[ -r /etc/profile.d/nix.sh ]]; then
-        source /etc/profile.d/nix.sh
-      elif [[ -r "${config.home.homeDirectory}/.nix-profile/etc/profile.d/nix.sh" ]]; then
-        source "${config.home.homeDirectory}/.nix-profile/etc/profile.d/nix.sh"
-      fi
-    '')
+        # Enable Nix!
+        # This is idempotent so no need to check if Nix is already loaded.
+        if [[ -r /etc/profile.d/nix.sh ]]; then
+          source /etc/profile.d/nix.sh
+        elif [[ -r "${config.home.homeDirectory}/.nix-profile/etc/profile.d/nix.sh" ]]; then
+          source "${config.home.homeDirectory}/.nix-profile/etc/profile.d/nix.sh"
+        fi
+      ''
+    )
 
     (optionalString stdenv.isLinux ''
       # are we running on ChromeOS
