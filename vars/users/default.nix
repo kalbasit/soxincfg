@@ -34,5 +34,10 @@ in
 
         home = "/yl";
       }
+
+    // optionalAttrs (mode == "nix-darwin")
+      {
+        home = "/Users/yl";
+      }
   ;
 }

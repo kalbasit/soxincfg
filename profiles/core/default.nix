@@ -9,6 +9,7 @@ in
   imports =
     [ ]
     ++ optionals (mode == "NixOS") [ ./nixos.nix ]
+    ++ optionals (mode == "nix-darwin") [ ./nix-darwin.nix ]
     ++ optionals (mode == "home-manager") [ ./home.nix ];
 
   # configure the keyboard

@@ -16,9 +16,17 @@
       };
     };
 
+    darwin = {
+      url = "github:LnL7/nix-darwin";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
+
     soxin = {
       url = "github:SoxinOS/soxin";
       inputs = {
+        darwin.follows = "darwin";
         deploy-rs.follows = "deploy-rs";
         flake-utils-plus.follows = "flake-utils-plus";
         home-manager.follows = "home-manager";
@@ -93,9 +101,10 @@
 
         # Supported systems, used for packages, apps, devShell and multiple other definitions. Defaults to `flake-utils.lib.defaultSystems`
         supportedSystems = [
+          "aarch64-darwin"
           "aarch64-linux"
-          "x86_64-linux"
           "x86_64-darwin"
+          "x86_64-linux"
         ];
 
         devShellBuilder = channels: with channels.nixpkgs; mkShell {

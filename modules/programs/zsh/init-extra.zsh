@@ -174,14 +174,9 @@ if [[ "$OSTYPE" = linux* ]]; then
 	export CHROME_BIN="$(which chromium)"
 fi
 
-if [[ "$OSTYPE" = darwin* ]]; then
-	# export system-wide defined PATH
-	eval "$(/usr/libexec/path_helper -s)"
-
-	# Export Github's token if it's readable.
-	if [[ -o interactive ]] && [[ -r "@home_path@/.github_token" ]]; then
-		export HOMEBREW_GITHUB_API_TOKEN="$(head -1 "@home_path@/.github_token")"
-	fi
+# Export Github's token if it's readable.
+if [[ "$OSTYPE" = darwin* ]] && [[ -o interactive ]] && [[ -r "@home_path@/.github_token" ]]; then
+	export HOMEBREW_GITHUB_API_TOKEN="$(head -1 "@home_path@/.github_token")"
 fi
 
 # opsgenie
@@ -649,25 +644,10 @@ fi
 # Externals
 #####################################################################
 
-if [[ -o interactive ]]; then
-	# Mac only externals
-	if [[ "$OSTYPE" = darwin* ]]; then
-		if have brew; then
-			# Load autojump
-			autojump_path="$(brew --prefix)/etc/profile.d/autojump.sh"
-			[[ -r "${autojump_path}" ]] && source "${autojump_path}"
-			unset autojump_path
-
-			# Export CFLAGS and LDFLAGS
-			export CGO_CFLAGS="-I/usr/local/include"
-			export CGO_CPPFLAGS="${CGO_CFLAGS}"
-			export CGO_CXXFLAGS="${CGO_CFLAGS}"
-			export CGO_LDFLAGS="-L/usr/local/lib"
-		fi
-
-		# Load iterm2 shell integration
-		[[ -r "@home_path@/.iterm2_shell_integration.zsh" ]] && source "@home_path@/.iterm2_shell_integration.zsh"
-	fi
+# Load iterm2 shell integration on Darwin
+if [[ -o interactive ]] && [[ "$OSTYPE" = darwin* ]] && [[ -r "@home_path@/.iterm2_shell_integration.zsh" ]]; then
+	# TODO: Bring the iterm shell integration from https://iterm2.com/shell_integration/zsh
+	source "@home_path@/.iterm2_shell_integration.zsh"
 fi
 
 #####################################################################

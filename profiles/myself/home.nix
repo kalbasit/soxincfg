@@ -44,12 +44,6 @@ in
         };
       };
 
-      "serial.nasreddine.com" = {
-        extraOptions = {
-          IdentityFile = "~/.ssh/per-host/serial.nasreddine.com_rsa";
-        };
-      };
-
       "serial" = {
         extraOptions = {
           IdentityFile = "~/.ssh/per-host/serial.nasreddine.com_rsa";

@@ -104,15 +104,17 @@ let
         elif [[ -r "${config.home.homeDirectory}/.nix-profile/etc/profile.d/nix.sh" ]]; then
           source "${config.home.homeDirectory}/.nix-profile/etc/profile.d/nix.sh"
         fi
-
-        # are we running on ChromeOS
-        if grep -q '^ID=debian$' /etc/os-release; then
-          # workaround an issue preventing mount of /proc in user namespace
-          # XXX: https://discourse.nixos.org/t/chrome-os-83-breaks-nix-sandboxing/6764/4
-          sudo umount /proc/{cpuinfo,diskstats,meminfo,stat,uptime} &> /dev/null || true
-        fi
       ''
     )
+
+    (optionalString stdenv.isLinux ''
+      # are we running on ChromeOS
+      if grep -q '^ID=debian$' /etc/os-release; then
+        # workaround an issue preventing mount of /proc in user namespace
+        # XXX: https://discourse.nixos.org/t/chrome-os-83-breaks-nix-sandboxing/6764/4
+        sudo umount /proc/{cpuinfo,diskstats,meminfo,stat,uptime} &> /dev/null || true
+      fi
+    '')
 
     (builtins.readFile (substituteAll {
       src = ./init-extra.zsh;
@@ -139,7 +141,7 @@ in
   config = mkIf cfg.enable (mkMerge [
     { soxin.programs.zsh.enable = true; }
 
-    {
+    (optionalAttrs (mode == "NixOS" || mode == "home-manager") {
       programs.zsh.shellAliases = with pkgs; {
         cat = "${bat}/bin/bat";
         e = "\${EDITOR:-nvim}";
@@ -188,12 +190,27 @@ in
         # use 'fc -fl 1' for mm/dd/yyyy
         history = "fc -il 1";
       };
-    }
-
-    (mkIf pkgs.stdenv.hostPlatform.isDarwin {
-      # TODO: swm should parse a configuration file in order to ignore these
-      programs.zsh.shellAliases.swm = ''swm --ignore-pattern ".Spotlight-V100|.Trashes|.fseventsd"'';
     })
+
+    (optionalAttrs (mode == "nix-darwin") (mkIf pkgs.stdenv.hostPlatform.isDarwin {
+      # TODO: swm should parse a configuration file in order to ignore these
+      # environment.shellAliases.swm = ''
+      #   swm --ignore-pattern '.Spotlight-V100|.Trashes|.fseventsd'
+      # '';
+    }))
+
+    (optionalAttrs (mode == "home-manager") (mkIf pkgs.stdenv.hostPlatform.isDarwin {
+      # TODO: swm should parse a configuration file in order to ignore these
+      # programs.zsh.shellAliases.swm = ''
+      #   swm --ignore-pattern '.Spotlight-V100|.Trashes|.fseventsd'
+      # '';
+
+      programs.zsh.initExtra = ''
+        if [[ -d /opt/homebrew ]]; then
+          eval "$(/opt/homebrew/bin/brew shellenv)"
+        fi
+      '';
+    }))
 
     (optionalAttrs (mode == "NixOS") {
       programs.zsh = {
