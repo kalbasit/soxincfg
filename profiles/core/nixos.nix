@@ -17,6 +17,7 @@ in
 
   boot.tmp.useTmpfs = true;
 
+  # TODO: Get rid of Nasreddine CA
   security.pki.certificates = [ soxincfg.vars.assets.nasreddineCA ];
 
   # Set the ssh authorized keys for the root user
