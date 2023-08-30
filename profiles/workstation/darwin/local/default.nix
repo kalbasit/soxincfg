@@ -44,13 +44,10 @@ in
         ssh-support.enable = true;
 
         gnupg-support = {
-          # TODO: the onlykey-agent no longer builds on darwin
           enable = true;
 
           default-key = "kalbasit@pm.me";
 
-          # TODO: this is not working on Darwin because it gets stuck trying to
-          # call the gpg agent :(
           decryption-key-public = ''
             -----BEGIN PGP PUBLIC KEY BLOCK-----
 
