@@ -25,15 +25,9 @@ in
       less.enable = true;
     };
 
-    services = {
-      openssh.enable = true;
-    };
-
-    virtualisation = {
-      docker.enable = true;
-      libvirtd.enable = true;
-      virtualbox.enable = true;
-    };
+    # virtualisation = {
+    #   docker.enable = true;
+    # };
   };
 
   soxincfg = {
@@ -92,7 +86,7 @@ in
     };
 
     programs = {
-      android.enable = true;
+      # android.enable = true;
       # brave.enable = true;
       # chromium = { enable = true; surfingkeys.enable = true; };
       # dbeaver.enable = true;
