@@ -102,7 +102,6 @@ in
       fzf.enable = true;
       git.enable = true;
       mosh.enable = true;
-      neovim.enable = true;
       pet.enable = true;
       ssh.enable = true;
       starship.enable = true;
