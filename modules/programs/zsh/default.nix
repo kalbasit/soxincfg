@@ -92,27 +92,27 @@ let
   };
 
   shellInit = with pkgs; builtins.concatStringsSep "\n\n" [
-    (
-      ''
-        # source in the LS_COLORS
-        source "${nur.repos.kalbasit.ls-colors}/ls-colors/bourne-shell.sh"
+    (''
+      # source in the LS_COLORS
+      source "${nur.repos.kalbasit.ls-colors}/ls-colors/bourne-shell.sh"
 
-        # Enable Nix!
-        # This is idempotent so no need to check if Nix is already loaded.
-        if [[ -r /etc/profile.d/nix.sh ]]; then
-          source /etc/profile.d/nix.sh
-        elif [[ -r "${config.home.homeDirectory}/.nix-profile/etc/profile.d/nix.sh" ]]; then
-          source "${config.home.homeDirectory}/.nix-profile/etc/profile.d/nix.sh"
-        fi
+      # Enable Nix!
+      # This is idempotent so no need to check if Nix is already loaded.
+      if [[ -r /etc/profile.d/nix.sh ]]; then
+        source /etc/profile.d/nix.sh
+      elif [[ -r "${config.home.homeDirectory}/.nix-profile/etc/profile.d/nix.sh" ]]; then
+        source "${config.home.homeDirectory}/.nix-profile/etc/profile.d/nix.sh"
+      fi
+    '')
 
-        # are we running on ChromeOS
-        if grep -q '^ID=debian$' /etc/os-release; then
-          # workaround an issue preventing mount of /proc in user namespace
-          # XXX: https://discourse.nixos.org/t/chrome-os-83-breaks-nix-sandboxing/6764/4
-          sudo umount /proc/{cpuinfo,diskstats,meminfo,stat,uptime} &> /dev/null || true
-        fi
-      ''
-    )
+    (optionalString stdenv.isLinux ''
+      # are we running on ChromeOS
+      if grep -q '^ID=debian$' /etc/os-release; then
+        # workaround an issue preventing mount of /proc in user namespace
+        # XXX: https://discourse.nixos.org/t/chrome-os-83-breaks-nix-sandboxing/6764/4
+        sudo umount /proc/{cpuinfo,diskstats,meminfo,stat,uptime} &> /dev/null || true
+      fi
+    '')
 
     (builtins.readFile (substituteAll {
       src = ./init-extra.zsh;
