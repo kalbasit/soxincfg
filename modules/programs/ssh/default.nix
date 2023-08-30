@@ -173,10 +173,6 @@ in
     (optionalAttrs (mode == "home-manager") (mkIf (cfg.enableSSHAgent && pkgs.stdenv.hostPlatform.isDarwin) {
       programs.zsh.initExtra = ''
         eval "$(${pkgs.keychain}/bin/keychain --eval -q)"
-
-        if [[ -r "$HOME/.ssh/id_ed25519_sk_rk" ]] && [[ -r "$HOME/.ssh/id_ed25519_sk_rk.pub" ]]; then
-          eval "$(${pkgs.keychain}/bin/keychain --eval --agents ssh id_ed25519_sk_rk -q)"
-        fi
       '';
     }))
 

@@ -51,6 +51,12 @@ in
       '';
     })
 
+    (mkIf (cfg.ssh-support.enable && pkgs.stdenv.hostPlatform.isDarwin) {
+      programs.zsh.initExtra = ''
+        eval "$(${pkgs.keychain}/bin/keychain --eval --agents ssh id_ed25519_sk_rk -q)"
+      '';
+    })
+
     (mkIf cfg.gnupg-support.enable {
       home.file.".gnupg/run-agent.sh" = {
         source = gpg-agent-program;
