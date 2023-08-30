@@ -96,8 +96,8 @@ case "${action}" in
             nixos-rebuild --use-remote-sudo --flake "path:.#${host}" switch # --show-trace
         elif isDarwin; then
             "$0" build "$host"
-            sudo ./result/activate
             ./result/activate-user
+            sudo ./result/activate
         else
             home-manager switch --flake "path:.#${host}"
             $(nix path-info "path:.#homeConfigurations.${host}.activationPackage")/activate

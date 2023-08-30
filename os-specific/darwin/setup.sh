@@ -52,12 +52,6 @@ if ! defaults read com.github.kalbasit.soxincfg bootstrap >/dev/null 2>&1; then
 		curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
 	}
 
-	# make sure /run exists
-	if [[ ! -d /run ]]; then
-		printf 'run\tprivate/var/run\n' | sudo tee -a /etc/synthetic.conf
-		sudo /System/Library/Filesystems/apfs.fs/Contents/Resources/apfs.util -t || true
-	fi
-
 	# Wipe all (default) app icons from the Dock
 	# This is only really useful when setting up a new Mac, or if you don’t use
 	# the Dock to launch apps.
