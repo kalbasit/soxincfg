@@ -10,9 +10,6 @@ let
     src = ./plugins/functions;
     phases = [ "installPhase" ];
     installPhase = builtins.concatStringsSep "\n\n" [
-      # substituteInPlace $out/jspp \
-      #   --subst-var-by js-beautify_bin ${getBin python3Packages.jsbeautifier}/bin/js-beautify
-
       ''
         mkdir $out
 
@@ -29,6 +26,9 @@ let
         substituteInPlace $out/jsonpp \
           --subst-var-by python_bin ${getBin python3Full}/bin/python \
           --subst-var-by pygmentize_bin ${getBin python3Packages.pygments}/bin/pygmentize
+
+        substituteInPlace $out/jspp \
+          --subst-var-by js-beautify_bin ${getBin python3Packages.jsbeautifier}/bin/js-beautify
 
         substituteInPlace $out/kcc \
           --subst-var-by kubectl ${getBin kubectl}/bin/kubectl
