@@ -644,13 +644,9 @@ fi
 # Externals
 #####################################################################
 
-if [[ -o interactive ]]; then
-	# Mac only externals
-	if [[ "$OSTYPE" = darwin* ]]; then
-		if have brew; then
-		# Load iterm2 shell integration
-		[[ -r "@home_path@/.iterm2_shell_integration.zsh" ]] && source "@home_path@/.iterm2_shell_integration.zsh"
-	fi
+# Load iterm2 shell integration on Darwin
+if [[ -o interactive ]] && [[ "$OSTYPE" = darwin* ]] && [[ -r "@home_path@/.iterm2_shell_integration.zsh" ]]; then
+	source "@home_path@/.iterm2_shell_integration.zsh"
 fi
 
 #####################################################################
