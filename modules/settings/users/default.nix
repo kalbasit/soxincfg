@@ -13,7 +13,8 @@ in
 {
   imports =
     [ ]
-    ++ optionals (mode == "NixOS") [ ./nixos.nix ];
+    ++ optionals (mode == "NixOS") [ ./nixos.nix ]
+    ++ optionals (mode == "nix-darwin") [ ./nix-darwin.nix ];
 
   options.soxincfg.settings.users = {
     enable = mkOption {

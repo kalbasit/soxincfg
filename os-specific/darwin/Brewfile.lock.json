@@ -1,0 +1,107 @@
+{
+  "entries": {
+    "tap": {
+      "homebrew/bundle": {
+        "revision": "4d03d87b61bd5202ffb89232592965252a096820"
+      }
+    },
+    "cask": {
+      "alfred": {
+        "version": "5.1.2,2145",
+        "options": {
+          "full_name": "alfred"
+        }
+      },
+      "charles": {
+        "version": "4.6.4",
+        "options": {
+          "full_name": "charles"
+        }
+      },
+      "goland": {
+        "version": "2023.2.1,232.9559.64",
+        "options": {
+          "full_name": "goland"
+        }
+      },
+      "google-chrome": {
+        "version": "116.0.5845.140",
+        "options": {
+          "full_name": "google-chrome"
+        }
+      },
+      "iterm2": {
+        "version": "3.4.20",
+        "options": {
+          "full_name": "iterm2"
+        }
+      },
+      "keybase": {
+        "version": "6.2.1,20230724165206,e6160f1b9e",
+        "options": {
+          "full_name": "keybase"
+        }
+      },
+      "sequel-pro": {
+        "version": "1.1.2",
+        "options": {
+          "full_name": "sequel-pro"
+        }
+      },
+      "slack": {
+        "version": "4.33.90",
+        "options": {
+          "full_name": "slack"
+        }
+      },
+      "tailscale": {
+        "version": "1.48.1",
+        "options": {
+          "full_name": "tailscale"
+        }
+      },
+      "teamviewer": {
+        "version": "15.45.3",
+        "options": {
+          "full_name": "teamviewer"
+        }
+      },
+      "viscosity": {
+        "version": "1.10.7",
+        "options": {
+          "full_name": "viscosity"
+        }
+      },
+      "vlc": {
+        "version": "3.0.18",
+        "options": {
+          "full_name": "vlc"
+        }
+      },
+      "whatsapp": {
+        "version": "2.2335.9",
+        "options": {
+          "full_name": "whatsapp"
+        }
+      },
+      "signal": {
+        "version": "6.29.1",
+        "options": {
+          "full_name": "signal"
+        }
+      }
+    }
+  },
+  "system": {
+    "macos": {
+      "ventura": {
+        "HOMEBREW_VERSION": "4.1.7",
+        "HOMEBREW_PREFIX": "/opt/homebrew",
+        "Homebrew/homebrew-core": "api",
+        "CLT": "14.3.1.0.1.1683849156",
+        "Xcode": "14.3",
+        "macOS": "13.5.1"
+      }
+    }
+  }
+}

@@ -135,7 +135,7 @@ in
   };
 
   config = mkIf cfg.enable (mkMerge [
-    {
+    (optionalAttrs (mode == "NixOS" || mode == "home-manager") {
       programs.ssh = {
         extraConfig = ''
           PubkeyAuthentication yes
@@ -156,7 +156,7 @@ in
               ("Ciphers " + (concatStringsSep "," cfg.ciphers))}
         '';
       };
-    }
+    })
 
     (optionalAttrs (mode == "NixOS") {
       programs.ssh = {
@@ -169,6 +169,12 @@ in
         startAgent = cfg.enableSSHAgent;
       };
     })
+
+    (optionalAttrs (mode == "home-manager") (mkIf (cfg.enableSSHAgent && pkgs.stdenv.hostPlatform.isDarwin) {
+      programs.zsh.initExtra = ''
+        eval "$(${pkgs.keychain}/bin/keychain --eval -q)"
+      '';
+    }))
 
     (optionalAttrs (mode == "home-manager") {
       programs.ssh = {

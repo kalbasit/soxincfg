@@ -44,12 +44,6 @@ in
         };
       };
 
-      "host.invalid" = {
-        extraOptions = {
-          IdentityFile = "~/.ssh/per-host/host.invalid_rsa";
-        };
-      };
-
       "serial" = {
         extraOptions = {
           IdentityFile = "~/.ssh/per-host/host.invalid_rsa";
