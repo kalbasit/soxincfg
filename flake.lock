@@ -281,8 +281,8 @@
         "sops-nix": "sops-nix"
       },
       "locked": {
-        "lastModified": 1693120922,
-        "narHash": "sha256-ORmchkrdX3aqcBwjp9LiFX++Q3H3v607bRYmetQBroc=",
+        "lastModified": 1693352389,
+        "narHash": "sha256-pS+ZxMzaIaYNIK9tE6SKrZyuLJuau652uH4e5TXJ2xY=",
         "path": "/Users/yl/code/repositories/github.com/SoxinOS/soxin",
         "type": "path"
       },
