@@ -14,8 +14,6 @@ in
   # load YL's home-manager configuration
   home-manager.users.yl = import ./home.nix { inherit soxincfg; };
 
-  environment.systemPath = singleton "/etc/profiles/per-user/yl/bin";
-
   soxincfg.programs.neovim.enable = true;
 
   # TODO: Make gpg work, and re-enable this.
