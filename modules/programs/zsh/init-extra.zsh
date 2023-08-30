@@ -654,10 +654,10 @@ if [[ -o interactive ]]; then
 			unset autojump_path
 
 			# Export CFLAGS and LDFLAGS
-			export CGO_CFLAGS="-I/usr/local/include"
+			export CGO_CFLAGS="-I$(brew --prefix)/include"
 			export CGO_CPPFLAGS="${CGO_CFLAGS}"
 			export CGO_CXXFLAGS="${CGO_CFLAGS}"
-			export CGO_LDFLAGS="-L/usr/local/lib"
+			export CGO_LDFLAGS="-L$(brew --prefix)/lib"
 		fi
 
 		# Load iterm2 shell integration
