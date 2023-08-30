@@ -17,6 +17,7 @@
       "viscosity" # VPN Application
       "vlc"
       "whatsapp" # WhatsApp application
+      "zoom"
     ];
   };
 }
