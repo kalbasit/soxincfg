@@ -61,20 +61,4 @@ if ! defaults read com.github.kalbasit.soxincfg bootstrap >/dev/null 2>&1; then
 	defaults write com.github.kalbasit.soxincfg bootstrap -bool true
 fi
 
-# Brew the Brewfile
-info "Brewing the Brew file"
-while ! brew bundle --file="${here}/Brewfile" --verbose; do
-	error "It looks like HomeBrew has failed, retry [y/n]"
-
-	read -r answer
-	while [[ -z "${answer}" ]] || ( [[ "${answer}" != "y" ]] && [[ "${answer}" != "n" ]] ); do
-		error "I only understand y or n. Please respond with either y or n"
-		read -r answer
-	done
-
-	if [[ "${answer}" == "n" ]]; then
-		break
-	fi
-done
-
 } # prevent the script from executing partially downloaded
