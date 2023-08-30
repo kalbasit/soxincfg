@@ -648,18 +648,6 @@ if [[ -o interactive ]]; then
 	# Mac only externals
 	if [[ "$OSTYPE" = darwin* ]]; then
 		if have brew; then
-			# Load autojump
-			autojump_path="$(brew --prefix)/etc/profile.d/autojump.sh"
-			[[ -r "${autojump_path}" ]] && source "${autojump_path}"
-			unset autojump_path
-
-			# Export CFLAGS and LDFLAGS
-			export CGO_CFLAGS="-I$(brew --prefix)/include"
-			export CGO_CPPFLAGS="${CGO_CFLAGS}"
-			export CGO_CXXFLAGS="${CGO_CFLAGS}"
-			export CGO_LDFLAGS="-L$(brew --prefix)/lib"
-		fi
-
 		# Load iterm2 shell integration
 		[[ -r "@home_path@/.iterm2_shell_integration.zsh" ]] && source "@home_path@/.iterm2_shell_integration.zsh"
 	fi

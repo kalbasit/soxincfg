@@ -1,5 +1,7 @@
 tap "homebrew/bundle"
 
+# TODO: https://github.com/LnL7/nix-darwin/blob/master/modules/homebrew.nix
+
 cask "alfred"                     # spotlight replacement
 cask "charles"                    # Charles Proxy
 cask "goland"                     # Goland -- Go IDE
