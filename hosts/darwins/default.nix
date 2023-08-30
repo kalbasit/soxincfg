@@ -7,7 +7,7 @@ let
     ;
 
   # the default channel to follow.
-  channelName = "nixpkgs-unstable";
+  channelName = "nixpkgs";
 
   # the operating mode of Soxin
   mode = "nix-darwin";
