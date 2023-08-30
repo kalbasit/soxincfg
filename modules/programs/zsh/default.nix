@@ -207,10 +207,6 @@ in
         if [[ -d /opt/homebrew ]]; then
           eval "$(/opt/homebrew/bin/brew shellenv)"
         fi
-
-        # Use the SSH agent from Homebrew for support of Onlykey-resident ED25519-sk key.
-        # https://aditsachde.com/posts/yubikey-ssh/
-        # export SSH_AUTH_SOCK="~/.ssh/agent"
       '';
     }))
 
