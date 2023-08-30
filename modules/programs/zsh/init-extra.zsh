@@ -646,6 +646,7 @@ fi
 
 # Load iterm2 shell integration on Darwin
 if [[ -o interactive ]] && [[ "$OSTYPE" = darwin* ]] && [[ -r "@home_path@/.iterm2_shell_integration.zsh" ]]; then
+	# TODO: Bring the iterm shell integration from https://iterm2.com/shell_integration/zsh
 	source "@home_path@/.iterm2_shell_integration.zsh"
 fi
 
