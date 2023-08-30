@@ -26,6 +26,7 @@
     soxin = {
       url = "github:SoxinOS/soxin";
       inputs = {
+        darwin.follows = "darwin";
         deploy-rs.follows = "deploy-rs";
         flake-utils-plus.follows = "flake-utils-plus";
         home-manager.follows = "home-manager";
