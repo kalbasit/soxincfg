@@ -9,12 +9,16 @@ cask "keybase"                    # Keybase for accessing my encrypted repositor
 cask "sequel-pro"                 # MySQL frontend supporting connections through a tunnel
 cask "slack"                      # Team communication
 cask "teamviewer"                 # TeamViewer for remote login
-cask "virtualbox"                 # VirtualBox for VM
+# cask "virtualbox"                 # VirtualBox for VM
 cask "viscosity"                  # VPN Application
 cask "vlc"                        # VideoLan video player
 cask "whatsapp"                   # WhatsApp application
 
 #cask "hammerspoon"                # Change caps_lock to control when used as modifier, escape when used alone
+
+# Brews
+brew "openssh"
+brew "keychain"
 
 # TODO: Whatever does not install via nix, install it via Brew. Below, is the contents of my old Brewfile.
 #
