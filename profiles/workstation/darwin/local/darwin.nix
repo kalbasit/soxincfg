@@ -5,6 +5,7 @@
     casks = [
       "alfred" # spotlight replacement
       "charles"
+      "flotato" # Makes applications of any website.
       "goland"
       "google-chrome"
       "iterm2"
