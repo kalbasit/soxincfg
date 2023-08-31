@@ -25,11 +25,14 @@ let
   gpg-agent-program = writeShellScript "run-onlykey-agent.sh" ''
     set -euo pipefail
 
+    readonly stderrFile="$HOME/.gnupg/onlykey-agent.stderr.log"
+    readonly stdoutFile="$HOME/.gnupg/onlykey-agent.stdout.log"
+
     exec ${onlykey-agent}/bin/onlykey-gpg-agent \
       --homedir ~/.gnupg \
       --skey-slot=${toString cfg.gnupg-support.signing-key-slot} \
       --dkey-slot=${toString cfg.gnupg-support.decryption-key-slot} \
-      $*
+      $* 1>>"$stdoutFile" 2>>"$stderrFile"
   '';
 in
 {
