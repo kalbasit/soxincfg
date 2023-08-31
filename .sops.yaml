@@ -46,14 +46,14 @@ creation_rules:
     key_groups:
       - pgp:
         - *user_yl_0x8EBD95DC147755A2
-      - age:
+        age:
         - *host_age_prometheus
 
   - path_regex: profiles/workstation/darwin/(local|remote)/[^/]+\.sops[^/]*
     key_groups:
       - pgp:
         - *user_yl_0x8EBD95DC147755A2
-      - age:
+        age:
         - *host_age_prometheus
 
   - path_regex: profiles/workstation/nixos/(local|remote)/[^/]+\.sops[^/]*
@@ -75,7 +75,7 @@ creation_rules:
         - *host_pgp_kore
         - *host_pgp_prometheus
         - *host_pgp_zeus
-      - age:
+        age:
         - *host_age_prometheus
 
   - path_regex: modules/.*/[^/]+\.sops[^/]*
@@ -87,5 +87,5 @@ creation_rules:
         - *host_pgp_kore
         - *host_pgp_prometheus
         - *host_pgp_zeus
-      - age:
+        age:
         - *host_age_prometheus
