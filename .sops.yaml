@@ -49,6 +49,13 @@ creation_rules:
       - age:
         - *host_age_prometheus
 
+  - path_regex: profiles/workstation/darwin/(local|remote)/[^/]+\.sops[^/]*
+    key_groups:
+      - pgp:
+        - *user_yl_0x8EBD95DC147755A2
+      - age:
+        - *host_age_prometheus
+
   - path_regex: profiles/workstation/nixos/(local|remote)/[^/]+\.sops[^/]*
     key_groups:
       - pgp:
