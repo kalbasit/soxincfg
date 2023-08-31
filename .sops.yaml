@@ -12,8 +12,66 @@ keys:
   # Age host keys
   - &host_age_prometheus age1uvkcsm082vacmmauxakhuzjyjr7dx7gxyd6k757smwlwm5ekzgzs2sq8uh
 creation_rules:
-  # TODO: Go more granual
-  - path_regex: .*$
+  - path_regex: hosts/nixoses/hades/[^/]+\.sops[^/]*
+    key_groups:
+      - pgp:
+        - *user_yl_0x8EBD95DC147755A2
+        - *host_pgp_hades
+
+  - path_regex: hosts/nixoses/hercules/[^/]+\.sops[^/]*
+    key_groups:
+      - pgp:
+        - *user_yl_0x8EBD95DC147755A2
+        - *host_pgp_hercules
+
+  - path_regex: hosts/nixoses/kore/[^/]+\.sops[^/]*
+    key_groups:
+      - pgp:
+        - *user_yl_0x8EBD95DC147755A2
+        - *host_pgp_kore
+
+  - path_regex: hosts/nixoses/prometheus/[^/]+\.sops[^/]*
+    key_groups:
+      - pgp:
+        - *user_yl_0x8EBD95DC147755A2
+        - *host_pgp_prometheus
+
+  - path_regex: hosts/nixoses/zeus/[^/]+\.sops[^/]*
+    key_groups:
+      - pgp:
+        - *user_yl_0x8EBD95DC147755A2
+        - *host_pgp_zeus
+
+  - path_regex: hosts/darwins/saturn/[^/]+\.sops[^/]*
+    key_groups:
+      - pgp:
+        - *user_yl_0x8EBD95DC147755A2
+      - age:
+        - *host_age_prometheus
+
+  - path_regex: profiles/workstation/nixos/(local|remote)/[^/]+\.sops[^/]*
+    key_groups:
+      - pgp:
+        - *user_yl_0x8EBD95DC147755A2
+        - *host_pgp_hades
+        - *host_pgp_hercules
+        - *host_pgp_kore
+        - *host_pgp_prometheus
+        - *host_pgp_zeus
+
+  - path_regex: profiles/myself/[^/]+\.sops[^/]*
+    key_groups:
+      - pgp:
+        - *user_yl_0x8EBD95DC147755A2
+        - *host_pgp_hades
+        - *host_pgp_hercules
+        - *host_pgp_kore
+        - *host_pgp_prometheus
+        - *host_pgp_zeus
+      - age:
+        - *host_age_prometheus
+
+  - path_regex: modules/.*/[^/]+\.sops[^/]*
     key_groups:
       - pgp:
         - *user_yl_0x8EBD95DC147755A2
