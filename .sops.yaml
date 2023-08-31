@@ -1,0 +1,95 @@
+keys:
+  # PGP User Keys
+  - &user_yl_0x8EBD95DC147755A2 8C67A027B7CAC398C88820578EBD95DC147755A2
+
+  # PGP host keys
+  - &host_pgp_hades 40F574563C054BDCC05FDF8CC83DFFD75179DF76
+  - &host_pgp_hercules 74C749550A06560276DCA8219685DAC2922E7B46
+  - &host_pgp_kore 882BE5435E81479DDBFFEF70F5DC39FB0D1A991D
+  - &host_pgp_prometheus 42EFF1BA24BF1181C0C4B20329532C0000EE00E4
+  - &host_pgp_zeus 99DB0E5347E89C86DBBA763760DAF54F845F5A1D
+
+  # Age host keys
+  - &host_age_prometheus age1uvkcsm082vacmmauxakhuzjyjr7dx7gxyd6k757smwlwm5ekzgzs2sq8uh
+creation_rules:
+  - path_regex: hosts/nixoses/hades/[^/]+\.sops[^/]*
+    key_groups:
+      - pgp:
+        - *user_yl_0x8EBD95DC147755A2
+        - *host_pgp_hades
+
+  - path_regex: hosts/nixoses/hercules/[^/]+\.sops[^/]*
+    key_groups:
+      - pgp:
+        - *user_yl_0x8EBD95DC147755A2
+        - *host_pgp_hercules
+
+  - path_regex: hosts/nixoses/kore/[^/]+\.sops[^/]*
+    key_groups:
+      - pgp:
+        - *user_yl_0x8EBD95DC147755A2
+        - *host_pgp_kore
+
+  - path_regex: hosts/nixoses/prometheus/[^/]+\.sops[^/]*
+    key_groups:
+      - pgp:
+        - *user_yl_0x8EBD95DC147755A2
+        - *host_pgp_prometheus
+
+  - path_regex: hosts/nixoses/zeus/[^/]+\.sops[^/]*
+    key_groups:
+      - pgp:
+        - *user_yl_0x8EBD95DC147755A2
+        - *host_pgp_zeus
+
+  - path_regex: hosts/darwins/saturn/[^/]+\.sops[^/]*
+    key_groups:
+      - pgp:
+        - *user_yl_0x8EBD95DC147755A2
+        age:
+        - *host_age_prometheus
+
+  - path_regex: profiles/workstation/darwin/(local|remote)/[^/]+\.sops[^/]*
+    key_groups:
+      - pgp:
+        - *user_yl_0x8EBD95DC147755A2
+        age:
+        - *host_age_prometheus
+
+  - path_regex: profiles/workstation/nixos/(local|remote)/[^/]+\.sops[^/]*
+    key_groups:
+      - pgp:
+        - *user_yl_0x8EBD95DC147755A2
+        - *host_pgp_hades
+        - *host_pgp_hercules
+        - *host_pgp_kore
+        - *host_pgp_prometheus
+        - *host_pgp_zeus
+
+  - path_regex: profiles/myself/[^/]+\.sops[^/]*
+    key_groups:
+      - pgp:
+        - *user_yl_0x8EBD95DC147755A2
+        - *host_pgp_hades
+        - *host_pgp_hercules
+        - *host_pgp_kore
+        - *host_pgp_prometheus
+        - *host_pgp_zeus
+        age:
+        - *host_age_prometheus
+
+  - path_regex: modules/.*/[^/]+\.sops[^/]*
+    key_groups:
+      - pgp:
+        - *user_yl_0x8EBD95DC147755A2
+        - *host_pgp_hades
+        - *host_pgp_hercules
+        - *host_pgp_kore
+        - *host_pgp_prometheus
+        - *host_pgp_zeus
+        age:
+        - *host_age_prometheus
+
+  # Allow Git to diff via sopsdiffer
+  # https://github.com/getsops/sops/issues/337#issuecomment-761108756
+  - path_regex: .*
