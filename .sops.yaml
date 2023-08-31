@@ -89,7 +89,3 @@ creation_rules:
         - *host_pgp_zeus
         age:
         - *host_age_prometheus
-
-  # Allow Git to diff via sopsdiffer
-  # https://github.com/getsops/sops/issues/337#issuecomment-761108756
-  - path_regex: .*
