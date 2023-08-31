@@ -130,6 +130,12 @@ in
           tool = "vimdiff";
         };
 
+        # https://github.com/mozilla/sops#47showing-diffs-in-cleartext-in-git
+        diff.sopsdiffer = {
+          # https://github.com/getsops/sops/issues/884#issuecomment-1399395740
+          textconv = "${pkgs.sops}/bin/sops --config /dev/null -d";
+        };
+
         difftool = {
           prompt = false;
         };
