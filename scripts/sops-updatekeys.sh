@@ -10,11 +10,7 @@ fi
 
 cd "$root_dir"
 
-readonly sops_files=($(find . -name '*.sops' -print) $(find . -name '*.sops.*' -print))
-
-for fn in "${sops_files[@]}"; do
-    [[ "$fn" == "./.sops.yaml" ]] && continue
-
-    >&2 echo ">>> Updating $fn"
-    sops updatekeys -y "$fn"
+for file in $(grep -lr "\"sops\": {")
+do
+    sops updatekeys -y "$file"
 done
