@@ -25,6 +25,13 @@ let
   gpg-agent-program = writeShellScript "run-onlykey-agent.sh" ''
     set -euo pipefail
 
+    readonly stderrFile="$HOME/.gnupg/onlykey-agent.stderr.log"
+    readonly stdoutFile="$HOME/.gnupg/onlykey-agent.stdout.log"
+
+    # redirect stdout and stderr to log files, ignoring old logs (truncate mode).
+    exec 1> "$stdoutFile"
+    exec 2> "$stderrFile"
+
     exec ${onlykey-agent}/bin/onlykey-gpg-agent \
       --homedir ~/.gnupg \
       --skey-slot=${toString cfg.gnupg-support.signing-key-slot} \
