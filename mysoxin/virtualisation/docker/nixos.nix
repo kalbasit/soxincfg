@@ -3,6 +3,7 @@
 let
   inherit (lib)
     mkIf
+    optional
     ;
 
   cfg = config.soxin.virtualisation.docker;
