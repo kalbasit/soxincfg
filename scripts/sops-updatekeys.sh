@@ -10,7 +10,5 @@ fi
 
 cd "$root_dir"
 
-for file in $(grep -lr "\"sops\": {")
-do
-    sops updatekeys -y "$file"
-done
+find . \( \( -name '*.sops.yaml' -or -name '*.sops.yml' -or -name '*.sops.json' -or -name '*.sops' \) -and -not \( -name '.sops.yaml' \) \) -print0 |
+    xargs -0L1 sops updatekeys --yes
