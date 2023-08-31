@@ -1,5 +1,4 @@
 *.qcow2
-.sops.yaml
 /result*
 
 # soxin is used as a symlink to allow me to work on both projects in one editor

@@ -1,2 +1,5 @@
+# Match all files ending with .sops
 *.sops diff=sopsdiffer
-*.sops.yaml diff=sopsdiffer
+
+# Match all files ending with .sops.yaml except .sops.yaml itself
+*[a-z0-9].sops.yaml diff=sopsdiffer
