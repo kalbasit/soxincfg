@@ -14,7 +14,6 @@ in
       _config_remmina_remmina_pref = { inherit owner sopsFile; path = "${yl_home}/.config/remmina/remmina.pref"; };
       _config_swm_config_yaml = { inherit owner sopsFile; path = "${yl_home}/.config/swm/config.yaml"; };
       _config_tiny_config_yml = { inherit owner sopsFile; path = "${yl_home}/.config/tiny/config.yml"; };
-      _docker_config_json = { inherit owner sopsFile; path = "${yl_home}/.docker/config.json"; };
       _gist = { inherit owner sopsFile; path = "${yl_home}/.gist"; };
       _gist_vim = { inherit owner sopsFile; path = "${yl_home}/.gist-vim"; };
       _gitconfig_secrets = { inherit owner sopsFile; path = "${yl_home}/.gitconfig.secrets"; };

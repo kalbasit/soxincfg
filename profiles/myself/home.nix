@@ -26,7 +26,6 @@ in
     _config_pet_snippet_toml = { inherit sopsFile; path = "${yl_home}/.config/pet/snippet.toml"; };
     _config_swm_config_yaml = { inherit sopsFile; path = "${yl_home}/Library/Application Support/swm/config.yaml"; };
     _config_tiny_config_yml = { inherit sopsFile; path = "${yl_home}/.config/tiny/config.yml"; };
-    _docker_config_json = { inherit sopsFile; path = "${yl_home}/.docker/config.json"; };
     _gist = { inherit sopsFile; path = "${yl_home}/.gist"; };
     _gist_vim = { inherit sopsFile; path = "${yl_home}/.gist-vim"; };
     _gitconfig_secrets = { inherit sopsFile; path = "${yl_home}/.gitconfig.secrets"; };
