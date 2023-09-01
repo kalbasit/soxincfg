@@ -184,7 +184,7 @@
       # sudo pmset -a standbydelay 86400
 
       # Disable the sound effects on boot
-      # sudo nvram SystemAudioVolume=" "
+      sudo nvram SystemAudioVolume=" "
 
       # Disable transparency in the menu bar and elsewhere on Yosemite
       defaults write com.apple.universalaccess reduceTransparency -bool true
