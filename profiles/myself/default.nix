@@ -1,11 +1,7 @@
-{ soxincfg, lib, mode, ... }:
+{ lib, mode, ... }:
 
 let
   inherit (lib)
-    mkDefault
-    mkEnableOption
-    mkIf
-    optionalAttrs
     optionals
     ;
 in
