@@ -5,6 +5,10 @@ let
     mkIf
     ;
 
+  inherit (pkgs.hostPlatform)
+    isDarwin
+    ;
+
   yl_home = config.home.homeDirectory;
   sopsFile = ./credentials-config.json.sops;
 
@@ -14,7 +18,12 @@ in
   config = mkIf cfg.enable {
     home.packages = [ pkgs.dbeaver ];
 
-    sops.secrets = {
+    sops.age = mkIf isDarwin {
+      generateKey = true;
+      keyFile = "${yl_home}/.local/share/soxincfg/sops/age.key";
+    };
+
+    sops.secrets = mkIf isDarwin {
       credentials-config-json = {
         inherit sopsFile;
         format = "binary";
