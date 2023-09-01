@@ -8,6 +8,7 @@
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs.url = "github:NixOS/nixpkgs/release-23.05";
     nur.url = "github:nix-community/NUR";
+    sops-nix.url = "github:Mic92/sops-nix";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-23.05";
@@ -37,7 +38,7 @@
     };
   };
 
-  outputs = inputs@{ flake-utils-plus, nixos-hardware, nixpkgs, self, soxin, ... }:
+  outputs = inputs@{ flake-utils-plus, nixos-hardware, nixpkgs, self, sops-nix, soxin, ... }:
     let
       # Enable deploy-rs support
       withDeploy = true;
@@ -128,5 +129,9 @@
 
         # set the nixos specialArgs
         nixosSpecialArgs = { inherit nixos-hardware; };
+
+        extraHomeManagerModules = [
+          "${sops-nix.sourceInfo.outPath}/modules/home-manager/sops.nix"
+        ];
       };
 }

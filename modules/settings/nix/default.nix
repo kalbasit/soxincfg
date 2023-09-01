@@ -1,1 +1,1 @@
-{ imports = [ ./distributed-builds.nix ]; }
+{ imports = [ ./distributed-builds ]; }
