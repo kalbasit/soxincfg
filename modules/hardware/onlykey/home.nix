@@ -18,6 +18,7 @@ let
 
   inherit (pkgs.hostPlatform)
     isLinux
+    isDarwin
     ;
 
   cfg = config.soxincfg.hardware.onlykey;
@@ -38,6 +39,10 @@ let
       --dkey-slot=${toString cfg.gnupg-support.decryption-key-slot} \
       $*
   '';
+
+  yl_home = config.home.homeDirectory;
+  owner = config.users.users.yl.name;
+  sopsFile = ./secrets.sops.yaml;
 in
 {
   config = mkIf cfg.enable (mkMerge [
@@ -45,8 +50,17 @@ in
       home.packages =
         [
           onlykey-cli
-        ] ++ optionals (isLinux) [ onlykey ];
+        ] ++ optionals isLinux [ onlykey ];
     }
+
+    (mkIf isDarwin {
+      sops.age = mkIf isDarwin {
+        generateKey = true;
+        keyFile = "${yl_home}/.local/share/soxincfg/sops/age.key";
+      };
+
+      sops.secrets._ssh_id_ed25519_sk_rk = { inherit sopsFile; path = "${yl_home}/.ssh/id_ed25519_sk_rk"; };
+    })
 
     (mkIf cfg.ssh-support.enable {
       soxincfg.programs.ssh = {

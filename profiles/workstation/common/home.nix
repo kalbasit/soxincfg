@@ -17,6 +17,7 @@ in
 
   home.packages = with pkgs; [
     amazon-ecr-credential-helper
+    awscli
     arduino-cli
     audacity
     binutils # for strings
