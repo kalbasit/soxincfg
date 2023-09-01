@@ -1,0 +1,61 @@
+diff --git a/pkgs/tools/misc/keychain/default.nix b/pkgs/tools/misc/keychain/default.nix
+index 826c9d85579c..de2c070f3746 100644
+--- a/pkgs/tools/misc/keychain/default.nix
++++ b/pkgs/tools/misc/keychain/default.nix
+@@ -25,6 +25,8 @@ stdenv.mkDerivation rec {
+     sha256 = "1bkjlg0a2bbdjhwp37ci1rwikvrl4s3xlbf2jq2z4azc96dr83mj";
+   };
+ 
++  patches = [ ./fix-pubkey-lookup.patch ];
++
+   nativeBuildInputs = [ installShellFiles makeWrapper ];
+   buildInputs = [ perl ];
+ 
+diff --git a/pkgs/tools/misc/keychain/fix-pubkey-lookup.patch b/pkgs/tools/misc/keychain/fix-pubkey-lookup.patch
+new file mode 100644
+index 000000000000..a9be41170f1c
+--- /dev/null
++++ b/pkgs/tools/misc/keychain/fix-pubkey-lookup.patch
+@@ -0,0 +1,42 @@
++diff --git a/keychain b/keychain
++index 0eee68f..85d6f03 100755
++--- a/keychain
+++++ b/keychain
++@@ -954,22 +954,29 @@ ssh_f() {
++ 
++ 	if $openssh || $sunssh; then
++ 		realpath_bin="$(command -v realpath)"
++-		# if private key is symlink and symlink to *.pub is missing:
++-		if [ -L "$sf_filename" ] && [ ! -z "$realpath_bin" ]; then
++-			sf_filename="$($realpath_bin $sf_filename)"
++-		fi
++ 		lsf_filename="$sf_filename.pub"
+++
+++		if [ ! -f "$lsf_filename" ]; then
+++			# if private key is symlink and symlink to *.pub is missing:
+++			if [ -L "$sf_filename" ] && [ ! -z "$realpath_bin" ]; then
+++				sf_filename="$($realpath_bin $sf_filename)"
+++			fi
+++			lsf_filename="$sf_filename.pub"
+++		fi
+++
++ 		if [ ! -f "$lsf_filename" ]; then
++ 			# try to remove extension from private key, *then* add .pub, and see if we now find it:
++ 			if [ -L "$sf_filename" ] && [ ! -z "$realpath_bin" ]; then
++ 				sf_filename="$($realpath_bin $sf_filename)"
++ 			fi
++ 			lsf_filename=$(echo "$sf_filename" | sed 's/\.[^\.]*$//').pub
++-			if [ ! -f "$lsf_filename" ]; then
++-			    warn "Cannot find separate public key for $1."
++-				lsf_filename="$sf_filename"
++-			fi
++ 		fi
+++
+++		if [ ! -f "$lsf_filename" ]; then
+++		  warn "Cannot find separate public key for $1."
+++			lsf_filename="$sf_filename"
+++		fi
+++
++ 		sf_fing=$(ssh-keygen -l -f "$lsf_filename") || return 1
++ 		echo "$sf_fing" | extract_fingerprints
++ 	else
