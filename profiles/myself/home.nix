@@ -24,7 +24,7 @@ in
     _aws_configure_profile_personal_sh = { inherit sopsFile; mode = "0500"; };
     _config_pet_config_toml = { inherit sopsFile; path = "${yl_home}/.config/pet/config.toml"; };
     _config_pet_snippet_toml = { inherit sopsFile; path = "${yl_home}/.config/pet/snippet.toml"; };
-    _config_swm_config_yaml = { inherit sopsFile; path = "${yl_home}/.config/swm/config.yaml"; };
+    _config_swm_config_yaml = { inherit sopsFile; path = "${yl_home}/Library/Application Support/swm/config.yaml"; };
     _config_tiny_config_yml = { inherit sopsFile; path = "${yl_home}/.config/tiny/config.yml"; };
     _docker_config_json = { inherit sopsFile; path = "${yl_home}/.docker/config.json"; };
     _gist = { inherit sopsFile; path = "${yl_home}/.gist"; };
