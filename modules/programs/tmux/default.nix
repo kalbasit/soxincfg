@@ -9,7 +9,7 @@ let
   tmuxVimAwarness =
     let
       isVim = pkgs.writeShellScript "isVim.sh" ''
-        ps -o state= -o comm= -t '#{pane_tty}' | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?)(diff)?$'
+        ps -o state= -o comm= -t '#{pane_tty}' | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|l?n?vim?x?)(diff)?$'
       '';
     in
     ''
