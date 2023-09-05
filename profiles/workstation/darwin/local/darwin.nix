@@ -14,6 +14,7 @@
         "sequel-pro" # MySQL frontend supporting connections through a tunnel
         "signal"
         "slack"
+        "synology-drive"
         "tailscale"
         "teamviewer"
         "viscosity" # VPN Application
