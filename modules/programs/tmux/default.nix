@@ -6,16 +6,21 @@ let
 
   keyboardLayout = config.soxin.settings.keyboard.defaultLayout.console.keyMap;
 
-  tmuxVimAwarness = ''
-    # Smart pane switching with awareness of Vim splits.
-    # See: https://github.com/christoomey/vim-tmux-navigator
-    is_vim="ps -o state= -o comm= -t '#{pane_tty}' \
-        | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?)(diff)?$'"
-    bind-key -n M-n if-shell "$is_vim" "send-keys M-n"  "select-pane -L"
-    bind-key -n M-e if-shell "$is_vim" "send-keys M-e"  "select-pane -D"
-    bind-key -n M-i if-shell "$is_vim" "send-keys M-i"  "select-pane -U"
-    bind-key -n M-o if-shell "$is_vim" "send-keys M-o"  "select-pane -R"
-  '';
+  tmuxVimAwarness =
+    let
+      isVim = pkgs.writeShellScript "isVim.sh" ''
+        ps -o state= -o comm= -t '#{pane_tty}' | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?)(diff)?$'
+      '';
+    in
+    ''
+      # Smart pane switching with awareness of Vim splits.
+      # See: https://github.com/christoomey/vim-tmux-navigator
+      is_vim="${isVim}"
+      bind-key -n M-n if-shell "$is_vim" "send-keys M-n"  "select-pane -L"
+      bind-key -n M-e if-shell "$is_vim" "send-keys M-e"  "select-pane -D"
+      bind-key -n M-i if-shell "$is_vim" "send-keys M-i"  "select-pane -U"
+      bind-key -n M-o if-shell "$is_vim" "send-keys M-o"  "select-pane -R"
+    '';
 
   colemakBindings = ''
     #
