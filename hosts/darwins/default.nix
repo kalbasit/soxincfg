@@ -35,7 +35,7 @@ mapAttrs
         system
         ;
 
-      modules = [ ./poseidon/configuration.nix ];
+      modules = [ ./poseidon/darwin.nix ];
     };
 
   ###
@@ -52,6 +52,6 @@ mapAttrs
         system
         ;
 
-      modules = [ ./saturn/configuration.nix ];
+      modules = [ ./saturn/darwin.nix ];
     };
 }
