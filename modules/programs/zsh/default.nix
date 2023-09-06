@@ -234,16 +234,6 @@ in
         plugins = let inherit (pkgs) fetchFromGitHub; in
           [
             {
-              name = "enhancd";
-              file = "init.sh";
-              src = fetchFromGitHub {
-                owner = "b4b4r07";
-                repo = "enhancd";
-                rev = "v2.5.1";
-                sha256 = "sha256-kaintLXSfLH7zdLtcoZfVNobCJCap0S/Ldq85wd3krI=";
-              };
-            }
-            {
               name = "zsh-completions";
               src = fetchFromGitHub {
                 owner = "zsh-users";
