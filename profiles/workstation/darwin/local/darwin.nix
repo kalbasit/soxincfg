@@ -11,6 +11,7 @@
         "google-chrome"
         "iterm2"
         "keybase"
+        "rectangle"
         "sequel-pro" # MySQL frontend supporting connections through a tunnel
         "signal"
         "slack"
