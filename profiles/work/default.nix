@@ -4,9 +4,11 @@
       hosts =
         if builtins.pathExists ./secret-store
         then import ./secret-store
-        else builtins.trace "WARNING: The secret work files were NOT found" { };
+        else { };
     in
-    if builtins.hasAttr hostName hosts
+    if hosts == { }
+    then builtins.trace "WARNING: The secret work files were NOT found" [ ]
+    else if builtins.hasAttr hostName hosts
     then builtins.getAttr hostName hosts
-    else [ ];
+    else builtins.trace "WARNING: No secrets were found for host ${hostName}." [ ];
 }
