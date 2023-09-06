@@ -11,7 +11,7 @@
         "google-chrome"
         "iterm2"
         "keybase"
-        "rectangle"
+        "rectangle" # macOS window manager
         "sequel-pro" # MySQL frontend supporting connections through a tunnel
         "signal"
         "slack"
