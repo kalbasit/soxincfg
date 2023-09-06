@@ -8,7 +8,8 @@ with lib;
   imports = [
     soxincfg.nixosModules.profiles.myself
     soxincfg.nixosModules.profiles.workstation.darwin.local
-  ];
+  ]
+  ++ (soxincfg.nixosModules.profiles.work.imports { hostName = "saturn"; });
 
   home.stateVersion = "23.05";
 }

@@ -9,7 +9,8 @@ in
   imports = [
     soxincfg.nixosModules.profiles.myself
     soxincfg.nixosModules.profiles.workstation.darwin.local
-  ];
+  ]
+  ++ (soxincfg.nixosModules.profiles.work.imports { hostName = "saturn"; });
 
   # load YL's home-manager configuration
   home-manager.users.yl = import ./home.nix { inherit soxincfg; };
