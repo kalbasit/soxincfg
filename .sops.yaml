@@ -10,7 +10,7 @@ keys:
   - &host_pgp_zeus 99DB0E5347E89C86DBBA763760DAF54F845F5A1D
 
   # Age host keys
-  - &host_age_prometheus age1uvkcsm082vacmmauxakhuzjyjr7dx7gxyd6k757smwlwm5ekzgzs2sq8uh
+  - &host_age_saturn age1uvkcsm082vacmmauxakhuzjyjr7dx7gxyd6k757smwlwm5ekzgzs2sq8uh
 creation_rules:
   - path_regex: hosts/nixoses/hades/[^/]+\.sops[^/]*
     key_groups:
@@ -47,14 +47,14 @@ creation_rules:
       - pgp:
         - *user_yl_0x8EBD95DC147755A2
         age:
-        - *host_age_prometheus
+        - *host_age_saturn
 
   - path_regex: profiles/workstation/darwin/(local|remote)/[^/]+\.sops[^/]*
     key_groups:
       - pgp:
         - *user_yl_0x8EBD95DC147755A2
         age:
-        - *host_age_prometheus
+        - *host_age_saturn
 
   - path_regex: profiles/workstation/nixos/(local|remote)/[^/]+\.sops[^/]*
     key_groups:
@@ -76,7 +76,7 @@ creation_rules:
         - *host_pgp_prometheus
         - *host_pgp_zeus
         age:
-        - *host_age_prometheus
+        - *host_age_saturn
 
   - path_regex: modules/.*/[^/]+\.sops[^/]*
     key_groups:
@@ -88,4 +88,4 @@ creation_rules:
         - *host_pgp_prometheus
         - *host_pgp_zeus
         age:
-        - *host_age_prometheus
+        - *host_age_saturn
