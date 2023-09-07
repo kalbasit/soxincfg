@@ -11,6 +11,7 @@
         "google-chrome"
         "iterm2"
         "keybase"
+        "raycast" # Alfred replacement
         "rectangle" # macOS window manager
         "sequel-pro" # MySQL frontend supporting connections through a tunnel
         "signal"
