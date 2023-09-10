@@ -11,11 +11,31 @@ if [[ "${#}" -ne 1 ]]; then
 fi
 
 readonly userName="${1}"
-readonly homeManagerService="result/etc/systemd/system/home-manager-${userName}.service"
 
-if ! [[ -f "${homeManagerService}" ]]; then
-    echo "ERR: ${homeManagerService} does not exist"
+isDarwin() {
+	local os="$(uname -s)"
+	[[ "${os}" == "Darwin" ]]
+}
+
+isLinux() {
+	local os="$(uname -s)"
+	[[ "${os}" == "Linux" ]]
+}
+
+if isLinux; then
+    readonly homeManagerService="result/etc/systemd/system/home-manager-${userName}.service"
+
+    if ! [[ -f "${homeManagerService}" ]]; then
+        echo "ERR: ${homeManagerService} does not exist"
+        exit 1
+    fi
+
+    awk '/ExecStart=/ {print $2}' "${homeManagerService}"
+elif isDarwin; then
+    readonly activation_yl="$(awk '/activation-yl/ {print $5}' result/activate)"
+    readonly activate="$(awk '/exec/ {print $2}' "$activation_yl")"
+    dirname "$activate"
+else
+    >&2 echo "OS is not supported"
     exit 1
 fi
-
-awk '/ExecStart=/ {print $2}' "${homeManagerService}"
