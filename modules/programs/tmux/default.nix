@@ -131,8 +131,10 @@ in
             # No Mouse!
             set -g mouse off
 
-            # Do not update the environment, keep everything from what it was started with except for my ZSH_PROFILE
-            set -g update-environment "ZSH_PROFILE"
+            # Do not update the environment, keep everything from what it was
+            # started with except for my ZSH_PROFILE and all startup env-vars
+            # for home-manager/nix-darwin.
+            set -g update-environment "ZSH_PROFILE __NIX_DARWIN_SET_ENVIRONMENT_DONE __HM_SESS_VARS_SOURCED __HM_ZSH_SESS_VARS_SOURCED"
 
             # Last active window
             bind C-t last-window
