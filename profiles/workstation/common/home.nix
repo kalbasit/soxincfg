@@ -25,6 +25,7 @@ in
     docker-credential-gcr
     dosbox
     duf # du replacement on steroids
+    element-desktop # Element client
     eternal-terminal
     file
     fx # JSON viewer
