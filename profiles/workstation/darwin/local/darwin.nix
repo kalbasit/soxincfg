@@ -5,6 +5,7 @@
 
       casks = [
         "alfred" # spotlight replacement
+        "arc" # Arc Browser
         "charles"
         "flotato" # Makes applications of any website.
         "goland"
