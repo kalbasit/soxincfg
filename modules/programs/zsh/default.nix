@@ -197,15 +197,8 @@ in
       # environment.shellAliases.swm = ''
       #   swm --ignore-pattern '.Spotlight-V100|.Trashes|.fseventsd'
       # '';
-    }))
 
-    (optionalAttrs (mode == "home-manager") (mkIf pkgs.stdenv.hostPlatform.isDarwin {
-      # TODO: swm should parse a configuration file in order to ignore these
-      # programs.zsh.shellAliases.swm = ''
-      #   swm --ignore-pattern '.Spotlight-V100|.Trashes|.fseventsd'
-      # '';
-
-      programs.zsh.initExtra = ''
+      programs.zsh.shellInit = ''
         if [[ -d /opt/homebrew ]]; then
           eval "$(/opt/homebrew/bin/brew shellenv)"
         fi
