@@ -3,10 +3,6 @@
     homebrew = {
       enable = true;
 
-      brews = [
-        "koekeishiya/formulae/yabai" # macOS window manager
-      ];
-
       casks = [
         "alfred" # spotlight replacement
         "arc" # Arc Browser
@@ -28,10 +24,6 @@
         "vlc"
         "whatsapp" # WhatsApp application
         "zoom"
-      ];
-
-      taps = [
-        "koekeishiya/homebrew-formulae"
       ];
     };
 
