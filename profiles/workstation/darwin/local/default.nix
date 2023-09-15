@@ -103,6 +103,7 @@ in
     services = {
       sketchybar.enable = true;
       skhd.enable = true;
+      yabai.enable = true;
     };
 
     settings = {
