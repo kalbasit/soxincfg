@@ -8,6 +8,7 @@ ACTIVITY=􀒓
 LOCK=􀒳
 BELL=􀋚
 BELL_DOT=􀝗
+TERMINAL=􀪏
 
 # Git Icons
 GIT_ISSUE=􀍷
