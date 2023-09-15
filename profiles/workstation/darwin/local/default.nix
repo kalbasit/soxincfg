@@ -102,6 +102,7 @@ in
 
     services = {
       sketchybar.enable = true;
+      skhd.enable = true;
     };
 
     settings = {
