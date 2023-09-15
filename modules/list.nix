@@ -29,6 +29,7 @@
   iscsid = ./services/iscsid.nix;
   nextcloud = ./services/nextcloud;
   sketchybar = ./services/sketchybar;
+  skhd = ./services/skhd;
   sleep-on-lan = ./services/sleep-on-lan;
   twingate = ./services/networking/twingate.nix;
 
