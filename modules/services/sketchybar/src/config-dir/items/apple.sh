@@ -19,6 +19,12 @@ apple_prefs=(
   click_script="open -a 'System Preferences'; $POPUP_OFF"
 )
 
+apple_terminal=(
+  icon=$TERMINAL
+  label="Terminal"
+  click_script="open -a 'iTerm'; $POPUP_OFF"
+)
+
 apple_activity=(
   icon=$ACTIVITY
   label="Activity"
@@ -36,6 +42,9 @@ sketchybar --add item apple.logo left                  \
                                                        \
            --add item apple.prefs popup.apple.logo     \
            --set apple.prefs "${apple_prefs[@]}"       \
+                                                       \
+           --add item apple.terminal popup.apple.logo  \
+           --set apple.terminal "${apple_terminal[@]}" \
                                                        \
            --add item apple.activity popup.apple.logo  \
            --set apple.activity "${apple_activity[@]}" \
