@@ -67,7 +67,7 @@ in
         ${helper}/bin/helper $HELPER > /dev/null 2>&1 &
 
         # Unload the macOS on screen indicator overlay for volume change
-        launchctl unload -F /System/Library/LaunchAgents/com.apple.OSDUIHelper.plist > /dev/null 2>&1 &
+        # launchctl unload -F /System/Library/LaunchAgents/com.apple.OSDUIHelper.plist > /dev/null 2>&1 &
 
         # Setting up the general bar appearance of the bar
         bar=(
