@@ -32,7 +32,7 @@ in
         "right_padding" = "12";
         "split_ratio" = "0.50";
         "split_type" = "auto";
-        "top_padding" = "15";
+        "top_padding" = "50";
         "window_animation_duration" = "0.0";
         "window_animation_frame_rate" = "120";
         "window_border" = "off";
