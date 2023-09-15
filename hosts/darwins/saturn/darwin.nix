@@ -154,7 +154,6 @@ in
       shift + alt - o : yabai -m window --swap east
 
       # toggle window zoom
-      alt - d : yabai -m window --toggle zoom-parent
       alt - f : yabai -m window --toggle zoom-fullscreen
     '';
   };
