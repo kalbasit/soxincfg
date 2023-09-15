@@ -100,6 +100,10 @@ in
       zsh.enable = true;
     };
 
+    services = {
+      sketchybar.enable = true;
+    };
+
     settings = {
       fonts.enable = true;
       nix.distributed-builds.enable = true;

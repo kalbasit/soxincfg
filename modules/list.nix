@@ -28,6 +28,7 @@
   i3 = ./services/x11/window-managers/i3.nix;
   iscsid = ./services/iscsid.nix;
   nextcloud = ./services/nextcloud;
+  sketchybar = ./services/sketchybar;
   sleep-on-lan = ./services/sleep-on-lan;
   twingate = ./services/networking/twingate.nix;
 
