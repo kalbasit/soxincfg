@@ -10,6 +10,7 @@
         "flotato" # Makes applications of any website.
         "goland"
         "google-chrome"
+        "homebrew/cask-fonts/font-sf-pro" # SF Pro used by SketchyBar
         "iterm2"
         "keybase"
         "raycast" # Alfred replacement
@@ -24,6 +25,10 @@
         "vlc"
         "whatsapp" # WhatsApp application
         "zoom"
+      ];
+
+      taps = [
+        "homebrew/cask-fonts"
       ];
     };
 
