@@ -45,8 +45,6 @@ let
 in
 {
   config = mkIf cfg.enable {
-    environment.systemPackages = [ pkgs.nerdfonts ];
-
     services.sketchybar = {
       enable = true;
       config = ''
