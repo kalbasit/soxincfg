@@ -9,6 +9,16 @@ let
 in
 {
   config = mkIf cfg.enable {
+    launchd.user.agents.yabai.serviceConfig = {
+      StandardOutPath = "/var/tmp/yabai.stdout.log";
+      StandardErrorPath = "/var/tmp/yabai.stderr.log";
+    };
+
+    launchd.daemons.yabai-sa.serviceConfig = {
+      StandardOutPath = "/var/tmp/yabai-sa.stdout.log";
+      StandardErrorPath = "/var/tmp/yabai-sa.stderr.log";
+    };
+
     services.yabai = {
       enable = true;
       enableScriptingAddition = true;
