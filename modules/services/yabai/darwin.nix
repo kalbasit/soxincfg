@@ -42,7 +42,7 @@ in
         "right_padding" = "4";
         "split_ratio" = "0.50";
         "top_padding" = "10";
-        "window_animation_duration" = "0.3";
+        "window_animation_duration" = "0.1";
         "window_border" = "on";
         "window_border_blur" = "off";
         "window_border_hidpi" = "off";
