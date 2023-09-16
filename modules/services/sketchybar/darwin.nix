@@ -50,8 +50,9 @@ in
       EnvironmentVariables = {
         PATH = mkForce (builtins.concatStringsSep ":" [
           "${config.services.sketchybar.package}/bin"
-          "${pkgs.jq}/bin"
           "${pkgs.gh}/bin"
+          "${pkgs.gnugrep}/bin"
+          "${pkgs.jq}/bin"
           "${config.environment.systemPath}"
           "/opt/homebrew/bin"
           "/usr/local/bin"
