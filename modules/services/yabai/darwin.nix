@@ -28,6 +28,7 @@ in
         "active_window_opacity" = "1.0";
         "auto_balance" = "off";
         "bottom_padding" = "12";
+        "external_bar" = "all:35:0";
         "focus_follows_mouse" = "off";
         "insert_feedback_color" = "0xffd75f5f";
         "layout" = "bsp";
@@ -42,7 +43,7 @@ in
         "right_padding" = "12";
         "split_ratio" = "0.50";
         "split_type" = "auto";
-        "top_padding" = "50";
+        "top_padding" = "15";
         "window_animation_duration" = "0.0";
         "window_animation_frame_rate" = "120";
         "window_border" = "off";
