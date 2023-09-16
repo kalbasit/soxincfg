@@ -186,14 +186,6 @@ in
           submodule = 1;
         };
 
-        "url \"ssh://git@github.com/\"" = {
-          insteadOf = "https://github.com/";
-        };
-
-        "url \"ssh://git@gitlab.com/\"" = {
-          insteadOf = "https://gitlab.com/";
-        };
-
         "filter \"lfs\"" = {
           clean = "git-lfs clean -- %f";
           smudge = "git-lfs smudge -- %f";
