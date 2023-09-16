@@ -2,6 +2,7 @@
 
 let
   inherit (lib)
+    mkForce
     mkIf
     ;
 
@@ -46,6 +47,16 @@ in
 {
   config = mkIf cfg.enable {
     launchd.user.agents.sketchybar.serviceConfig = {
+      EnvironmentVariables = {
+        PATH = mkForce (builtins.concatStringsSep ":" [
+          "${config.services.sketchybar.package}/bin"
+          "${pkgs.jq}/bin"
+          "${pkgs.gh}/bin"
+          "${config.environment.systemPath}"
+          "/opt/homebrew/bin"
+          "/usr/local/bin"
+        ]);
+      };
       StandardOutPath = "/var/tmp/sketchybar.stdout.log";
       StandardErrorPath = "/var/tmp/sketchybar.stderr.log";
     };
