@@ -45,6 +45,11 @@ let
 in
 {
   config = mkIf cfg.enable {
+    launchd.user.agents.sketchybar.serviceConfig = {
+      StandardOutPath = "/var/tmp/sketchybar.stdout.log";
+      StandardErrorPath = "/var/tmp/sketchybar.stderr.log";
+    };
+
     services.sketchybar = {
       enable = true;
       config = ''

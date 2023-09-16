@@ -9,6 +9,11 @@ let
 in
 {
   config = mkIf cfg.enable {
+    launchd.user.agents.skhd.serviceConfig = {
+      StandardOutPath = "/var/tmp/skhd.stdout.log";
+      StandardErrorPath = "/var/tmp/skhd.stderr.log";
+    };
+
     services.skhd = {
       enable = true;
       skhdConfig = ''
