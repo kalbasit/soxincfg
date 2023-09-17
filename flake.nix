@@ -58,6 +58,7 @@
             (_: super: {
               inherit (channels.nixpkgs-unstable)
                 # inherit packages from unstable.
+                obsidian
                 yabai
                 ;
             })
