@@ -32,6 +32,7 @@ in
     gh # GitHub command line client
     gist
     git-quick-stats
+    gnugrep
     gnupg
     go
     hexyl # hex viewer with nice colors
