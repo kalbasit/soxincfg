@@ -22,6 +22,7 @@ in
     awscli
     binutils # for strings
     bitwarden-cli
+    csvkit
     docker-credential-gcr
     dosbox
     duf # du replacement on steroids
