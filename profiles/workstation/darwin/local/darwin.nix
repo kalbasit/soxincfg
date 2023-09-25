@@ -7,6 +7,7 @@
         "alfred" # spotlight replacement
         "arc" # Arc Browser
         "charles"
+        "dosbox" # MS-DOS game emulator
         "flotato" # Makes applications of any website.
         "goland"
         "google-chrome"
