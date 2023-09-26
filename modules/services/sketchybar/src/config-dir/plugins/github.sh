@@ -1,8 +1,8 @@
 #!/bin/bash
 
 update() {
-  source "@CONFIG_DIR@/colors.sh"
-  source "@CONFIG_DIR@/icons.sh"
+  source "$CONFIG_DIR/colors.sh"
+  source "$CONFIG_DIR/icons.sh"
 
   NOTIFICATIONS="$(gh api notifications)"
   COUNT="$(echo "$NOTIFICATIONS" | jq 'length')"
