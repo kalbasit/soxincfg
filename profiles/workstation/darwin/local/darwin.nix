@@ -3,6 +3,8 @@
     homebrew = {
       enable = true;
 
+      brews = [ ];
+
       casks = [
         "alfred" # spotlight replacement
         "arc" # Arc Browser
