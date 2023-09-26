@@ -1,7 +1,7 @@
 #!/bin/bash
 
-source "@CONFIG_DIR@/icons.sh"
-source "@CONFIG_DIR@/colors.sh"
+source "$CONFIG_DIR/icons.sh"
+source "$CONFIG_DIR/colors.sh"
 
 BATTERY_INFO="$(pmset -g batt)"
 PERCENTAGE=$(echo "$BATTERY_INFO" | grep -Po "\d+%" | cut -d% -f1)

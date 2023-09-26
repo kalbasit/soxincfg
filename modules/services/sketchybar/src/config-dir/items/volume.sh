@@ -1,7 +1,7 @@
 #!/bin/bash
 
 volume_slider=(
-  script="@PLUGIN_DIR@/volume.sh"
+  script="$PLUGIN_DIR/volume.sh"
   updates=on
   label.drawing=off
   icon.drawing=off
@@ -14,7 +14,7 @@ volume_slider=(
 )
 
 volume_icon=(
-  click_script="@PLUGIN_DIR@/volume_click.sh"
+  click_script="$PLUGIN_DIR/volume_click.sh"
   padding_left=10
   icon=$VOLUME_100
   icon.width=0

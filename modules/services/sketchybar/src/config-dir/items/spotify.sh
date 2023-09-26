@@ -4,7 +4,7 @@ SPOTIFY_EVENT="com.spotify.client.PlaybackStateChanged"
 POPUP_SCRIPT="sketchybar -m --set spotify.anchor popup.drawing=toggle"
 
 spotify_anchor=(
-  script="@PLUGIN_DIR@/spotify.sh"
+  script="$PLUGIN_DIR/spotify.sh"
   click_script="$POPUP_SCRIPT"
   popup.horizontal=on
   popup.align=center
@@ -17,7 +17,7 @@ spotify_anchor=(
 )
 
 spotify_cover=(
-  script="@PLUGIN_DIR@/spotify.sh"
+  script="$PLUGIN_DIR/spotify.sh"
   click_script="open -a 'Spotify'; $POPUP_SCRIPT"
   label.drawing=off
   icon.drawing=off
@@ -72,7 +72,7 @@ spotify_state=(
   slider.highlight_color=$GREEN
   slider.percentage=40
   slider.width=115
-  script="@PLUGIN_DIR@/spotify.sh"
+  script="$PLUGIN_DIR/spotify.sh"
   update_freq=1
   updates=when_shown
 )
@@ -84,7 +84,7 @@ spotify_shuffle=(
   icon.color=$BLACK
   icon.highlight_color=$GREY
   label.drawing=off
-  script="@PLUGIN_DIR@/spotify.sh"
+  script="$PLUGIN_DIR/spotify.sh"
   y_offset=-45
 )
 
@@ -93,7 +93,7 @@ spotify_back=(
   icon.padding_left=5
   icon.padding_right=5
   icon.color=$BLACK
-  script="@PLUGIN_DIR@/spotify.sh"
+  script="$PLUGIN_DIR/spotify.sh"
   label.drawing=off
   y_offset=-45
 )
@@ -112,7 +112,7 @@ spotify_play=(
   icon.padding_right=5
   updates=on
   label.drawing=off
-  script="@PLUGIN_DIR@/spotify.sh"
+  script="$PLUGIN_DIR/spotify.sh"
   y_offset=-45
 )
 
@@ -122,7 +122,7 @@ spotify_next=(
   icon.padding_right=5
   icon.color=$BLACK
   label.drawing=off
-  script="@PLUGIN_DIR@/spotify.sh"
+  script="$PLUGIN_DIR/spotify.sh"
   y_offset=-45
 )
 
@@ -133,7 +133,7 @@ spotify_repeat=(
   icon.padding_right=10
   icon.color=$BLACK
   label.drawing=off
-  script="@PLUGIN_DIR@/spotify.sh"
+  script="$PLUGIN_DIR/spotify.sh"
   y_offset=-45
 )
 

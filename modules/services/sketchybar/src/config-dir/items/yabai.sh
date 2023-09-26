@@ -3,7 +3,7 @@
 yabai=(
   icon.width=0
   label.width=0
-  script="@PLUGIN_DIR@/yabai.sh"
+  script="$PLUGIN_DIR/yabai.sh"
   icon.font="$FONT:Bold:16.0"
   associated_display=active
 )

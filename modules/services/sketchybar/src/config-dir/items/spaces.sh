@@ -28,7 +28,7 @@ do
     background.border_color=$BACKGROUND_2
     background.drawing=off
     label.drawing=off
-    script="@PLUGIN_DIR@/space.sh"
+    script="$PLUGIN_DIR/space.sh"
   )
 
   sketchybar --add space space.$sid left    \

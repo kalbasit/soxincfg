@@ -1,7 +1,7 @@
 #!/bin/bash
 
 update() {
-  source "@CONFIG_DIR@/icons.sh"
+  source "$CONFIG_DIR/icons.sh"
   LABEL="$INFO ($(ipconfig getifaddr en0))"
   ICON="$([ -n "$INFO" ] && echo "$WIFI_CONNECTED" || echo "$WIFI_DISCONNECTED")"
 
