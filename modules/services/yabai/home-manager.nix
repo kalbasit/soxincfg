@@ -9,20 +9,18 @@ let
 in
 {
   config = mkIf cfg.enable {
-    # Must run these commands after installing for the first time
-    #
-    #   yabai --install-service
-    #   yabai --start-service
-    #   sudo yabai --load-sa
-    #
-    # And this commands to update
-    #
-    #   yabai --restart-service
-    #   sudo yabai --load-sa
-    #
-    # TODO: Automate this!
     xdg.configFile."yabai/yabairc" = {
       executable = true;
+
+      onChange = ''
+        if ! test -f ${config.home.homeDirectory}/Library/LaunchAgents/com.koekeishiya.yabai.plist; then
+          yabai --install-service
+          yabai --start-service
+        else
+          yabai --stop-service || true
+          yabai --start-service
+        fi
+      '';
 
       text = ''
         yabai -m config active_window_border_color 0xffe1e3e4
