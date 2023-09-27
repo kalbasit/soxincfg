@@ -10,15 +10,34 @@ in
 {
   config = mkIf cfg.enable {
     xdg.configFile."skhd/skhdrc" = {
-      onChange = ''
-        if ! test -f ${config.home.homeDirectory}/Library/LaunchAgents/com.koekeishiya.skhd.plist; then
-          skhd --install-service
-          skhd --start-service
-        else
-          skhd --stop-service || true
-          skhd --start-service
-        fi
-      '';
+
+      # TODO: When Nix interacts with launchctl, it gets killed due to
+      # segmentation fault. Fix this!
+      #
+      # onChange = ''
+      #   if ! type skhd &>/dev/null; then
+      #     skhd() {
+      #       if test -x /opt/homebrew/bin/skhd; then
+      #         PATH="$PATH:/bin:/usr/bin:/opt/homebrew/bin" skhd "$@"
+      #       elif test -x /usr/local/bin/skhd; then
+      #         PATH="$PATH:/bin:/usr/bin:/usr/local/bin" skhd "$@"
+      #       else
+      #         _iError "skhd: No such file or directory" >&2
+      #         return 1
+      #       fi
+      #     }
+      #   fi
+      #
+      #   if ! test -f ${config.home.homeDirectory}/Library/LaunchAgents/com.koekeishiya.skhd.plist; then
+      #     _iNote "Installing and starting the skhd service"
+      #     skhd --install-service
+      #     skhd --start-service
+      #   else
+      #     _iNote "Restarting the skhd service"
+      #     skhd --stop-service &>/dev/null || true
+      #     skhd --start-service
+      #   fi
+      # '';
 
       text = ''
         # focus window

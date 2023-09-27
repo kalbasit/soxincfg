@@ -12,15 +12,33 @@ in
     xdg.configFile."yabai/yabairc" = {
       executable = true;
 
-      onChange = ''
-        if ! test -f ${config.home.homeDirectory}/Library/LaunchAgents/com.koekeishiya.yabai.plist; then
-          yabai --install-service
-          yabai --start-service
-        else
-          yabai --stop-service || true
-          yabai --start-service
-        fi
-      '';
+      # TODO: When Nix interacts with launchctl, it gets killed due to
+      # segmentation fault. Fix this!
+      #
+      # onChange = ''
+      #   if ! type yabai &>/dev/null; then
+      #     yabai() {
+      #       if test -x /opt/homebrew/bin/yabai; then
+      #         PATH="$PATH:/bin:/usr/bin:/opt/homebrew/bin" yabai "$@"
+      #       elif test -x /usr/local/bin/yabai; then
+      #         PATH="$PATH:/bin:/usr/bin:/usr/local/bin" yabai "$@"
+      #       else
+      #         _iError "yabai: No such file or directory" >&2
+      #         return 1
+      #       fi
+      #     }
+      #   fi
+      #
+      #   if ! test -f ${config.home.homeDirectory}/Library/LaunchAgents/com.koekeishiya.yabai.plist; then
+      #     _iNote "Installing and starting the yabai service"
+      #     yabai --install-service
+      #     yabai --start-service
+      #   else
+      #     _iNote "Restarting the yabai service"
+      #     yabai --stop-service &>/dev/null || true
+      #     yabai --start-service
+      #   fi
+      # '';
 
       text = ''
         yabai -m config active_window_border_color 0xffe1e3e4
