@@ -105,7 +105,26 @@ in
     xdg.configFile."sketchybar/sketchybarrc" = {
       executable = true;
 
-      onChange = "brew services restart sketchybar";
+      # TODO: When Nix interacts with launchctl, it gets killed due to
+      # segmentation fault. Fix this!
+      #
+      # onChange = ''
+      #   if ! type brew &>/dev/null; then
+      #     brew() {
+      #       if test -x /opt/homebrew/bin/brew; then
+      #         PATH="$PATH:/bin:/usr/bin:/opt/homebrew/bin" brew "$@"
+      #       elif test -x /usr/local/bin/brew; then
+      #         PATH="$PATH:/bin:/usr/bin:/usr/local/bin" brew "$@"
+      #       else
+      #         _iError "brew: No such file or directory" >&2
+      #         return 1
+      #       fi
+      #     }
+      #   fi
+      #
+      #   _iNote "Restarting Sketchybar"
+      #   brew services restart sketchybar
+      # '';
 
       text = ''
         CONFIG_DIR="${config-dir}/share/sketchybar"
