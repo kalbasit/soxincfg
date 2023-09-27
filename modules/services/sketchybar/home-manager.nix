@@ -19,11 +19,11 @@ let
     '';
   };
 
-  app-font-version= "1.0.16";
+  app-font-version = "1.0.16";
 
   app-font-ttf = pkgs.stdenvNoCC.mkDerivation {
     pname = "sketchybar-app-font-ttf";
-    version =app-font-version;
+    version = app-font-version;
 
     src = pkgs.fetchurl {
       url = "https://github.com/kvndrsslr/sketchybar-app-font/releases/download/v${app-font-version}/sketchybar-app-font.ttf";
@@ -40,7 +40,7 @@ let
 
   app-font-map = pkgs.stdenvNoCC.mkDerivation {
     pname = "sketchybar-app-font-map";
-    version =app-font-version;
+    version = app-font-version;
 
     src = pkgs.fetchurl {
       url = "https://github.com/kvndrsslr/sketchybar-app-font/releases/download/v${app-font-version}/icon_map_fn.sh";
@@ -94,7 +94,7 @@ in
       pkgs.jq
     ];
 
-    home.activation.sketchybar = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    home.activation.sketchybar = lib.hm.dag.entryBefore [ "onFilesChange" ] ''
       mkdir -p ${config.home.homeDirectory}/Library/Fonts
 
       rm -f ${config.home.homeDirectory}/Library/Fonts/sketchybar-app-font.ttf
@@ -102,17 +102,10 @@ in
         ${config.home.homeDirectory}/Library/Fonts/sketchybar-app-font.ttf
     '';
 
-    # Must run these commands after installing for the first time
-    #
-    #   brew services start sketchybar
-    #
-    # And this commands to update
-    #
-    #   brew services restart sketchybar
-    #
-    # TODO: Automate this!
     xdg.configFile."sketchybar/sketchybarrc" = {
       executable = true;
+
+      onChange = "brew services restart sketchybar";
 
       text = ''
         CONFIG_DIR="${config-dir}/share/sketchybar"
