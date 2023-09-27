@@ -94,7 +94,7 @@ in
       pkgs.jq
     ];
 
-    home.activation.sketchybar = lib.hm.dag.entryBefore [ "onFilesChange" ] ''
+    home.activation.sketchybar-app-font = lib.hm.dag.entryBefore [ "onFilesChange" ] ''
       mkdir -p ${config.home.homeDirectory}/Library/Fonts
 
       rm -f ${config.home.homeDirectory}/Library/Fonts/sketchybar-app-font.ttf
