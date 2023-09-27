@@ -19,6 +19,42 @@ let
     '';
   };
 
+  app-font-version= "1.0.16";
+
+  app-font-ttf = pkgs.stdenvNoCC.mkDerivation {
+    pname = "sketchybar-app-font-ttf";
+    version =app-font-version;
+
+    src = pkgs.fetchurl {
+      url = "https://github.com/kvndrsslr/sketchybar-app-font/releases/download/v${app-font-version}/sketchybar-app-font.ttf";
+      hash = "sha256-58gRCEJix9pnZEcoo6bm2zWduP0xXl3WWC6mt36SGuo=";
+    };
+
+    dontUnpack = true;
+
+    installPhase = ''
+      mkdir -p $out/share/fonts
+      cp $src $out/share/fonts/sketchybar-app-font.ttf
+    '';
+  };
+
+  app-font-map = pkgs.stdenvNoCC.mkDerivation {
+    pname = "sketchybar-app-font-map";
+    version =app-font-version;
+
+    src = pkgs.fetchurl {
+      url = "https://github.com/kvndrsslr/sketchybar-app-font/releases/download/v${app-font-version}/icon_map_fn.sh";
+      hash = "sha256-Ca76M0sySWgsUJNziuFa+afetx/477mUtmuuosNZgbY";
+    };
+
+    dontUnpack = true;
+
+    installPhase = ''
+      mkdir -p $out/share/scripts
+      cp $src $out/share/scripts/icon_map_fn.sh
+    '';
+  };
+
   config-dir = pkgs.stdenvNoCC.mkDerivation {
     pname = "sketchybar-config-dir";
     version = "0.0.1";
@@ -43,6 +79,7 @@ let
         wrapProgram "$file" \
           --set CONFIG_DIR $out/share/sketchybar \
           --set PLUGIN_DIR $out/share/sketchybar/plugins \
+          --set APP_FONT_MAP ${app-font-map}/share/scripts/icon_map_fn.sh \
           --prefix PATH ":" ${makeBinPath [ pkgs.gh pkgs.gnugrep pkgs.jq ]} \
           --suffix PATH ":" /opt/homebrew/bin
       done
@@ -56,6 +93,14 @@ in
       pkgs.gnugrep
       pkgs.jq
     ];
+
+    home.activation.sketchybar = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      mkdir -p ${config.home.homeDirectory}/Library/Fonts
+
+      rm -f ${config.home.homeDirectory}/Library/Fonts/sketchybar-app-font.ttf
+      cp ${app-font-ttf}/share/fonts/sketchybar-app-font.ttf \
+        ${config.home.homeDirectory}/Library/Fonts/sketchybar-app-font.ttf
+    '';
 
     # Must run these commands after installing for the first time
     #
