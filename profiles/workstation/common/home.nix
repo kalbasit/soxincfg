@@ -19,7 +19,7 @@ in
     amazon-ecr-credential-helper
     arduino-cli
     audacity
-    awscli
+    awscli2
     binutils # for strings
     bitwarden-cli
     csvkit

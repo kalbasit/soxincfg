@@ -44,7 +44,7 @@ optionalAttrs (mode == "home-manager") {
         _soxin_aws_configure_profiles_found=1
         # run it in a subshell but only if it's executable
         if [[ -x $sh ]]; then
-          (PATH=${pkgs.awscli}/bin:$PATH exec $sh)
+          (PATH=${pkgs.awscli2}/bin:$PATH exec $sh)
         else
           warnEcho "$sh is not executable, skipping it."
         fi
