@@ -202,11 +202,13 @@ in
         # Right
         source "$ITEM_DIR/calendar.sh"
         source "$ITEM_DIR/brew.sh"
-        source "$ITEM_DIR/wifi.sh"
         source "$ITEM_DIR/github.sh"
+        source "$ITEM_DIR/wifi.sh"
         source "$ITEM_DIR/battery.sh"
         source "$ITEM_DIR/volume.sh"
         source "$ITEM_DIR/cpu.sh"
+
+        sketchybar --hotload on
 
         # Forcing all item scripts to run (never do this outside of sketchybarrc)
         sketchybar --update
