@@ -80,7 +80,7 @@
   set wildignore+=*.swp,*~,._*
 
   " Disable node/TypeScript
-  set wildignore+=*/node_modules/*,*/typings/*,*/dist/*
+  set wildignore+=*/node_modules/*,*/dist/*
 
   " Disable the build folder, usually used by java
   set wildignore+=*/build/*
