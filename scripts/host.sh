@@ -95,9 +95,18 @@ case "${action}" in
         if isNixOS; then
             nixos-rebuild --use-remote-sudo --flake "path:.#${host}" switch # --show-trace
         elif isDarwin; then
+            # steps taken from https://github.com/LnL7/nix-darwin/blob/8b6ea26d5d2e8359d06278364f41fbc4b903b28a/pkgs/nix-tools/darwin-rebuild.sh
+
+            # 1. build the host
             "$0" build "$host"
-            ./result/activate-user
-            sudo ./result/activate
+
+            # 2. setup the profile
+            profile=/nix/var/nix/profiles/system
+            systemConfig="$(readlink -f result)"
+            sudo -H nix-env -p "$profile" --set "$systemConfig"
+
+            # 3. call darwin-rebuild activate
+            ./result/sw/bin/darwin-rebuild activate
         else
             home-manager switch --flake "path:.#${host}"
             $(nix path-info "path:.#homeConfigurations.${host}.activationPackage")/activate
