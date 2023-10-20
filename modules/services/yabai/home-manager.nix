@@ -90,6 +90,10 @@ in
         yabai -m rule --add label="Safari" app="^Safari$" title="^(General|(Tab|Password|Website|Extension)s|AutoFill|Se(arch|curity)|Privacy|Advance)$" manage=off
         yabai -m rule --add label="About This Mac" app="System Information" title="About This Mac" manage=off
         yabai -m rule --add label="Select file to save to" app="^Inkscape$" title="Select file to save to" manage=off
+
+        # https://github.com/koekeishiya/yabai/issues/1622#issuecomment-1493105964
+        yabai -m rule --add app="^Arc$" subrole='AXSystemDialog' manage=off mouse_follows_focus=off
+        yabai -m rule --add app='^Arc$' title='^Space.*$' manage=off
       '';
     };
   };
