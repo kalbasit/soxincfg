@@ -55,11 +55,7 @@ function gcim() {
 			story=" (${story})"
 		fi
 
-		if [[ "${GIT_DISABLE_GPG_SIGN:-}" != "" ]]; then
-			@git_bin@ commit --no-gpg-sign -m "${message}${story}"
-		else
-			@git_bin@ commit -m "${message}${story}"
-		fi
+		@git_bin@ commit -m "${message}${story}"
 	} always {
 		unfunction -m "$0_*"
 	}
