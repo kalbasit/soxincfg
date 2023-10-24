@@ -42,9 +42,6 @@ in
     serviceConfig.ProcessType = "Interactive";
   };
 
-  # TODO: Make gpg work, and re-enable this.
-  soxincfg.programs.git.enableGpgSigningKey = false;
-
   nix = {
     useDaemon = true;
   };

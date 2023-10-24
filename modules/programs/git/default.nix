@@ -7,10 +7,6 @@ in
 {
   options.soxincfg.programs.git = {
     enable = mkEnableOption "programs.git";
-
-    enableGpgSigningKey = recursiveUpdate
-      (mkEnableOption "enable gpg signing")
-      { default = cfg.enable; };
   };
 
   config = mkIf cfg.enable (mkMerge [
@@ -22,9 +18,6 @@ in
         userEmail = "wael.nasreddine@gmail.com";
       };
     }
-
-    # enable GPG signing
-    (mkIf cfg.enableGpgSigningKey { soxin.programs.git.gpgSigningKey = "me@yl.codes"; })
 
     (optionalAttrs (mode == "home-manager") {
       home.packages = with pkgs; [

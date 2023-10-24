@@ -88,7 +88,7 @@ in
       # chromium = { enable = true; surfingkeys.enable = true; };
       dbeaver.enable = true;
       fzf.enable = true;
-      git = { enable = true; enableGpgSigningKey = false; };
+      git.enable = true;
       mosh.enable = true;
       pet.enable = true;
       ssh.enable = true;

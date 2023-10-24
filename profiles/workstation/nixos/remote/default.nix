@@ -38,13 +38,7 @@ in
   soxincfg = {
     programs = {
       fzf.enable = true;
-      git = {
-        enable = true;
-
-        # No need to attempt to sign commits via GnuPG as it really does not
-        # work well, yet.
-        enableGpgSigningKey = mkForce false;
-      };
+      git.enable = true;
       mosh.enable = true;
       pet.enable = true;
       ssh = {
