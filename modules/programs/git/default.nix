@@ -29,7 +29,6 @@ in
     (optionalAttrs (mode == "home-manager") {
       home.packages = with pkgs; [
         gitAndTools.git-appraise
-        gitAndTools.hub
         gitAndTools.tig
       ];
 
