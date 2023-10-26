@@ -83,6 +83,10 @@
         # allowBroken = true;
         allowUnfree = true;
         # allowUnsupportedSystem = true;
+
+        permittedInsecurePackages = [
+          "electron-24.8.6" # needed for Bitwarden on 23.05
+        ];
       };
 
       nixosModules = (import ./modules) // {
