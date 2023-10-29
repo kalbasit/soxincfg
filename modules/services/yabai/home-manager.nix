@@ -74,9 +74,6 @@ in
         yabai -m config window_topmost off
         yabai -m config window_zoom_persist off
 
-        # Unload the macOS WindowManager process
-        # launchctl unload -F /System/Library/LaunchAgents/com.apple.WindowManager.plist > /dev/null 2>&1 &
-
         yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
         yabai -m signal --add event=window_focused action="sketchybar --trigger window_focus"
         # yabai -m signal --add event=display_added action="sleep 2 && $HOME/.config/yabai/create_spaces.sh"
