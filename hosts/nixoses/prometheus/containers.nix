@@ -52,12 +52,12 @@ in
         "--device=/dev/v4l/by-id/usb-046d_HD_Pro_Webcam_C920_CA58666F-video-index0:/dev/camera"
         "--device=/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0:/dev/printer"
       ];
-      image = "docker.io/octoprint/octoprint:1.9.2@sha256:5fb961292d13d644849128ac54c778c370f70c9ca381c20792b5f3daeeb8bea2";
+      image = "docker.io/octoprint/octoprint:1.9.3@sha256:1e48b53ab15e740e42d29a54b44efa4283d10d9a00aa21fa84f37a869ad0e81c";
       volumes = [ "/persistence/octoprint:/octoprint" ];
     };
 
     containers.mosquitto = {
-      image = "eclipse-mosquitto:2.0.17-openssl@sha256:f6f7d1728a23dc0310266075c4baf8080ad0c12048a914dbaa89490657640af9";
+      image = "eclipse-mosquitto:2.0.18-openssl@sha256:000a1baa31419cf1f271cfeb8740952f1e125f826206f7b277aa187131806866";
       extraOptions = [ "--network=${network_name}" ];
       volumes = [ "/persistence/mosquitto:/mosquitto" ];
       ports = [ "1883:1883" ];
@@ -67,7 +67,7 @@ in
       dependsOn = [ "mosquitto" "zwave-js" ];
       environment.TZ = config.time.timeZone;
       extraOptions = [ "--network=${network_name}" ];
-      image = "ghcr.io/home-assistant/home-assistant:2023.8.4@sha256:60a9b90ef0075c0cfbb088abd6a5ff609166f4cc25d8c7a2d113dac010834a0f";
+      image = "ghcr.io/home-assistant/home-assistant:2023.11.1@sha256:9fd01a2dc6294555048f08f344900e998be0aa89d86d6273b5f1bd2554a7bb73";
       ports = [ "5683:5683/udp" ];
       volumes = [ "/persistence/home-assistant:/config" ];
     };
@@ -78,12 +78,12 @@ in
         "--network=${network_name}"
         "--device=/dev/serial/by-id/usb-0658_0200-if00:/dev/zwave"
       ];
-      image = "zwavejs/zwave-js-ui:8.23.1@sha256:197d2ba19c2fdb86180441f2ba052df0ab6d562ef9b9e1ef41b25ca820729e41";
+      image = "zwavejs/zwave-js-ui:9.3.1@sha256:8a98d1ab0da008d716c1f24f92497c85d65c1281adfe766037c29517212cadc3";
       volumes = [ "/persistence/zwave-js:/usr/src/app/store" ];
     };
 
     containers.signal-cli-rest-api = {
-      image = "bbernhard/signal-cli-rest-api:0.67@sha256:70871b504478a74e5ab30b6d94130d355d32300893ab2254e9aea63264121d31";
+      image = "bbernhard/signal-cli-rest-api:0.70@sha256:8871a51a6cb898e5b49e1839fb0b1109e608919db2cae7f0a49fbfe342e8c807";
       extraOptions = [ "--network=${network_name}" ];
       environment.MODE = "native";
       environment.AUTO_RECEIVE_SCHEDULE = "0 22 * * *";
@@ -100,7 +100,7 @@ in
         "-Fmqtt://mosquitto:1883,retain=1"
       ];
       dependsOn = [ "mosquitto" ];
-      image = "hertzg/rtl_433:22.11-alpine@sha256:6b5c681e507f5355f7c23bb7d662d63d80a15e13e1a73deb5bbcf1437a4fba25";
+      image = "hertzg/rtl_433:22.11-alpine@sha256:cded9f8bb755a9157a26f672202d30770c5e13e1b57525791ce227c7fd41e218";
       extraOptions = [
         "--privileged"
         "--network=${network_name}"
@@ -110,7 +110,7 @@ in
 
     containers.rtl-433-mqtt-autodiscovery = {
       dependsOn = [ "mosquitto" ];
-      image = "ghcr.io/pbkhrv/rtl_433-hass-addons-rtl_433_mqtt_autodiscovery-amd64:0.6.0@sha256:172e9636ed002bc5f8b6527ee4c488172ad14737a09e8b50f6f768e15f460774";
+      image = "ghcr.io/pbkhrv/rtl_433-hass-addons-rtl_433_mqtt_autodiscovery-amd64:0.7.0@sha256:c4c87de2058fda1b73061a5be23db3bed1750fd33113dae14fb119ed4ce2068d";
       extraOptions = [ "--network=${network_name}" ];
       environment.MQTT_HOST = "mosquitto";
       environment.MQTT_PORT = "1883";
