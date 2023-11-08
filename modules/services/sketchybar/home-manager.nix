@@ -186,6 +186,7 @@ in
           popup.background.color=$POPUP_BACKGROUND_COLOR
           popup.blur_radius=20
           popup.background.shadow.drawing=on
+          scroll_texts=on
         )
 
         sketchybar --default "''${defaults[@]}"
@@ -198,6 +199,7 @@ in
 
         # Center
         source "$ITEM_DIR/spotify.sh"
+        # source "$ITEM_DIR/media.sh"
 
         # Right
         source "$ITEM_DIR/calendar.sh"
