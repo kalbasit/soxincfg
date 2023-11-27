@@ -11,7 +11,7 @@ in
   yl =
     optionalAttrs (mode == "NixOS")
       {
-        hashedPassword = "$6$eNj/qXHN3NAsZZyk$CcQCAKjEnKTtWA3c0JH0h1RJ4ljwLZx4L5XCR4cEI60Suzslt3HW3Q7CvzqAb1IDA4oGe3EfebDtoD/WLO9vK1";
+        hashedPassword = "$6$3p/OxtH1cSksf/17$mJ5ujXNY8iiFmGwM7bkuNo65uj3MJKke/Iy.guva8tKKcTs5pHDID/x.pN656J1I9VK3bSrP8l6GO7k2GQefG/";
 
         sshKeys = [
           # YubiKey 5C
