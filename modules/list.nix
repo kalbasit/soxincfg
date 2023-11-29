@@ -24,6 +24,7 @@
   zsh = ./programs/zsh;
 
   # services
+  borders = ./services/borders;
   dnsmasq = ./services/dnsmasq;
   i3 = ./services/x11/window-managers/i3.nix;
   iscsid = ./services/iscsid.nix;
