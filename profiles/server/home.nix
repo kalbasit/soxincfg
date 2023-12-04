@@ -35,7 +35,7 @@ in
     lf # curses-based file manager
     mercurial
     nix-index
-    nix-review
+    nixpkgs-review
     nix-zsh-completions
     unzip
   ] ++ (optionals stdenv.isLinux [
