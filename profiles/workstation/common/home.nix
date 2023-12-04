@@ -48,7 +48,7 @@ in
     libnotify
     mercurial
     nix-index
-    nix-review
+    nixpkgs-review
     nix-zsh-completions
     nixos-generators
     nur.repos.kalbasit.nixify
