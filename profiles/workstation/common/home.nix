@@ -66,7 +66,7 @@ in
     # Linux applications
     #
 
-    (retroarch.override { cores = with libretro; [ beetle-psx beetle-psx-hw beetle-snes ]; })
+    (retroarch.override { cores = with libretro; [ beetle-psx beetle-psx-hw ]; })
     _2048-in-terminal
     android-studio
     android-tools
