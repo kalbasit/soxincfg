@@ -6,11 +6,11 @@
     flake-utils-plus.url = "github:gytis-ivaskevicius/flake-utils-plus";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs.url = "github:NixOS/nixpkgs/release-23.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/release-23.11";
     nur.url = "github:nix-community/NUR";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-23.05";
+      url = "github:nix-community/home-manager/release-23.11";
       inputs = {
         nixpkgs.follows = "nixpkgs";
       };
@@ -65,7 +65,6 @@
             (_: super: {
               inherit (channels.nixpkgs-unstable)
                 # inherit packages from unstable.
-                obsidian
                 ;
             })
           ];
@@ -84,9 +83,7 @@
         allowUnfree = true;
         # allowUnsupportedSystem = true;
 
-        permittedInsecurePackages = [
-          "electron-24.8.6" # needed for Bitwarden on 23.05
-        ];
+        permittedInsecurePackages = [ ];
       };
 
       nixosModules = (import ./modules) // {
