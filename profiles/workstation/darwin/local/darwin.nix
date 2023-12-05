@@ -16,6 +16,7 @@
         "homebrew/cask-fonts/font-sf-pro" # SF Pro used by SketchyBar
         "iterm2"
         "keybase"
+        "postico" # Yet another GUI for Postgres
         "raycast" # Alfred replacement
         "rectangle" # macOS window manager
         "sequel-pro" # MySQL frontend supporting connections through a tunnel
