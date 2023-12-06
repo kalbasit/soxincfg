@@ -67,7 +67,7 @@ in
       dependsOn = [ "mosquitto" "zwave-js" ];
       environment.TZ = config.time.timeZone;
       extraOptions = [ "--network=${network_name}" ];
-      image = "ghcr.io/home-assistant/home-assistant:2023.11.1@sha256:9fd01a2dc6294555048f08f344900e998be0aa89d86d6273b5f1bd2554a7bb73";
+      image = "ghcr.io/home-assistant/home-assistant:2023.12.0@sha256:f173ad0c19bbc41bdf7bde0d5f18b3acd4dacade8c42bc2943c24853d6e74319";
       ports = [ "5683:5683/udp" ];
       volumes = [ "/persistence/home-assistant:/config" ];
     };
