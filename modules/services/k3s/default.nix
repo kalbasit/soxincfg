@@ -11,7 +11,7 @@ in
 {
   imports =
     [ ]
-    ++ optionals (mode == "nixos") [ ./nixos.nix ];
+    ++ optionals (mode == "NixOS") [ ./nixos.nix ];
 
   options.soxincfg.services.k3s = {
     enable = mkEnableOption "Install and configure k3s either as the server or agent";

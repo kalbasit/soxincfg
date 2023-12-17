@@ -1,10 +1,11 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 let
   inherit (lib)
     mkIf
     mkMerge
     optionals
+    singleton
     ;
 
   cfg = config.soxincfg.services.k3s;
@@ -24,7 +25,7 @@ in
         8472 # k3s, flannel: required if using multi-node for inter-node networking
       ];
 
-    environment.systemPackages = [ pkgs.k3s ];
+    environment.systemPackages = singleton config.services.k3s.package;
 
     services.k3s = mkMerge [
       {
