@@ -2,6 +2,7 @@
 
 let
   inherit (lib)
+    mkIf
     mkMerge
     optionals
     ;
@@ -33,9 +34,7 @@ in
         tokenFile = config.sops.secrets.services-k3s-tokenFile.path;
       }
 
-      (mkIf (cfg.role == "server") {
-        clusterInit = true;
-      })
+      (mkIf (cfg.role == "server") { clusterInit = true; })
     ];
 
 
