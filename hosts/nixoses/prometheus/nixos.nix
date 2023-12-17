@@ -62,7 +62,7 @@ in
 
   soxincfg.services.k3s = {
     enable = true;
-    role="server";
+    role = "server";
   };
 
   # TODO: Automatically add the uptime-kuma user to the docker group. I added
