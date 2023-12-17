@@ -5,6 +5,7 @@ let
     mkEnableOption
     mkOption
     optionals
+    types
     ;
 in
 {
