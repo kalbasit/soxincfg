@@ -9,6 +9,7 @@ in
 
     ./containers.nix
     ./hardware-configuration.nix
+    ./k3s.nix
     ./prometheus.nix
     ./unifi.nix
   ];
