@@ -5,6 +5,17 @@ set -euo pipefail
 readonly action="${1:-}"
 readonly host="${2:-$(hostname)}"
 
+readonly root_dir="$(cd $(dirname "$BASH_SOURCE[0]")/.. && pwd)"
+readonly work_secret_store_path="$root_dir/profiles/work/secret-store"
+
+if [[ -L "$work_secret_store_path" ]]; then
+    readonly rp="$(readlink -f "$root_dir/profiles/work/secret-store")"
+    trap "rm -rf $work_secret_store_path && ln -nsf $rp $work_secret_store_path" EXIT
+
+    rm -rf "$work_secret_store_path"
+    cp -r "$rp" "$work_secret_store_path"
+fi
+
 isDarwin() {
 	local os="$(uname -s)"
 	[[ "${os}" == "Darwin" ]]
@@ -53,14 +64,14 @@ isSupported() {
     return 1
 }
 
+function usage() {
+    >&2 echo "USAGE: $0 <action> [hostname]"
+}
+
 if ! isSupported; then
     echo "Sorry, your operating system is not supported"
     exit 1
 fi
-
-function usage() {
-    >&2 echo "USAGE: $0 <action> [hostname]"
-}
 
 if [[ -z "${action:-}" ]]; then
     usage
