@@ -12,6 +12,7 @@
         "dbeaver-community" # Database GUI
         "dosbox" # MS-DOS game emulator
         "flotato" # Makes applications of any website.
+        "gimp"
         "goland"
         "google-chrome"
         "homebrew/cask-fonts/font-sf-pro" # SF Pro used by SketchyBar
