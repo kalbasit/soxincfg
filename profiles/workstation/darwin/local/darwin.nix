@@ -9,6 +9,7 @@
         "alfred" # spotlight replacement
         "arc" # Arc Browser
         "charles"
+        "dbeaver-community" # Database GUI
         "dosbox" # MS-DOS game emulator
         "flotato" # Makes applications of any website.
         "goland"
@@ -17,6 +18,7 @@
         "iterm2"
         "keybase"
         "postico" # Yet another GUI for Postgres
+        "postman" # API
         "raycast" # Alfred replacement
         "rectangle" # macOS window manager
         "sequel-pro" # MySQL frontend supporting connections through a tunnel
