@@ -7,10 +7,10 @@
     ./hardware-configuration.nix
   ];
 
-  # soxincfg.services.k3s = {
-  #   enable = true;
-  #   role = "server";
-  # };
+  soxincfg.services.k3s = {
+    enable = true;
+    role = "server";
+  };
 
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
