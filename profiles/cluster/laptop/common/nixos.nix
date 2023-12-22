@@ -18,9 +18,9 @@ in
 
   networking.networkmanager.enable = true;
   sops.secrets = {
-    nasreddine-nmconnection = {
+    nasreddine-servernetwork0-nmconnection = {
       inherit sopsFile;
-      path = "/etc/NetworkManager/system-connections/Nasreddine.nmconnection";
+      path = "/etc/NetworkManager/system-connections/Nasreddine-ServerNetwork0.nmconnection";
     };
   };
 
