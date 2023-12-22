@@ -32,7 +32,7 @@ in
         enable = true;
         role = cfg.role;
         serverAddr = cfg.serverAddr;
-        tokenFile = config.sops.secrets.services-k3s-tokenFile.path;
+        # tokenFile = config.sops.secrets.services-k3s-tokenFile.path;
       }
 
       (mkIf (cfg.role == "server") { clusterInit = true; })
