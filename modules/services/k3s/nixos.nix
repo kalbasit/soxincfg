@@ -31,11 +31,14 @@ in
       {
         enable = true;
         role = cfg.role;
-        serverAddr = cfg.serverAddr;
-        # tokenFile = config.sops.secrets.services-k3s-tokenFile.path;
       }
 
       (mkIf (cfg.role == "server") { clusterInit = true; })
+
+      (mkIf (cfg.role == "agent") {
+        serverAddr = cfg.serverAddr;
+        tokenFile = config.sops.secrets.services-k3s-tokenFile.path;
+      })
     ];
 
 
