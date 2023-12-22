@@ -1,0 +1,3 @@
+{
+  laptop = import ./laptop;
+}

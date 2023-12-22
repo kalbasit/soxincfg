@@ -38,7 +38,7 @@ in
   # define the networking by hand
   networking.wireless = {
     enable = true;
-    environmentFile = "/run/secrets/networking.wireless.environmentFile";
+    environmentFile = config.sops.secrets."networking.wireless.environmentFile".path;
     networks = {
       "Nasreddine" = {
         psk = "@PSK_NASREDDINE@";
