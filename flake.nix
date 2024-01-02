@@ -70,7 +70,12 @@
           ];
 
           # Channel specific configuration. Overwrites `channelsConfig` argument
-          config = { };
+          config = {
+            permittedInsecurePackages = [
+              # For obsidian.
+              "electron-25.9.0"
+            ];
+          };
 
           # Yep, you see it first folks - you can patch nixpkgs!
           patches = [ ./patches/fix-pubkey-lookup.patch ];
