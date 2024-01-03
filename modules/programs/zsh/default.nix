@@ -148,7 +148,6 @@ in
         gl = "github_commit_link";
         http = "http --print=HhBb";
         kc = "kubectl";
-        ll = "ls -la";
         pw = "ps aux | grep -v grep | grep -e";
         rot13 = "tr \"[A-Za-z]\" \"[N-ZA-Mn-za-m]\"";
         serve_this = "${python3}/bin/python -m http.server";
@@ -213,6 +212,14 @@ in
     })
 
     (optionalAttrs (mode == "home-manager") {
+      programs.eza = {
+        enable = true;
+        enableAliases = true;
+        extraOptions = [
+          "--group-directories-first"
+        ];
+      };
+
       programs.zsh = {
         autocd = true;
         oh-my-zsh = ohMyZsh;
