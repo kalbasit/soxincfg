@@ -236,15 +236,6 @@ in
               };
             }
             {
-              name = "zsh-history-substring-search";
-              src = fetchFromGitHub {
-                owner = "zsh-users";
-                repo = "zsh-history-substring-search";
-                rev = "400e58a87f72ecec14f783fbd29bc6be4ff1641c";
-                sha256 = "sha256-GSEvgvgWi1rrsgikTzDXokHTROoyPRlU0FVpAoEmXG4=";
-              };
-            }
-            {
               name = "zsh-syntax-highlighting";
               src = fetchFromGitHub {
                 owner = "zsh-users";
