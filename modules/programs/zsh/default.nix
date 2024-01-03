@@ -104,6 +104,10 @@ let
         elif [[ -r "${config.home.homeDirectory}/.nix-profile/etc/profile.d/nix.sh" ]]; then
           source "${config.home.homeDirectory}/.nix-profile/etc/profile.d/nix.sh"
         fi
+
+        # enable fzf completion and keybindings
+        source ${fzf}/share/fzf/key-bindings.zsh
+        source ${fzf}/share/fzf/completion.zsh
       ''
     )
 
@@ -119,9 +123,10 @@ let
     (builtins.readFile (substituteAll {
       src = ./init-extra.zsh;
 
+      inherit fzf;
+
       bat_bin = "${getBin bat}/bin/bat";
       fortune_bin = "${getBin fortune}/bin/fortune";
-      fzf_bin = "${getBin fzf}/bin/fzf-tmux";
       home_path = "$HOME";
       jq_bin = "${getBin jq}/bin/jq";
       less_bin = "${getBin less}/bin/less";
