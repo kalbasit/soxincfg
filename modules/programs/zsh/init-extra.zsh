@@ -161,7 +161,7 @@ fi
 
 # setup fzf
 if [[ -o interactive ]]; then
-	export ENHANCD_FILTER=@fzf@/bin/fzf-tmux
+	export ENHANCD_FILTER=@fzf_bin@
 fi
 
 # export the code path
