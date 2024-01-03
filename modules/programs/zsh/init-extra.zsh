@@ -405,14 +405,6 @@ if [[ -o interactive ]]; then
 	bindkey -v                                            # Use vim key bindings
 	export KEYTIMEOUT=1                                   # kill ZSH's lag when ESC is pressed in vim mode
 
-	bindkey '^r' history-incremental-search-backward      # [Ctrl-r] - Search backward incrementally for a specified string. The string may begin with ^ to anchor the search to the beginning of the line.
-	if [[ "${terminfo[kpp]}" != "" ]]; then
-		bindkey "${terminfo[kpp]}" up-line-or-history       # [PageUp] - Up a line of history
-	fi
-	if [[ "${terminfo[knp]}" != "" ]]; then
-		bindkey "${terminfo[knp]}" down-line-or-history     # [PageDown] - Down a line of history
-	fi
-
 	# start typing + [Up-Arrow] - fuzzy find history forward
 	[[ "${terminfo[kcuu1]}" != "" ]] && bindkey "${terminfo[kcuu1]}" history-substring-search-up
 
