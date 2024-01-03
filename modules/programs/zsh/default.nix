@@ -86,7 +86,6 @@ let
     plugins = [
       "command-not-found"
       "git"
-      "history"
       "sudo"
     ];
   };
