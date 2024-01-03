@@ -72,8 +72,7 @@
           # Channel specific configuration. Overwrites `channelsConfig` argument
           config = {
             permittedInsecurePackages = [
-              # For obsidian.
-              "electron-25.9.0"
+              (lib.optionalString (nixpkgs.obsidian.version == "1.5.3") "electron-25.9.0")
             ];
           };
 
