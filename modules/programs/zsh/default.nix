@@ -275,6 +275,8 @@ in
             }
           ];
       };
+
+      programs.zoxide.enable = true;
     })
   ]);
 }
