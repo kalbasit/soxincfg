@@ -67,7 +67,7 @@ in
       dependsOn = [ "mosquitto" "zwave-js" ];
       environment.TZ = config.time.timeZone;
       extraOptions = [ "--network=${network_name}" ];
-      image = "ghcr.io/home-assistant/home-assistant:2023.12.0@sha256:f173ad0c19bbc41bdf7bde0d5f18b3acd4dacade8c42bc2943c24853d6e74319";
+      image = "ghcr.io/home-assistant/home-assistant:2024.1.1@sha256:c0752d4901483e0116120bc44230af5793d32bd337730e5d06bef2930e289dce";
       ports = [ "5683:5683/udp" ];
       volumes = [ "/persistence/home-assistant:/config" ];
     };
@@ -78,12 +78,12 @@ in
         "--network=${network_name}"
         "--device=/dev/serial/by-id/usb-0658_0200-if00:/dev/zwave"
       ];
-      image = "zwavejs/zwave-js-ui:9.3.1@sha256:8a98d1ab0da008d716c1f24f92497c85d65c1281adfe766037c29517212cadc3";
+      image = "zwavejs/zwave-js-ui:9.6.2@sha256:4a296b2767fc777b6ef590a166f00c8c92a13cbbcb3571d431d719675cc83787";
       volumes = [ "/persistence/zwave-js:/usr/src/app/store" ];
     };
 
     containers.signal-cli-rest-api = {
-      image = "bbernhard/signal-cli-rest-api:0.70@sha256:8871a51a6cb898e5b49e1839fb0b1109e608919db2cae7f0a49fbfe342e8c807";
+      image = "bbernhard/signal-cli-rest-api:0.80@sha256:a299b612291747ad72cf75b19888431bd48bc7d1b1c95d40c12b0bd4a2723b21";
       extraOptions = [ "--network=${network_name}" ];
       environment.MODE = "native";
       environment.AUTO_RECEIVE_SCHEDULE = "0 22 * * *";
@@ -100,7 +100,7 @@ in
         "-Fmqtt://mosquitto:1883,retain=1"
       ];
       dependsOn = [ "mosquitto" ];
-      image = "hertzg/rtl_433:22.11-alpine@sha256:cded9f8bb755a9157a26f672202d30770c5e13e1b57525791ce227c7fd41e218";
+      image = "hertzg/rtl_433:22.11-alpine@sha256:d7a3d8038c67a718486da6209afcfceb2d8ed3e1b0fcc8b0b918a4ccaec3ff9e";
       extraOptions = [
         "--privileged"
         "--network=${network_name}"
