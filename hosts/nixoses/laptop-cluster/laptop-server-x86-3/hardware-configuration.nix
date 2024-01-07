@@ -5,7 +5,8 @@
 
 {
   imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
+    [
+      (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -18,12 +19,14 @@
   boot.extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/8ceba00e-3e10-44a2-b4ec-5fb11d067690";
+    {
+      device = "/dev/disk/by-uuid/8ceba00e-3e10-44a2-b4ec-5fb11d067690";
       fsType = "ext4";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/9CAE-B63A";
+    {
+      device = "/dev/disk/by-uuid/9CAE-B63A";
       fsType = "vfat";
     };
 
