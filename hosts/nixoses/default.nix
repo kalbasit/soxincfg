@@ -34,7 +34,7 @@ mapAttrs
       modules = [ ./hades/nixos.nix ];
 
       deploy = {
-        hostname = "hades.wael-nasreddine.gmail.com.beta.tailscale.net";
+        hostname = "hades.bigeye-bushi.ts.net";
         profiles.system = {
           sshUser = "root";
           user = "root";
@@ -52,7 +52,7 @@ mapAttrs
       modules = [ ./hercules/nixos.nix ];
 
       deploy = {
-        hostname = "hercules.wael-nasreddine.gmail.com.beta.tailscale.net";
+        hostname = "hercules.bigeye-bushi.ts.net";
         profiles.system = {
           sshUser = "root";
           user = "root";
@@ -70,7 +70,7 @@ mapAttrs
       modules = [ ./laptop-cluster/laptop-server-x86-1/nixos.nix ];
 
       deploy = {
-        hostname = "laptop-server-x86-1.wael-nasreddine.gmail.com.beta.tailscale.net";
+        hostname = "laptop-server-x86-1.bigeye-bushi.ts.net";
         profiles.system = {
           sshUser = "root";
           user = "root";
@@ -88,7 +88,7 @@ mapAttrs
       modules = [ ./laptop-cluster/laptop-server-x86-2/nixos.nix ];
 
       deploy = {
-        hostname = "laptop-server-x86-2.wael-nasreddine.gmail.com.beta.tailscale.net";
+        hostname = "laptop-server-x86-2.bigeye-bushi.ts.net";
         profiles.system = {
           sshUser = "root";
           user = "root";
@@ -106,7 +106,7 @@ mapAttrs
       modules = [ ./laptop-cluster/laptop-server-x86-3/nixos.nix ];
 
       deploy = {
-        hostname = "laptop-server-x86-3.wael-nasreddine.gmail.com.beta.tailscale.net";
+        hostname = "laptop-server-x86-3.bigeye-bushi.ts.net";
         profiles.system = {
           sshUser = "root";
           user = "root";
@@ -124,7 +124,7 @@ mapAttrs
       modules = [ ./prometheus/nixos.nix ];
 
       deploy = {
-        hostname = "prometheus.wael-nasreddine.gmail.com.beta.tailscale.net";
+        hostname = "prometheus.bigeye-bushi.ts.net";
         profiles.system = {
           sshUser = "root";
           user = "root";
@@ -164,7 +164,7 @@ mapAttrs
       modules = [ ./kore/nixos.nix ];
 
       deploy = {
-        hostname = "kore.wael-nasreddine.gmail.com.beta.tailscale.net";
+        hostname = "kore.bigeye-bushi.ts.net";
         profiles.system = {
           sshUser = "root";
           user = "root";
