@@ -31,16 +31,10 @@ in
 
     environment.systemPackages = singleton config.services.k3s.package;
 
-    services.k3s = mkMerge [
-      { inherit (cfg) enable role; }
-
-      (mkIf (cfg.role == "server") { clusterInit = true; })
-
-      (mkIf (cfg.role == "agent") {
-        serverAddr = cfg.serverAddr;
-        tokenFile = config.sops.secrets.services-k3s-tokenFile.path;
-      })
-    ];
+    services.k3s = {
+      inherit (cfg) enable role serverAddr;
+      tokenFile = config.sops.secrets.services-k3s-tokenFile.path;
+    };
 
     sops.secrets = {
       "services-k3s-tokenFile" = { inherit sopsFile; };
