@@ -97,6 +97,24 @@ mapAttrs
       };
     };
 
+  laptop-server-x86-3 =
+    let
+      system = "x86_64-linux";
+    in
+    {
+      inherit channelName system;
+      modules = [ ./laptop-cluster/laptop-server-x86-3/nixos.nix ];
+
+      deploy = {
+        hostname = "laptop-server-x86-3.wael-nasreddine.gmail.com.beta.tailscale.net";
+        profiles.system = {
+          sshUser = "root";
+          user = "root";
+          path = deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.laptop-server-x86-3;
+        };
+      };
+    };
+
   prometheus =
     let
       system = "x86_64-linux";
