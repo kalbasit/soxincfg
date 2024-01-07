@@ -106,8 +106,7 @@ mapAttrs
       modules = [ ./laptop-cluster/laptop-server-x86-3/nixos.nix ];
 
       deploy = {
-        # hostname = "laptop-server-x86-3.wael-nasreddine.gmail.com.beta.tailscale.net";
-        hostname = "192.168.10.224";
+        hostname = "laptop-server-x86-3.wael-nasreddine.gmail.com.beta.tailscale.net";
         profiles.system = {
           sshUser = "root";
           user = "root";
