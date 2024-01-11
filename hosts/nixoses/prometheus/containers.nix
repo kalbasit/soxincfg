@@ -99,18 +99,6 @@ in
       ];
     };
 
-    containers.signal-cli-rest-api = {
-      image = "bbernhard/signal-cli-rest-api:0.80@sha256:a299b612291747ad72cf75b19888431bd48bc7d1b1c95d40c12b0bd4a2723b21";
-      extraOptions = [ "--network=${network_name}" ];
-      environment.MODE = "native";
-      environment.AUTO_RECEIVE_SCHEDULE = "0 22 * * *";
-      volumes = [ "/persistence/signal-cli-rest-api:/home/.local/share/signal-cli" ];
-      ports = [
-        # required for the migration to the new cluster
-        "8099:8080"
-      ];
-    };
-
     containers.rtl-433 = {
       cmd = [
         "-Mtime:unix:usec:utc"
