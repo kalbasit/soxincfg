@@ -54,14 +54,21 @@ in
       ];
       image = "docker.io/octoprint/octoprint:1.9.3@sha256:1e48b53ab15e740e42d29a54b44efa4283d10d9a00aa21fa84f37a869ad0e81c";
       volumes = [ "/persistence/octoprint:/octoprint" ];
-      ports = [ "5000:5000" ];
+      ports = [
+        # required for the migration to the new cluster
+        "5000:5000"
+        "8088:8080"
+      ];
     };
 
     containers.mosquitto = {
       image = "eclipse-mosquitto:2.0.18-openssl@sha256:000a1baa31419cf1f271cfeb8740952f1e125f826206f7b277aa187131806866";
       extraOptions = [ "--network=${network_name}" ];
       volumes = [ "/persistence/mosquitto:/mosquitto" ];
-      ports = [ "1883:1883" ];
+      ports = [
+        # required for the migration to the new cluster
+        "1883:1883"
+      ];
     };
 
     containers.homeassistant = {
@@ -86,7 +93,10 @@ in
       ];
       image = "zwavejs/zwave-js-ui:9.6.2@sha256:4a296b2767fc777b6ef590a166f00c8c92a13cbbcb3571d431d719675cc83787";
       volumes = [ "/persistence/zwave-js:/usr/src/app/store" ];
-      ports = [ "8091:8091" ];
+      ports = [
+        # required for the migration to the new cluster
+        "8091:8091"
+      ];
     };
 
     containers.signal-cli-rest-api = {
@@ -95,7 +105,10 @@ in
       environment.MODE = "native";
       environment.AUTO_RECEIVE_SCHEDULE = "0 22 * * *";
       volumes = [ "/persistence/signal-cli-rest-api:/home/.local/share/signal-cli" ];
-      ports = [ "8080:8080" ];
+      ports = [
+        # required for the migration to the new cluster
+        "8080:8080"
+      ];
     };
 
     containers.rtl-433 = {
