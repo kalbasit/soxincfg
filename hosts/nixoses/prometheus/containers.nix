@@ -54,6 +54,7 @@ in
       ];
       image = "docker.io/octoprint/octoprint:1.9.3@sha256:1e48b53ab15e740e42d29a54b44efa4283d10d9a00aa21fa84f37a869ad0e81c";
       volumes = [ "/persistence/octoprint:/octoprint" ];
+      ports = [ "5000:5000" ];
     };
 
     containers.mosquitto = {
@@ -68,7 +69,12 @@ in
       environment.TZ = config.time.timeZone;
       extraOptions = [ "--network=${network_name}" ];
       image = "ghcr.io/home-assistant/home-assistant:2024.1.1@sha256:c0752d4901483e0116120bc44230af5793d32bd337730e5d06bef2930e289dce";
-      ports = [ "5683:5683/udp" ];
+      ports = [
+        "5683:5683/udp"
+
+        # required for the migration to the new cluster
+        "8123"
+      ];
       volumes = [ "/persistence/home-assistant:/config" ];
     };
 
@@ -80,6 +86,7 @@ in
       ];
       image = "zwavejs/zwave-js-ui:9.6.2@sha256:4a296b2767fc777b6ef590a166f00c8c92a13cbbcb3571d431d719675cc83787";
       volumes = [ "/persistence/zwave-js:/usr/src/app/store" ];
+      ports = [ "8091:8091" ];
     };
 
     containers.signal-cli-rest-api = {
@@ -88,6 +95,7 @@ in
       environment.MODE = "native";
       environment.AUTO_RECEIVE_SCHEDULE = "0 22 * * *";
       volumes = [ "/persistence/signal-cli-rest-api:/home/.local/share/signal-cli" ];
+      ports = [ "8080:8080" ];
     };
 
     containers.rtl-433 = {
