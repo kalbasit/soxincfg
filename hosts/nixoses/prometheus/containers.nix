@@ -107,7 +107,7 @@ in
       volumes = [ "/persistence/signal-cli-rest-api:/home/.local/share/signal-cli" ];
       ports = [
         # required for the migration to the new cluster
-        "8080:8080"
+        "8099:8080"
       ];
     };
 
