@@ -73,7 +73,7 @@ in
         "5683:5683/udp"
 
         # required for the migration to the new cluster
-        "8123"
+        "8123:8123"
       ];
       volumes = [ "/persistence/home-assistant:/config" ];
     };
