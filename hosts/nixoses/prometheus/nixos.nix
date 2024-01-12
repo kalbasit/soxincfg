@@ -31,6 +31,14 @@ in
     "networking.wireless.environmentFile" = { inherit sopsFile; };
   };
 
+  # Temporarily forward port 1883 to the cluster
+  # TODO: Remove when sure no mqtt devices are left calling Prometheus.
+  networking.nat.forwardPorts = [{
+    destination = "192.168.50.13:1883";
+    proto = "tcp";
+    sourcePort = "1883";
+  }];
+
   # Don't allow systemd to stop the Tailscale service because that wreck havoc
   # on my network and containers.
   systemd.services.tailscaled.restartIfChanged = false;
