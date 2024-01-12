@@ -66,18 +66,8 @@ in
       ];
     };
 
-    containers.mosquitto = {
-      image = "eclipse-mosquitto:2.0.18-openssl@sha256:000a1baa31419cf1f271cfeb8740952f1e125f826206f7b277aa187131806866";
-      extraOptions = [ "--network=${network_name}" ];
-      volumes = [ "/persistence/mosquitto:/mosquitto" ];
-      ports = [
-        # required for the migration to the new cluster
-        "1883:1883"
-      ];
-    };
-
     containers.homeassistant = {
-      dependsOn = [ "mosquitto" "zwave-js" ];
+      dependsOn = [ "zwave-js" ];
       environment.TZ = config.time.timeZone;
       extraOptions = [ "--network=${network_name}" ];
       image = "ghcr.io/home-assistant/home-assistant:2024.1.1@sha256:c0752d4901483e0116120bc44230af5793d32bd337730e5d06bef2930e289dce";
