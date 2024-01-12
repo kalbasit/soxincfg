@@ -36,8 +36,12 @@ in
   # enable focusrite Gen3 support.
   #soxin.hardware.sound.focusRiteGen3Support = true;
 
-  boot.loader.systemd-boot.enable = true;
+  # Use the systemd-boot EFI boot loader.
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.systemd-boot = {
+    configurationLimit = 10;
+    enable = true;
+  };
 
   nix.settings.max-jobs = lib.mkDefault 12;
 
