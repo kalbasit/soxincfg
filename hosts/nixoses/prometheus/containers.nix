@@ -116,7 +116,7 @@ in
       extraOptions = [ "--network=${network_name}" ];
       environment.MQTT_HOST = "mosquitto.cluster.ifcsn0.nasreddine.com";
       environment.MQTT_PORT = "1883";
-      environment.MQTT_USER = "rtl-433";
+      environment.MQTT_USERNAME = "rtl-433";
       environment.MQTT_PASSWORD = "chill-chain-hesitant-eskimo-slacks";
       environment.DISCOVERY_INTERVAL = "60";
     };
