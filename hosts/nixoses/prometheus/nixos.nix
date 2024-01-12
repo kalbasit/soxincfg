@@ -67,12 +67,5 @@ in
     };
   };
 
-  # TODO: Automatically add the uptime-kuma user to the docker group. I added
-  # interfaces manually this time to make it work.
-  services.uptime-kuma.enable = true;
-  services.uptime-kuma.settings = {
-    HOST = "0.0.0.0";
-  };
-
   system.stateVersion = "23.05";
 }
