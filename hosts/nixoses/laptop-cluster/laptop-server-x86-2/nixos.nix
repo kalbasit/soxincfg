@@ -9,7 +9,7 @@
 
   soxincfg.services.k3s = {
     enable = true;
-    role = "agent";
+    role = "server";
     serverAddr = "https://192.168.50.13:6443";
   };
 
