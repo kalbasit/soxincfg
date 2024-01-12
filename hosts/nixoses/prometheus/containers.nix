@@ -93,23 +93,5 @@ in
         "8091:8091"
       ];
     };
-
-    containers.rtl-433 = {
-      cmd = [
-        "-Mtime:unix:usec:utc"
-        "-Mbits"
-        "-Mlevel"
-        "-Mprotocol"
-        "-Mstats:2:300"
-        # TODO: Rotate password when this is moved to the cluster
-        "-Fmqtt://mosquitto.cluster.ifcsn0.nasreddine.com:1883,user=rtl-433,pass=laziness-graveness-onto-empty-huddle,retain=1"
-      ];
-      image = "hertzg/rtl_433:22.11-alpine@sha256:d7a3d8038c67a718486da6209afcfceb2d8ed3e1b0fcc8b0b918a4ccaec3ff9e";
-      extraOptions = [
-        "--privileged"
-        "--network=${network_name}"
-      ];
-      volumes = [ "/dev/bus/usb:/dev/bus/usb" ];
-    };
   };
 }
