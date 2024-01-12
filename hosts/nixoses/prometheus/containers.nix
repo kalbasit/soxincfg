@@ -25,6 +25,11 @@ in
       '';
   };
 
+  virtualisation.docker.listenOptions = [
+      "/run/docker.sock"
+      "38561"
+    ];
+
   virtualisation.oci-containers = {
     backend = "docker";
 
