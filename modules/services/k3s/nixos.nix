@@ -36,8 +36,14 @@ in
       tokenFile = config.sops.secrets.services-k3s-tokenFile.path;
     };
 
-    sops.secrets = {
-      "services-k3s-tokenFile" = { inherit sopsFile; };
-    };
+    sops.secrets = mkMerge [
+      {
+        "services-k3s-tokenFile" = { inherit sopsFile; };
+      }
+
+      (mkIf cfg.role == "server" {
+        "services-k3s-environmentFile" = { inherit sopsFile; };
+      })
+    ];
   };
 }
