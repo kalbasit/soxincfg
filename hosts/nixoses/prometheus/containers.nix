@@ -111,16 +111,5 @@ in
       ];
       volumes = [ "/dev/bus/usb:/dev/bus/usb" ];
     };
-
-    containers.rtl-433-mqtt-autodiscovery = {
-      image = "ghcr.io/pbkhrv/rtl_433-hass-addons-rtl_433_mqtt_autodiscovery-amd64:0.7.0@sha256:c4c87de2058fda1b73061a5be23db3bed1750fd33113dae14fb119ed4ce2068d";
-      extraOptions = [ "--network=${network_name}" ];
-      environment.MQTT_HOST = "mosquitto.cluster.ifcsn0.nasreddine.com";
-      environment.MQTT_PORT = "1883";
-      environment.MQTT_USERNAME = "rtl-433";
-      # TODO: Rotate password when this is moved to the cluster
-      environment.MQTT_PASSWORD = "laziness-graveness-onto-empty-huddle";
-      environment.DISCOVERY_INTERVAL = "60";
-    };
   };
 }
