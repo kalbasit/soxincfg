@@ -66,18 +66,5 @@ in
       ];
     };
 
-    containers.homeassistant = {
-      environment.TZ = config.time.timeZone;
-      extraOptions = [ "--network=${network_name}" ];
-      image = "ghcr.io/home-assistant/home-assistant:2024.1.1@sha256:c0752d4901483e0116120bc44230af5793d32bd337730e5d06bef2930e289dce";
-      ports = [
-        "5683:5683/udp"
-
-        # required for the migration to the new cluster
-        "8123:8123"
-      ];
-      volumes = [ "/persistence/home-assistant:/config" ];
-    };
-
   };
 }
