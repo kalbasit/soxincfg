@@ -7,12 +7,14 @@
     ./hardware-configuration.nix
   ];
 
+  services.k3s.extraFlags = builtins.concatStringsSep " " [
+    "--node-label nasreddine.com/has-rtl-sdv-device=yes"
+    "--node-label nasreddine.com/has-zwave-device=yes"
+  ];
   soxincfg.services.k3s = {
     enable = true;
     role = "server";
   };
-
-  services.k3s.extraFlags = "--node-label nasreddine.com/has-rtl-sdv-device=yes";
 
   # Copy the NixOS configuration file and link it from the resulting system
   # (/run/current-system/configuration.nix). This is useful in case you
