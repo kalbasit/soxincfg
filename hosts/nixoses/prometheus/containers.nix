@@ -67,7 +67,6 @@ in
     };
 
     containers.homeassistant = {
-      dependsOn = [ "zwave-js" ];
       environment.TZ = config.time.timeZone;
       extraOptions = [ "--network=${network_name}" ];
       image = "ghcr.io/home-assistant/home-assistant:2024.1.1@sha256:c0752d4901483e0116120bc44230af5793d32bd337730e5d06bef2930e289dce";
@@ -80,18 +79,5 @@ in
       volumes = [ "/persistence/home-assistant:/config" ];
     };
 
-    containers.zwave-js = {
-      environment.TZ = config.time.timeZone;
-      extraOptions = [
-        "--network=${network_name}"
-        "--device=/dev/serial/by-id/usb-0658_0200-if00:/dev/zwave"
-      ];
-      image = "zwavejs/zwave-js-ui:9.6.2@sha256:4a296b2767fc777b6ef590a166f00c8c92a13cbbcb3571d431d719675cc83787";
-      volumes = [ "/persistence/zwave-js:/usr/src/app/store" ];
-      ports = [
-        # required for the migration to the new cluster
-        "8091:8091"
-      ];
-    };
   };
 }
