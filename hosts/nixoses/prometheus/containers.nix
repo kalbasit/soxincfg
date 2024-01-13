@@ -46,25 +46,5 @@ in
       volumes = [ "/persistence/nginx-proxy-manager/data:/data" "/persistence/nginx-proxy-manager/letsencrypt:/etc/letsencrypt" ];
     };
 
-    containers.octoprint = {
-      environment = {
-        ENABLE_MJPG_STREAMER = "true";
-        MJPG_STREAMER_INPUT = "-y -n -r 1920x1080";
-        CAMERA_DEV = "/dev/camera";
-      };
-      extraOptions = [
-        "--network=${network_name}"
-        "--device=/dev/v4l/by-id/usb-046d_HD_Pro_Webcam_C920_CA58666F-video-index0:/dev/camera"
-        "--device=/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0:/dev/printer"
-      ];
-      image = "docker.io/octoprint/octoprint:1.9.3@sha256:1e48b53ab15e740e42d29a54b44efa4283d10d9a00aa21fa84f37a869ad0e81c";
-      volumes = [ "/persistence/octoprint:/octoprint" ];
-      ports = [
-        # required for the migration to the new cluster
-        "5000:5000"
-        "8088:8080"
-      ];
-    };
-
   };
 }
