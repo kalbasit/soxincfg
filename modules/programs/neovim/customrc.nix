@@ -8,40 +8,40 @@
   " ENTER to continue" but will shorten the editor.
   set cmdheight=2
 
-  set backup                             " enable backup, written to backupdir set below
-  set colorcolumn=80                     " Display a color column
-  set complete=.,w,b,t,i                 " Same as default except that I remove the 'u' option
-  set completeopt=menu,noinsert,noselect " Enable completion menu and disable insert/select
-  set cursorline                         " cursor line highlighting
-  set diffopt+=iwhite                    " Add ignorance of whitespace to diff
-  set hidden                             " you can change buffer without saving
-  set ignorecase                         " searches are case insensitive...
-  set lz                                 " do not redraw while running macros (much faster) (LazyRedraw)
-  set makeef=error.err                   " When using make, where should it dump the file
-  set matchtime=2                        " how many tenths of a second to blink matching brackets for
-  set mouse=                             " I hate using the mouse for other than copying/pasting.
-  set noautowrite                        " safe automacially content
-  set nobackup                           " Turn off backup
-  set nocursorcolumn                     " no cursor column highlighting
-  set noerrorbells                       " don't make noise
-  set novisualbell                       " don't blink
-  set number                             " turn on line numbers but display them as relative to the current line
-  set pastetoggle=<F12>                  " Paste toggle on key F12!
-  set report=1                           " tell us when anything is changed via :...
-  set ruler                              " Always show current positions along the bottom
-  set scrolloff=5                        " Keep 10 lines (top/bottom) for scope
-  set shortmess=atTIc                    " shortens messages to avoid 'press a key' prompt
-  set showfulltag                        " When completing by tag, show the whole tag, not just the function name
-  set showmatch                          " show matching brackets
-  set smartcase                          " ... unless they contain at least one capital letter
-  set spell                              " Turn on spellcheck.
-  set splitbelow                         " Always split under
-  set splitright                         " Always split on the right
-  set startofline                        " Move the cursor to the first non-blank of the line
-  set undofile                           " remember undo chains between sessions
-  set whichwrap+=<,>,h,l                 " backspace and cursor keys wrap to
-  set wildchar=<TAB>                     " Which character activates the wildmenu
-  set winwidth=79                        " Set the minimum window width
+  set backup                              " enable backup, written to backupdir set below
+  set colorcolumn=80                      " Display a color column
+  set complete=.,w,b,t,i                  " Same as default except that I remove the 'u' option
+  set completeopt=menu,noinsert,noselect  " Enable completion menu and disable insert/select
+  set cursorline                          " cursor line highlighting
+  set diffopt+=iwhite                     " Add ignorance of whitespace to diff
+  set hidden                              " you can change buffer without saving
+  set ignorecase                          " searches are case insensitive...
+  set lz                                  " do not redraw while running macros (much faster) (LazyRedraw)
+  set makeef=error.err                    " When using make, where should it dump the file
+  set matchtime=2                         " how many tenths of a second to blink matching brackets for
+  set mouse=                              " I hate using the mouse for other than copying/pasting.
+  set noautowrite                         " safe automacially content
+  set nobackup                            " Turn off backup
+  set nocursorcolumn                      " no cursor column highlighting
+  set noerrorbells                        " don't make noise
+  set novisualbell                        " don't blink
+  set number                              " turn on line numbers but display them as relative to the current line
+  set pastetoggle=<F12>                   " Paste toggle on key F12!
+  set report=1                            " tell us when anything is changed via :...
+  set ruler                               " Always show current positions along the bottom
+  set scrolloff=5                         " Keep 10 lines (top/bottom) for scope
+  set shortmess=atTIc                     " shortens messages to avoid 'press a key' prompt
+  set showfulltag                         " When completing by tag, show the whole tag, not just the function name
+  set showmatch                           " show matching brackets
+  set smartcase                           " ... unless they contain at least one capital letter
+  set spell                               " Turn on spellcheck.
+  set splitbelow                          " Always split under
+  set splitright                          " Always split on the right
+  set startofline                         " Move the cursor to the first non-blank of the line
+  set undofile                            " remember undo chains between sessions
+  set whichwrap+=<,>,h,l                  " backspace and cursor keys wrap to
+  set wildchar=<TAB>                      " Which character activates the wildmenu
+  set winwidth=79                         " Set the minimum window width
 
   " Whitespace
   set list         " Show invisible characters
