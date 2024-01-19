@@ -8,19 +8,18 @@
   " ENTER to continue" but will shorten the editor.
   set cmdheight=2
 
+  set autowriteall                        " Auto write changed files. See :h autowriteall
   set backup                              " enable backup, written to backupdir set below
   set colorcolumn=80                      " Display a color column
   set complete=.,w,b,t,i                  " Same as default except that I remove the 'u' option
   set completeopt=menu,noinsert,noselect  " Enable completion menu and disable insert/select
   set cursorline                          " cursor line highlighting
   set diffopt+=iwhite                     " Add ignorance of whitespace to diff
-  set hidden                              " you can change buffer without saving
   set ignorecase                          " searches are case insensitive...
   set lz                                  " do not redraw while running macros (much faster) (LazyRedraw)
   set makeef=error.err                    " When using make, where should it dump the file
   set matchtime=2                         " how many tenths of a second to blink matching brackets for
   set mouse=                              " I hate using the mouse for other than copying/pasting.
-  set noautowrite                         " safe automacially content
   set nobackup                            " Turn off backup
   set nocursorcolumn                      " no cursor column highlighting
   set noerrorbells                        " don't make noise
