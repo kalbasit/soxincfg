@@ -26,7 +26,6 @@ in
     docker-credential-gcr
     dosbox
     duf # du replacement on steroids
-    element-desktop # Element client
     eternal-terminal
     file
     fx # JSON viewer
@@ -74,6 +73,7 @@ in
     blender # 3d modeling software
     cura # slicing software for 3d printers
     dnsutils # for dig
+    element-desktop # Element client
     esptool
     filezilla
     gdb
