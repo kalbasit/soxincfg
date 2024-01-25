@@ -36,7 +36,7 @@ in
     # TODO: Remove once all shelly devices are migrated.
     {
       destination = "192.168.50.13:5683";
-      proto = "tcp";
+      proto = "udp";
       sourcePort = "5683";
     }
   ];
