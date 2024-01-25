@@ -32,14 +32,6 @@ in
 
   # Temporary port forwarding for moving stuff from Prometheus to my cluster
   networking.nat.forwardPorts = [
-    # Temporarily forward port 1883 to the cluster
-    # TODO: Remove when sure no mqtt devices are left calling Prometheus.
-    {
-      destination = "192.168.50.13:1883";
-      proto = "tcp";
-      sourcePort = "1883";
-    }
-
     # Temporarily forward coiot port to the cluster.
     # TODO: Remove once all shelly devices are migrated.
     {
