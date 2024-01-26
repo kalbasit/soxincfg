@@ -30,17 +30,6 @@ in
     "networking.wireless.environmentFile" = { inherit sopsFile; };
   };
 
-  # Temporary port forwarding for moving stuff from Prometheus to my cluster
-  networking.nat.forwardPorts = [
-    # Temporarily forward coiot port to the cluster.
-    # TODO: Remove once all shelly devices are migrated.
-    {
-      destination = "192.168.50.13:5683";
-      proto = "udp";
-      sourcePort = "5683";
-    }
-  ];
-
   # Don't allow systemd to stop the Tailscale service because that wreck havoc
   # on my network and containers.
   systemd.services.tailscaled.restartIfChanged = false;
