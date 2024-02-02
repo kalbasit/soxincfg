@@ -16,9 +16,16 @@ in
     let
       inherit (pkgs)
         nfs-utils
+        util-linux
         ;
     in
-    [ nfs-utils ];
+    [
+      # needed for NFS persistent volume
+      nfs-utils
+
+      # longhorn requires nsenter, this package provides it
+      util-linux
+    ];
 
   # Don't allow systemd to stop the Tailscale service because that wreck havoc
   # on my network and containers.
