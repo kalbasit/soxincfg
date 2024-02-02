@@ -7,6 +7,8 @@ in
     soxincfg.nixosModules.profiles.myself
     soxincfg.nixosModules.profiles.server
 
+    ./longhorn-support.nix
+
     nixos-hardware.nixosModules.apple-macbook-air-3
   ];
 
@@ -16,15 +18,11 @@ in
     let
       inherit (pkgs)
         nfs-utils
-        util-linux
         ;
     in
     [
       # needed for NFS persistent volume
       nfs-utils
-
-      # longhorn requires nsenter, this package provides it
-      util-linux
     ];
 
   # Don't allow systemd to stop the Tailscale service because that wreck havoc
