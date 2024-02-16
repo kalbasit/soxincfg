@@ -22,10 +22,6 @@ in
   ]
   ++ (soxincfg.nixosModules.profiles.work.imports { hostName = "hercules"; });
 
-  # enable twingate
-  # TODO: https://github.com/NixOS/nixpkgs/pull/144455
-  soxincfg.services.twingate.enable = true;
-
   # TODO: Remove this once I can work out:
   #   - How to ssh into my machine if U2F is required.
   #   - How make 'sudo' ask for password before U2F because Onlykey makes me

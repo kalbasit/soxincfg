@@ -23,10 +23,6 @@ in
   ]
   ++ (soxincfg.nixosModules.profiles.work.imports { hostName = "hades"; });
 
-  # enable twingate
-  # TODO: https://github.com/NixOS/nixpkgs/pull/144455
-  soxincfg.services.twingate.enable = true;
-
   services.foldingathome = {
     daemonNiceLevel = 19;
     enable = true;
