@@ -60,6 +60,12 @@ in
     unzip
     weechat
     xsel
+
+    # TODO: Move to a Kubernetes client module
+    argo
+    kubectl
+    kubetail
+    # kustomize
   ] ++ (optionals stdenv.isLinux [
     #
     # Linux applications
