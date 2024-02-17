@@ -8,7 +8,6 @@ in
     soxincfg.nixosModules.profiles.server
 
     ./hardware-configuration.nix
-    ./prometheus.nix
     ./unifi.nix
   ];
 
