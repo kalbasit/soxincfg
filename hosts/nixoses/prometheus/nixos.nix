@@ -46,23 +46,9 @@ in
     enable = true;
     environmentFile = config.sops.secrets."networking.wireless.environmentFile".path;
     networks = {
-      "Nasreddine" = {
-        psk = "@PSK_NASREDDINE@";
+      "Nasreddine-ServerNetwork0" = {
+        psk = "@PSK_NASREDDINE_SERVERNETWORK0@";
       };
-    };
-  };
-
-  networking.vlans = {
-    ifcsn0 = {
-      id = 50;
-      interface = "enp0s31f6";
-    };
-  };
-
-  networking.interfaces = {
-    ifcsn0 = {
-      useDHCP = true;
-      macAddress = "e8:6a:64:cf:ff:8a";
     };
   };
 
