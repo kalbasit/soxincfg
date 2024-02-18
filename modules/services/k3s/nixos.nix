@@ -12,6 +12,10 @@ let
   sopsFile = ./secrets.sops.yaml;
 in
 {
+  imports = [
+    ./longhorn-support.nix
+  ];
+
   config = mkIf cfg.enable {
     networking.firewall.allowedTCPPorts =
       [
