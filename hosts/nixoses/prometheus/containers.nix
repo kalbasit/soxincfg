@@ -34,9 +34,9 @@ in
     backend = "docker";
 
     containers.postgres = {
-      environment={
-         PGDATA= "/var/lib/postgresql/data";
-         POSTGRES_PASSWORD_FILE= "/run/secrets/postgres-passwd";
+      environment = {
+        PGDATA = "/var/lib/postgresql/data";
+        POSTGRES_PASSWORD_FILE = "/run/secrets/postgres-passwd";
       };
       extraOptions = [
         "--network=${network_name}"
