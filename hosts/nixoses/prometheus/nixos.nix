@@ -7,6 +7,7 @@ in
     soxincfg.nixosModules.profiles.myself
     soxincfg.nixosModules.profiles.server
 
+    ./containers.nix
     ./hardware-configuration.nix
     ./unifi.nix
   ];
