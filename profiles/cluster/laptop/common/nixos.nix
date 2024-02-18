@@ -7,8 +7,6 @@ in
     soxincfg.nixosModules.profiles.myself
     soxincfg.nixosModules.profiles.server
 
-    ./longhorn-support.nix
-
     nixos-hardware.nixosModules.apple-macbook-air-3
   ];
 
