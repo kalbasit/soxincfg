@@ -39,6 +39,10 @@ in
         POSTGRES_PASSWORD_FILE = "/run/secrets/postgres-passwd";
       };
       extraOptions = [
+        "--health-cmd=pg_isready -U postgres --dbname=postgres"
+        "--health-interval=10s"
+        "--health-timeout=5s"
+        "--health-start-period=30s"
         "--network=${network_name}"
         "--shm-size=1G"
       ];
