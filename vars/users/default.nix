@@ -11,7 +11,9 @@ in
   yl =
     optionalAttrs (mode == "NixOS")
       {
-        hashedPassword = "$6$3p/OxtH1cSksf/17$mJ5ujXNY8iiFmGwM7bkuNo65uj3MJKke/Iy.guva8tKKcTs5pHDID/x.pN656J1I9VK3bSrP8l6GO7k2GQefG/";
+        # Generate the password with the following command on Linux:
+        # mkpasswd --method=SHA-512 | xargs -I{} sed -e 's:hashedPassword = ".*";:hashedPassword = "{}";:g' -i vars/users/default.nix
+        hashedPassword = "$6$lAOktqm6B9gB0Xff$oSLoR.0Xz2461Y908gYN8tjQlCRnWUK/VgM7k8O7YSN.98RwSGj6FMn9CwYafeQG1uSIldw66f.YOtJSDzSQD0";
 
         sshKeys = [
           # YubiKey 5C
