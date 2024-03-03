@@ -9,8 +9,6 @@ in
   config = {
     sops.secrets = {
       _aws_configure_profile_personal_sh = { inherit owner sopsFile; mode = "0500"; };
-      _config_pet_config_toml = { inherit owner sopsFile; path = "${yl_home}/.config/pet/config.toml"; };
-      _config_pet_snippet_toml = { inherit owner sopsFile; path = "${yl_home}/.config/pet/snippet.toml"; };
       _config_remmina_remmina_pref = { inherit owner sopsFile; path = "${yl_home}/.config/remmina/remmina.pref"; };
       _config_swm_config_yaml = { inherit owner sopsFile; path = "${yl_home}/.config/swm/config.yaml"; };
       _config_tiny_config_yml = { inherit owner sopsFile; path = "${yl_home}/.config/tiny/config.yml"; };
