@@ -20,6 +20,21 @@ in
     { soxin.services.xserver.windowManager.i3.enable = true; }
 
     (optionalAttrs (mode == "home-manager") {
+      programs.pet.snippets = [
+        {
+          description = "i3 get-all-workspaces";
+          command = "i3-msg -t get_workspaces | jq -r '.[] | .name'";
+        }
+        {
+          description = "i3 get-current-workspace";
+          command = "i3-msg -t get_workspaces | jq -r '.[] | if .focused == true then .name else empty end'";
+        }
+        {
+          description = "github-list-stargazers";
+          command = "curl -H \"Authorization: token $(cat ~/.gist)\" -H 'Accept: application/vnd.github.v3.star+json' https://api.github.com/repos/<owner>/<repo>/stargazers";
+        }
+      ];
+
       soxin.services.xserver.windowManager.bar = {
         enable = true;
         location = "top";
