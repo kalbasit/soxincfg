@@ -12,7 +12,7 @@ in
   # enable unifi and open the remote port
   services.unifi = {
     enable = true;
-    jrePackage = pkgs.jre8_headless;
+    jrePackage = pkgs.jdk21_headless;
     unifiPackage = pkgs.unifi;
     # XXX: Leaving this in case I need to update it again.
     # unifiPackage = pkgs.unifiStable.overrideAttrs (oa: rec {
