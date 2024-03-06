@@ -13,7 +13,7 @@ in
   services.unifi = {
     enable = true;
     jrePackage = pkgs.jre8_headless;
-    unifiPackage = pkgs.unifiStable;
+    unifiPackage = pkgs.unifi;
     # XXX: Leaving this in case I need to update it again.
     # unifiPackage = pkgs.unifiStable.overrideAttrs (oa: rec {
     #   version = "6.0.43";
