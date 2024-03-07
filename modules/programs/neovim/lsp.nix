@@ -154,13 +154,6 @@ in
               }
             '' else ""}
 
-            ${if cfg.lsp.languages.nix then ''
-              lspconfig.rnix.setup{
-                ${if cfg.completion.enable then "capabilities = capabilities;" else ""}
-                cmd = {"${pkgs.rnix-lsp}/bin/rnix-lsp"}
-              }
-            '' else ""}
-
             ${if cfg.lsp.languages.python then ''
               lspconfig.pyright.setup{
                 ${if cfg.completion.enable then "capabilities = capabilities;" else ""}
