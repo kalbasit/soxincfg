@@ -10,7 +10,7 @@
   soxincfg.services.k3s = {
     enable = true;
     role = "agent";
-    serverAddr = "https://192.168.50.13:6443";
+    serverAddr = "https://192.168.50.16:6443";
   };
 
   # Copy the NixOS configuration file and link it from the resulting system
