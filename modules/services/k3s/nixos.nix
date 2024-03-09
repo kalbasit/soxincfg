@@ -19,8 +19,10 @@ in
   config = mkIf cfg.enable {
     networking.firewall.allowedTCPPorts =
       [
-        # 80 # HTTP
-        # 443 # HTTPS
+        80 # HTTP
+        443 # HTTPS
+
+        1883 # MQTT
       ] ++ optionals (cfg.role == "server") [
         6443 # k3s: required so that pods can reach the API server (running on port 6443 by default)
         2379 # k3s, etcd clients: required if using a "High Availability Embedded etcd" configuration
