@@ -14,6 +14,7 @@ in
 {
   imports = [
     ./longhorn-support.nix
+    ./nfs-support.nix
   ];
 
   config = mkIf cfg.enable {

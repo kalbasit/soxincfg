@@ -12,17 +12,6 @@ in
 
   soxin.hardware.lowbatt.enable = true;
 
-  environment.systemPackages =
-    let
-      inherit (pkgs)
-        nfs-utils
-        ;
-    in
-    [
-      # needed for NFS persistent volume
-      nfs-utils
-    ];
-
   # Don't allow systemd to stop the Tailscale service because that wreck havoc
   # on my network and containers.
   systemd.services.tailscaled.restartIfChanged = false;
