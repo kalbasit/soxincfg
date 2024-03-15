@@ -2,7 +2,7 @@
 
 {
   services.k3s.extraFlags = builtins.concatStringsSep " " [
-    "--node-taint nasreddine.com/is-allowed-on-prometheus=:NoExecute"
+    "--node-taint CriticalAddonsOnly=:NoExecute"
     "--node-label nasreddine.com/is-allowed-on-prometheus=yes"
   ];
 
