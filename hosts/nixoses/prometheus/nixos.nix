@@ -10,6 +10,7 @@ in
     ./containers.nix
     ./hardware-configuration.nix
     ./unifi.nix
+    ./k3s.nix
   ];
 
   # load YL's home-manager configuration
