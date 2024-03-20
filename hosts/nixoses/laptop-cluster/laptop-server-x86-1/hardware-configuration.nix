@@ -12,7 +12,7 @@
   # Use the systemd-boot EFI boot loader.
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.systemd-boot = {
-    configurationLimit = 10;
+    configurationLimit = 2;
     enable = true;
   };
 
