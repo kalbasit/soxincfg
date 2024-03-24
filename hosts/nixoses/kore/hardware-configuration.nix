@@ -7,11 +7,6 @@
   # Use the extlinux boot loader. (NixOS wants to enable GRUB by default)
   boot.loader.grub.enable = false;
 
-  boot.loader.raspberryPi.enable = true;
-  boot.loader.raspberryPi.version = 3;
-  boot.loader.raspberryPi.uboot.enable = true;
-  boot.loader.raspberryPi.firmwareConfig = "force_turbo=1";
-
   boot.kernelParams = [ "console=ttyS1,115200n8" ];
 
   fileSystems."/" =
