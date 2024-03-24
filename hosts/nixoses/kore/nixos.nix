@@ -12,14 +12,6 @@ with lib;
   # nixpkgs.config.allowUnfree = true;
   nixpkgs.system = "aarch64-linux";
 
-  # SSH do not automatically open firewall to control the interfaces.
-  services.openssh.openFirewall = false;
-
-  # Allow unifi controller inform on all interfaces
-  networking.firewall.allowedTCPPorts = [
-    22 # ssh
-  ];
-
   # Setup the builder account
   nix.settings.trusted-users = [ "root" "@wheel" "@builders" ];
   users.users = {
