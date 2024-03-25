@@ -1,6 +1,8 @@
 { config, lib, pkgs, soxincfg, ... }:
 
-with lib;
+let
+  sopsFile = ./secrets.sops.yaml;
+in
 {
   imports = [
     soxincfg.nixosModules.profiles.miniserver
@@ -39,6 +41,7 @@ with lib;
   };
 
   # define the networking by hand
+  sops.secrets."networking.wireless.environmentFile" = { inherit sopsFile; };
   networking.wireless = {
     enable = true;
     environmentFile = config.sops.secrets."networking.wireless.environmentFile".path;
