@@ -38,5 +38,16 @@ with lib;
     };
   };
 
+  # define the networking by hand
+  networking.wireless = {
+    enable = true;
+    environmentFile = config.sops.secrets."networking.wireless.environmentFile".path;
+    networks = {
+      "Nasreddine-ServerNetwork0" = {
+        psk = "@PSK_NASREDDINE_SERVERNETWORK0@";
+      };
+    };
+  };
+
   system.stateVersion = "23.05";
 }
