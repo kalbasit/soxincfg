@@ -10,6 +10,7 @@ in
     ./hardware-configuration.nix
   ];
 
+  environment.systemPackages = [ pkgs.mjpg-streamer ];
 
   # nixpkgs.config.allowUnfree = true;
   nixpkgs.system = "aarch64-linux";
