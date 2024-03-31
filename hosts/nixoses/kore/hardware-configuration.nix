@@ -6,6 +6,10 @@
 
   # Use the extlinux boot loader. (NixOS wants to enable GRUB by default)
   boot.loader.grub.enable = false;
+  boot.loader.generic-extlinux-compatible = {
+    enable = true;
+    configurationLimit = 2;
+  };
 
   boot.kernelParams = [ "console=ttyS1,115200n8" ];
 
