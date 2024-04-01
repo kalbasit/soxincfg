@@ -23,6 +23,7 @@ in
     binutils # for strings
     bitwarden-cli
     csvkit
+    devbox
     docker-credential-gcr
     dosbox
     duf # du replacement on steroids
