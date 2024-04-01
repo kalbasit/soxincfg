@@ -19,8 +19,8 @@ in
         autoRepeatDelay = 200;
         autoRepeatInterval = 30;
 
-        xkbOptions = concatStringsSep "," [
-          "backspace:nocaps"
+        xkb.options = concatStringsSep "," [
+          "ctrl:nocaps"
         ];
 
         libinput.enable = true;
