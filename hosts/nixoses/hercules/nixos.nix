@@ -19,6 +19,7 @@ in
 
     ./hardware-configuration.nix
     ./prometheus.nix
+    ./nvidia.nix
   ]
   ++ (soxincfg.nixosModules.profiles.work.imports { hostName = "hercules"; });
 

@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 with lib;
 let
@@ -50,10 +50,16 @@ in
   # Common firmware, i.e. for wifi cards
   hardware.enableRedistributableFirmware = true;
 
+  # Topology config for routing audio/microphone on Razer laptops
+  # copied from https://github.com/eureka-cpu/dotfiles/blob/tensorbook/nixos/configuration.nix
+  boot.extraModprobeConfig = ''
+    options snd-sof-pci tplg_filename=sof-hda-generic-2ch-pdm1.tplg
+  '';
+
   # ZFS requires a networking hostId
   networking.hostId = "4a92c82f";
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "vmd" "nvme" "usbhid" "usb_storage" "sd_mod" ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "vmd" "nvme" "usbhid" "usb_storage" "sd_mod" "sdhci_pci" ];
   boot.kernelModules = [ "kvm-intel" ];
 
   boot.loader.grub = {
@@ -74,6 +80,8 @@ in
   nix.settings.max-jobs = 3;
 
   powerManagement.cpuFreqGovernor = "powersave";
+
+  hardware.cpu.intel.updateMicrocode = mkDefault config.hardware.enableRedistributableFirmware;
 
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.opengl.enable = true;
