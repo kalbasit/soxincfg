@@ -18,7 +18,6 @@ in
     nixos-hardware.nixosModules.common-pc-ssd
 
     ./hardware-configuration.nix
-    ./prometheus.nix
     ./nvidia.nix
   ]
   ++ (soxincfg.nixosModules.profiles.work.imports { hostName = "hercules"; });
