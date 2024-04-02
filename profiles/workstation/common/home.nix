@@ -6,6 +6,10 @@ let
     ;
 in
 {
+  imports = [
+    ./home-kubernetes-client.nix
+  ];
+
   # programs
   programs.bat.enable = true;
   programs.direnv.enable = true;
