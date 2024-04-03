@@ -77,7 +77,7 @@ in
 
   boot.loader.systemd-boot.enable = false;
 
-  nix.settings.max-jobs = 3;
+  nix.settings.max-jobs = 12;
 
   powerManagement.cpuFreqGovernor = "powersave";
 
