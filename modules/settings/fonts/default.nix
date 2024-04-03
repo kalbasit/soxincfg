@@ -3,7 +3,7 @@
 with lib;
 let
   cfg = config.soxincfg.settings.fonts;
-  fonts = with pkgs; [
+  packages = with pkgs; [
     corefonts
 
     powerline-fonts
@@ -30,9 +30,9 @@ in
   config = mkIf cfg.enable (mkMerge [
     (optionalAttrs (mode == "NixOS") {
       fonts = {
-        inherit fonts;
+        inherit packages;
 
-        enableDefaultFonts = true;
+        enableDefaultPackages = true;
         enableGhostscriptFonts = true;
         fontDir.enable = true;
         fontconfig.enable = true;
