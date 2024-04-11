@@ -16,6 +16,6 @@
   ];
 
   programs.zsh.shellAliases = {
-    kc="kubecolor";
+    kc = "kubecolor";
   };
 }
