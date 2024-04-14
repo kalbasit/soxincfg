@@ -18,12 +18,17 @@ in
   ];
 
   config = mkIf cfg.enable {
+    # https://kubernetes.io/docs/reference/networking/ports-and-protocols
     networking.firewall.allowedTCPPorts =
       [
         80 # HTTP
         443 # HTTPS
 
         1883 # MQTT
+
+        10250 # Kubelet API
+        10257 # kube-controller-manager
+        10259 # kube-scheduler
 
         9100 # Prometheus
       ] ++ optionals (cfg.role == "server") [
