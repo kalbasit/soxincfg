@@ -85,7 +85,6 @@ let
     enable = true;
     plugins = [
       "command-not-found"
-      "git"
       "history"
       "sudo"
     ];
@@ -143,6 +142,8 @@ in
 
     (optionalAttrs (mode == "NixOS" || mode == "home-manager") {
       programs.zsh.shellAliases = with pkgs; {
+        g="git";
+
         cat = "${bat}/bin/bat";
         e = "\${EDITOR:-nvim}";
         gl = "github_commit_link";
