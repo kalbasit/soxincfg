@@ -48,7 +48,7 @@ function gcim() {
 			return 1
 		fi
 
-		local branch="$(current_branch)"
+		local branch="$(git_current_branch)"
 		local story="$(echo "${branch}" | grep '^[[:alpha:]][[:alpha:]]*-[[:digit:]][[:digit:]]*$')"
 
 		if [[ "x${story}" != "x" ]]; then
