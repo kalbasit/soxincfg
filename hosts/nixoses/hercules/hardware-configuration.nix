@@ -63,7 +63,7 @@ in
   boot.kernelModules = [ "kvm-intel" ];
 
   boot.loader.grub = {
-    configurationLimit = 10;
+    configurationLimit = 5;
     device = "nodev";
     efiSupport = true;
     enable = true;
