@@ -124,7 +124,7 @@ mapAttrs
       modules = [ ./laptop-cluster/laptop-server-x86-4/nixos.nix ];
 
       deploy = {
-        hostname = "laptop-server-x86-4.bigeye-bushi.ts.net";
+        hostname = "192.168.10.131";
         profiles.system = {
           sshUser = "root";
           user = "root";
