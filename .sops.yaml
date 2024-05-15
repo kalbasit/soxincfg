@@ -11,6 +11,7 @@ keys:
   - &host_pgp_laptop_server_x86_1 21CC4032C3EA56261C2F096DB7B315CF6141FE6F
   - &host_pgp_laptop_server_x86_2 E9D632250421A9360CEA6185D71690EA67E853C6
   - &host_pgp_laptop_server_x86_3 86D7B916A771B0C9F19025157C5552A043B01BFB
+  - &host_pgp_laptop_server_x86_4 36A30882A22EFD86FE6ACFD9FBADC37EA70009FE
 
   # Age host keys
   - &host_age_saturn age1uvkcsm082vacmmauxakhuzjyjr7dx7gxyd6k757smwlwm5ekzgzs2sq8uh
@@ -57,6 +58,12 @@ creation_rules:
         - *user_yl_0x8EBD95DC147755A2
         - *host_pgp_laptop_server_x86_3
 
+  - path_regex: hosts/nixoses/laptop-server-x86-4/[^/]+\.sops[^/]*
+    key_groups:
+      - pgp:
+        - *user_yl_0x8EBD95DC147755A2
+        - *host_pgp_laptop_server_x86_4
+
   - path_regex: hosts/nixoses/zeus/[^/]+\.sops[^/]*
     key_groups:
       - pgp:
@@ -77,6 +84,7 @@ creation_rules:
         - *host_pgp_laptop_server_x86_1
         - *host_pgp_laptop_server_x86_2
         - *host_pgp_laptop_server_x86_3
+        - *host_pgp_laptop_server_x86_4
 
   - path_regex: profiles/workstation/darwin/(local|remote)/[^/]+\.sops[^/]*
     key_groups:
@@ -96,6 +104,7 @@ creation_rules:
         - *host_pgp_laptop_server_x86_1
         - *host_pgp_laptop_server_x86_2
         - *host_pgp_laptop_server_x86_3
+        - *host_pgp_laptop_server_x86_4
         - *host_pgp_zeus
 
   - path_regex: profiles/myself/[^/]+\.sops[^/]*
@@ -109,6 +118,7 @@ creation_rules:
         - *host_pgp_laptop_server_x86_1
         - *host_pgp_laptop_server_x86_2
         - *host_pgp_laptop_server_x86_3
+        - *host_pgp_laptop_server_x86_4
         - *host_pgp_zeus
         age:
         - *host_age_saturn
@@ -124,6 +134,7 @@ creation_rules:
         - *host_pgp_laptop_server_x86_1
         - *host_pgp_laptop_server_x86_2
         - *host_pgp_laptop_server_x86_3
+        - *host_pgp_laptop_server_x86_4
         - *host_pgp_zeus
         age:
         - *host_age_saturn
