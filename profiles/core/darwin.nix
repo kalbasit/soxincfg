@@ -12,8 +12,6 @@
     "soxincfg=${soxincfg}"
   ];
 
-  security.pki.certificates = [ soxincfg.vars.assets.nasreddineCA ];
-
   nix.extraOptions = ''
     extra-platforms = x86_64-darwin aarch64-darwin
     extra-experimental-features = auto-allocate-uids
