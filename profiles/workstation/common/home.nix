@@ -91,7 +91,7 @@ in
     kdenlive # video editing
     libreoffice
     obs-studio # video recording
-    protonvpn-cli
+    protonvpn-gui
     remmina
     synology-drive-client
     slack
