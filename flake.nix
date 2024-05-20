@@ -66,6 +66,7 @@
               inherit (channels.nixpkgs-unstable)
                 # inherit packages from unstable.
                 devbox
+                protonvpn-gui
                 ;
             })
           ];
