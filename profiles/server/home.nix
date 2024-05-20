@@ -45,6 +45,5 @@ in
 
     glances
     gotop
-    protonvpn-cli
   ]);
 }
