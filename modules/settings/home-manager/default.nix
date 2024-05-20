@@ -24,7 +24,7 @@ optionalAttrs (mode == "home-manager") {
       elif isDarwin; then
         noteEcho "Waiting for secrets..."
         sleep 3
-        _soxin_aws_configure_secretsPath="$(/usr/bin/getconf DARWIN_USER_TEMP_DIR)/secrets"
+        _soxin_aws_configure_secretsPath="${config.xdg.configHome}/sops-nix/secrets"
         for i in $(seq 1 10)
         do
           if [[ ! -d "$_soxin_aws_configure_secretsPath" ]]; then
