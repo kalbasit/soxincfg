@@ -89,7 +89,6 @@ in
       # android.enable = true;
       # brave.enable = true;
       # chromium = { enable = true; surfingkeys.enable = true; };
-      dbeaver.enable = true;
       fzf.enable = true;
       git.enable = true;
       mosh.enable = true;
