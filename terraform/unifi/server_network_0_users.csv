@@ -1,7 +1,0 @@
-mac,name,fixed_ip,note
-00:11:32:72:8a:c7,apollo,192.168.50.2,NAS
-68:05:ca:3e:77:34,zeus,192.168.50.3,Zeus Server
-52:54:00:54:35:95,win10-server,192.168.50.10,Windows 10 VM
-50:00:00:00:00:01,k8s-master-1,192.168.50.6,Kubernetes master 1
-50:00:00:00:00:02,k8s-master-2,192.168.50.7,Kubernetes master 2
-50:00:00:00:00:03,k8s-master-3,192.168.50.8,Kubernetes master 3
