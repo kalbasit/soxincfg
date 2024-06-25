@@ -76,10 +76,7 @@
 
           # Channel specific configuration. Overwrites `channelsConfig` argument
           config = {
-            permittedInsecurePackages = [
-              # For obsidian.
-              "electron-25.9.0"
-            ];
+            permittedInsecurePackages = [ ];
           };
 
           # Yep, you see it first folks - you can patch nixpkgs!
