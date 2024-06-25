@@ -32,7 +32,9 @@
     };
 
     soxin = {
-      url = "github:SoxinOS/soxin";
+      # TODO: Restore soxin main branch once https://github.com/SoxinOS/soxin/pull/61 is merged.
+      # url = "github:SoxinOS/soxin";
+      url = "github:SoxinOS/soxin/release-24.05";
       inputs = {
         darwin.follows = "darwin";
         deploy-rs.follows = "deploy-rs";
