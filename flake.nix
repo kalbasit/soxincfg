@@ -41,6 +41,7 @@
         nixpkgs-unstable.follows = "nixpkgs-unstable";
         nixpkgs.follows = "nixpkgs";
         nur.follows = "nur";
+        sops-nix.follows = "sops-nix";
       };
     };
   };
