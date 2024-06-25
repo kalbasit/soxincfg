@@ -16,7 +16,7 @@ let
 in
 {
   config = mkIf cfg.enable {
-    home.packages = [ pkgs.dbeaver ];
+    home.packages = [ pkgs.dbeaver-bin ];
 
     sops.age = mkIf isDarwin {
       generateKey = true;
