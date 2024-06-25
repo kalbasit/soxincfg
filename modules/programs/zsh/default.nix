@@ -142,7 +142,7 @@ in
 
     (optionalAttrs (mode == "NixOS" || mode == "home-manager") {
       programs.zsh.shellAliases = with pkgs; {
-        g="git";
+        g = "git";
 
         cat = "${bat}/bin/bat";
         e = "\${EDITOR:-nvim}";
