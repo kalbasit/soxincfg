@@ -214,7 +214,7 @@ in
     (optionalAttrs (mode == "home-manager") {
       programs.eza = {
         enable = true;
-        enableAliases = true;
+        enableZshIntegration = true;
         extraOptions = [
           "--group-directories-first"
         ];
