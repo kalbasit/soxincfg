@@ -116,11 +116,11 @@
     },
     "nixos-hardware": {
       "locked": {
-        "lastModified": 1719322773,
-        "narHash": "sha256-BqPxtFwXrpJQDh65NOIHX99pz2rtIMshG9Mt2xnnc5c=",
+        "lastModified": 1719487696,
+        "narHash": "sha256-pCsl9qFCuIuhIfGH03CiBOsy1LNwITC6VMb6/5tz+Qc=",
         "owner": "NixOS",
         "repo": "nixos-hardware",
-        "rev": "caabc425565bbd5c8640630b0bf6974961a49242",
+        "rev": "14aadcba1a26c8c142453839f888afd0db8b2041",
         "type": "github"
       },
       "original": {
@@ -163,11 +163,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1719345313,
-        "narHash": "sha256-+hZM6kKhUIIDOELTNM4F4kPbc8v1dLne56I3I1PaM3Y=",
+        "lastModified": 1719516056,
+        "narHash": "sha256-fk+tniEoJmXVfLQjhKWjAl/Z+cExI00h66PrmQHujI0=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "994b9c5be2b943f8b67586e4caf2d072b371060b",
+        "rev": "c82ad1b10b310442e685bc150199747fdee92095",
         "type": "github"
       },
       "original": {
@@ -179,11 +179,11 @@
     },
     "nur": {
       "locked": {
-        "lastModified": 1719344711,
-        "narHash": "sha256-k389PPp1HG9xk3yXn4Q/eAY/K+qm/+kbHLq9hfo+m14=",
+        "lastModified": 1719510997,
+        "narHash": "sha256-KxOrqnIyTFqubLMzz9GmWTWqp0kpaoxJKgYrNUz0kow=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "85596df878b1b71a54e1de3835ac6135c1bb8744",
+        "rev": "162412634e99dd353461e1b43085449c2c98d77f",
         "type": "github"
       },
       "original": {
@@ -257,16 +257,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1719338961,
+        "lastModified": 1719348131,
         "narHash": "sha256-JERxN7CTQKKBgCnT9MmQgz5m2W3a663sow0PecqVszk=",
         "owner": "SoxinOS",
         "repo": "soxin",
-        "rev": "358df748773601a0bd754623c8cdc2d1aee536ed",
+        "rev": "967377316dea590006d18e3b988dcf2fa58221ad",
         "type": "github"
       },
       "original": {
         "owner": "SoxinOS",
-        "ref": "release-24.05",
         "repo": "soxin",
         "type": "github"
       }
