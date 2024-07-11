@@ -24,7 +24,7 @@
   set nocursorcolumn                      " no cursor column highlighting
   set noerrorbells                        " don't make noise
   set novisualbell                        " don't blink
-  set number                              " turn on line numbers but display them as relative to the current line
+  set relativenumber                      " turn on line numbers but display them as relative to the current line
   set pastetoggle=<F12>                   " Paste toggle on key F12!
   set report=1                            " tell us when anything is changed via :...
   set ruler                               " Always show current positions along the bottom
