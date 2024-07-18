@@ -7,6 +7,9 @@
     ./hardware-configuration.nix
   ];
 
+  services.k3s.extraFlags = builtins.concatStringsSep " " [
+    "--node-label nasreddine.com/has-zwave-device=yes"
+  ];
   soxincfg.services.k3s = {
     enable = true;
     role = "agent";
