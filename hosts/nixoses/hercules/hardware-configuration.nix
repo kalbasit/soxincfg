@@ -27,7 +27,7 @@ let
     # "Code"
     # "Documentaries"
     # "Downloads"
-    "Imported"
+    # "Imported"
     # "Mail"
     # "Movies"
     # "MusicVideos"
