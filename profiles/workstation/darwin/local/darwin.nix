@@ -17,7 +17,6 @@
         "google-chrome"
         "homebrew/cask-fonts/font-sf-pro" # SF Pro used by SketchyBar
         "iterm2"
-        "karabiner-elements" # Custom Keyboard behavior
         "keybase"
         "postico" # Yet another GUI for Postgres
         "postman" # API
