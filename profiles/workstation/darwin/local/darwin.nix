@@ -10,6 +10,7 @@
         "arc" # Arc Browser
         "charles"
         "dbeaver-community" # Database GUI
+        "discord"
         "dosbox" # MS-DOS game emulator
         "flotato" # Makes applications of any website.
         "gimp"
