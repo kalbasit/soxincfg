@@ -41,8 +41,4 @@ in
     serviceConfig.KeepAlive = true;
     serviceConfig.ProcessType = "Interactive";
   };
-
-  nix = {
-    useDaemon = true;
-  };
 }
