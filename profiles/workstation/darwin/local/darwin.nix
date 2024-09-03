@@ -28,7 +28,6 @@
         "slack"
         "synology-drive"
         "tailscale"
-        "teamviewer"
         "viscosity" # VPN Application
         "vlc"
         "whatsapp" # WhatsApp application
