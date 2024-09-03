@@ -2,6 +2,7 @@
 
 let
   inherit (lib)
+    mkForce
     singleton
     ;
 in
@@ -41,4 +42,7 @@ in
     serviceConfig.KeepAlive = true;
     serviceConfig.ProcessType = "Interactive";
   };
+
+  # Keep the name given by the org
+  networking.hostName = mkForce "Canary-WP943K0HYC";
 }
