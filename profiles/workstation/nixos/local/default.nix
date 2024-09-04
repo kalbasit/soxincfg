@@ -25,7 +25,6 @@ in
         bluetooth.enable = true;
         fwupd.enable = true;
         lowbatt.enable = true;
-        rtl-sdr.enable = true;
         sound.enable = true;
         zsa.enable = true;
       };

@@ -7,9 +7,6 @@
     ./hardware-configuration.nix
   ];
 
-  services.k3s.extraFlags = builtins.concatStringsSep " " [
-    "--node-label nasreddine.com/has-rtl-sdv-device=yes"
-  ];
   soxincfg.services.k3s = {
     enable = true;
     role = "server";
