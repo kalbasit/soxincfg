@@ -22,10 +22,10 @@
 
   networking.bonds.servernetwork0bond = {
     interfaces = [
-      "enp2s0f0",
-      "enp2s0f1",
-      "enp5s0f0",
-      "enp5s0f1",
+      "enp2s0f0"
+      "enp2s0f1"
+      "enp5s0f0"
+      "enp5s0f1"
     ];
     driverOptions = {
       miimon = "100";
