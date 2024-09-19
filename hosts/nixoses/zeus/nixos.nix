@@ -20,7 +20,7 @@
   #  serverAddr = "https://192.168.50.16:6443";
   #};
 
-  networking.bonds.servernetwork0bond = {
+  networking.bonds.snbond0 = {
     interfaces = [
       "enp2s0f0"
       "enp2s0f1"
