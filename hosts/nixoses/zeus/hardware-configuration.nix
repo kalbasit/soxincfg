@@ -5,7 +5,8 @@
 
 {
   imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
+    [
+      (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
@@ -13,43 +14,53 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
+  # Use the systemd-boot EFI boot loader.
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.configurationLimit = 3;
+  boot.loader.efi.canTouchEfiVariables = true;
+
   # ZFS requires a networking hostId
   networking.hostId = "adeb4b43";
 
   fileSystems."/" =
-    { device = "rpool/nixos/root";
+    {
+      device = "rpool/nixos/root";
       fsType = "zfs";
     };
 
   fileSystems."/home" =
-    { device = "rpool/nixos/home";
+    {
+      device = "rpool/nixos/home";
       fsType = "zfs";
     };
 
   fileSystems."/var" =
-    { device = "rpool/nixos/var";
+    {
+      device = "rpool/nixos/var";
       fsType = "zfs";
     };
 
   fileSystems."/var/lib" =
-    { device = "rpool/nixos/var/lib";
+    {
+      device = "rpool/nixos/var/lib";
       fsType = "zfs";
     };
 
   fileSystems."/var/log" =
-    { device = "rpool/nixos/var/log";
+    {
+      device = "rpool/nixos/var/log";
       fsType = "zfs";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/9BBB-48AE";
+    {
+      device = "/dev/disk/by-uuid/9BBB-48AE";
       fsType = "vfat";
       options = [ "fmask=0022" "dmask=0022" ];
     };
 
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/035b5999-31ce-478f-b039-e6ef339ebf49"; }
-    ];
+    [{ device = "/dev/disk/by-uuid/035b5999-31ce-478f-b039-e6ef339ebf49"; }];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
