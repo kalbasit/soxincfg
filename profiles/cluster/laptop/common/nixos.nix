@@ -4,7 +4,7 @@ let
 in
 {
   imports = [
-    soxincfg.nixosModules.profiles.myself
+    soxincfg.nixosModules.profiles.myself # TODO: Remove This, servers don't need my secrets!
     soxincfg.nixosModules.profiles.server
 
     nixos-hardware.nixosModules.apple-macbook-air-3

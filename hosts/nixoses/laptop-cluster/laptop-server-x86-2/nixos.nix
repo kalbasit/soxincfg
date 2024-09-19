@@ -7,10 +7,6 @@
     ./hardware-configuration.nix
   ];
 
-  services.k3s.extraFlags = builtins.concatStringsSep " " [
-    "--node-label nasreddine.com/has-octoprint-device=yes"
-    "--node-label nasreddine.com/has-usb-outlet-controller-device=yes"
-  ];
   soxincfg.services.k3s = {
     enable = true;
     role = "server";

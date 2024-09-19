@@ -160,7 +160,7 @@ mapAttrs
       modules = [ ./zeus/nixos.nix ];
 
       deploy = {
-        hostname = "zeus.admin.nasreddine.com";
+        hostname = "zeus.bigeye-bushi.ts.net";
         profiles.system = {
           sshUser = "root";
           user = "root";
