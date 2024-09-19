@@ -20,6 +20,19 @@
   #  serverAddr = "https://192.168.50.16:6443";
   #};
 
+  networking.bonds.servernetwork0bond = {
+    interfaces = [
+      "enp2s0f0",
+      "enp2s0f1",
+      "enp5s0f0",
+      "enp5s0f1",
+    ];
+    driverOptions = {
+      miimon = "100";
+      mode = "802.3ad";
+    };
+  };
+
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
   #
