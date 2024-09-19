@@ -13,6 +13,9 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
+  # ZFS requires a networking hostId
+  networking.hostId = "adeb4b43";
+
   fileSystems."/" =
     { device = "rpool/nixos/root";
       fsType = "zfs";
