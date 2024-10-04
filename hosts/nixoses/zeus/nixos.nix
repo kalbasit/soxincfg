@@ -12,6 +12,7 @@
   systemd.services.tailscaled.restartIfChanged = false;
 
   services.k3s.extraFlags = builtins.concatStringsSep " " [
+    "--flannel-iface=snbond0" # Use the snbond0 interface
     "--node-label nasreddine.com/has-octoprint-device=yes"
     "--node-label nasreddine.com/has-network-bond=yes"
   ];
