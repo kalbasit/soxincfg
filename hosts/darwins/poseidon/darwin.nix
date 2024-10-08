@@ -17,4 +17,6 @@ in
   nix = {
     useDaemon = true;
   };
+
+  system.stateVersion = 5;
 }

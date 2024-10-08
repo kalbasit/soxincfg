@@ -45,4 +45,6 @@ in
 
   # Keep the name given by the org
   networking.hostName = mkForce "Canary-WP943K0HYC";
+
+  system.stateVersion = 5;
 }
