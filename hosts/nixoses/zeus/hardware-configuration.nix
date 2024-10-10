@@ -14,6 +14,10 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
+  # Allow Docker to access Nvidia containers
+  hardware.nvidia-container-toolkit.enable = true;
+  services.xserver.videoDrivers = [ "nvidia" ]; # enable Nvidia on the system
+
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 3;
