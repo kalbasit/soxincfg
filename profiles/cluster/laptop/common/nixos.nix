@@ -16,14 +16,6 @@ in
   # on my network and containers.
   systemd.services.tailscaled.restartIfChanged = false;
 
-  networking.networkmanager.enable = true;
-  sops.secrets = {
-    nasreddine-servernetwork0-nmconnection = {
-      inherit sopsFile;
-      path = "/etc/NetworkManager/system-connections/Nasreddine-ServerNetwork0.nmconnection";
-    };
-  };
-
   # https://www.reddit.com/r/NixOS/comments/14qa7d8/comment/jqo1cpw/?utm_source=share&utm_medium=web2x&context=3
   services = {
     logind = {
