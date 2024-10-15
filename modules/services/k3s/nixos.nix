@@ -43,6 +43,13 @@ in
         10250 # k3s, metrics.
       ];
 
+    # Error seen in Cloudflared
+    # https://github.com/quic-go/quic-go/wiki/UDP-Buffer-Sizes
+    boot.kernel.sysctl = {
+      "net.core.rmem_max" = 7500000;
+      "net.core.wmem_max" = 7500000;
+    };
+
     environment.systemPackages = singleton config.services.k3s.package;
 
     services.k3s = mkMerge [
