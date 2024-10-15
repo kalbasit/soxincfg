@@ -113,13 +113,6 @@ creation_rules:
         - *user_yl_0x8EBD95DC147755A2
         - *host_pgp_hades
         - *host_pgp_hercules
-        - *host_pgp_kore
-        - *host_pgp_prometheus
-        - *host_pgp_laptop_server_x86_1
-        - *host_pgp_laptop_server_x86_2
-        - *host_pgp_laptop_server_x86_3
-        - *host_pgp_laptop_server_x86_4
-        - *host_pgp_zeus
         age:
         - *host_age_saturn
 
