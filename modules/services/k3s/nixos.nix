@@ -26,21 +26,14 @@ in
 
         1883 # MQTT
 
-        10250 # Kubelet API
-        10257 # kube-controller-manager
-        10259 # kube-scheduler
-
-        9100 # Prometheus
+        10250 # Kubelet metrics
       ] ++ optionals (cfg.role == "server") [
         6443 # k3s: required so that pods can reach the API server (running on port 6443 by default)
-        2379 # k3s, etcd clients: required if using a "High Availability Embedded etcd" configuration
-        2380 # k3s, etcd peers: required if using a "High Availability Embedded etcd" configuration
       ];
 
     networking.firewall.allowedUDPPorts =
       [
-        8472 # k3s, flannel: required if using multi-node for inter-node networking
-        10250 # k3s, metrics.
+        8472 # k3s, flannel: required for VXLAN
       ];
 
     # Error seen in Cloudflared
