@@ -33,6 +33,7 @@ in
     _ssh_config_include_myself = { inherit sopsFile; path = "${yl_home}/.ssh/config_include_myself"; };
     _ssh_per-host_bitbucket_org_rsa = { inherit sopsFile; path = "${yl_home}/.ssh/per-host/bitbucket.org_rsa"; };
     _ssh_per-host_gitlab_com_rsa = { inherit sopsFile; path = "${yl_home}/.ssh/per-host/gitlab.com_rsa"; };
+    _ssh_per-host_hermes-gl-mt3000_bigeye-bushi_ts_net_ed25519 = { inherit sopsFile; path = "${yl_home}/.ssh/per-host/hermes-gl-mt3000.bigeye-bushi.ts.net_ed25519"; };
     _ssh_per-host_serial_nasreddine_com_rsa = { inherit sopsFile; path = "${yl_home}/.ssh/per-host/serial.nasreddine.com_rsa"; };
     _ssh_per-host_unifi_nasreddine_com_rsa = { inherit sopsFile; path = "${yl_home}/.ssh/per-host/unifi.nasreddine.com_rsa"; };
     _zsh_profiles_opensource_zsh = { inherit sopsFile; path = "${yl_home}/.zsh/profiles/opensource.zsh"; };
@@ -46,6 +47,10 @@ in
 
     ".ssh/per-host/gitlab.com_rsa.pub".text = ''
       ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDd2xrIB5Tml5+r2jpsFxK6nSo0D7w32Naxj1eEUYQsLU+SucvkhprhctL3su7NeFvO9W9q4M0nSF2JdgDTFccvsIMChtjJ6CbpP3mw2wpFgSWSBLGt3wDMPac9OYZ2I225gDjczZb1K3t4pkrdqBbjjWnPdEX0HE3tSf6f3+v0eKYP2fbHk/7rvDafwF9wnG9A6hHZ6DAQuxnkUMxMfEfXSuZIS/s+5ZLO/jJULipcrQ/4bS31b0zwM7wESSXE7ErkorsH0LqDCZCIEUWoXXZNJlOtoGrSxCzJ7APKR/hHxMayUsucgPjxGLg+lCzMuMrkLbnXdsSlEWNULi8LHIzeUjQccFIpz8NGdTksW6BEFWhOG1G1txGT0bD+YS8LvabL0IBS6ocakTPEGGt1dGGGXVydD0TKIen7Fd/TpxyOE0uJTR6jHpv97aG7lI/1tv3NvC+PbcfGYA089mIR0gdip4M48BkiARI7goUXQ65FSxJ+mpiKiuK9Quu0bJW4sUZhQL93/GzS8iaZLL/9rbkApo0IvVwtqdI8Y3KulaEOOvsttbJJsQ7ppQ0r9PeSRYJjZc1AchbbitPw2iX1NM06ctiONxujm4KBvV0wQ2JGXmX4N4zznu1CIdu0wrNMfgF9Yo/F9Sb0eVcFw61xNfr9mtno2VUz2CjhZBRq0NpRtw== gitlab.com
+    '';
+
+    ".ssh/per-host/hermes-gl-mt3000.bigeye-bushi.ts.net_ed25519.pub".text = ''
+      ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOLQj0aTkBIM3rSvwDJCnW/Jv/VXNEzymYO6t/w18QVf hermes-gl-mt3000.bigeye-bushi.ts.net
     '';
 
     ".ssh/per-host/serial.nasreddine.com_rsa.pub".text = ''
