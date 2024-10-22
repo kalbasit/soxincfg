@@ -60,18 +60,18 @@ with lib;
           HDMI-0 = {
             crtc = 2;
             enable = true;
-            position = "3440x0";
+            position = "0x0";
             mode = "1920x1200";
             gamma = "1.0:0.909:0.909";
             rate = "59.95";
-            rotate = "left";
+            rotate = "right";
           };
 
           DP-2 = {
             enable = true;
             gamma = "1.0:0.909:0.909";
             mode = "3440x1440";
-            position = "0x320";
+            position = "1920x0";
             primary = true;
             rate = "59.97";
           };
