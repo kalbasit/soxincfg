@@ -37,21 +37,4 @@ mapAttrs
 
       modules = [ ./poseidon/darwin.nix ];
     };
-
-  ###
-  # aarch64-darwin
-  ###
-
-  saturn =
-    let
-      system = "aarch64-darwin";
-    in
-    {
-      inherit
-        channelName
-        system
-        ;
-
-      modules = [ ./saturn/darwin.nix ];
-    };
 }
