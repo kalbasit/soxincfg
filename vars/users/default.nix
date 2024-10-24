@@ -25,11 +25,8 @@ in
           # Terminus Phone
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIuEPwgfiRDZ1+Ahc43NKSfScT97iS9ueK9lbrcDYJyh Aris-Termius"
 
-          # Cronus - ChromeOS 2024-09-17
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHYyRYC3MSZDRZeO+WwDI3HxwDuWlyhnEfUiah14hqQ7 Cronus - ChromeOS 2024-09-17"
-
-          # ChromeOS 2023-08-24 - Old, remove!
-          "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC0zNAx9dH6iKo+ZeCZmYjNYvr/9rLXZrNCpwD5eHZLuAsvT4J6u2Mv0+4zirXsyhW3QFXoAq8b0lCvOj8vG1JMFERQUrXE4mCQdPz7mMfTVPAbxKn9jWstfqWrTDTn5aGrKUQZNkEf3OwUIq7ilRpQC/R4qrWa/IfPHW6a3xgXfknwexZc7QQAPP/RZ/YkovLvzqJRZxnDOEESg7Is9+QrXhMskS3UFH3POxm0XCnIC2+onji7TXE4PUnWLTEztnPnKobBFWz2sBw65dAmqGSxo3x8kmQZNoPg8lQNiO0edsFpZrmt4M6dquZDlSaw+v+Qw8N3I5sSGS/57Dsz9fnWxxh8Vkl3WfANLUu4up2RhAzZKBjvAfJCD8Fm2ht2w37cVezjkysO+n8TwNYasmJsYpTz7L9565qHxqxGnKNzhytf5tq2R+fzHWjXH7KMtYVz+1oiBpYSb9DFpN6TA6qg4Qt7hcUXbfGVPT6Y+EizNEGpNpgUTmPC2bi8rYtbbiKkzC4eg4BR2nMkJLm/ppJtmM2UeL3GivmNHJ958geyFR33KnJYbYYVC5fS0b3mJhcAdZf9zDaljurv3fKwWgdqkQlWgK+RHm+5LmwYJHgUuAT9nmgdVWxF7H5sOQuiJBVxnCPMRtmpKVTKqFXMZvYMqI5f8z2Lr7POdSZh97HxLw== ChromeOS 2023-08-24"
+          # Cronus - ChromeOS 2024-10-23
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHDMWCJ+hjoFsZdUzOzlQ1xZKngq/OnoBflf3fsemK4s Cronus - ChromeOS 2024-10-23"
         ];
 
         uid = 2000;

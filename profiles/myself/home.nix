@@ -32,6 +32,7 @@ in
     _netrc = { inherit sopsFile; path = "${yl_home}/.netrc"; };
     _ssh_config_include_myself = { inherit sopsFile; path = "${yl_home}/.ssh/config_include_myself"; };
     _ssh_per-host_bitbucket_org_rsa = { inherit sopsFile; path = "${yl_home}/.ssh/per-host/bitbucket.org_rsa"; };
+    _ssh_per-host_cronus_ed25519 = { inherit sopsFile; path = "${yl_home}/.ssh/per-host/cronus_ed25519"; };
     _ssh_per-host_gitlab_com_rsa = { inherit sopsFile; path = "${yl_home}/.ssh/per-host/gitlab.com_rsa"; };
     _ssh_per-host_hermes-gl-mt3000_bigeye-bushi_ts_net_ed25519 = { inherit sopsFile; path = "${yl_home}/.ssh/per-host/hermes-gl-mt3000.bigeye-bushi.ts.net_ed25519"; };
     _ssh_per-host_serial_nasreddine_com_rsa = { inherit sopsFile; path = "${yl_home}/.ssh/per-host/serial.nasreddine.com_rsa"; };
@@ -43,6 +44,10 @@ in
   home.file = {
     ".ssh/per-host/bitbucket.org_rsa.pub".text = ''
       ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDFfgG34BchsSeKncvO/vysGK2VNweC5ZJQuiVZD9FRSL9PxNYQq68D8PY9DMI+HqF64g+TTDhd3hPhvie1w9If8iWjQC1hvtuQzU72KbSbTKRylgsLoBcSCwDwdvMU0gHHd1fMjhglDsMykE/Jz0mJXOF+z6i98fCB+6hjGENhESkmlTx0lJnyBQP4PjKe0hVrm3+lUe/QQ/xUDWebu3TzSssZj0dTKzlh4OTG9GRFuLaCLtXEhoFhXsgrHHhGHI3Q4hZoeZo8CP+mkBQYKBOXUBLUq16lQ4y0XwGrIZZ4+VvVOe3+X1PfNmq9f+FYilHvEKfFN0mdxBMrIU4FxC+xnKd6hMmNfeEEG3W5th2SDGcWSdUFGEZY3xCjeGk36Tzc6j/oDDbwPytU3sLX4+4x/Kb+xebIwvK6RFY5V2jXuEu9cjjEXPfJG9EFJFlUJDpApsnr1KUA8mlxUW4duhMgX/K/sGEL/O4B3MSPbLi9hl+rg/ABL5JlWC42Vtt6TqUua4LANIzPbYBFXZCVwKf7FtJuzeAtKqsCTVWJMcFHzsI7UKW6fuUlCyh+Vtvpl2ZVTboutuBVAqV38iv6tt/CYPeM8Kxlk6Z8O9sfJlMtAPGcDw/6IG9ihoSruARSn8YJ4EEEETe0b1GFjb76b3HyCKhCH0vth9fbc8d3Ud2qrQ== bitbucket.org
+    '';
+
+    ".ssh/per-host/cronus_ed25519.pub".text = ''
+      ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHDMWCJ+hjoFsZdUzOzlQ1xZKngq/OnoBflf3fsemK4s Cronus - ChromeOS 2024-10-23
     '';
 
     ".ssh/per-host/gitlab.com_rsa.pub".text = ''
