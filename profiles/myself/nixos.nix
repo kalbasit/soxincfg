@@ -23,7 +23,9 @@ in
       _netrc = { inherit owner sopsFile; path = "${yl_home}/.netrc"; };
       _ssh_config_include_myself = { inherit owner sopsFile; path = "${yl_home}/.ssh/config_include_myself"; };
       _ssh_per-host_bitbucket_org_rsa = { inherit owner sopsFile; path = "${yl_home}/.ssh/per-host/bitbucket.org_rsa"; };
+      _ssh_per-host_cronus_ed25519 = { inherit owner sopsFile; path = "${yl_home}/.ssh/per-host/cronus_ed25519"; };
       _ssh_per-host_gitlab_com_rsa = { inherit owner sopsFile; path = "${yl_home}/.ssh/per-host/gitlab.com_rsa"; };
+      _ssh_per-host_redacted-host_tailnet_ts_net_ed25519 = { inherit owner sopsFile; path = "${yl_home}/.ssh/per-host/host.tailnet.invalid_ed25519"; };
       _ssh_per-host_serial_example_com_rsa = { inherit owner sopsFile; path = "${yl_home}/.ssh/per-host/host.invalid_rsa"; };
       _ssh_per-host_unifi_example_com_rsa = { inherit owner sopsFile; path = "${yl_home}/.ssh/per-host/host.invalid_rsa"; };
       _zsh_profiles_opensource_zsh = { inherit owner sopsFile; path = "${yl_home}/.zsh/profiles/opensource.zsh"; };
