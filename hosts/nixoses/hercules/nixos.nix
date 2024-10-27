@@ -39,39 +39,10 @@ in
   networking.firewall.allowedTCPPorts = [
     # allow me to use serve_this on my main machine
     6090
-
-    # allow synergy on port 24800
-    24800
   ];
 
   # hmm do I need this?
   soxin.hardware.intelBacklight.enable = true;
-
-  services.synergy.server = {
-    address = "192.168.2.26";
-    autoStart = true;
-    enable = true;
-    screenName = "hades";
-    configFile = pkgs.writeText "synergy.conf" ''
-      section: screens
-          poseidon:
-          hades:
-      end
-
-      section: links
-          hades:
-              left = poseidon
-
-          poseidon:
-              right = hades
-      end
-
-      section: options
-          keystroke(control+super+right) = switchInDirection(right)
-          keystroke(control+super+left) = switchInDirection(left)
-      end
-    '';
-  };
 
   # store u2f for onlykey
   security.pam.u2f.authFile = pkgs.writeText "u2f-mappings" ''
