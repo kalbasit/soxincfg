@@ -3,6 +3,7 @@
   git,
   inetutils,
   libnotify,
+  openssh,
   writeShellScript,
   yl_home
 }:
@@ -30,7 +31,7 @@ writeShellScript "auto-backup-obsidian-vaults.sh" ''
 
   GIT_AUTHOR_NAME="Wael Nasreddine"
   GIT_AUTHOR_EMAIL="wael.nasreddine+$(${inetutils}/bin/hostname)@gmail.com"
-  GIT_SSH_COMMAND='ssh -i "${yl_home}/.ssh/per-host/github.com_obsidian_vaults_deploy_key_ed25519" -o IdentitiesOnly=yes -o ControlPath=/dev/null -o ControlMaster=no -o ControlPersist=no'
+  GIT_SSH_COMMAND='${openssh}/bin/ssh -i "${yl_home}/.ssh/per-host/github.com_obsidian_vaults_deploy_key_ed25519" -o IdentitiesOnly=yes -o ControlPath=none -o ControlMaster=no -o ControlPersist=no'
   export GIT_AUTHOR_NAME GIT_AUTHOR_EMAIL GIT_SSH_COMMAND
 
   status=
