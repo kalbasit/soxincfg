@@ -10,4 +10,8 @@ in
     [ ]
     ++ optionals (mode == "NixOS") [ ./nixos.nix ]
     ++ optionals (mode == "home-manager") [ ./home.nix ];
+
+  config = {
+    soxincfg.services.obsidian-vaults-backup.enable = true;
+  };
 }

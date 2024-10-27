@@ -30,6 +30,7 @@
   iscsid = ./services/iscsid.nix;
   k3s = ./services/k3s;
   nextcloud = ./services/nextcloud;
+  obsidian-vaults-backup = ./services/obsidian-vaults-backup;
   sketchybar = ./services/sketchybar;
   skhd = ./services/skhd;
   sleep-on-lan = ./services/sleep-on-lan;
