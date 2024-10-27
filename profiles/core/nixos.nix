@@ -27,4 +27,8 @@ in
   # set the default locale and the timeZone
   i18n.defaultLocale = "en_US.UTF-8";
   time.timeZone = "America/Los_Angeles";
+
+  # set my location narrowed to the USPS Post Office of a nearby town (for privacy)
+  location.latitude = 38.5811902710705;
+  location.longitude = -121.49817303671485;
 }

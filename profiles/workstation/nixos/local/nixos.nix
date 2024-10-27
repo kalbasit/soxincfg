@@ -40,8 +40,6 @@ in
   };
 
   # Redshift
-  location.latitude = 34.42;
-  location.longitude = -122.11;
   services.redshift = {
     brightness.day = "1.0";
     brightness.night = "0.6";
