@@ -150,7 +150,7 @@ in
         http = "http --print=HhBb";
         pw = "ps aux | grep -v grep | grep -e";
         rot13 = "tr \"[A-Za-z]\" \"[N-ZA-Mn-za-m]\"";
-        serve_this = "${python3}/bin/python -m http.server";
+        serve_this = "${python3}/bin/python -m http.server"; # Use port 8000 by default, open in firewall
         utf8test = "${curl}/bin/curl -L https://github.com/tmux/tmux/raw/master/tools/UTF-8-demo.txt";
         vi = "nvim";
         vim = "nvim";
