@@ -21,7 +21,15 @@ in
     (optionalAttrs (mode == "NixOS") {
       virtualisation.libvirtd = {
         enable = true;
-        qemu.runAsRoot = false;
+        qemu = {
+          ovmf = {
+            enable = true;
+            packages = [ pkgs.OVMFFull.fd ];
+          };
+          package = pkgs.qemu_kvm;
+          runAsRoot = false;
+          swtpm.enable = true;
+        };
       };
 
       # libvirtd now requires polkit
