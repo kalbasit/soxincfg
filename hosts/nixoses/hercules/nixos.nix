@@ -38,7 +38,7 @@ in
 
   networking.firewall.allowedTCPPorts = [
     # allow me to use serve_this on my main machine
-    6090
+    8000
   ];
 
   # hmm do I need this?

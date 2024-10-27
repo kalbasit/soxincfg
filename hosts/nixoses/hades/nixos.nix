@@ -44,7 +44,7 @@ in
 
   networking.firewall.allowedTCPPorts = [
     # allow me to use serve_this on my main machine
-    6090
+    8000
 
     # allow synergy on port 24800
     24800
