@@ -101,6 +101,7 @@ in
     xfce.thunar-archive-plugin
     xfce.thunar-media-tags-plugin
     xfce.thunar-volman
+    xfce.tumbler
     xkb-switch # Switch your X keyboard layouts from the command line
     zoom-us
   ]);
