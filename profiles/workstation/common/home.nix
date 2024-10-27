@@ -93,6 +93,7 @@ in
     libreoffice
     obs-studio # video recording
     protonvpn-gui
+    quickemu
     remmina
     synology-drive-client
     slack
