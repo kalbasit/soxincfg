@@ -84,28 +84,23 @@ in
     filezilla
     gdb
     glances
+    go-mtpfs
     gotop
     inotify-tools
-    # jetbrains.goland
-    # jetbrains.idea-ultimate
-    # jetbrains.ruby-mine
     kdenlive # video editing
     libreoffice
     obs-studio # video recording
     protonvpn-gui
     quickemu
     remmina
-    synology-drive-client
     slack
     smartmontools
+    synology-drive-client
+    whatsapp-for-linux
     xfce.thunar
-    xfce.thunar-volman
     xfce.thunar-archive-plugin
     xfce.thunar-media-tags-plugin
-    # teams
-    # todoist-electron
-    go-mtpfs
-    whatsapp-for-linux
+    xfce.thunar-volman
     xkb-switch # Switch your X keyboard layouts from the command line
     zoom-us
   ]);
