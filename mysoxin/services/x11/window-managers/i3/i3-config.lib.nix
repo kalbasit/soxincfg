@@ -52,7 +52,7 @@ in
     {
       bars = [ ];
 
-      fonts = { names = [ "pango:Source Code Pro for Powerline" ]; size = 8.0; };
+      fonts = { names = [ "pango:Source Code Pro for Powerline" ]; size = 12.0; };
 
       window = {
         commands = [
