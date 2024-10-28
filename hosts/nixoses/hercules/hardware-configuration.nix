@@ -94,7 +94,6 @@ in
   boot.initrd.luks.devices = {
     cryptkey = { device = "/dev/disk/by-uuid/f6d83931-7313-490f-90b9-f337f7663015"; };
     cryptroot0 = { device = "/dev/disk/by-uuid/c27c971e-8ba9-42c3-b75a-e89ccdc2e701"; keyFile = "/dev/mapper/cryptkey"; };
-    cryptroot1 = { device = "/dev/disk/by-uuid/127feb77-bf29-4b76-be64-cf1c7fafaeea"; keyFile = "/dev/mapper/cryptkey"; };
     cryptswap0 = { device = "/dev/disk/by-uuid/fdd38250-eed9-45bf-9e2b-38b94de6a740"; keyFile = "/dev/mapper/cryptkey"; };
     cryptswap1 = { device = "/dev/disk/by-uuid/adbe4611-bb18-43da-9a02-c660f9575e8b"; keyFile = "/dev/mapper/cryptkey"; };
   };
