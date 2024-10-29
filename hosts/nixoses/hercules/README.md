@@ -44,6 +44,8 @@ sudo zfs create -o mountpoint=/yl/code olympus/user/yl/code
 
 ### Mount everything
 
+#### Mount all ZFS volumes
+
 ```bash
 sudo zfs mount -a
 
