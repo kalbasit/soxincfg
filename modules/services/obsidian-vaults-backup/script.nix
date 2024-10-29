@@ -1,11 +1,10 @@
-{
-  coreutils,
-  git,
-  inetutils,
-  libnotify,
-  openssh,
-  writeShellScript,
-  yl_home
+{ coreutils
+, git
+, inetutils
+, libnotify
+, openssh
+, writeShellScript
+, yl_home
 }:
 
 let
