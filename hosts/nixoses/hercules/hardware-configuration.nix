@@ -101,7 +101,11 @@ in
       "/boot" = { device = bootDevice; fsType = "vfat"; options = [ "fmask=0022" "dmask=0022" ]; };
 
       # SoxinCFG secrets
-      "/yl/code/repositories/github.com/kalbasit/soxincfg/profiles/work/secret-store" = { device = "/yl/code/repositories/keybase/private/ylcodes/secrets/soxincfg/work/secret-store"; options = [ "bind" ]; };
+      "/yl/code/repositories/github.com/kalbasit/soxincfg/profiles/work/secret-store" = {
+        device = "/yl/code/repositories/keybase/private/ylcodes/secrets/soxincfg/work/secret-store";
+        options = [ "bind" ];
+        depends = [ "/yl" "/yl/code" ];
+      };
     };
 
   swapDevices = [
