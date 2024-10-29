@@ -42,23 +42,34 @@ sudo zfs create -o mountpoint=/yl olympus/user/yl/home
 sudo zfs create -o mountpoint=/yl/code olympus/user/yl/code
 ```
 
-### Mount everything
+### Mount all ZFS volumes
 
 ```bash
 sudo zfs mount -a
 
 sudo mount -t zfs olympus/system/nixos/root /mnt
 
-sudo mkdir -p /mnt/{boot,var,nix}
-
-sudo mount /dev/nvme0n1p1 /mnt/boot
+sudo mkdir -p /mnt/{var,nix}
 
 sudo mount -t zfs olympus/system/nixos/var /mnt/var
 sudo mount -t zfs olympus/system/nixos/nix /mnt/nix
+```
 
+### Mount user's home directory (optional)
+
+```bash
 sudo mkdir -p /mnt/yl
 sudo mount --bind /yl /mnt/yl
 sudo mount --bind /yl/code /mnt/yl/code
+```
+
+### Mount the boot/efi partition
+
+This assumes then boot partition is labeled EFI.
+
+```bash
+sudo mkdir -p /mnt/boot
+sudo mount /dev/disk/by-label/EFI /mnt/boot
 ```
 
 Finally proceed with the regular NixOS installation instructions.
