@@ -15,8 +15,9 @@ zpool create \
     -O normalization=formD \
     -O relatime=on \
     -O xattr=sa \
-    rpool /dev/mapper/cryptroot
+    olympus /dev/mapper/cryptroot
 
+# TODO below is still invalid
 
 zfs create -o mountpoint=legacy     rpool/nixos/root
 mount -t zfs rpool/nixos/root /mnt/
