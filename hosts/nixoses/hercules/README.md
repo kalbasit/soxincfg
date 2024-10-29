@@ -72,7 +72,9 @@ sudo mkdir -p /mnt/boot
 sudo mount /dev/disk/by-label/EFI /mnt/boot
 ```
 
-Finally proceed with the regular NixOS installation instructions.
+### Install NixOS
+
+Finally proceed with NixOS installation following the [instructions on the manual][nixos-manual-install].
 
 ## Restore bootloader
 
@@ -112,3 +114,5 @@ sudo bash nixos-enter.sh  # on NixOS, just run: nixos-enter
 ```bash
 NIXOS_INSTALL_BOOTLOADER=1 /run/current-system/bin/switch-to-configuration boot
 ```
+
+[nixos-manual-install]: https://nixos.org/manual/nixos/stable/#sec-installation
