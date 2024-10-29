@@ -1,25 +1,26 @@
 { config, lib, pkgs, ... }:
 
-with lib;
 let
-  bootDevice = "/dev/disk/by-uuid/E1F2-2DEC";
-  swap0Device = "/dev/disk/by-uuid/0e5232f4-2f60-41fb-a11a-2867bf3686a2";
-  swap1Device = "/dev/disk/by-uuid/8415c540-ae09-4716-bfc5-02e5b83ec73b";
+  inherit (lib)
+    mkDefault
+    nameValuePair
+    mergeAttrs
+    mapAttrs'
+    ;
+
+  bootDevice = "/dev/disk/by-uuid/733F-28F5";
+  swapDevice = "/dev/disk/by-uuid/85587a1b-57cc-4d9c-bf7e-7abb4bdd2060";
 
   datasets = {
-    "/" = { device = "rpool/nixos/root"; };
-    "/home" = { device = "rpool/nixos/home"; };
-    "/var" = { device = "rpool/nixos/var"; };
-    "/var/lib" = { device = "rpool/nixos/var/lib"; };
-    "/var/log" = { device = "rpool/nixos/var/log"; };
-    "/yl" = { device = "rpool/nixos/yl"; };
-    "/yl/code" = { device = "rpool/nixos/yl/code"; };
+    "/" = { device = "olympus/system/nixos/root"; };
+    "/var" = { device = "olympus/system/nixos/var"; };
+    "/nix" = { device = "olympus/system/nixos/nix"; };
   };
 
   mkZFSDataSet = mountPoint: { device }:
     nameValuePair
       (mountPoint)
-      ({ inherit device; fsType = "zfs"; });
+      ({ inherit device; fsType = "zfs"; options = [ "relatime" ]; });
 
   exports = [
     # "Anime"
@@ -39,7 +40,7 @@ let
     # "music"
   ];
 
-  toFSEntry = export: lib.nameValuePair "/nas/${export}" {
+  toFSEntry = export: nameValuePair "/nas/${export}" {
     device = "192.168.50.2:/volume1/${export}";
     fsType = "nfs";
   };
@@ -59,23 +60,20 @@ in
   # ZFS requires a networking hostId
   networking.hostId = "4a92c82f";
 
+  # configure kernel and modules
   boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "vmd" "nvme" "usbhid" "usb_storage" "sd_mod" "sdhci_pci" ];
   boot.kernelModules = [ "kvm-intel" ];
 
-  boot.loader.grub = {
-    configurationLimit = 3;
-    device = "nodev";
-    efiSupport = true;
+  # configure boot loader
+  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.systemd-boot = {
+    editor = false;
     enable = true;
-    enableCryptodisk = true;
+    configurationLimit = 3;
   };
 
   # enable focusrite Gen3 support.
   soxin.hardware.sound.focusRiteGen3Support = true;
-
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  boot.loader.systemd-boot.enable = false;
 
   nix.settings.max-jobs = 12;
 
@@ -92,24 +90,21 @@ in
   console.font = "Lat2-Terminus16";
 
   boot.initrd.luks.devices = {
-    cryptkey = { device = "/dev/disk/by-uuid/f6d83931-7313-490f-90b9-f337f7663015"; };
-    cryptroot0 = { device = "/dev/disk/by-uuid/c27c971e-8ba9-42c3-b75a-e89ccdc2e701"; keyFile = "/dev/mapper/cryptkey"; };
-    cryptroot1 = { device = "/dev/disk/by-uuid/127feb77-bf29-4b76-be64-cf1c7fafaeea"; keyFile = "/dev/mapper/cryptkey"; };
-    cryptswap0 = { device = "/dev/disk/by-uuid/fdd38250-eed9-45bf-9e2b-38b94de6a740"; keyFile = "/dev/mapper/cryptkey"; };
-    cryptswap1 = { device = "/dev/disk/by-uuid/adbe4611-bb18-43da-9a02-c660f9575e8b"; keyFile = "/dev/mapper/cryptkey"; };
+    cryptkey = { device = "/dev/disk/by-uuid/00f72dbb-eb46-468f-b1c3-dd63adc542f0"; };
+    cryptroot = { device = "/dev/disk/by-uuid/5f4422ca-eb45-4532-931b-63225c2143d5"; keyFile = "/dev/mapper/cryptkey"; };
+    cryptswap = { device = "/dev/disk/by-uuid/0249ea43-7216-4a9b-9c57-377f22c41bfc"; keyFile = "/dev/mapper/cryptkey"; };
   };
 
   fileSystems = mergeAttrs
     (mergeAttrs nfsFSEntries (mapAttrs' mkZFSDataSet datasets))
     {
-      "/boot" = { device = bootDevice; fsType = "vfat"; };
+      "/boot" = { device = bootDevice; fsType = "vfat"; options = [ "fmask=0022" "dmask=0022" ]; };
 
       # SoxinCFG secrets
       "/yl/code/repositories/github.com/kalbasit/soxincfg/profiles/work/secret-store" = { device = "/yl/code/repositories/keybase/private/ylcodes/secrets/soxincfg/work/secret-store"; options = [ "bind" ]; };
     };
 
   swapDevices = [
-    { device = swap0Device; }
-    { device = swap1Device; }
+    { device = swapDevice; }
   ];
 }
