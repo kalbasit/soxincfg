@@ -18,28 +18,22 @@ zpool create \
     -O xattr=sa \
     olympus /dev/mapper/cryptroot
 
-# TODO below is still invalid
+zfs create -o mountpoint=none olympus/system
+zfs create -o mountpoint=legacy olympus/system/nixos
+zfs create -o mountpoint=legacy olympus/system/nixos/root
+zfs create -o mountpoint=legacy olympus/system/nixos/var
+zfs create -o mountpoint=legacy olympus/system/nixos/nix
 
-zfs create -o mountpoint=legacy     rpool/nixos/root
-mount -t zfs rpool/nixos/root /mnt/
+zfs create -o mountpoint=none olympus/user
+zfs create -o mountpoint=none olympus/user/yl
+zfs create -o mountpoint=/yl olympus/user/yl/home
+zfs create -o mountpoint=/yl/code olympus/user/yl/code
 
-zfs create -o mountpoint=legacy rpool/nixos/home
-mkdir /mnt/home
-mount -t zfs  rpool/nixos/home /mnt/home
-
-zfs create -o mountpoint=legacy rpool/nixos/yl
-mkdir /mnt/yl
-mount -t zfs  rpool/nixos/yl /mnt/yl
-
-zfs create -o mountpoint=legacy rpool/nixos/yl/code
-mkdir /mnt/yl/code
-mount -t zfs  rpool/nixos/yl/code /mnt/yl/code
-
-zfs create -o mountpoint=legacy  rpool/nixos/var
-zfs create -o mountpoint=legacy rpool/nixos/var/lib
-zfs create -o mountpoint=legacy rpool/nixos/var/log
-zfs create -o mountpoint=legacy rpool/nixos/empty
-zfs snapshot rpool/nixos/empty@start
+mount -t zfs olympus/system/nixos/root /mnt
+mkdir /mnt/{boot,var,nix}
+mount /dev/nvme0n1p1 /mnt/boot
+mount -t zfs olympus/system/nixos/var /mnt/var
+mount -t zfs olympus/system/nixos/nix /mnt/nix
 ```
 
 # Restore bootloader
