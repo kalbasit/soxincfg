@@ -85,7 +85,7 @@ sudo cryptsetup luksOpen /dev/disk/by-uuid/00f72dbb-eb46-468f-b1c3-dd63adc542f0 
 sudo cryptsetup luksOpen --key-file=/dev/mapper/cryptkey /dev/disk/by-uuid/5f4422ca-eb45-4532-931b-63225c2143d5 cryptroot
 ```
 
-### import the pool
+### Import the pool
 
 ```bash
 sudo zpool import olympus
