@@ -1,10 +1,15 @@
-# Installation
+# Hercules
 
-Leaving the raw notes of my installation session of this OS.
+My main workstation, a laptop with a decent i7-11800H CPU, 64G RAM and an RTX 3080 Max-Q GPU
 
-Following https://openzfs.github.io/openzfs-docs/Getting%20Started/NixOS/Root%20on%20ZFS/3-system-configuration.html
+## Install
 
-## Create the ZFS Pool
+Leaving my installation instructions to help me re-do the laptop if I needed to.
+
+### Create the ZFS Pool
+
+This assumes you've already created the partitions, the root partitions is
+encrypted and open at /dev/mapper/cryptroot.
 
 ```bash
 sudo zpool create \
@@ -22,7 +27,7 @@ sudo zpool create \
     /dev/mapper/cryptroot
 ```
 
-## Create the ZFS volumes
+### Create the ZFS volumes
 
 ```bash
 sudo zfs create -o mountpoint=none olympus/system
@@ -37,7 +42,7 @@ sudo zfs create -o mountpoint=/yl olympus/user/yl/home
 sudo zfs create -o mountpoint=/yl/code olympus/user/yl/code
 ```
 
-## Mount everything
+### Mount everything
 
 ```bash
 sudo zfs mount -a
@@ -55,16 +60,18 @@ sudo mount --bind /yl /mnt/yl
 sudo mount --bind /yl/code /mnt/yl/code
 ```
 
-# Restore bootloader
+Finally proceed with the regular NixOS installation instructions.
 
-## Decrypt the drive
+## Restore bootloader
+
+### Decrypt the drive
 
 ```bash
 sudo cryptsetup luksOpen /dev/disk/by-uuid/00f72dbb-eb46-468f-b1c3-dd63adc542f0 cryptkey
 sudo cryptsetup luksOpen --key-file=/dev/mapper/cryptkey /dev/disk/by-uuid/5f4422ca-eb45-4532-931b-63225c2143d5 cryptroot
 ```
 
-## import the pool
+### import the pool
 
 ```bash
 sudo zpool import olympus
@@ -73,7 +80,7 @@ sudo zfs list olympus
 
 Refer to [Mount everything](#mount-everything) above to mount the everything you need.
 
-## Download nixos-enter (optional, needed for non-nixos boot USB)
+### Download nixos-enter (optional, needed for non-nixos boot USB)
 
 *NOTE*: This was needed because I was using ubuntu to do the restore (for the
 fun of it). NixOS install disk already has nixos-enter in the PATH.
@@ -81,8 +88,6 @@ fun of it). NixOS install disk already has nixos-enter in the PATH.
 ```bash
 curl -LO https://github.com/NixOS/nixpkgs/raw/master/nixos/modules/installer/tools/nixos-enter.sh
 ```
-
-## Reinstall the bootloader
 
 ### Enter the nixos system
 
