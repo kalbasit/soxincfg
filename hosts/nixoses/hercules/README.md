@@ -56,6 +56,7 @@ sudo mount /dev/nvme0n1p1 /mnt/boot
 sudo mount -t zfs olympus/system/nixos/var /mnt/var
 sudo mount -t zfs olympus/system/nixos/nix /mnt/nix
 
+sudo mkdir -p /mnt/yl
 sudo mount --bind /yl /mnt/yl
 sudo mount --bind /yl/code /mnt/yl/code
 ```
