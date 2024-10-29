@@ -10,6 +10,7 @@ zpool create \
     -o autotrim=on \
     -O acltype=posixacl \
     -O canmount=off \
+    -O mountpoint=none \
     -O compression=lz4 \
     -O dnodesize=auto \
     -O normalization=formD \
