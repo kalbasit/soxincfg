@@ -42,7 +42,7 @@ sudo zfs create -o mountpoint=/yl olympus/user/yl/home
 sudo zfs create -o mountpoint=/yl/code olympus/user/yl/code
 ```
 
-### Mount all ZFS volumes
+### Mount everything
 
 ```bash
 sudo zfs mount -a
@@ -55,7 +55,7 @@ sudo mount -t zfs olympus/system/nixos/var /mnt/var
 sudo mount -t zfs olympus/system/nixos/nix /mnt/nix
 ```
 
-### Mount user's home directory (optional)
+#### Mount user's home directory (optional)
 
 ```bash
 sudo mkdir -p /mnt/yl
@@ -63,7 +63,7 @@ sudo mount --bind /yl /mnt/yl
 sudo mount --bind /yl/code /mnt/yl/code
 ```
 
-### Mount the boot/efi partition
+#### Mount the boot/efi partition
 
 This assumes then boot partition is labeled EFI.
 
