@@ -4,7 +4,6 @@ keys:
 
   # PGP host keys
   - &host_pgp_hades 40F574563C054BDCC05FDF8CC83DFFD75179DF76
-  - &host_pgp_hercules 74C749550A06560276DCA8219685DAC2922E7B46
   - &host_pgp_kore 882BE5435E81479DDBFFEF70F5DC39FB0D1A991D
   - &host_pgp_prometheus 42EFF1BA24BF1181C0C4B20329532C0000EE00E4
   - &host_pgp_zeus 1C589E495DBBEFF2F4DA370685F1A3641FBEFD44
@@ -15,6 +14,7 @@ keys:
 
   # Age host keys
   - &host_age_saturn age1uvkcsm082vacmmauxakhuzjyjr7dx7gxyd6k757smwlwm5ekzgzs2sq8uh
+  - &host_age_hercules age1g3f7pkzwth395ydm4yzf7qh7tgkj22spdlz68qjt5kszw078l4js3tyq2d
 creation_rules:
   - path_regex: hosts/nixoses/hades/[^/]+\.sops[^/]*
     key_groups:
@@ -26,7 +26,8 @@ creation_rules:
     key_groups:
       - pgp:
         - *user_yl_0x8EBD95DC147755A2
-        - *host_pgp_hercules
+        age:
+        - *host_age_hercules
 
   - path_regex: hosts/nixoses/kore/[^/]+\.sops[^/]*
     key_groups:
@@ -98,7 +99,6 @@ creation_rules:
       - pgp:
         - *user_yl_0x8EBD95DC147755A2
         - *host_pgp_hades
-        - *host_pgp_hercules
         - *host_pgp_kore
         - *host_pgp_prometheus
         - *host_pgp_laptop_server_x86_1
@@ -106,14 +106,16 @@ creation_rules:
         - *host_pgp_laptop_server_x86_3
         - *host_pgp_laptop_server_x86_4
         - *host_pgp_zeus
+        age:
+        - *host_age_hercules
 
   - path_regex: profiles/myself/[^/]+\.sops[^/]*
     key_groups:
       - pgp:
         - *user_yl_0x8EBD95DC147755A2
         - *host_pgp_hades
-        - *host_pgp_hercules
         age:
+        - *host_age_hercules
         - *host_age_saturn
 
   - path_regex: modules/.*/[^/]+\.sops[^/]*
@@ -121,7 +123,6 @@ creation_rules:
       - pgp:
         - *user_yl_0x8EBD95DC147755A2
         - *host_pgp_hades
-        - *host_pgp_hercules
         - *host_pgp_kore
         - *host_pgp_prometheus
         - *host_pgp_laptop_server_x86_1
@@ -130,4 +131,5 @@ creation_rules:
         - *host_pgp_laptop_server_x86_4
         - *host_pgp_zeus
         age:
+        - *host_age_hercules
         - *host_age_saturn
