@@ -6,21 +6,16 @@ Following https://openzfs.github.io/openzfs-docs/Getting%20Started/NixOS/Root%20
 
 ```bash
 zpool create \
-    -o ashift=12 \
+    -o ashift=13 \
     -o autotrim=on \
-    -R /mnt \
     -O acltype=posixacl \
     -O canmount=off \
-    -O compression=zstd \
+    -O compression=lz4 \
     -O dnodesize=auto \
     -O normalization=formD \
     -O relatime=on \
     -O xattr=sa \
-    -O mountpoint=/ \
-    rpool \
-    raidz1 \
-    /dev/mapper/cryptroot0 \
-    /dev/mapper/cryptroot1
+    rpool /dev/mapper/cryptroot
 
 
 zfs create -o mountpoint=legacy     rpool/nixos/root
