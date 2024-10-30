@@ -13,8 +13,10 @@ let
 
   datasets = {
     "/" = { device = "olympus/system/nixos/root"; };
-    "/var" = { device = "olympus/system/nixos/var"; };
     "/nix" = { device = "olympus/system/nixos/nix"; };
+    "/var" = { device = "olympus/system/nixos/var"; };
+    "/yl" = { device = "olympus/user/yl/home"; };
+    "/yl/code" = { device = "olympus/user/yl/code"; };
   };
 
   mkZFSDataSet = mountPoint: { device }:

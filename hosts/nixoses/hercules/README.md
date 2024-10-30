@@ -38,8 +38,8 @@ sudo zfs create -o mountpoint=legacy olympus/system/nixos/nix
 
 sudo zfs create -o mountpoint=none olympus/user
 sudo zfs create -o mountpoint=none olympus/user/yl
-sudo zfs create -o mountpoint=/yl olympus/user/yl/home
-sudo zfs create -o mountpoint=/yl/code olympus/user/yl/code
+sudo zfs create -o mountpoint=legacy olympus/user/yl/home
+sudo zfs create -o mountpoint=legacy olympus/user/yl/code
 ```
 
 ### Mount everything
