@@ -10,6 +10,7 @@ let
 
   bootDevice = "/dev/disk/by-uuid/733F-28F5";
   swapDevice = "/dev/disk/by-uuid/85587a1b-57cc-4d9c-bf7e-7abb4bdd2060";
+  windowsDevice = "/dev/disk/by-uuid/28C025C1C025965A";
 
   datasets = {
     "/" = { device = "olympus/system/nixos/root"; };
@@ -101,6 +102,16 @@ in
     (mergeAttrs nfsFSEntries (mapAttrs' mkZFSDataSet datasets))
     {
       "/boot" = { device = bootDevice; fsType = "vfat"; options = [ "fmask=0022" "dmask=0022" ]; };
+
+      # Windows
+      "/mnt/windows" = {
+        device = windowsDevice;
+        fsType = "ntfs";
+        options = [
+          "gid=${builtins.toString config.users.groups."${config.users.users.yl.group}".gid}"
+          "uid=${builtins.toString config.users.users.yl.uid}"
+        ];
+      };
 
       # SoxinCFG secrets
       "/yl/code/repositories/github.com/kalbasit/soxincfg/profiles/work/secret-store" = {
