@@ -21,7 +21,7 @@ in
 writeShellScript "auto-backup-obsidian-vaults.sh" ''
   set -euo pipefail
 
-  if ! test -d ~/SynologyDrive/Obsidian
+  if ! test -d ~/SynologyDrive/Obsidian || ! test -d ~/SynologyDrive/Obsidian/.git
   then
     exit 0
   fi
