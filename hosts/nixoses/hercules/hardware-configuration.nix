@@ -14,6 +14,9 @@ let
 
   datasets = {
     "/" = { device = "olympus/system/nixos/root"; };
+    "/mnt/arch" = { device = "olympus/system/arch/root"; };
+    "/mnt/arch/nix" = { device = "olympus/system/arch/nix"; };
+    "/mnt/arch/var" = { device = "olympus/system/arch/var"; };
     "/nix" = { device = "olympus/system/nixos/nix"; };
     "/var" = { device = "olympus/system/nixos/var"; };
     "/yl" = { device = "olympus/user/yl/home"; };
