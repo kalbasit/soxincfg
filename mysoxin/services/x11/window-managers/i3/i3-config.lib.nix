@@ -213,7 +213,7 @@ in
         "${meta}+l" = "exec ${nosid} ${locker}";
 
         # clipboard history
-        "${meta}+${alt}+c" = "exec CM_LAUNCHER=rofi ${getBin pkgs.clipmenu}/bin/clipmenu";
+        "${meta}+${alt}+c" = "exec CM_LAUNCHER=rofi ${getBin pkgs.clipmenu}/bin/clipmenu && ${getBin pkgs.xdotool}/bin/xdotool key Shift+Insert";
 
         # Terminals
         "${meta}+Return" = "exec ${nosid} ${getBin pkgs.wezterm}/bin/wezterm";
