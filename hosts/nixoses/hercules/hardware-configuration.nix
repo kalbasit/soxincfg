@@ -21,7 +21,7 @@ let
     "/mnt/arch/yl/code" = { device = "olympus/user/yl/code"; };
     "/nix" = { device = "olympus/system/nixos/nix"; };
     "/var" = { device = "olympus/system/nixos/var"; };
-    "/yl" = { device = "olympus/user/yl/home"; };
+    "/yl" = { device = "olympus/user/yl/nixos-home"; };
     "/yl/code" = { device = "olympus/user/yl/code"; };
   };
 
