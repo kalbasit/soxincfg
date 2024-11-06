@@ -20,12 +20,19 @@ let
     "/yl" = { device = "olympus/user/yl/nixos-home"; };
     "/yl/code" = { device = "olympus/user/yl/code"; };
 
-    # Arch Linux
+    # Arch Linux within NixOS
     "/mnt/arch" = { device = "olympus/system/arch/root"; };
     "/mnt/arch/nix" = { device = "olympus/system/arch/nix"; };
     "/mnt/arch/var" = { device = "olympus/system/arch/var"; };
     "/mnt/arch/yl" = { device = "olympus/user/yl/arch-home"; };
     "/mnt/arch/yl/code" = { device = "olympus/user/yl/code"; };
+
+    # NixOS within Arch Linux
+    "/mnt/arch/mnt/nixos" = { device = "olympus/system/nixos/root"; };
+    "/mnt/arch/mnt/nixos/nix" = { device = "olympus/system/nixos/nix"; };
+    "/mnt/arch/mnt/nixos/var" = { device = "olympus/system/nixos/var"; };
+    "/mnt/arch/mnt/nixos/yl" = { device = "olympus/user/yl/nixos-home"; };
+    "/mnt/arch/mnt/nixos/yl/code" = { device = "olympus/user/yl/code"; };
   };
 
   mkZFSDataSet = mountPoint: { device }:
