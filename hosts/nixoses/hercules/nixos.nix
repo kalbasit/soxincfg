@@ -52,5 +52,8 @@ in
   # Default is overlay, and the docker image kartoza/postgis fails to boot.
   virtualisation.docker.storageDriver = "zfs";
 
+  # Support for ArchLinux
+  environment.systemPackages = [ pkgs.arch-install-scripts pkgs.pacman ];
+
   system.stateVersion = "23.05";
 }
