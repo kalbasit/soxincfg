@@ -75,6 +75,27 @@ in
   boot.loader.systemd-boot = {
     editor = false;
     enable = true;
+    extraEntries = {
+      "archlinux.conf" = ''
+        title Arch Linux
+        sort-key arch
+        version Main
+        linux /EFI/arch/vmlinuz-linux
+        initrd /EFI/arch/initramfs-linux.img
+        options root=/dev/mapper/cryptroot
+        machine-id eb9cb30c8e1d473e91ef3c792d4af65c
+      '';
+
+      "archlinux-fallback.conf" = ''
+        title Arch Linux
+        sort-key arch
+        version Fallback
+        linux /EFI/arch/vmlinuz-linux
+        initrd /EFI/arch/initramfs-linux-fallback.img
+        options root=/dev/mapper/cryptroot
+        machine-id eb9cb30c8e1d473e91ef3c792d4af65c
+      '';
+    };
     configurationLimit = 3;
   };
 
