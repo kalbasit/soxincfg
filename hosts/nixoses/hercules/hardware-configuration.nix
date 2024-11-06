@@ -20,6 +20,7 @@ let
     "/yl" = { device = "olympus/user/yl/nixos-home"; };
     "/yl/code" = { device = "olympus/user/yl/code"; };
 
+    ## Arch Linux
     # Arch Linux within NixOS
     "/mnt/arch" = { device = "olympus/system/arch/root"; };
     "/mnt/arch/nix" = { device = "olympus/system/arch/nix"; };
@@ -33,6 +34,21 @@ let
     "/mnt/arch/mnt/nixos/var" = { device = "olympus/system/nixos/var"; };
     "/mnt/arch/mnt/nixos/yl" = { device = "olympus/user/yl/nixos-home"; };
     "/mnt/arch/mnt/nixos/yl/code" = { device = "olympus/user/yl/code"; };
+
+    ## Ubuntu
+    # Ubuntu within NixOS
+    "/mnt/ubuntu" = { device = "olympus/system/ubuntu/root"; };
+    "/mnt/ubuntu/nix" = { device = "olympus/system/ubuntu/nix"; };
+    "/mnt/ubuntu/var" = { device = "olympus/system/ubuntu/var"; };
+    "/mnt/ubuntu/yl" = { device = "olympus/user/yl/ubuntu-home"; };
+    "/mnt/ubuntu/yl/code" = { device = "olympus/user/yl/code"; };
+
+    # NixOS within Ubuntu
+    "/mnt/ubuntu/mnt/nixos" = { device = "olympus/system/nixos/root"; };
+    "/mnt/ubuntu/mnt/nixos/nix" = { device = "olympus/system/nixos/nix"; };
+    "/mnt/ubuntu/mnt/nixos/var" = { device = "olympus/system/nixos/var"; };
+    "/mnt/ubuntu/mnt/nixos/yl" = { device = "olympus/user/yl/nixos-home"; };
+    "/mnt/ubuntu/mnt/nixos/yl/code" = { device = "olympus/user/yl/code"; };
   };
 
   mkZFSDataSet = mountPoint: { device }:
