@@ -130,7 +130,7 @@ in
         version Main
         linux /EFI/ubuntu/vmlinuz
         initrd /EFI/ubuntu/initrd.img
-        options spl.spl_hostid=0x4a92c82f root=ZFS=olympus/system/arch/root rw
+        options spl.spl_hostid=0x4a92c82f root=ZFS=olympus/system/ubuntu/root rw quiet splash
         machine-id eb9cb30c8e1d473e91ef3c792d4af65c
       '';
     };
