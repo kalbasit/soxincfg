@@ -123,6 +123,16 @@ in
         options spl.spl_hostid=0x4a92c82f cryptdevice=/dev/disk/by-uuid/5f4422ca-eb45-4532-931b-63225c2143d5:cryptroot zfs=olympus/system/arch/root rw
         machine-id eb9cb30c8e1d473e91ef3c792d4af65c
       '';
+
+      "ubuntu.conf" = ''
+        title Ubuntu
+        sort-key ubuntu
+        version Main
+        linux /EFI/ubuntu/vmlinuz
+        initrd /EFI/ubuntu/initrd.img
+        options spl.spl_hostid=0x4a92c82f root=ZFS=olympus/system/arch/root rw
+        machine-id eb9cb30c8e1d473e91ef3c792d4af65c
+      '';
     };
     configurationLimit = 3;
   };
