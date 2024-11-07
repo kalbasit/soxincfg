@@ -16,6 +16,8 @@ let
     # NixOS
     "/" = { device = "olympus/system/nixos/root"; };
     "/home/yl" = { device = "olympus/user/yl/nixos-home"; };
+    "/home/yl/.SynologyDrive/data" = { device = "olympus/user/yl/synology-drive/data"; };
+    "/home/yl/SynologyDrive" = { device = "olympus/user/yl/synology-drive/drive"; };
     "/home/yl/code" = { device = "olympus/user/yl/code"; };
     "/nix" = { device = "olympus/system/nixos/nix"; };
     "/var" = { device = "olympus/system/nixos/var"; };
@@ -24,6 +26,8 @@ let
     # Arch Linux within NixOS
     "/mnt/arch" = { device = "olympus/system/arch/root"; };
     "/mnt/arch/home/yl" = { device = "olympus/user/yl/arch-home"; };
+    "/mnt/arch/home/yl/.SynologyDrive/data" = { device = "olympus/user/yl/synology-drive/data"; };
+    "/mnt/arch/home/yl/SynologyDrive" = { device = "olympus/user/yl/synology-drive/drive"; };
     "/mnt/arch/home/yl/code" = { device = "olympus/user/yl/code"; };
     "/mnt/arch/nix" = { device = "olympus/system/arch/nix"; };
     "/mnt/arch/var" = { device = "olympus/system/arch/var"; };
@@ -31,6 +35,8 @@ let
     # NixOS within Arch Linux
     "/mnt/arch/mnt/nixos" = { device = "olympus/system/nixos/root"; };
     "/mnt/arch/mnt/nixos/home/yl" = { device = "olympus/user/yl/nixos-home"; };
+    "/mnt/arch/mnt/nixos/home/yl/.SynologyDrive/data" = { device = "olympus/user/yl/synology-drive/data"; };
+    "/mnt/arch/mnt/nixos/home/yl/SynologyDrive" = { device = "olympus/user/yl/synology-drive/drive"; };
     "/mnt/arch/mnt/nixos/home/yl/code" = { device = "olympus/user/yl/code"; };
     "/mnt/arch/mnt/nixos/nix" = { device = "olympus/system/nixos/nix"; };
     "/mnt/arch/mnt/nixos/var" = { device = "olympus/system/nixos/var"; };
@@ -39,6 +45,8 @@ let
     # Ubuntu within NixOS
     "/mnt/ubuntu" = { device = "olympus/system/ubuntu/root"; };
     "/mnt/ubuntu/home/yl" = { device = "olympus/user/yl/ubuntu-home"; };
+    "/mnt/ubuntu/home/yl/.SynologyDrive/data" = { device = "olympus/user/yl/synology-drive/data"; };
+    "/mnt/ubuntu/home/yl/SynologyDrive" = { device = "olympus/user/yl/synology-drive/drive"; };
     "/mnt/ubuntu/home/yl/code" = { device = "olympus/user/yl/code"; };
     "/mnt/ubuntu/nix" = { device = "olympus/system/ubuntu/nix"; };
     "/mnt/ubuntu/var" = { device = "olympus/system/ubuntu/var"; };
@@ -46,6 +54,8 @@ let
     # NixOS within Ubuntu
     "/mnt/ubuntu/mnt/nixos" = { device = "olympus/system/nixos/root"; };
     "/mnt/ubuntu/mnt/nixos/home/yl" = { device = "olympus/user/yl/nixos-home"; };
+    "/mnt/ubuntu/mnt/nixos/home/yl/.SynologyDrive/data" = { device = "olympus/user/yl/synology-drive/data"; };
+    "/mnt/ubuntu/mnt/nixos/home/yl/SynologyDrive" = { device = "olympus/user/yl/synology-drive/drive"; };
     "/mnt/ubuntu/mnt/nixos/home/yl/code" = { device = "olympus/user/yl/code"; };
     "/mnt/ubuntu/mnt/nixos/nix" = { device = "olympus/system/nixos/nix"; };
     "/mnt/ubuntu/mnt/nixos/var" = { device = "olympus/system/nixos/var"; };
