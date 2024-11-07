@@ -49,7 +49,7 @@ in
   };
 
   # TODO: fix this!
-  system.extraSystemBuilderCmds = ''ln -sfn /yl/.surfingkeys.js $out/.surfingkeys.js'';
+  system.extraSystemBuilderCmds = ''ln -sfn /home/yl/.surfingkeys.js $out/.surfingkeys.js'';
 
   # work around bug https://github.com/NixOS/nixpkgs/issues/180175
   systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;

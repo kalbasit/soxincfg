@@ -34,7 +34,7 @@ in
         isAdmin = true;
         isNixTrustedUser = true;
 
-        home = "/yl";
+        home = "/home/yl";
       }
 
     // optionalAttrs (mode == "nix-darwin")

@@ -15,40 +15,40 @@ let
   datasets = {
     # NixOS
     "/" = { device = "olympus/system/nixos/root"; };
+    "/home/yl" = { device = "olympus/user/yl/nixos-home"; };
+    "/home/yl/code" = { device = "olympus/user/yl/code"; };
     "/nix" = { device = "olympus/system/nixos/nix"; };
     "/var" = { device = "olympus/system/nixos/var"; };
-    "/yl" = { device = "olympus/user/yl/nixos-home"; };
-    "/yl/code" = { device = "olympus/user/yl/code"; };
 
     ## Arch Linux
     # Arch Linux within NixOS
     "/mnt/arch" = { device = "olympus/system/arch/root"; };
+    "/mnt/arch/home/yl" = { device = "olympus/user/yl/arch-home"; };
+    "/mnt/arch/home/yl/code" = { device = "olympus/user/yl/code"; };
     "/mnt/arch/nix" = { device = "olympus/system/arch/nix"; };
     "/mnt/arch/var" = { device = "olympus/system/arch/var"; };
-    "/mnt/arch/yl" = { device = "olympus/user/yl/arch-home"; };
-    "/mnt/arch/yl/code" = { device = "olympus/user/yl/code"; };
 
     # NixOS within Arch Linux
     "/mnt/arch/mnt/nixos" = { device = "olympus/system/nixos/root"; };
+    "/mnt/arch/mnt/nixos/home/yl" = { device = "olympus/user/yl/nixos-home"; };
+    "/mnt/arch/mnt/nixos/home/yl/code" = { device = "olympus/user/yl/code"; };
     "/mnt/arch/mnt/nixos/nix" = { device = "olympus/system/nixos/nix"; };
     "/mnt/arch/mnt/nixos/var" = { device = "olympus/system/nixos/var"; };
-    "/mnt/arch/mnt/nixos/yl" = { device = "olympus/user/yl/nixos-home"; };
-    "/mnt/arch/mnt/nixos/yl/code" = { device = "olympus/user/yl/code"; };
 
     ## Ubuntu
     # Ubuntu within NixOS
     "/mnt/ubuntu" = { device = "olympus/system/ubuntu/root"; };
+    "/mnt/ubuntu/home/yl" = { device = "olympus/user/yl/ubuntu-home"; };
+    "/mnt/ubuntu/home/yl/code" = { device = "olympus/user/yl/code"; };
     "/mnt/ubuntu/nix" = { device = "olympus/system/ubuntu/nix"; };
     "/mnt/ubuntu/var" = { device = "olympus/system/ubuntu/var"; };
-    "/mnt/ubuntu/yl" = { device = "olympus/user/yl/ubuntu-home"; };
-    "/mnt/ubuntu/yl/code" = { device = "olympus/user/yl/code"; };
 
     # NixOS within Ubuntu
     "/mnt/ubuntu/mnt/nixos" = { device = "olympus/system/nixos/root"; };
+    "/mnt/ubuntu/mnt/nixos/home/yl" = { device = "olympus/user/yl/nixos-home"; };
+    "/mnt/ubuntu/mnt/nixos/home/yl/code" = { device = "olympus/user/yl/code"; };
     "/mnt/ubuntu/mnt/nixos/nix" = { device = "olympus/system/nixos/nix"; };
     "/mnt/ubuntu/mnt/nixos/var" = { device = "olympus/system/nixos/var"; };
-    "/mnt/ubuntu/mnt/nixos/yl" = { device = "olympus/user/yl/nixos-home"; };
-    "/mnt/ubuntu/mnt/nixos/yl/code" = { device = "olympus/user/yl/code"; };
   };
 
   mkZFSDataSet = mountPoint: { device }:
@@ -193,10 +193,10 @@ in
       };
 
       # SoxinCFG secrets
-      "/yl/code/repositories/github.com/kalbasit/soxincfg/profiles/work/secret-store" = {
-        device = "/yl/code/repositories/keybase/private/ylcodes/secrets/soxincfg/work/secret-store";
+      "/home/yl/code/repositories/github.com/kalbasit/soxincfg/profiles/work/secret-store" = {
+        device = "/home/yl/code/repositories/keybase/private/ylcodes/secrets/soxincfg/work/secret-store";
         options = [ "bind" ];
-        depends = [ "/yl" "/yl/code" ];
+        depends = [ "/home/yl" "/home/yl/code" ];
       };
     };
 

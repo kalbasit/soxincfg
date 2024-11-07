@@ -60,9 +60,9 @@ sudo mount -t zfs olympus/system/nixos/nix /mnt/nix
 #### Mount user's home directory (optional)
 
 ```bash
-sudo mkdir -p /mnt/yl
-sudo mount --bind /yl /mnt/yl
-sudo mount --bind /yl/code /mnt/yl/code
+sudo mkdir -p /mnt/home/yl
+sudo mount --bind /home/yl /mnt/home/yl
+sudo mount --bind /home/yl/code /mnt/home/yl/code
 ```
 
 #### Mount the boot/efi partition
