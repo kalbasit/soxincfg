@@ -155,8 +155,17 @@ in
     {
       # Boot device
       "/boot" = { device = bootDevice; fsType = "vfat"; options = [ "fmask=0022" "dmask=0022" ]; };
+
+      # Arch boot device
       "/mnt/arch/boot" = { device = bootDevice; fsType = "vfat"; options = [ "fmask=0022" "dmask=0022" ]; };
-      "/mnt/ubuntu/boot" = { device = bootDevice; fsType = "vfat"; options = [ "fmask=0022" "dmask=0022" ]; };
+
+      # Ubuntu boot device
+      # TODO: Figure out how to configure Ubuntu where to put kernel
+      "/mnt/ubuntu/real-boot" = { device = bootDevice; fsType = "vfat"; options = [ "fmask=0022" "dmask=0022" ]; };
+      "/mnt/ubuntu/boot" = {
+        device = "/mnt/ubuntu/real-boot/EFI/ubuntu";
+        options = [ "bind" ];
+      };
 
       # Windows
       "/mnt/windows" = {
