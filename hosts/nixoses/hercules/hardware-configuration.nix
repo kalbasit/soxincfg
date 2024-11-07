@@ -166,16 +166,21 @@ in
       # Boot device
       "/boot" = { device = bootDevice; fsType = "vfat"; options = [ "fmask=0022" "dmask=0022" ]; };
 
-      # Arch boot device
+      # Arch non-zfs mounts
       "/mnt/arch/boot" = { device = bootDevice; fsType = "vfat"; options = [ "fmask=0022" "dmask=0022" ]; };
+      "/mnt/arch/dev" = { device = "/dev"; options = [ "bind" ]; };
+      "/mnt/arch/dev/pts" = { device = "/dev/pts"; options = [ "bind" ]; };
+      "/mnt/arch/proc" = { device = "proc"; fsType = "proc"; };
+      "/mnt/arch/sys" = { device = "sys"; fsType = "sysfs"; };
 
-      # Ubuntu boot device
-      # TODO: Figure out how to configure Ubuntu where to put kernel
-      "/mnt/ubuntu/real-boot" = { device = bootDevice; fsType = "vfat"; options = [ "fmask=0022" "dmask=0022" ]; };
-      "/mnt/ubuntu/boot" = {
-        device = "/mnt/ubuntu/real-boot/EFI/ubuntu";
-        options = [ "bind" ];
-      };
+      # Ubuntu non-zfs device
+      # TODO: Figure out how to configure Ubuntu where to put kernel instead of the /boot-real /boot hack
+      "/mnt/ubuntu/boot" = { device = "/mnt/ubuntu/boot-real/EFI/ubuntu"; options = [ "bind" ]; };
+      "/mnt/ubuntu/boot-real" = { device = bootDevice; fsType = "vfat"; options = [ "fmask=0022" "dmask=0022" ]; };
+      "/mnt/ubuntu/dev" = { device = "/dev"; options = [ "bind" ]; };
+      "/mnt/ubuntu/dev/pts" = { device = "/dev/pts"; options = [ "bind" ]; };
+      "/mnt/ubuntu/proc" = { device = "proc"; fsType = "proc"; };
+      "/mnt/ubuntu/sys" = { device = "sys"; fsType = "sysfs"; };
 
       # Windows
       "/mnt/windows" = {
