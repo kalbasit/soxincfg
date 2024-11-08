@@ -4,9 +4,6 @@ with lib;
 
 {
   imports = [
-    # TODO: requires sops support
-    # soxincfg.nixosModules.profiles.myself
-
-    soxincfg.nixosModules.profiles.workstation.linux.local
+    soxincfg.nixosModules.profiles.workstation.qubes.local
   ];
 }
