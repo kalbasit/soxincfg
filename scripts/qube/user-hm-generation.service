@@ -1,0 +1,13 @@
+[Unit]
+Description=Activate user home generation
+After=qubes-early-vm-config.service
+Requires=nix-daemon.socket
+
+[Service]
+Type=oneshot
+User=user
+ExecStart=/user-hm-generation.sh
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
