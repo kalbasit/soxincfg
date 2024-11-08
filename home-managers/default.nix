@@ -1,17 +1,18 @@
 inputs@{ ... }:
 
 {
-  penguin = {
-    configuration = ./penguin/home.nix;
-    homeDirectory = "/home/yl";
-    username = "yl";
-    system = "x86_64-linux";
-  };
+  coding-home = {
+    modules = [
+      ./coding-home/home.nix
+      {
+        home = {
+          username = "user";
+          homeDirectory = "/home/user";
+stateVersion="24.05";
+        };
+      }
+    ];
 
-  phoenix = {
-    configuration = ./phoenix/home.nix;
-    homeDirectory = "/home/yl";
-    username = "yl";
-    system = "x86_64-linux";
+pkgs = inputs.nixpkgs.legacyPackages."x86_64-linux";
   };
 }
