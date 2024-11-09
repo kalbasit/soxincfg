@@ -139,6 +139,12 @@ in
         machine-id eb9cb30c8e1d473e91ef3c792d4af65c
       '';
 
+      "qubes-os.conf" = ''
+        title Qubes OS
+        sort-key qubes-os
+        linux /EFI/qubes/grubx64.efi
+      '';
+
       "ubuntu.conf" = ''
         title Ubuntu
         sort-key ubuntu
