@@ -1,6 +1,7 @@
 keys:
   # PGP User Keys
   - &user_yl_0x8EBD95DC147755A2 8C67A027B7CAC398C88820578EBD95DC147755A2
+  - &user_yl_0xBFCD5D97543F7517 BFCD5D97543F75171DAD4CC98DF864C625F2B2AC
 
   # PGP host keys
   - &host_pgp_hades 40F574563C054BDCC05FDF8CC83DFFD75179DF76
@@ -108,6 +109,12 @@ creation_rules:
         - *host_pgp_zeus
         age:
         - *host_age_hercules
+
+  - path_regex: profiles/workstation/qubes/local/[^/]+\.sops[^/]*
+    key_groups:
+      - pgp:
+        - *user_yl_0x8EBD95DC147755A2
+        - *user_yl_0xBFCD5D97543F7517
 
   - path_regex: profiles/myself/[^/]+\.sops[^/]*
     key_groups:
