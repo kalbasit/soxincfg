@@ -1,17 +1,20 @@
-inputs@{ ... }:
+inputs:
 
 {
-  penguin = {
-    configuration = ./penguin/home.nix;
-    homeDirectory = "/home/yl";
-    username = "yl";
-    system = "x86_64-linux";
-  };
+  coding-home = {
+    inherit inputs;
 
-  phoenix = {
-    configuration = ./phoenix/home.nix;
-    homeDirectory = "/home/yl";
-    username = "yl";
+    modules = [
+      ./coding-home/home.nix
+      {
+        home = {
+          username = "user";
+          homeDirectory = "/home/user";
+          stateVersion = "24.05";
+        };
+      }
+    ];
+
     system = "x86_64-linux";
   };
 }
