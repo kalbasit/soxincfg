@@ -20,6 +20,7 @@ readonly hm_generation
 echo "Install the hm generation link and the installation script"
 sudo ln -nsf "$hm_generation" /user-hm-generation
 sudo cp "$root_dir/scripts/qube/user-hm-generation.sh" /user-hm-generation.sh
+sudo chmod +x /user-hm-generation.sh
 
 echo "Deploy the systemd service"
 sudo cp "$root_dir/scripts/qube/user-hm-generation.service" /etc/systemd/system
