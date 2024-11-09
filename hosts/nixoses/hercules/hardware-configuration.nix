@@ -121,7 +121,7 @@ in
     extraEntries = {
       "archlinux.conf" = ''
         title Arch Linux
-        sort-key arch
+        sort-key 30-arch
         version Main
         linux /EFI/arch/vmlinuz-linux
         initrd /EFI/arch/initramfs-linux.img
@@ -131,7 +131,7 @@ in
 
       "archlinux-fallback.conf" = ''
         title Arch Linux
-        sort-key arch
+        sort-key 30-arch
         version Fallback
         linux /EFI/arch/vmlinuz-linux
         initrd /EFI/arch/initramfs-linux-fallback.img
@@ -141,13 +141,13 @@ in
 
       "qubes-os.conf" = ''
         title Qubes OS
-        sort-key qubes-os
+        sort-key 10-qubes-os
         linux /EFI/qubes/grubx64.efi
       '';
 
       "ubuntu.conf" = ''
         title Ubuntu
-        sort-key ubuntu
+        sort-key 40-ubuntu
         version Main
         linux /EFI/ubuntu/vmlinuz
         initrd /EFI/ubuntu/initrd.img
@@ -156,6 +156,7 @@ in
       '';
     };
     configurationLimit = 3;
+    sortKey = "20-nixos";
   };
 
   # enable focusrite Gen3 support.
