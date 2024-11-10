@@ -34,7 +34,7 @@
 
     soxin = {
       # url = "github:SoxinOS/soxin";
-      url = "github:SoxinOS/soxin/fix-home-managers";
+      url = "github:SoxinOS/soxin/wael-delete-me";
       inputs = {
         darwin.follows = "darwin";
         deploy-rs.follows = "deploy-rs";
