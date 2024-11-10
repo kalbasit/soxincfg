@@ -19,9 +19,12 @@ mapAttrs
   (n: v: recursiveUpdate
   {
     inherit
-      hostType
       mode
       ;
+
+    specialArgs = {
+      inherit hostType;
+    };
   }
     v)
 {
