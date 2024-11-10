@@ -11,11 +11,15 @@ let
 
   # the operating mode of Soxin
   mode = "nix-darwin";
+
+  # the hostType of the installation
+  hostType = "nix-darwin";
 in
 mapAttrs
   (n: v: recursiveUpdate
   {
     inherit
+      hostType
       mode
       ;
   }
