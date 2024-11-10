@@ -10,12 +10,10 @@ in
   sops.secrets = {
     _aws_configure_profile_personal_sh = { inherit sopsFile; mode = "0500"; };
     _config_swm_config_yaml_qubes = { inherit sopsFile; path = "${yl_home}/.config/swm/config.yaml"; };
-    _config_tiny_config_yml = { inherit sopsFile; path = "${yl_home}/.config/tiny/config.yml"; };
     _gist = { inherit sopsFile; path = "${yl_home}/.gist"; };
     _gist_vim = { inherit sopsFile; path = "${yl_home}/.gist-vim"; };
     _gitconfig_secrets = { inherit sopsFile; path = "${yl_home}/.gitconfig.secrets"; };
     _github_token = { inherit sopsFile; path = "${yl_home}/.github_token"; };
-    _jrnl_config = { inherit sopsFile; path = "${yl_home}/.jrnl_config"; };
     _netrc = { inherit sopsFile; path = "${yl_home}/.netrc"; };
     _ssh_config_include_myself = { inherit sopsFile; path = "${yl_home}/.ssh/config_include_myself"; };
     _ssh_per-host_bitbucket_org_rsa = { inherit sopsFile; path = "${yl_home}/.ssh/per-host/bitbucket.org_rsa"; };
