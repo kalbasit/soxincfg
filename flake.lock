@@ -258,16 +258,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1731100865,
-        "narHash": "sha256-ptKtpluBgP6dOLNxC62xNBocAjFgYDKBDh6dF99+D/E=",
+        "lastModified": 1731213063,
+        "narHash": "sha256-t8VIyXSI+1GqnhSka0mk7s1myWRc+WLiVX9eFKE9IJM=",
         "owner": "SoxinOS",
         "repo": "soxin",
-        "rev": "3816b9d77a6db8f15a499ef3101cf1527569c0ea",
+        "rev": "3b32edb38c56935c68f92e80d25404be702de302",
         "type": "github"
       },
       "original": {
         "owner": "SoxinOS",
-        "ref": "fix-home-managers",
+        "ref": "wael-delete-me",
         "repo": "soxin",
         "type": "github"
       }
