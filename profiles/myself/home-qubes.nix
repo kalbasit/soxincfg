@@ -9,7 +9,7 @@ in
 
   sops.secrets = {
     _aws_configure_profile_personal_sh = { inherit sopsFile; mode = "0500"; };
-    _config_swm_config_yaml = { inherit sopsFile; path = "${yl_home}/.config/swm/config.yaml"; };
+    _config_swm_config_yaml_qubes = { inherit sopsFile; path = "${yl_home}/.config/swm/config.yaml"; };
     _config_tiny_config_yml = { inherit sopsFile; path = "${yl_home}/.config/tiny/config.yml"; };
     _gist = { inherit sopsFile; path = "${yl_home}/.gist"; };
     _gist_vim = { inherit sopsFile; path = "${yl_home}/.gist-vim"; };
