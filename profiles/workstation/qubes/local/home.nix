@@ -7,7 +7,6 @@ let
 in
 {
   sops.gnupg.qubes-split-gpg = { enable = true; domain = "vault-gpg"; };
-  sops.secrets.hello = { sopsFile = ./secrets.sops.yaml; };
 
   # programs
   programs.bat.enable = true;
