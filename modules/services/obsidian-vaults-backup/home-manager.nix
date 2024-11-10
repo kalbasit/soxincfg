@@ -34,7 +34,7 @@ in
         Unit = "auto-backup-obsidian-vaults.service";
         # Wait 30 minutes after the user has logged in before starting the
         # first run to give the Synology Drive Client time to sync.
-        OnStartupSec = "30m"; 
+        OnStartupSec = "30m";
         # Run the backup script every 5 minutes
         OnUnitInactiveSec = "5m";
       };
