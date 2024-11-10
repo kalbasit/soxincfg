@@ -24,8 +24,7 @@
     };
 
     sops-nix = {
-      # url = "github:Mic92/sops-nix";
-      url = "github:kalbasit/sops-nix/qubes-support";
+      url = "github:Mic92/sops-nix";
       inputs = {
         nixpkgs.follows = "nixpkgs-unstable";
         nixpkgs-stable.follows = "nixpkgs";
