@@ -216,16 +216,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1731205315,
+        "lastModified": 1731213149,
         "narHash": "sha256-jR8i6nFLmSmm0cIoeRQ8Q4EBARa3oGaAtEER/OMMxus=",
-        "owner": "kalbasit",
+        "owner": "Mic92",
         "repo": "sops-nix",
-        "rev": "1352417c3aab993f44fe01b3bf19e60e5b07007a",
+        "rev": "f1675e3b0e1e663a4af49be67ecbc9e749f85eb7",
         "type": "github"
       },
       "original": {
-        "owner": "kalbasit",
-        "ref": "qubes-support",
+        "owner": "Mic92",
         "repo": "sops-nix",
         "type": "github"
       }
