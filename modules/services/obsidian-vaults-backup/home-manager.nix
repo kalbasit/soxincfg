@@ -51,7 +51,11 @@ in
 
       Service = {
         PassEnvironment = "DISPLAY";
-        ExecStart = pkgs.callPackage ./script.nix { inherit yl_home; };
+        ExecStart = pkgs.callPackage ./script.nix {
+          inherit yl_home;
+
+          openssh = config.programs.ssh.package;
+        };
       };
     };
   };

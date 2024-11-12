@@ -59,7 +59,7 @@ in
         pkgs.writeShellScriptBin "edit-weechat-config" ''
           set -euo pipefail
 
-          local_dir="$(${pkgs.git}/bin/git rev-parse --show-toplevel)/modules/programs/weechat/config"
+          local_dir="$(${config.programs.ssh.package}/bin/git rev-parse --show-toplevel)/modules/programs/weechat/config"
           if ! [[ -d "$local_dir" ]]; then
             echo "Please run this script from within soxincfg"
             exit 1
