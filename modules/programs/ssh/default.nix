@@ -9,6 +9,7 @@ let
     mkIf
     mkMerge
     mkOption
+    mkPackageOption
     optionalAttrs
     optionalString
     singleton
@@ -131,6 +132,10 @@ in
           Specifies the ciphers allowed and their order of preference.
         '';
       };
+
+      package = mkPackageOption pkgs "openssh_gssapi" {
+        example = "pkgs.openssh";
+      };
     };
   };
 
@@ -161,10 +166,12 @@ in
     (optionalAttrs (mode == "NixOS") {
       programs.ssh = {
         inherit (cfg)
+          ciphers
           hostKeyAlgorithms
           kexAlgorithms
           macs
-          ciphers;
+          package
+          ;
 
         startAgent = cfg.enableSSHAgent;
       };
@@ -178,6 +185,10 @@ in
 
     (optionalAttrs (mode == "home-manager") {
       programs.ssh = {
+        inherit (cfg)
+          package
+          ;
+
         enable = true;
 
         compression = true;

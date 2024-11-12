@@ -18,7 +18,11 @@ in
     launchd.user.agents.auto-backup-obsidian-vaults = {
       path = [ config.environment.systemPath ];
 
-      serviceConfig.ProgramArguments = pkgs.callPackage ./script.nix { inherit yl_home; };
+      serviceConfig.ProgramArguments = pkgs.callPackage ./script.nix {
+        inherit yl_home;
+
+        # openssh = config.programs.ssh.package;
+      };
 
       serviceConfig.KeepAlive = true;
       serviceConfig.ProcessType = "Interactive";
