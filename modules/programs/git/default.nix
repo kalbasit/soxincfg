@@ -3,6 +3,10 @@
 with lib;
 let
   cfg = config.soxincfg.programs.git;
+
+  package = pkgs.gitAndTools.gitFull.override {
+    openssh = config.programs.ssh.package;
+  };
 in
 {
   options.soxincfg.programs.git = {
@@ -12,6 +16,8 @@ in
   config = mkIf cfg.enable (mkMerge [
     {
       soxin.programs.git = {
+        inherit package;
+
         enable = true;
         lfs.enable = true;
         userName = "Wael M. Nasreddine";
