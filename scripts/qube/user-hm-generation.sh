@@ -17,4 +17,4 @@ then
     rm -rf /home/user/.local/state/nix/profiles
 fi
 
-/user-hm-generation/activate
+/bin/bash /user-hm-generation/activate
