@@ -257,16 +257,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1731213063,
+        "lastModified": 1731424061,
         "narHash": "sha256-t8VIyXSI+1GqnhSka0mk7s1myWRc+WLiVX9eFKE9IJM=",
         "owner": "SoxinOS",
         "repo": "soxin",
-        "rev": "3b32edb38c56935c68f92e80d25404be702de302",
+        "rev": "2f56f850e50161a9043f9ce4ed0e07e8512815fe",
         "type": "github"
       },
       "original": {
         "owner": "SoxinOS",
-        "ref": "wael-delete-me",
         "repo": "soxin",
         "type": "github"
       }

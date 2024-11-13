@@ -32,8 +32,7 @@
     };
 
     soxin = {
-      # url = "github:SoxinOS/soxin";
-      url = "github:SoxinOS/soxin/wael-delete-me";
+      url = "github:SoxinOS/soxin";
       inputs = {
         darwin.follows = "darwin";
         deploy-rs.follows = "deploy-rs";
