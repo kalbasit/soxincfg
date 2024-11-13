@@ -15,6 +15,13 @@ in
   config = {
     soxin = {
       programs = {
+        git = {
+          signing = {
+            key = "wael.nasreddine@gmail.com";
+            signByDefault = true;
+            gpgPath = "qubes-gpg-client-wrapper";
+          };
+        };
         less.enable = true;
       };
     };
