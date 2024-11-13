@@ -15,7 +15,7 @@
 
     Service = {
       ExecStart = ''
-        ${pkgs.socat}/bin/socat -d -d "UNIX-LISTEN:%t/qubes-ssh-agent.socket,mode=600,fork,unlink-early" "EXEC:qrexec-client-vm vault-ssh qubes.SshAgent"
+        ${pkgs.socat}/bin/socat -d -d "UNIX-LISTEN:%t/qubes-ssh-agent.socket,mode=600,fork,unlink-early" "EXEC:qrexec-client-vm vault qubes.SshAgent"
       '';
       Restart = "always";
     };
