@@ -9,7 +9,7 @@ let
     ;
 
   bootDevice = "/dev/disk/by-uuid/733F-28F5";
-  swapDevice = "/dev/disk/by-uuid/85587a1b-57cc-4d9c-bf7e-7abb4bdd2060";
+  swapDevice = "/dev/zvol/olympus/system/nixos/swap";
   windowsDevice = "/dev/disk/by-uuid/28C025C1C025965A";
 
   datasets = {
@@ -125,7 +125,7 @@ in
         version Main
         linux /EFI/arch/vmlinuz-linux
         initrd /EFI/arch/initramfs-linux.img
-        options spl.spl_hostid=0x4a92c82f cryptdevice=/dev/disk/by-uuid/5f4422ca-eb45-4532-931b-63225c2143d5:cryptroot zfs=olympus/system/arch/root rw
+        options spl.spl_hostid=0x4a92c82f cryptdevice=/dev/disk/by-uuid/809f49a2-0edb-49ac-aab6-fc0c77565e74:cryptroot zfs=olympus/system/arch/root rw
         machine-id eb9cb30c8e1d473e91ef3c792d4af65c
       '';
 
@@ -135,7 +135,7 @@ in
         version Fallback
         linux /EFI/arch/vmlinuz-linux
         initrd /EFI/arch/initramfs-linux-fallback.img
-        options spl.spl_hostid=0x4a92c82f cryptdevice=/dev/disk/by-uuid/5f4422ca-eb45-4532-931b-63225c2143d5:cryptroot zfs=olympus/system/arch/root rw
+        options spl.spl_hostid=0x4a92c82f cryptdevice=/dev/disk/by-uuid/809f49a2-0edb-49ac-aab6-fc0c77565e74:cryptroot zfs=olympus/system/arch/root rw
         machine-id eb9cb30c8e1d473e91ef3c792d4af65c
       '';
 
@@ -178,8 +178,7 @@ in
 
   boot.initrd.luks.devices = {
     cryptkey = { device = "/dev/disk/by-uuid/00f72dbb-eb46-468f-b1c3-dd63adc542f0"; };
-    cryptroot = { device = "/dev/disk/by-uuid/5f4422ca-eb45-4532-931b-63225c2143d5"; keyFile = "/dev/mapper/cryptkey"; };
-    cryptswap = { device = "/dev/disk/by-uuid/0249ea43-7216-4a9b-9c57-377f22c41bfc"; keyFile = "/dev/mapper/cryptkey"; };
+    cryptroot = { device = "/dev/disk/by-uuid/809f49a2-0edb-49ac-aab6-fc0c77565e74"; keyFile = "/dev/mapper/cryptkey"; };
   };
 
   fileSystems = mergeAttrs
