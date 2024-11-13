@@ -32,7 +32,8 @@
     };
 
     soxin = {
-      url = "github:SoxinOS/soxin";
+      # url = "github:SoxinOS/soxin";
+      url = "github:SoxinOS/soxin/improve-git-integration";
       inputs = {
         darwin.follows = "darwin";
         deploy-rs.follows = "deploy-rs";
