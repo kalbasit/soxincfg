@@ -107,7 +107,7 @@ in
   '';
 
   # ZFS requires a networking hostId
-  networking.hostId = "4a92c82f";
+  networking.hostId = "007f0200";
 
   # configure kernel and modules
   boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "vmd" "nvme" "usbhid" "usb_storage" "sd_mod" "sdhci_pci" ];
@@ -125,7 +125,7 @@ in
         version Main
         linux /EFI/arch/vmlinuz-linux
         initrd /EFI/arch/initramfs-linux.img
-        options spl.spl_hostid=0x4a92c82f cryptdevice=/dev/disk/by-uuid/809f49a2-0edb-49ac-aab6-fc0c77565e74:cryptroot zfs=olympus/system/arch/root rw
+        options spl.spl_hostid=0x007f0200 cryptdevice=/dev/disk/by-uuid/809f49a2-0edb-49ac-aab6-fc0c77565e74:cryptroot zfs=olympus/system/arch/root rw
         machine-id eb9cb30c8e1d473e91ef3c792d4af65c
       '';
 
@@ -135,7 +135,7 @@ in
         version Fallback
         linux /EFI/arch/vmlinuz-linux
         initrd /EFI/arch/initramfs-linux-fallback.img
-        options spl.spl_hostid=0x4a92c82f cryptdevice=/dev/disk/by-uuid/809f49a2-0edb-49ac-aab6-fc0c77565e74:cryptroot zfs=olympus/system/arch/root rw
+        options spl.spl_hostid=0x007f0200 cryptdevice=/dev/disk/by-uuid/809f49a2-0edb-49ac-aab6-fc0c77565e74:cryptroot zfs=olympus/system/arch/root rw
         machine-id eb9cb30c8e1d473e91ef3c792d4af65c
       '';
 
@@ -151,7 +151,7 @@ in
         version Main
         linux /EFI/ubuntu/vmlinuz
         initrd /EFI/ubuntu/initrd.img
-        options spl.spl_hostid=0x4a92c82f root=ZFS=olympus/system/ubuntu/root rw quiet splash
+        options spl.spl_hostid=0x007f0200 root=ZFS=olympus/system/ubuntu/root rw quiet splash
         machine-id eb9cb30c8e1d473e91ef3c792d4af65c
       '';
     };
