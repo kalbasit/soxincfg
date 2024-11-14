@@ -19,7 +19,6 @@ in
           signing = {
             key = "wael.nasreddine@gmail.com";
             signByDefault = true;
-            gpgPath = "qubes-gpg-client-wrapper";
           };
         };
         less.enable = true;
