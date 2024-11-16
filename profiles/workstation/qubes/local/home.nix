@@ -6,7 +6,10 @@ let
     ;
 in
 {
-  imports = [ ./split-ssh.nix ];
+  imports = [
+    ../../common/home-kubernetes-client.nix
+    ./split-ssh.nix
+  ];
 
   config = {
     sops.gnupg.qubes-split-gpg = { enable = true; domain = "vault-gpg"; };
