@@ -12,7 +12,6 @@
     pkgs.kubespy
     pkgs.kubetail
     pkgs.kubeval
-    pkgs.lens
   ];
 
   programs.zsh.shellAliases = {
