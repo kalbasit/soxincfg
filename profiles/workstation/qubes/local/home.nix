@@ -27,6 +27,7 @@ in
       amazon-ecr-credential-helper
       awscli2
       binutils # for strings
+      bitwarden-cli
       devbox
       docker-credential-gcr
       duf # du replacement on steroids
