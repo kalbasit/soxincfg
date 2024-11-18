@@ -16,6 +16,8 @@ function mkfs.enc() {
 		local count=10
 		local log_depth=0
 		local lo_file=
+		local cipher=aes-xts-plain64
+		local hash=sha256
 
 		while [[ $# -ge 1 ]]; do
 			case "${1}" in
@@ -50,6 +52,24 @@ function mkfs.enc() {
 					fi
 					shift 2
 					;;
+				--cipher)
+					cipher="${2}"
+					if [[ -z "${cipher}" ]]; then
+						print_error "${log_depth}" "--cipher requires an argument"
+						$0_help
+						return 1
+					fi
+					shift 2
+					;;
+				--hash)
+					hash="${2}"
+					if [[ -z "${hash}" ]]; then
+						print_error "${log_depth}" "--hash requires an argument"
+						$0_help
+						return 1
+					fi
+					shift 2
+					;;
 				*)
 					# Make sure we have only one argument left
 					if [[ -n "${2}" ]]; then
@@ -71,7 +91,7 @@ function mkfs.enc() {
 		# open the encrypted volume
 		local name="$(basename ${lo_file})"
 		print_info "${log_depth}" "opening the encrypted device ${lo_file} as ${name}"
-		sudo @cryptsetup_bin@ open --type plain "${lo_file}" "${name}" || return 1
+		sudo @cryptsetup_bin@ open --type plain --cipher "${cipher}" --hash "${hash}" "${lo_file}" "${name}" || return 1
 		# create the filesystem
 		print_info "${log_depth}" "creating a file system"
 		sudo @mkfs_ext2_bin@ "/dev/mapper/${name}" || return 1
