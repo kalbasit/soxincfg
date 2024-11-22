@@ -1,4 +1,9 @@
-{ lib, mode, soxincfg, ... }:
+{
+  lib,
+  mode,
+  soxincfg,
+  ...
+}:
 
 {
   config = {

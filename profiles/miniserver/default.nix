@@ -1,4 +1,9 @@
-{ soxincfg, lib, mode, ... }:
+{
+  soxincfg,
+  lib,
+  mode,
+  ...
+}:
 
 let
   inherit (lib)
@@ -12,8 +17,7 @@ in
 {
   imports =
     [ soxincfg.nixosModules.profiles.neovim ]
-    ++ optionals (mode == "NixOS") [ ./nixos.nix ]
-    ++ optionals (mode == "home-manager") [ ./home.nix ];
+    ++ optionals (mode == "NixOS") [ ./nixos.nix ] ++ optionals (mode == "home-manager") [ ./home.nix ];
 
   config = {
     soxin = {

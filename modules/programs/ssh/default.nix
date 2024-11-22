@@ -1,4 +1,10 @@
-{ mode, config, pkgs, lib, ... }:
+{
+  mode,
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 let
   inherit (lib)
@@ -58,7 +64,12 @@ in
 
       addKeysToAgent = mkOption {
         apply = v: if builtins.isBool v then yesOrNo v else v;
-        type = types.either types.bool (types.enum [ "ask" "confirm" ]);
+        type = types.either types.bool (
+          types.enum [
+            "ask"
+            "confirm"
+          ]
+        );
         default = cfg.enableSSHAgent;
         description = ''
           Whether to automatically add a private key that is used during
@@ -133,9 +144,7 @@ in
         '';
       };
 
-      package = mkPackageOption pkgs "openssh_gssapi" {
-        example = "pkgs.openssh";
-      };
+      package = mkPackageOption pkgs "openssh_gssapi" { example = "pkgs.openssh"; };
     };
   };
 
@@ -150,15 +159,15 @@ in
           HashKnownHosts ${yesOrNo cfg.hashKnownHosts}
 
           # Host keys the client accepts - order here is honored by OpenSSH
-          ${optionalString (cfg.hostKeyAlgorithms != [ ])
-              ("HostKeyAlgorithms " + (concatStringsSep "," cfg.hostKeyAlgorithms))}
+          ${optionalString (cfg.hostKeyAlgorithms != [ ]) (
+            "HostKeyAlgorithms " + (concatStringsSep "," cfg.hostKeyAlgorithms)
+          )}
 
-          ${optionalString (cfg.kexAlgorithms != [ ])
-              ("KexAlgorithms " + (concatStringsSep "," cfg.kexAlgorithms))}
-          ${optionalString (cfg.macs != [ ])
-              ("MACs " + (concatStringsSep "," cfg.macs))}
-          ${optionalString (cfg.ciphers != [ ])
-              ("Ciphers " + (concatStringsSep "," cfg.ciphers))}
+          ${optionalString (cfg.kexAlgorithms != [ ]) (
+            "KexAlgorithms " + (concatStringsSep "," cfg.kexAlgorithms)
+          )}
+          ${optionalString (cfg.macs != [ ]) ("MACs " + (concatStringsSep "," cfg.macs))}
+          ${optionalString (cfg.ciphers != [ ]) ("Ciphers " + (concatStringsSep "," cfg.ciphers))}
         '';
       };
     })
@@ -177,17 +186,17 @@ in
       };
     })
 
-    (optionalAttrs (mode == "home-manager") (mkIf (cfg.enableSSHAgent && pkgs.stdenv.hostPlatform.isDarwin) {
-      programs.zsh.initExtra = ''
-        eval "$(${pkgs.keychain}/bin/keychain --eval -q)"
-      '';
-    }))
+    (optionalAttrs (mode == "home-manager") (
+      mkIf (cfg.enableSSHAgent && pkgs.stdenv.hostPlatform.isDarwin) {
+        programs.zsh.initExtra = ''
+          eval "$(${pkgs.keychain}/bin/keychain --eval -q)"
+        '';
+      }
+    ))
 
     (optionalAttrs (mode == "home-manager") {
       programs.ssh = {
-        inherit (cfg)
-          package
-          ;
+        inherit (cfg) package;
 
         enable = true;
 
@@ -198,9 +207,9 @@ in
 
         extraConfig = ''
           IdentitiesOnly=${yesOrNo cfg.identitiesOnly}
-          ${optionalString (cfg.identityFiles != [ ])
-          (concatStringsSep "\n" (map (f: "IdentityFile ${f}") cfg.identityFiles))
-          }
+          ${optionalString (cfg.identityFiles != [ ]) (
+            concatStringsSep "\n" (map (f: "IdentityFile ${f}") cfg.identityFiles)
+          )}
 
           AddKeysToAgent=${cfg.addKeysToAgent}
         '';

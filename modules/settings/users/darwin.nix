@@ -1,4 +1,11 @@
-{ mode, config, options, pkgs, lib, ... }:
+{
+  mode,
+  config,
+  options,
+  pkgs,
+  lib,
+  ...
+}:
 
 with lib;
 let
@@ -14,7 +21,9 @@ let
   ];
 
   # makeUser = userName: { isAdmin, sshKeys, ... }@user:
-  makeUser = userName: { ... }@user:
+  makeUser =
+    userName:
+    { ... }@user:
     {
       # group = "mine";
       # extraGroups =
@@ -24,7 +33,11 @@ let
 
       shell = pkgs.zsh;
     }
-    // (builtins.removeAttrs user [ "isAdmin" "isNixTrustedUser" "sshKeys" ]);
+    // (builtins.removeAttrs user [
+      "isAdmin"
+      "isNixTrustedUser"
+      "sshKeys"
+    ]);
 
 in
 {
@@ -39,7 +52,8 @@ in
     # set and finally pass the user. Each step will override attributes from
     # the previous one, so it's important the passed-in value is evaluated
     # last.
-    apply = users:
+    apply =
+      users:
       let
         defaults = name: {
           inherit name;

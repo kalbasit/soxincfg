@@ -1,9 +1,12 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
-  inherit (lib)
-    mkIf
-    ;
+  inherit (lib) mkIf;
 
   cfg = config.soxincfg.services.borders;
 in

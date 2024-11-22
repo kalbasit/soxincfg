@@ -1,4 +1,11 @@
-{ config, lib, mode, options, pkgs, ... }:
+{
+  config,
+  lib,
+  mode,
+  options,
+  pkgs,
+  ...
+}:
 
 with lib;
 let
@@ -22,8 +29,8 @@ in
       networking.networkmanager.dns = "dnsmasq";
     })
 
-    (optionalAttrs (mode == "NixOS") (mkIf cfg.blockAds
-      {
+    (optionalAttrs (mode == "NixOS") (
+      mkIf cfg.blockAds {
         services.dnsmasq.extraConfig = ''
           conf-file=/var/lib/dnsmasq/notracking/hosts-blocklists/domains.txt
           addn-hosts=/var/lib/dnsmasq/notracking/hosts-blocklists/hostnames.txt
@@ -41,15 +48,17 @@ in
           description = "Update the notracking hosts blocklists";
           after = [ "dnsmasq.service" ];
           serviceConfig = {
-            ExecStart = with pkgs; writeScript "update-notracking-hosts-blocklists.sh" ''
-              #!${runtimeShell}
-              set -euo pipefail
-              cd /var/lib/dnsmasq/notracking/hosts-blocklists
-              ${git}/bin/git config pull.ff only
-              ${git}/bin/git pull
-              chown -R dnsmasq /var/lib/dnsmasq/notracking
-              systemctl reload dnsmasq.service
-            '';
+            ExecStart =
+              with pkgs;
+              writeScript "update-notracking-hosts-blocklists.sh" ''
+                #!${runtimeShell}
+                set -euo pipefail
+                cd /var/lib/dnsmasq/notracking/hosts-blocklists
+                ${git}/bin/git config pull.ff only
+                ${git}/bin/git pull
+                chown -R dnsmasq /var/lib/dnsmasq/notracking
+                systemctl reload dnsmasq.service
+              '';
           };
         };
 
@@ -62,6 +71,7 @@ in
             OnBootSec = "15min";
           };
         };
-      }))
+      }
+    ))
   ]);
 }

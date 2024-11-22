@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 let
   cfg = config.soxincfg.settings.users;
@@ -13,20 +18,23 @@ let
     types
     ;
 
-  makeUser = userName: { isAdmin, sshKeys, ... }@user:
+  makeUser =
+    userName:
+    { isAdmin, sshKeys, ... }@user:
     {
       group = "mine";
-      extraGroups =
-        cfg.defaultGroups
-        ++ cfg.groups
-        ++ (optionals isAdmin [ "wheel" ]);
+      extraGroups = cfg.defaultGroups ++ cfg.groups ++ (optionals isAdmin [ "wheel" ]);
 
       shell = pkgs.zsh;
       isNormalUser = true;
 
       openssh.authorizedKeys.keys = sshKeys;
     }
-    // (builtins.removeAttrs user [ "isAdmin" "isNixTrustedUser" "sshKeys" ]);
+    // (builtins.removeAttrs user [
+      "isAdmin"
+      "isNixTrustedUser"
+      "sshKeys"
+    ]);
 
 in
 {
@@ -57,7 +65,8 @@ in
       # set and finally pass the user. Each step will override attributes from
       # the previous one, so it's important the passed-in value is evaluated
       # last.
-      apply = users:
+      apply =
+        users:
         let
           defaults = name: {
             inherit name;
@@ -77,8 +86,12 @@ in
       mutableUsers = false;
 
       groups = {
-        builders = { gid = 1999; };
-        mine = { gid = 2000; };
+        builders = {
+          gid = 1999;
+        };
+        mine = {
+          gid = 2000;
+        };
       };
 
       users = mapAttrs makeUser config.soxincfg.settings.users.users;

@@ -1,9 +1,12 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 let
-  inherit (lib)
-    mkIf
-    ;
+  inherit (lib) mkIf;
 
   cfg = config.soxincfg.services.k3s;
 in
@@ -11,9 +14,7 @@ in
   config = mkIf cfg.enable {
     environment.systemPackages =
       let
-        inherit (pkgs)
-          nfs-utils
-          ;
+        inherit (pkgs) nfs-utils;
       in
       [
         # needed for NFS persistent volume

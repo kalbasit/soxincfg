@@ -1,13 +1,14 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
-  inherit (lib)
-    mkIf
-    ;
+  inherit (lib) mkIf;
 
-  inherit (pkgs.hostPlatform)
-    isDarwin
-    ;
+  inherit (pkgs.hostPlatform) isDarwin;
 
   yl_home = config.home.homeDirectory;
   sopsFile = ./credentials-config.json.sops;
@@ -38,4 +39,3 @@ in
     };
   };
 }
-

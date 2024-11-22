@@ -1,10 +1,12 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
-  inherit (lib)
-    makeBinPath
-    mkIf
-    ;
+  inherit (lib) makeBinPath mkIf;
 
   cfg = config.soxincfg.services.sketchybar;
 
@@ -80,7 +82,13 @@ let
           --set CONFIG_DIR $out/share/sketchybar \
           --set PLUGIN_DIR $out/share/sketchybar/plugins \
           --set APP_FONT_MAP ${app-font-map}/share/scripts/icon_map_fn.sh \
-          --prefix PATH ":" ${makeBinPath [ pkgs.gh pkgs.gnugrep pkgs.jq ]} \
+          --prefix PATH ":" ${
+            makeBinPath [
+              pkgs.gh
+              pkgs.gnugrep
+              pkgs.jq
+            ]
+          } \
           --suffix PATH ":" /opt/homebrew/bin
       done
     '';

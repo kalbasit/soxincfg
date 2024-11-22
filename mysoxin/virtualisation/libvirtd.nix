@@ -1,4 +1,10 @@
-{ mode, config, lib, pkgs, ... }:
+{
+  mode,
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 with lib;
 let
@@ -8,12 +14,10 @@ in
   options = {
     soxin.virtualisation.libvirtd = {
       enable = mkEnableOption "Enable libvirtd.";
-      addAdminUsersToGroup = recursiveUpdate
-        (mkEnableOption ''
-          Whether to add admin users declared in soxincfg.settings.users to the
-          `libvirtd` group.
-        '')
-        { default = true; };
+      addAdminUsersToGroup = recursiveUpdate (mkEnableOption ''
+        Whether to add admin users declared in soxincfg.settings.users to the
+        `libvirtd` group.
+      '') { default = true; };
     };
   };
 
@@ -37,7 +41,10 @@ in
 
       soxincfg.settings.users.groups = optional cfg.addAdminUsersToGroup "libvirtd";
 
-      environment.systemPackages = with pkgs; [ virt-manager spice-gtk ];
+      environment.systemPackages = with pkgs; [
+        virt-manager
+        spice-gtk
+      ];
     })
   ]);
 }

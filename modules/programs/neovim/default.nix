@@ -1,10 +1,13 @@
-{ config, lib, mode, pkgs, ... }:
+{
+  config,
+  lib,
+  mode,
+  pkgs,
+  ...
+}:
 
 let
-  inherit (lib)
-    mkEnableOption
-    mkIf
-    ;
+  inherit (lib) mkEnableOption mkIf;
 
   cfg = config.soxincfg.programs.neovim;
 in

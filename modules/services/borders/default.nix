@@ -1,10 +1,7 @@
 { lib, mode, ... }:
 
 let
-  inherit (lib)
-    mkEnableOption
-    optionals
-    ;
+  inherit (lib) mkEnableOption optionals;
 in
 {
   imports =

@@ -1,9 +1,7 @@
 { config, lib, ... }:
 
 let
-  inherit (lib)
-    mkEnableOption
-    ;
+  inherit (lib) mkEnableOption;
 
   cfg = config.soxin.hardware.zsa;
 in

@@ -1,12 +1,16 @@
-{ config, lib, mode, pkgs, ... }:
+{
+  config,
+  lib,
+  mode,
+  pkgs,
+  ...
+}:
 
 with lib;
 let
   cfg = config.soxincfg.programs.git;
 
-  package = pkgs.gitAndTools.gitFull.override {
-    openssh = config.programs.ssh.package;
-  };
+  package = pkgs.gitAndTools.gitFull.override { openssh = config.programs.ssh.package; };
 in
 {
   options.soxincfg.programs.git = {
@@ -120,7 +124,9 @@ in
         };
 
         core = {
-          pager = with pkgs; "${gitAndTools.diff-so-fancy}/bin/diff-so-fancy | ${less}/bin/less --tabs=4 -RFX";
+          pager =
+            with pkgs;
+            "${gitAndTools.diff-so-fancy}/bin/diff-so-fancy | ${less}/bin/less --tabs=4 -RFX";
           whitespace = "trailing-space,space-before-tab,-indent-with-non-tab,cr-at-eol";
         };
 
@@ -330,9 +336,7 @@ in
         "!.gitignore"
       ];
 
-      programs.git.includes = [
-        { path = "~/.gitconfig.secrets"; }
-      ];
+      programs.git.includes = [ { path = "~/.gitconfig.secrets"; } ];
     })
   ]);
 }

@@ -1,5 +1,11 @@
 # TODO(high): Surfingkeys must be composed of two files, the main one and the colemak bindings.
-{ config, lib, mode, pkgs, ... }:
+{
+  config,
+  lib,
+  mode,
+  pkgs,
+  ...
+}:
 
 with lib;
 let

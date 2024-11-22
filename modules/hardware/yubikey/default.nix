@@ -1,4 +1,10 @@
-{ mode, config, pkgs, lib, ... }:
+{
+  mode,
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 with lib;
 let
@@ -13,7 +19,6 @@ in
   options = {
     soxincfg.hardware.yubikey = {
       enable = mkEnableOption "Whether to enable Yubikey.";
-
 
       gnupg-support = {
         enable = mkEnableOption "Whether to enable GnuPG support with OnlyKey.";
@@ -75,7 +80,12 @@ in
 
           public-certificate-pem = mkOption {
             apply = value: if builtins.isPath value then value else pkgs.writeText "id_rsa.pub" value;
-            type = types.nullOr (types.oneOf [ types.lines types.path ]);
+            type = types.nullOr (
+              types.oneOf [
+                types.lines
+                types.path
+              ]
+            );
             default = null;
             description = ''
               The public certificate of the SSH key.
@@ -89,8 +99,9 @@ in
   config = mkIf cfg.enable {
     soxincfg.programs.ssh = mkIf cfg.gnupg-support.ssh-support.enable {
       identitiesOnly = mkDefault true;
-      identityFiles = mkIf (cfg.gnupg-support.ssh-support.public-certificate-pem != null)
-        (singleton cfg.gnupg-support.ssh-support.public-certificate-pem);
+      identityFiles = mkIf (cfg.gnupg-support.ssh-support.public-certificate-pem != null) (
+        singleton cfg.gnupg-support.ssh-support.public-certificate-pem
+      );
     };
   };
 }

@@ -1,4 +1,12 @@
-{ pkgs, soxin, soxincfg, inputs, lib, mode, ... }:
+{
+  pkgs,
+  soxin,
+  soxincfg,
+  inputs,
+  lib,
+  mode,
+  ...
+}:
 
 let
   users = soxincfg.vars.users { inherit lib mode; };

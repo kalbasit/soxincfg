@@ -1,4 +1,10 @@
-{ mode, config, pkgs, lib, ... }:
+{
+  mode,
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 with lib;
 let
@@ -39,8 +45,6 @@ in
       };
     })
 
-    (optionalAttrs (mode == "home-manager") {
-      fonts.fontconfig.enable = true;
-    })
+    (optionalAttrs (mode == "home-manager") { fonts.fontconfig.enable = true; })
   ]);
 }

@@ -1,4 +1,10 @@
-{ config, lib, mode, pkgs, ... }:
+{
+  config,
+  lib,
+  mode,
+  pkgs,
+  ...
+}:
 
 with lib;
 let
@@ -80,14 +86,13 @@ let
     bind -r O resize-pane -R 5
   '';
 
-  copyPaste =
-    optionalString pkgs.stdenv.isLinux ''
-      # copy/paste to system clipboard
-      bind-key C-p run "${pkgs.tmux}/bin/tmux save-buffer - | ${pkgs.gist}/bin/gist -f tmux.sh-session --no-private | ${pkgs.xsel}/bin/xsel --clipboard -i && ${pkgs.libnotify}/bin/notify-send -a Tmux 'Buffer saved as public gist' 'Tmux buffer was saved as Gist, URL in clipboard' --icon=dialog-information"
-      bind-key C-g run "${pkgs.tmux}/bin/tmux save-buffer - | ${pkgs.gist}/bin/gist -f tmux.sh-session --private | ${pkgs.xsel}/bin/xsel --clipboard -i && ${pkgs.libnotify}/bin/notify-send -a Tmux 'Buffer saved as private gist' 'Tmux buffer was saved as Gist, URL in clipboard' --icon=dialog-information"
-      bind-key C-c run "${pkgs.tmux}/bin/tmux save-buffer - | ${pkgs.xsel}/bin/xsel --clipboard -i"
-      bind-key C-v run "${pkgs.xsel}/bin/xsel --clipboard -o | ${pkgs.tmux}/bin/tmux load-buffer; ${pkgs.tmux}/bin/tmux paste-buffer"
-    '';
+  copyPaste = optionalString pkgs.stdenv.isLinux ''
+    # copy/paste to system clipboard
+    bind-key C-p run "${pkgs.tmux}/bin/tmux save-buffer - | ${pkgs.gist}/bin/gist -f tmux.sh-session --no-private | ${pkgs.xsel}/bin/xsel --clipboard -i && ${pkgs.libnotify}/bin/notify-send -a Tmux 'Buffer saved as public gist' 'Tmux buffer was saved as Gist, URL in clipboard' --icon=dialog-information"
+    bind-key C-g run "${pkgs.tmux}/bin/tmux save-buffer - | ${pkgs.gist}/bin/gist -f tmux.sh-session --private | ${pkgs.xsel}/bin/xsel --clipboard -i && ${pkgs.libnotify}/bin/notify-send -a Tmux 'Buffer saved as private gist' 'Tmux buffer was saved as Gist, URL in clipboard' --icon=dialog-information"
+    bind-key C-c run "${pkgs.tmux}/bin/tmux save-buffer - | ${pkgs.xsel}/bin/xsel --clipboard -i"
+    bind-key C-v run "${pkgs.xsel}/bin/xsel --clipboard -o | ${pkgs.tmux}/bin/tmux load-buffer; ${pkgs.tmux}/bin/tmux paste-buffer"
+  '';
 in
 {
   options.soxincfg.programs.tmux = {
@@ -159,14 +164,18 @@ in
             set  -g default-terminal "xterm-256color"
           '';
 
-        plugins = with pkgs.tmuxPlugins; [ logging prefix-highlight fzf-tmux-url ];
+        plugins = with pkgs.tmuxPlugins; [
+          logging
+          prefix-highlight
+          fzf-tmux-url
+        ];
       };
     })
 
     (optionalAttrs (mode == "NixOS" || mode == "home-manager") {
       programs.tmux = {
         clock24 = true;
-        customPaneNavigationAndResize = ! (keyboardLayout == "colemak");
+        customPaneNavigationAndResize = !(keyboardLayout == "colemak");
         escapeTime = 0;
         historyLimit = 10000;
         keyMode = "vi";

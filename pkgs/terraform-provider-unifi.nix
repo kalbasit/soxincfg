@@ -1,14 +1,26 @@
-{ buildGoModule, fetchFromGitHub, lib, go, ... }:
+{
+  buildGoModule,
+  fetchFromGitHub,
+  lib,
+  go,
+  ...
+}:
 
 # copied from nixpkgs
 let
-  buildWithGoModule = data:
+  buildWithGoModule =
+    data:
     buildGoModule {
       pname = data.repo;
       version = data.version;
       subPackages = [ "." ];
       src = fetchFromGitHub {
-        inherit (data) owner repo rev sha256;
+        inherit (data)
+          owner
+          repo
+          rev
+          sha256
+          ;
       };
       vendorSha256 = data.vendorSha256 or null;
 
@@ -17,7 +29,9 @@ let
       postBuild = "mv $NIX_BUILD_TOP/go/bin/${data.repo}{,_v${data.version}}";
       passthru = data;
 
-      meta = { inherit (go.meta) platforms; };
+      meta = {
+        inherit (go.meta) platforms;
+      };
     };
 in
 buildWithGoModule rec {

@@ -1,4 +1,10 @@
-{ config, lib, mode, pkgs, ... }:
+{
+  config,
+  lib,
+  mode,
+  pkgs,
+  ...
+}:
 
 with lib;
 let
@@ -8,8 +14,6 @@ in
   options.soxincfg.programs.brave.enable = mkEnableOption "Install and configure Brave";
 
   config = mkIf cfg.enable (mkMerge [
-    (optionalAttrs (mode == "home-manager") {
-      home.packages = with pkgs; [ brave ];
-    })
+    (optionalAttrs (mode == "home-manager") { home.packages = with pkgs; [ brave ]; })
   ]);
 }

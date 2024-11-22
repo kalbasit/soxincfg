@@ -1,9 +1,7 @@
 { config, lib, ... }:
 
 let
-  inherit (lib)
-    mkIf
-    ;
+  inherit (lib) mkIf;
 
   yl_home = config.users.users.yl.home;
   owner = config.users.users.yl.name;

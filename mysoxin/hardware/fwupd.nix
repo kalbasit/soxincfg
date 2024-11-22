@@ -1,4 +1,10 @@
-{ mode, config, pkgs, lib, ... }:
+{
+  mode,
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 with lib;
 let
@@ -12,8 +18,6 @@ in
   };
 
   config = mkIf cfg.enable (mkMerge [
-    (optionalAttrs (mode == "NixOS") {
-      services.fwupd.enable = true;
-    })
+    (optionalAttrs (mode == "NixOS") { services.fwupd.enable = true; })
   ]);
 }

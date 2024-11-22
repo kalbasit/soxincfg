@@ -9,9 +9,7 @@ let
     ;
 in
 {
-  imports =
-    [ ]
-    ++ optionals (mode == "NixOS") [ ./nixos.nix ];
+  imports = [ ] ++ optionals (mode == "NixOS") [ ./nixos.nix ];
 
   options.soxincfg.services.k3s = {
     enable = mkEnableOption "Install and configure k3s either as the server or agent";
@@ -22,7 +20,10 @@ in
       '';
 
       default = "server";
-      type = types.enum [ "server" "agent" ];
+      type = types.enum [
+        "server"
+        "agent"
+      ];
     };
 
     serverAddr = mkOption {
