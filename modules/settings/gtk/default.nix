@@ -25,7 +25,7 @@ in
         enable = true;
         font = {
           package = pkgs.hack-font;
-          name = "xft:SourceCodePro:style:Regular:size=12:antialias=true";
+          name = "xft:SourceCodePro:style:Regular:size=9:antialias=true";
         };
         iconTheme = {
           package = pkgs.arc-icon-theme;

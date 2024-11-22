@@ -58,7 +58,7 @@ in
 
     fonts = {
       names = [ "pango:Source Code Pro for Powerline" ];
-      size = 12.0;
+      size = 8.0;
     };
 
     window = {
