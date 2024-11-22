@@ -21,7 +21,7 @@ in
     { soxin.programs.termite.enable = true; }
 
     (optionalAttrs (mode == "home-manager") {
-      programs.termite.font = "Source Code Pro for Powerline 12";
+      programs.termite.font = "Source Code Pro for Powerline 9";
     })
   ]);
 }
