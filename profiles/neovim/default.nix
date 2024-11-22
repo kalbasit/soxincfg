@@ -1,27 +1,17 @@
 {
-  soxincfg.programs.neovim = {
-    enable = true;
-    completion.enable = true;
-    lsp = {
-      enable = true;
-      lightbulb = true;
-      languages = {
-        bash = true;
-        clang = true;
-        css = true;
-        docker = true;
-        go = true;
-        html = true;
-        json = true;
-        nix = true;
-        python = true;
-        tex = true;
-        typescript = true;
-        vimscript = true;
-        yaml = true;
-      };
-    };
-    telescope.enable = true;
-    treesitter.enable = true;
-  };
+  hostType,
+  lib,
+  mode,
+  ...
+}:
+
+let
+  inherit (lib) optionals;
+in
+{
+  imports =
+    [ ]
+    ++ optionals (hostType == "NixOS") [ ./nixos.nix ]
+    ++ optionals (hostType == "nix-darwin") [ ./darwin.nix ]
+    ++ optionals (hostType == "qubes-os") [ ./qubes.nix ];
 }

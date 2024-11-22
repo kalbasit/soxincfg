@@ -12,7 +12,6 @@
   fzf = ./programs/fzf;
   git = ./programs/git;
   mosh = ./programs/mosh;
-  neovim = ./programs/neovim;
   pet = ./programs/pet;
   rofi = ./programs/rofi;
   ssh = ./programs/ssh;

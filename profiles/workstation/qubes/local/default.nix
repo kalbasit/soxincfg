@@ -9,7 +9,9 @@ let
   inherit (lib) optionals;
 in
 {
-  imports = [ ] ++ optionals (mode == "home-manager") [ ./home.nix ];
+  imports = [
+    soxincfg.nixosModules.profiles.neovim
+  ] ++ optionals (mode == "home-manager") [ ./home.nix ];
 
   config = {
     soxin = {
