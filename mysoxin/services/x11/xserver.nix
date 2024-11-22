@@ -1,4 +1,10 @@
-{ mode, config, pkgs, lib, ... }:
+{
+  mode,
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 with lib;
 let
@@ -19,9 +25,7 @@ in
         autoRepeatDelay = 200;
         autoRepeatInterval = 30;
 
-        xkb.options = concatStringsSep "," [
-          "ctrl:nocaps"
-        ];
+        xkb.options = concatStringsSep "," [ "ctrl:nocaps" ];
 
         libinput.enable = true;
         libinput.mouse.naturalScrolling = true;

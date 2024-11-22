@@ -1,10 +1,13 @@
-{ config, lib, mode, pkgs, ... }:
+{
+  config,
+  lib,
+  mode,
+  pkgs,
+  ...
+}:
 
 let
-  inherit (lib)
-    mkIf
-    optionalAttrs
-    ;
+  inherit (lib) mkIf optionalAttrs;
 in
 optionalAttrs (mode == "home-manager") {
   home.activation.aws-credentials = mkIf (config.sops.secrets != { }) (

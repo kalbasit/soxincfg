@@ -1,9 +1,13 @@
-{ config, inputs, pkgs, lib, ... }:
+{
+  config,
+  inputs,
+  pkgs,
+  lib,
+  ...
+}:
 
 let
-  inherit (lib)
-    optionals
-    ;
+  inherit (lib) optionals;
 in
 {
   imports = [
@@ -12,7 +16,10 @@ in
   ];
 
   config = {
-    sops.gnupg.qubes-split-gpg = { enable = true; domain = "vault-gpg"; };
+    sops.gnupg.qubes-split-gpg = {
+      enable = true;
+      domain = "vault-gpg";
+    };
 
     # programs
     programs.bat.enable = true;
@@ -23,44 +30,47 @@ in
       ".npmrc".text = "prefix=${config.home.homeDirectory}/.filesystem";
     };
 
-    home.packages = with pkgs; [
-      inputs.nixvim.packages."${pkgs.stdenv.hostPlatform.system}".default
+    home.packages =
+      with pkgs;
+      [
+        inputs.nixvim.packages."${pkgs.stdenv.hostPlatform.system}".default
 
-      amazon-ecr-credential-helper
-      awscli2
-      binutils # for strings
-      bitwarden-cli
-      devbox
-      docker-credential-gcr
-      duf # du replacement on steroids
-      file
-      fx # JSON viewer
-      gh # GitHub command line client
-      gist
-      gnugrep
-      hexyl # hex viewer with nice colors
-      imagemagick # for convert
-      inetutils # for telnet
-      jq
-      mercurial
-      nix-index
-      nixpkgs-review
-      nix-zsh-completions
-      nur.repos.kalbasit.swm
-      pv # generic progress of data through a pipeline
-      scrcpy # mirror Android device via USB
-      screen # needed to open up terminal devices
-      unzip
-    ] ++ (optionals stdenv.isLinux [
-      #
-      # Linux applications
-      #
+        amazon-ecr-credential-helper
+        awscli2
+        binutils # for strings
+        bitwarden-cli
+        devbox
+        docker-credential-gcr
+        duf # du replacement on steroids
+        file
+        fx # JSON viewer
+        gh # GitHub command line client
+        gist
+        gnugrep
+        hexyl # hex viewer with nice colors
+        imagemagick # for convert
+        inetutils # for telnet
+        jq
+        mercurial
+        nix-index
+        nixpkgs-review
+        nix-zsh-completions
+        nur.repos.kalbasit.swm
+        pv # generic progress of data through a pipeline
+        scrcpy # mirror Android device via USB
+        screen # needed to open up terminal devices
+        unzip
+      ]
+      ++ (optionals stdenv.isLinux [
+        #
+        # Linux applications
+        #
 
-      _2048-in-terminal
-      dnsutils # for dig
-      esptool
-      gdb
-      mbuffer # memory buffer within pipeline
-    ]);
+        _2048-in-terminal
+        dnsutils # for dig
+        esptool
+        gdb
+        mbuffer # memory buffer within pipeline
+      ]);
   };
 }

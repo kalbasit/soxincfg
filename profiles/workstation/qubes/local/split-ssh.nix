@@ -20,6 +20,8 @@
       Restart = "always";
     };
 
-    Install = { WantedBy = [ "default.target" ]; };
+    Install = {
+      WantedBy = [ "default.target" ];
+    };
   };
 }

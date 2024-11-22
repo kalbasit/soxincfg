@@ -1,9 +1,7 @@
 { config, lib, ... }:
 
 let
-  inherit (lib)
-    mkIf
-    ;
+  inherit (lib) mkIf;
 
   cfg = config.soxincfg.services.sketchybar;
 in

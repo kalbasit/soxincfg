@@ -1,9 +1,12 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
-  inherit (lib)
-    optionals
-    ;
+  inherit (lib) optionals;
 in
 {
   home.packages = with pkgs; [

@@ -1,14 +1,16 @@
-{ config, home-manager, lib, mode, soxincfg, ... }:
+{
+  config,
+  home-manager,
+  lib,
+  mode,
+  soxincfg,
+  ...
+}:
 
 let
-  inherit (lib)
-    optionals
-    ;
+  inherit (lib) optionals;
 
-  inherit (home-manager.lib.hm.dag)
-    entryBefore
-    entryAnywhere
-    ;
+  inherit (home-manager.lib.hm.dag) entryBefore entryAnywhere;
 in
 {
   imports =
@@ -16,8 +18,7 @@ in
       soxincfg.nixosModules.profiles.neovim
       soxincfg.nixosModules.profiles.workstation.common
     ]
-    ++ optionals (mode == "NixOS") [ ./nixos.nix ]
-    ++ optionals (mode == "home-manager") [ ./home.nix ];
+    ++ optionals (mode == "NixOS") [ ./nixos.nix ] ++ optionals (mode == "home-manager") [ ./home.nix ];
 
   soxin = {
     hardware = {

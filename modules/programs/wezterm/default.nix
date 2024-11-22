@@ -1,4 +1,10 @@
-{ mode, config, pkgs, lib, ... }:
+{
+  mode,
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 let
   inherit (lib)
@@ -9,10 +15,7 @@ let
     singleton
     ;
 
-  inherit (pkgs)
-    substituteAll
-    wezterm
-    ;
+  inherit (pkgs) substituteAll wezterm;
 
   cfg = config.soxincfg.programs.wezterm;
 in

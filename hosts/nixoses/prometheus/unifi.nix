@@ -1,4 +1,10 @@
-{ config, lib, pkgs, soxincfg, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  soxincfg,
+  ...
+}:
 
 with lib;
 let

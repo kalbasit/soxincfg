@@ -1,10 +1,12 @@
-inputs@{ self, lib ? nixpkgs.lib, nixpkgs, ... }:
+inputs@{
+  self,
+  lib ? nixpkgs.lib,
+  nixpkgs,
+  ...
+}:
 
 let
-  inherit (lib)
-    mapAttrs
-    recursiveUpdate
-    ;
+  inherit (lib) mapAttrs recursiveUpdate;
 
   # the default channel to follow.
   channelName = "nixpkgs";
@@ -13,32 +15,31 @@ let
   hostType = "qubes-os";
 in
 mapAttrs
-  (n: v: recursiveUpdate
+  (
+    n: v:
+    recursiveUpdate {
+      specialArgs = {
+        inherit hostType;
+      };
+    } v
+  )
   {
-    specialArgs = {
-      inherit
-        hostType
-        ;
-    };
-  }
-    v)
-{
-  code-template =
-    let
-      system = "x86_64-linux";
-    in
-    {
-      inherit system;
+    code-template =
+      let
+        system = "x86_64-linux";
+      in
+      {
+        inherit system;
 
-      modules = [
-        ./code-template/home.nix
-        {
-          home = {
-            username = "user";
-            homeDirectory = "/home/user";
-            stateVersion = "24.05";
-          };
-        }
-      ];
-    };
-}
+        modules = [
+          ./code-template/home.nix
+          {
+            home = {
+              username = "user";
+              homeDirectory = "/home/user";
+              stateVersion = "24.05";
+            };
+          }
+        ];
+      };
+  }

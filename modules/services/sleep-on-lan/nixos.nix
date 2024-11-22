@@ -1,16 +1,22 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
-  inherit (lib)
-    mkIf
-    ;
+  inherit (lib) mkIf;
 
   cfg = config.soxincfg.services.sleep-on-lan;
   sopsFile = ./secrets.sops.yaml;
 in
 {
   config = mkIf cfg.enable {
-    sops.secrets.etc_sol_json = { inherit sopsFile; path = "/etc/sol.json"; };
+    sops.secrets.etc_sol_json = {
+      inherit sopsFile;
+      path = "/etc/sol.json";
+    };
 
     systemd.services.sleep-on-lan = {
       description = "Sleep-On-LAN daemon";

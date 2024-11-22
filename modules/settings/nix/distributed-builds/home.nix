@@ -1,13 +1,14 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
-  inherit (lib)
-    mkIf
-    ;
+  inherit (lib) mkIf;
 
-  inherit (pkgs.hostPlatform)
-    isDarwin
-    ;
+  inherit (pkgs.hostPlatform) isDarwin;
 
   sopsFile = ./secrets.sops.yaml;
   yl_home = config.home.homeDirectory;
@@ -24,8 +25,14 @@ in
     };
 
     sops.secrets = mkIf isDarwin {
-      ssh_key_aarch64_nixos_community = { inherit sopsFile; path = "${keyStore}/aarch64_nixos_community.key"; };
-      ssh_key_kore = { inherit sopsFile; path = "${keyStore}/kore.key"; };
+      ssh_key_aarch64_nixos_community = {
+        inherit sopsFile;
+        path = "${keyStore}/aarch64_nixos_community.key";
+      };
+      ssh_key_kore = {
+        inherit sopsFile;
+        path = "${keyStore}/kore.key";
+      };
     };
   };
 }

@@ -1,4 +1,11 @@
-{ config, pkgs, home-manager, lib, soxincfg, ... }:
+{
+  config,
+  pkgs,
+  home-manager,
+  lib,
+  soxincfg,
+  ...
+}:
 
 with lib;
 

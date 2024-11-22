@@ -1,4 +1,9 @@
-{ config, lib, mode, ... }:
+{
+  config,
+  lib,
+  mode,
+  ...
+}:
 
 let
   inherit (lib)
@@ -53,7 +58,18 @@ in
       };
 
       decryption-key-trust = mkOption {
-        type = types.enum [ "unknown" 1 "never" 2 "marginal" 3 "full" 4 "ultimate" 5 ];
+        type = types.enum [
+          "unknown"
+          1
+          "never"
+          2
+          "marginal"
+          3
+          "full"
+          4
+          "ultimate"
+          5
+        ];
         default = "ultimate";
         description = ''
           The amount of trust you have in the key ownership and the care the
@@ -102,7 +118,18 @@ in
       };
 
       signing-key-trust = mkOption {
-        type = types.enum [ "unknown" 1 "never" 2 "marginal" 3 "full" 4 "ultimate" 5 ];
+        type = types.enum [
+          "unknown"
+          1
+          "never"
+          2
+          "marginal"
+          3
+          "full"
+          4
+          "ultimate"
+          5
+        ];
         default = "ultimate";
         description = ''
           The amount of trust you have in the key ownership and the care the
@@ -138,6 +165,8 @@ in
   };
 
   config = mkIf cfg.enable {
-    soxincfg.programs.ssh = { enableSSHAgent = mkDefault cfg.ssh-support.enable; };
+    soxincfg.programs.ssh = {
+      enableSSHAgent = mkDefault cfg.ssh-support.enable;
+    };
   };
 }

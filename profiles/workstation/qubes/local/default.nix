@@ -1,14 +1,15 @@
-{ lib, mode, soxincfg, ... }:
+{
+  lib,
+  mode,
+  soxincfg,
+  ...
+}:
 
 let
-  inherit (lib)
-    optionals
-    ;
+  inherit (lib) optionals;
 in
 {
-  imports =
-    [ ]
-    ++ optionals (mode == "home-manager") [ ./home.nix ];
+  imports = [ ] ++ optionals (mode == "home-manager") [ ./home.nix ];
 
   config = {
     soxin = {

@@ -1,9 +1,14 @@
-{ config, lib, pkgs, inputs, soxincfg, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  soxincfg,
+  ...
+}:
 
 let
-  inherit (lib)
-    singleton
-    ;
+  inherit (lib) singleton;
 in
 {
   imports = [

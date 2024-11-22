@@ -1,14 +1,17 @@
-{ config, home-manager, lib, mode, pkgs, soxincfg, ... }:
+{
+  config,
+  home-manager,
+  lib,
+  mode,
+  pkgs,
+  soxincfg,
+  ...
+}:
 
 let
-  inherit (lib)
-    optionals
-    ;
+  inherit (lib) optionals;
 
-  inherit (home-manager.lib.hm.dag)
-    entryBefore
-    entryAnywhere
-    ;
+  inherit (home-manager.lib.hm.dag) entryBefore entryAnywhere;
 in
 {
   imports =
@@ -16,8 +19,7 @@ in
       soxincfg.nixosModules.profiles.neovim
       soxincfg.nixosModules.profiles.workstation.common
     ]
-    ++ optionals (mode == "NixOS") [ ./nixos.nix ]
-    ++ optionals (mode == "home-manager") [ ./home.nix ];
+    ++ optionals (mode == "NixOS") [ ./nixos.nix ] ++ optionals (mode == "home-manager") [ ./home.nix ];
 
   config = {
     soxin = {
@@ -142,7 +144,10 @@ in
         android.enable = true;
         autorandr.enable = true;
         brave.enable = true;
-        chromium = { enable = true; surfingkeys.enable = true; };
+        chromium = {
+          enable = true;
+          surfingkeys.enable = true;
+        };
         dbeaver.enable = true;
         fzf.enable = true;
         git.enable = true;

@@ -1,14 +1,17 @@
-{ config, home-manager, lib, mode, pkgs, soxincfg, ... }:
+{
+  config,
+  home-manager,
+  lib,
+  mode,
+  pkgs,
+  soxincfg,
+  ...
+}:
 
 let
-  inherit (lib)
-    optionals
-    ;
+  inherit (lib) optionals;
 
-  inherit (home-manager.lib.hm.dag)
-    entryBefore
-    entryAnywhere
-    ;
+  inherit (home-manager.lib.hm.dag) entryBefore entryAnywhere;
 in
 {
   imports =
@@ -18,7 +21,6 @@ in
     ]
     ++ optionals (mode == "nix-darwin") [ ./darwin.nix ]
     ++ optionals (mode == "home-manager") [ ./home.nix ];
-
 
   soxin = {
     programs = {
@@ -112,4 +114,3 @@ in
     };
   };
 }
-

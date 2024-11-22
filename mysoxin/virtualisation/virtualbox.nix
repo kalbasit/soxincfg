@@ -1,4 +1,9 @@
-{ mode, config, lib, ... }:
+{
+  mode,
+  config,
+  lib,
+  ...
+}:
 
 with lib;
 let
@@ -8,12 +13,10 @@ in
   options = {
     soxin.virtualisation.virtualbox = {
       enable = mkEnableOption "Enable virtualbox.";
-      addAdminUsersToGroup = recursiveUpdate
-        (mkEnableOption ''
-          Whether to add admin users declared in soxincfg.settings.users to the `virtualbox`
-          group.
-        '')
-        { default = true; };
+      addAdminUsersToGroup = recursiveUpdate (mkEnableOption ''
+        Whether to add admin users declared in soxincfg.settings.users to the `virtualbox`
+        group.
+      '') { default = true; };
     };
   };
 

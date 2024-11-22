@@ -34,9 +34,7 @@
         "zoom"
       ];
 
-      taps = [
-        "homebrew/cask-fonts"
-      ];
+      taps = [ "homebrew/cask-fonts" ];
     };
 
     # Enable “natural” (Lion-style) scrolling (mths.be/macos disables it)
@@ -52,7 +50,7 @@
     system.defaults.NSGlobalDomain.NSUseAnimatedFocusRing = false;
 
     # Increase window resize speed for Cocoa applications
-    system.defaults.NSGlobalDomain.NSWindowResizeTime = 0.001;
+    system.defaults.NSGlobalDomain.NSWindowResizeTime = 1.0e-3;
 
     # Expand save panel by default
     system.defaults.NSGlobalDomain.NSNavPanelExpandedStateForSaveMode = true;

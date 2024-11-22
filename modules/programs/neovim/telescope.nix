@@ -1,4 +1,10 @@
-{ config, lib, mode, pkgs, ... }:
+{
+  config,
+  lib,
+  mode,
+  pkgs,
+  ...
+}:
 
 let
   inherit (lib)
@@ -9,10 +15,7 @@ let
     singleton
     ;
 
-  inherit (pkgs)
-    vimPlugins
-    ripgrep
-    ;
+  inherit (pkgs) vimPlugins ripgrep;
 
   cfg = config.soxincfg.programs.neovim;
 in

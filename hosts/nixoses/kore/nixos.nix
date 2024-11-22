@@ -1,4 +1,10 @@
-{ config, lib, pkgs, soxincfg, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  soxincfg,
+  ...
+}:
 
 let
   sopsFile = ./secrets.sops.yaml;
@@ -16,7 +22,11 @@ in
   nixpkgs.system = "aarch64-linux";
 
   # Setup the builder account
-  nix.settings.trusted-users = [ "root" "@wheel" "@builders" ];
+  nix.settings.trusted-users = [
+    "root"
+    "@wheel"
+    "@builders"
+  ];
   users.users = {
     builder = {
       extraGroups = [ "builders" ];
@@ -28,7 +38,9 @@ in
   };
 
   # define the networking by hand
-  sops.secrets."networking.wireless.environmentFile" = { inherit sopsFile; };
+  sops.secrets."networking.wireless.environmentFile" = {
+    inherit sopsFile;
+  };
   networking.wireless = {
     enable = true;
     environmentFile = config.sops.secrets."networking.wireless.environmentFile".path;

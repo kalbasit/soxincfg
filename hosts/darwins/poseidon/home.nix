@@ -1,6 +1,12 @@
 # home-manager configuration for user `yl`
 { soxincfg }:
-{ config, pkgs, home-manager, lib, ... }:
+{
+  config,
+  pkgs,
+  home-manager,
+  lib,
+  ...
+}:
 
 with lib;
 

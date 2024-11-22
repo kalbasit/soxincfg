@@ -1,9 +1,7 @@
 { config, lib, ... }:
 
 let
-  inherit (lib)
-    mkIf
-    ;
+  inherit (lib) mkIf;
 
   cfg = config.soxincfg.settings.nix.distributed-builds;
 
@@ -35,8 +33,12 @@ in
     };
 
     sops.secrets = {
-      ssh_key_aarch64_nixos_community = { inherit sopsFile; };
-      ssh_key_kore = { inherit sopsFile; };
+      ssh_key_aarch64_nixos_community = {
+        inherit sopsFile;
+      };
+      ssh_key_kore = {
+        inherit sopsFile;
+      };
     };
   };
 }

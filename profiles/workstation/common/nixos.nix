@@ -7,4 +7,3 @@
     touch $out/etc/ipsec.secrets
   '';
 }
-

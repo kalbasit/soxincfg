@@ -1,4 +1,10 @@
-{ config, soxincfg, modulesPath, pkgs, ... }:
+{
+  config,
+  soxincfg,
+  modulesPath,
+  pkgs,
+  ...
+}:
 let
   sopsFile = ./secrets.sops.yaml;
 in
@@ -16,15 +22,17 @@ in
 
   environment.systemPackages =
     let
-      inherit (pkgs)
-        nfs-utils
-        speedtest-cli
-        ;
+      inherit (pkgs) nfs-utils speedtest-cli;
     in
-    [ nfs-utils speedtest-cli ];
+    [
+      nfs-utils
+      speedtest-cli
+    ];
 
   sops.secrets = {
-    "networking.wireless.environmentFile" = { inherit sopsFile; };
+    "networking.wireless.environmentFile" = {
+      inherit sopsFile;
+    };
   };
 
   # Don't allow systemd to stop the Tailscale service because that wreck havoc

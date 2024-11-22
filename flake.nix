@@ -29,6 +29,11 @@
       # inputs. nixpkgs.follows = "nixpkgs";
     };
 
+    pre-commit-hooks = {
+      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:cachix/pre-commit-hooks.nix";
+    };
+
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs = {
@@ -53,7 +58,17 @@
     };
   };
 
-  outputs = inputs@{ flake-utils-plus, nixos-hardware, nixpkgs, self, sops-nix, soxin, ... }:
+  outputs =
+    inputs@{
+      flake-utils-plus,
+      nixos-hardware,
+      nixpkgs,
+      pre-commit-hooks,
+      self,
+      sops-nix,
+      soxin,
+      ...
+    }:
     let
       # Enable deploy-rs support
       withDeploy = true;
@@ -103,57 +118,89 @@
         soxin = import ./mysoxin/soxin.nix; # TODO: Get rid of this!
         soxincfg = import ./modules/soxincfg.nix;
         profiles = import ./profiles;
+
       };
 
       nixosModule = nixosModules.soxincfg;
 
     in
-    soxin.lib.mkFlake
-      {
-        inherit channels channelsConfig inputs withDeploy withSops nixosModules nixosModule;
+    soxin.lib.mkFlake {
+      inherit
+        channels
+        channelsConfig
+        inputs
+        withDeploy
+        withSops
+        nixosModules
+        nixosModule
+        ;
 
-        # add Soxin's main module to all builders
-        extraGlobalModules = [
-          nixosModule
-          nixosModules.profiles.core
+      # add Soxin's main module to all builders
+      extraGlobalModules = [
+        nixosModule
+        nixosModules.profiles.core
 
-          # import mysoxin
-          # TODO: Get rid of this!
-          nixosModules.soxin
-        ];
+        # import mysoxin
+        # TODO: Get rid of this!
+        nixosModules.soxin
+      ];
 
-        # Supported systems, used for packages, apps, devShell and multiple other definitions. Defaults to `flake-utils.lib.defaultSystems`
-        supportedSystems = [
-          "aarch64-darwin"
-          "aarch64-linux"
-          "x86_64-darwin"
-          "x86_64-linux"
-        ];
+      # Supported systems, used for packages, apps, devShell and multiple other definitions. Defaults to `flake-utils.lib.defaultSystems`
+      supportedSystems = [
+        "aarch64-darwin"
+        "aarch64-linux"
+        "x86_64-darwin"
+        "x86_64-linux"
+      ];
 
-        devShellBuilder = channels: with channels.nixpkgs; mkShell {
-          buildInputs = [ arion ];
+      outputsBuilder =
+        channels:
+        let
+          pkgs = channels.nixpkgs;
+          pre-commit-check = pre-commit-hooks.lib.${pkgs.hostPlatform.system}.run {
+            src = ./.;
+            hooks = {
+              # TODO: Fix all errors and enable statix
+              # statix.enable = true;
+              nixfmt-rfc-style.enable = true;
+            };
+          };
+        in
+        {
+          checks = {
+            inherit pre-commit-check;
+          };
+
+          devShell =
+            with pkgs;
+            mkShell {
+              inherit (pre-commit-check) shellHook;
+              buildInputs = [ nixfmt-rfc-style ];
+            };
+
+          formatter = pkgs.nixfmt-rfc-style;
         };
 
-        # pull in all hosts
-        hosts = import ./hosts inputs;
+      # pull in all hosts
+      hosts = import ./hosts inputs;
 
-        # create all home-managers
-        home-managers = import ./home-managers inputs;
+      # create all home-managers
+      home-managers = import ./home-managers inputs;
 
-        # Evaluates to `packages.<system>.<pname> = <unstable-channel-reference>.<pname>`.
-        packagesBuilder = channels: flattenTree (import ./pkgs channels);
+      # Evaluates to `packages.<system>.<pname> = <unstable-channel-reference>.<pname>`.
+      packagesBuilder = channels: flattenTree (import ./pkgs channels);
 
-        # declare the vars
-        vars = import ./vars inputs;
+      # declare the vars
+      vars = import ./vars inputs;
 
-        # include all overlays
-        overlay = import ./overlays;
+      # include all overlays
+      overlay = import ./overlays;
 
-        # set the nixos specialArgs
-        nixosSpecialArgs = { inherit nixos-hardware; };
-
-        extraHomeManagerModules = [
-          "${sops-nix.sourceInfo.outPath}/modules/home-manager/sops.nix"
-        ];
+      # set the nixos specialArgs
+      nixosSpecialArgs = {
+        inherit nixos-hardware;
       };
+
+      extraHomeManagerModules = [ "${sops-nix.sourceInfo.outPath}/modules/home-manager/sops.nix" ];
+    };
 }

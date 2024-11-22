@@ -1,6 +1,12 @@
 # home-manager configuration for user `yl`
 { soxincfg }:
-{ config, pkgs, home-manager, lib, ... }:
+{
+  config,
+  pkgs,
+  home-manager,
+  lib,
+  ...
+}:
 
 with lib;
 
@@ -8,20 +14,20 @@ with lib;
   imports = [
     soxincfg.nixosModules.profiles.myself
     soxincfg.nixosModules.profiles.workstation.nixos.local
-  ]
-  ++ (soxincfg.nixosModules.profiles.work.imports { hostName = "hades"; });
+  ] ++ (soxincfg.nixosModules.profiles.work.imports { hostName = "hades"; });
 
   # Setup the name of the wireless interface in Polybar
   soxin.services.xserver.windowManager.bar.modules.network.wlan = singleton "wlp110s0";
 
-
   # Make sure GnuPG is able to pick up the right card (Yubikey)
   programs.gpg.scdaemonSettings =
-    mkIf (config.soxincfg.hardware.yubikey.enable && config.soxincfg.hardware.yubikey.gnupg-support.enable) {
-      reader-port = "Yubico YubiKey FIDO+CCID 01 00";
-      disable-ccid = true;
-      card-timeout = "5";
-    };
+    mkIf
+      (config.soxincfg.hardware.yubikey.enable && config.soxincfg.hardware.yubikey.gnupg-support.enable)
+      {
+        reader-port = "Yubico YubiKey FIDO+CCID 01 00";
+        disable-ccid = true;
+        card-timeout = "5";
+      };
 
   # Setup autorandr postswitch
   soxincfg.programs.autorandr.postswitch.move-workspaces-to-main = ''
@@ -38,7 +44,9 @@ with lib;
     in
     {
       "default" = {
-        fingerprint = { inherit eDP-1; };
+        fingerprint = {
+          inherit eDP-1;
+        };
 
         config = {
           eDP-1 = {
@@ -53,7 +61,9 @@ with lib;
       };
 
       "wide+vertical" = {
-        fingerprint = { inherit DP-2 DP-3; };
+        fingerprint = {
+          inherit DP-2 DP-3;
+        };
 
         config = {
           eDP-1.enable = false;
@@ -81,7 +91,9 @@ with lib;
       };
 
       "internal+wide+vertical" = {
-        fingerprint = { inherit eDP-1 DP-2 DP-3; };
+        fingerprint = {
+          inherit eDP-1 DP-2 DP-3;
+        };
 
         config = {
           eDP-1 = {

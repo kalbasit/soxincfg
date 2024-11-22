@@ -1,10 +1,12 @@
-{ config, lib, mode, ... }:
+{
+  config,
+  lib,
+  mode,
+  ...
+}:
 
 let
-  inherit (lib)
-    mkEnableOption
-    optionals
-    ;
+  inherit (lib) mkEnableOption optionals;
 
   cfg = config.soxincfg.settings.nix.distributed-builds;
 in

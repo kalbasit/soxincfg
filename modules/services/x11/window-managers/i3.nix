@@ -1,4 +1,10 @@
-{ config, lib, mode, pkgs, ... }:
+{
+  config,
+  lib,
+  mode,
+  pkgs,
+  ...
+}:
 
 with lib;
 
@@ -46,8 +52,16 @@ in
             enable = true;
 
             timezones = [
-              { timezone = "UTC"; prefix = "UTC"; format = "%H:%M:%S"; }
-              { timezone = "America/Los_Angeles"; prefix = "PST"; format = "%H:%M:%S"; }
+              {
+                timezone = "UTC";
+                prefix = "UTC";
+                format = "%H:%M:%S";
+              }
+              {
+                timezone = "America/Los_Angeles";
+                prefix = "PST";
+                format = "%H:%M:%S";
+              }
             ];
           };
           filesystems.enable = true;
@@ -66,15 +80,18 @@ in
             "${defaultModifier}+${thirdModifier}+s" = "exec ${nosid} ${getBin pkgs.pulseaudio}/bin/pactl set-source-mute @DEFAULT_SOURCE@ toggle";
           };
 
-
           startup = [
-            { command = "${getBin pkgs.nitrogen}/bin/nitrogen --restore"; always = false; notification = false; }
+            {
+              command = "${getBin pkgs.nitrogen}/bin/nitrogen --restore";
+              always = false;
+              notification = false;
+            }
           ];
         }
 
-        (mkIf (true /* TODO: config.soxin.settings.theme == "gruvbox-dark"*/) (
-          config.soxin.settings.theme.i3.config
-        ))
+        (mkIf (
+          true # TODO: config.soxin.settings.theme == "gruvbox-dark"
+        ) (config.soxin.settings.theme.i3.config))
       ];
     })
   ]);

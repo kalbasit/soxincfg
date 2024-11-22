@@ -1,9 +1,12 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
-  inherit (lib)
-    singleton
-    ;
+  inherit (lib) singleton;
 in
 {
   environment.homeBinInPath = true;
@@ -17,7 +20,11 @@ in
   # Setup my keyboard layout
   soxin.settings.keyboard = {
     layouts = [
-      { console = { keyMap = "colemak"; }; }
+      {
+        console = {
+          keyMap = "colemak";
+        };
+      }
     ];
   };
 }

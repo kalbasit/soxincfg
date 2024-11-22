@@ -1,10 +1,7 @@
 { config, lib, ... }:
 
 let
-  inherit (lib)
-    mkIf
-    optional
-    ;
+  inherit (lib) mkIf optional;
 
   cfg = config.soxin.virtualisation.docker;
 in

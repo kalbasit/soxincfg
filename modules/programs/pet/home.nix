@@ -1,10 +1,12 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 let
-  inherit (lib)
-    mkIf
-    mkMerge
-    ;
+  inherit (lib) mkIf mkMerge;
 
   cfg = config.soxincfg.programs.pet;
 in
@@ -52,19 +54,28 @@ in
         {
           description = "nix-diff /run/current-system result";
           command = "nix run nixpkgs.nix-diff -c nix-diff \"$(nix-store -q --deriver /run/current-system)\" \"$(nix-store -q --deriver result)\"";
-          tag = [ "nix" "nix-diff" ];
+          tag = [
+            "nix"
+            "nix-diff"
+          ];
         }
 
         {
           description = "nix-review pr";
           command = "nix-review pr <prnumber>";
-          tag = [ "nix" "nix-review" ];
+          tag = [
+            "nix"
+            "nix-review"
+          ];
         }
 
         {
           description = "nix-search-nix-store";
           command = "sudo nix run nixpkgs.sqlite -c sqlite3 -noheader /nix/var/nix/db/db.sqlite \"select path from ValidPaths where path like '%<search_term>%';\"";
-          tag = [ "nix" "nix-store" ];
+          tag = [
+            "nix"
+            "nix-store"
+          ];
         }
 
         #
@@ -74,7 +85,11 @@ in
         {
           description = "ssh-to-darwin";
           command = "TERM=xterm-256color ssh -A <hostname>";
-          tag = [ "ssh" "mac" "darwin" ];
+          tag = [
+            "ssh"
+            "mac"
+            "darwin"
+          ];
         }
       ];
     };

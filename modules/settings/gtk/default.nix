@@ -1,4 +1,10 @@
-{ mode, config, pkgs, lib, ... }:
+{
+  mode,
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 with lib;
 let
@@ -12,9 +18,7 @@ in
   };
 
   config = mkIf cfg.enable (mkMerge [
-    (optionalAttrs (mode == "NixOS") {
-      services.dbus.packages = [ pkgs.dconf ];
-    })
+    (optionalAttrs (mode == "NixOS") { services.dbus.packages = [ pkgs.dconf ]; })
 
     (optionalAttrs (mode == "home-manager") {
       gtk = {

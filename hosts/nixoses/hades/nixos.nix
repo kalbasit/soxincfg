@@ -1,12 +1,17 @@
-{ config, soxincfg, nixos-hardware, pkgs, lib, ... }:
+{
+  config,
+  soxincfg,
+  nixos-hardware,
+  pkgs,
+  lib,
+  ...
+}:
 let
   yl_home = config.users.users.yl.home;
   owner = config.users.users.yl.name;
   sopsFile = ./secrets.sops.yaml;
 
-  inherit (lib)
-    mkForce
-    ;
+  inherit (lib) mkForce;
 in
 {
   imports = [
@@ -19,8 +24,7 @@ in
 
     ./hardware-configuration.nix
     ./win10.nix
-  ]
-  ++ (soxincfg.nixosModules.profiles.work.imports { hostName = "hades"; });
+  ] ++ (soxincfg.nixosModules.profiles.work.imports { hostName = "hades"; });
 
   services.foldingathome = {
     daemonNiceLevel = 19;
@@ -35,8 +39,15 @@ in
   security.pam.u2f.enable = mkForce false;
 
   sops.secrets = {
-    _etc_NetworkManager_system-connections_Nasreddine-VPN_nmconnection = { inherit sopsFile; path = "/etc/NetworkManager/system-connections/Nasreddine-VPN.nmconnection"; };
-    _yl_bw_session_session = { inherit owner sopsFile; mode = "0400"; path = "${yl_home}/.bw_session"; };
+    _etc_NetworkManager_system-connections_Nasreddine-VPN_nmconnection = {
+      inherit sopsFile;
+      path = "/etc/NetworkManager/system-connections/Nasreddine-VPN.nmconnection";
+    };
+    _yl_bw_session_session = {
+      inherit owner sopsFile;
+      mode = "0400";
+      path = "${yl_home}/.bw_session";
+    };
   };
 
   # load YL's home-manager configuration

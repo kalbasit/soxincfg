@@ -6,9 +6,7 @@
   services.betterlockscreen = {
     enable = true;
     inactiveInterval = 5;
-    arguments = [
-      "--show-layout"
-    ];
+    arguments = [ "--show-layout" ];
   };
 
   services.screen-locker = {
@@ -16,6 +14,8 @@
     xss-lock = {
       screensaverCycle = 300;
     };
-    xautolock = { enable = false; };
+    xautolock = {
+      enable = false;
+    };
   };
 }

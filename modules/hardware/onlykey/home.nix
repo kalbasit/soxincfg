@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   inherit (lib)
@@ -16,10 +21,7 @@ let
     writeShellScript
     ;
 
-  inherit (pkgs.hostPlatform)
-    isLinux
-    isDarwin
-    ;
+  inherit (pkgs.hostPlatform) isLinux isDarwin;
 
   cfg = config.soxincfg.hardware.onlykey;
 
@@ -46,12 +48,7 @@ let
 in
 {
   config = mkIf cfg.enable (mkMerge [
-    {
-      home.packages =
-        [
-          onlykey-cli
-        ] ++ optionals isLinux [ onlykey ];
-    }
+    { home.packages = [ onlykey-cli ] ++ optionals isLinux [ onlykey ]; }
 
     (mkIf isDarwin {
       sops.age = {
@@ -59,7 +56,10 @@ in
         keyFile = "${yl_home}/.local/share/soxincfg/sops/age.key";
       };
 
-      sops.secrets._ssh_id_ed25519_sk_rk = { inherit sopsFile; path = "${yl_home}/.ssh/id_ed25519_sk_rk"; };
+      sops.secrets._ssh_id_ed25519_sk_rk = {
+        inherit sopsFile;
+        path = "${yl_home}/.ssh/id_ed25519_sk_rk";
+      };
     })
 
     (mkIf cfg.ssh-support.enable {

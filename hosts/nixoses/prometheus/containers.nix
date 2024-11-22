@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 let
   network_name = "web_network-br";
@@ -11,7 +16,8 @@ in
 
     serviceConfig.Type = "oneshot";
     script =
-      let dockercli = "${config.virtualisation.docker.package}/bin/docker";
+      let
+        dockercli = "${config.virtualisation.docker.package}/bin/docker";
       in
       ''
         # Put a true at the end to prevent getting non-zero return code, which will

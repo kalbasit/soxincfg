@@ -1,4 +1,10 @@
-{ soxincfg, inputs, pkgs, soxin, ... }:
+{
+  soxincfg,
+  inputs,
+  pkgs,
+  soxin,
+  ...
+}:
 {
   nix = {
     # enable the Nix sandbox

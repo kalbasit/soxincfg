@@ -54,7 +54,16 @@ in
   # work around bug https://github.com/NixOS/nixpkgs/issues/180175
   systemd.services.NetworkManager-wait-online.enable = lib.mkForce false;
 
-  sops.secrets._etc_NetworkManager_system-connections_Hermes_nmconnection = { inherit sopsFile; path = "/etc/NetworkManager/system-connections/Hermes.nmconnection"; };
-  sops.secrets._etc_NetworkManager_system-connections_Nasreddine_nmconnection = { inherit sopsFile; path = "/etc/NetworkManager/system-connections/Nasreddine.nmconnection"; };
-  sops.secrets._etc_NetworkManager_system-connections_Wired_connection_nmconnection = { inherit sopsFile; path = "/etc/NetworkManager/system-connections/Wired_connection.nmconnection"; };
+  sops.secrets._etc_NetworkManager_system-connections_Hermes_nmconnection = {
+    inherit sopsFile;
+    path = "/etc/NetworkManager/system-connections/Hermes.nmconnection";
+  };
+  sops.secrets._etc_NetworkManager_system-connections_Nasreddine_nmconnection = {
+    inherit sopsFile;
+    path = "/etc/NetworkManager/system-connections/Nasreddine.nmconnection";
+  };
+  sops.secrets._etc_NetworkManager_system-connections_Wired_connection_nmconnection = {
+    inherit sopsFile;
+    path = "/etc/NetworkManager/system-connections/Wired_connection.nmconnection";
+  };
 }

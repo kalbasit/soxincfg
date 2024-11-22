@@ -1,4 +1,10 @@
-{ mode, config, pkgs, lib, ... }:
+{
+  mode,
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 with lib;
 let
@@ -11,11 +17,9 @@ in
         Whether to enable printing support through the CUPS daemon.
       '';
 
-      autoDiscovery = recursiveUpdate
-        (mkEnableOption ''
-          Enable autodiscovery of printers in the local network.
-        '')
-        { default = true; };
+      autoDiscovery = recursiveUpdate (mkEnableOption ''
+        Enable autodiscovery of printers in the local network.
+      '') { default = true; };
 
       brands = mkOption {
         type = with types; listOf (enum (attrNames cfg.brandsPackages));
@@ -48,14 +52,7 @@ in
     (optionalAttrs (mode == "NixOS") {
       services.printing = {
         enable = true;
-        drivers = flatten (
-          attrValues (
-            filterAttrs
-              (
-                n: _: any (e: e == n) cfg.brands
-              )
-              cfg.brandsPackages
-          ));
+        drivers = flatten (attrValues (filterAttrs (n: _: any (e: e == n) cfg.brands) cfg.brandsPackages));
       };
 
       services.avahi = mkIf cfg.autoDiscovery {

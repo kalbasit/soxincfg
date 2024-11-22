@@ -1,28 +1,36 @@
-{ mode, config, pkgs, lib, ... }:
+{
+  mode,
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 with lib;
 let
   cfg = config.soxincfg.programs.weechat;
 
-  weechat-home = with pkgs; stdenvNoCC.mkDerivation {
-    name = "weechat-home";
-    src = ./config;
-    unpackPhase = ":";
+  weechat-home =
+    with pkgs;
+    stdenvNoCC.mkDerivation {
+      name = "weechat-home";
+      src = ./config;
+      unpackPhase = ":";
 
-    preferLocalBuild = true;
-    allowSubstitutes = false;
+      preferLocalBuild = true;
+      allowSubstitutes = false;
 
-    installPhase = ''
-      mkdir $out
+      installPhase = ''
+        mkdir $out
 
-      ln -s ${config.home.homeDirectory}/.weechat/buddylist.txt $out/buddylist.txt
-      ln -s ${config.home.homeDirectory}/.weechat/logs $out/logs
-      ln -s ${config.home.homeDirectory}/.weechat/urlserver_list.txt $out/urlserver_list.txt
-      ln -s ${config.home.homeDirectory}/.weechat/weechat.log $out/weechat.log
+        ln -s ${config.home.homeDirectory}/.weechat/buddylist.txt $out/buddylist.txt
+        ln -s ${config.home.homeDirectory}/.weechat/logs $out/logs
+        ln -s ${config.home.homeDirectory}/.weechat/urlserver_list.txt $out/urlserver_list.txt
+        ln -s ${config.home.homeDirectory}/.weechat/weechat.log $out/weechat.log
 
-      ${rsync}/bin/rsync --exclude '*.sops' -avz $src/ $out/
-    '';
-  };
+        ${rsync}/bin/rsync --exclude '*.sops' -avz $src/ $out/
+      '';
+    };
 
   owner = config.users.users.yl.name;
 in
@@ -35,9 +43,21 @@ in
 
   config = mkIf cfg.enable (mkMerge [
     (optionalAttrs (mode == "NixOS") {
-      sops.secrets."_config_weechat_certs_freenode.pem" = { inherit owner; format = "binary"; sopsFile = ./config/certs/freenode.pem.sops; };
-      sops.secrets."_config_weechat_irc.conf" = { inherit owner; format = "binary"; sopsFile = ./config/irc.conf.sops; };
-      sops.secrets."_config_weechat_sec.conf" = { inherit owner; format = "binary"; sopsFile = ./config/sec.conf.sops; };
+      sops.secrets."_config_weechat_certs_freenode.pem" = {
+        inherit owner;
+        format = "binary";
+        sopsFile = ./config/certs/freenode.pem.sops;
+      };
+      sops.secrets."_config_weechat_irc.conf" = {
+        inherit owner;
+        format = "binary";
+        sopsFile = ./config/irc.conf.sops;
+      };
+      sops.secrets."_config_weechat_sec.conf" = {
+        inherit owner;
+        format = "binary";
+        sopsFile = ./config/sec.conf.sops;
+      };
     })
 
     (optionalAttrs (mode == "home-manager") {
@@ -114,8 +134,7 @@ in
             let
               secureSocket = config.programs.tmux.enable && config.programs.tmux.secureSocket;
             in
-            [ "WEECHAT_HOME=${weechat-home}" ]
-            ++ (optionals secureSocket [ "TMUX_TMPDIR=/run/user/2000" ]); # TODO: Do not hardcode my uid
+            [ "WEECHAT_HOME=${weechat-home}" ] ++ (optionals secureSocket [ "TMUX_TMPDIR=/run/user/2000" ]); # TODO: Do not hardcode my uid
         };
 
         Install.WantedBy = [ "default.target" ];

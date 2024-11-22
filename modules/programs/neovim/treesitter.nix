@@ -1,14 +1,15 @@
-{ config, lib, mode, pkgs, ... }:
+{
+  config,
+  lib,
+  mode,
+  pkgs,
+  ...
+}:
 
 let
-  inherit (lib)
-    mkEnableOption
-    mkIf
-    ;
+  inherit (lib) mkEnableOption mkIf;
 
-  inherit (pkgs)
-    vimPlugins
-    ;
+  inherit (pkgs) vimPlugins;
 
   cfg = config.soxincfg.programs.neovim;
 in
@@ -18,7 +19,7 @@ in
   };
 
   config = mkIf cfg.treesitter.enable {
-    soxin.programs.neovim.plugins = with vimPlugins;[
+    soxin.programs.neovim.plugins = with vimPlugins; [
       nvim-treesitter.withAllGrammars
       nvim-treesitter-context
     ];

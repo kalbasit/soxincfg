@@ -1,10 +1,7 @@
 { config, lib, ... }:
 
 let
-  inherit (lib)
-    mkEnableOption
-    mkIf
-    ;
+  inherit (lib) mkEnableOption mkIf;
 
   cfg = config.soxin.hardware.zsa;
 in
@@ -13,7 +10,5 @@ in
     enable = mkEnableOption "hardware.zsa";
   };
 
-  config = mkIf cfg.enable {
-    soxincfg.settings.users.defaultGroups = [ "plugdev" ];
-  };
+  config = mkIf cfg.enable { soxincfg.settings.users.defaultGroups = [ "plugdev" ]; };
 }

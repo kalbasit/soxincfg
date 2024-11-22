@@ -1,15 +1,17 @@
-{ config, home-manager, lib, mode, pkgs, soxincfg, ... }:
+{
+  config,
+  home-manager,
+  lib,
+  mode,
+  pkgs,
+  soxincfg,
+  ...
+}:
 
 let
-  inherit (lib)
-    mkForce
-    optionals
-    ;
+  inherit (lib) mkForce optionals;
 
-  inherit (home-manager.lib.hm.dag)
-    entryBefore
-    entryAnywhere
-    ;
+  inherit (home-manager.lib.hm.dag) entryBefore entryAnywhere;
 in
 {
   imports =
@@ -17,11 +19,12 @@ in
       soxincfg.nixosModules.profiles.neovim
       soxincfg.nixosModules.profiles.workstation.common
     ]
-    ++ optionals (mode == "NixOS") [ ./nixos.nix ]
-    ++ optionals (mode == "home-manager") [ ./home.nix ];
+    ++ optionals (mode == "NixOS") [ ./nixos.nix ] ++ optionals (mode == "home-manager") [ ./home.nix ];
 
   soxin = {
-    hardware = { fwupd.enable = true; };
+    hardware = {
+      fwupd.enable = true;
+    };
 
     programs = {
       keybase = {
@@ -31,8 +34,12 @@ in
       less.enable = true;
     };
 
-    services = { openssh.enable = true; };
-    virtualisation = { docker.enable = true; };
+    services = {
+      openssh.enable = true;
+    };
+    virtualisation = {
+      docker.enable = true;
+    };
   };
 
   soxincfg = {

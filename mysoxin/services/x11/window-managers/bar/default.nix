@@ -1,4 +1,10 @@
-{ mode, config, pkgs, lib, ... }:
+{
+  mode,
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 with lib;
 let
@@ -44,7 +50,10 @@ in
       enable = mkEnableOption "Enable polybar";
 
       location = mkOption {
-        type = types.enum [ "top" "bottom" ];
+        type = types.enum [
+          "top"
+          "bottom"
+        ];
         default = "top";
         description = "Location of the bar";
       };
@@ -79,7 +88,12 @@ in
           };
           devices = mkOption {
             type = types.listOf batteryModule;
-            default = [{ device = "BAT0"; fullAt = 98; }];
+            default = [
+              {
+                device = "BAT0";
+                fullAt = 98;
+              }
+            ];
             description = "The battery devices to be monitored.";
           };
         };
@@ -100,7 +114,13 @@ in
           };
           timezones = mkOption {
             type = types.listOf timezoneModule;
-            default = [{ timezone = "UTC"; prefix = "UTC"; format = "%H:%M:%S"; }];
+            default = [
+              {
+                timezone = "UTC";
+                prefix = "UTC";
+                format = "%H:%M:%S";
+              }
+            ];
             description = "The timezones to be displayed.";
           };
         };
@@ -114,7 +134,10 @@ in
           mountPoints = mkOption {
             type = types.listOf types.str;
             default = [ "/" ];
-            example = [ "/" "/home" ];
+            example = [
+              "/"
+              "/home"
+            ];
             description = "The mount points of which the free space will be displayed. Currently, only the first mountpoint will be displayed";
           };
         };
@@ -126,7 +149,6 @@ in
             description = " Order of the module in the bar (left to right).";
           };
         };
-
 
         network = {
           enable = mkEnableOption "Enable the network bar module";
@@ -202,9 +224,9 @@ in
 
   config = mkIf cfg.enable (mkMerge [
     (optionalAttrs (mode == "home-manager") {
-      services.polybar = recursiveUpdate
-        (import ./polybar.lib.nix { inherit config pkgs lib; })
-        { enable = true; };
+      services.polybar = recursiveUpdate (import ./polybar.lib.nix { inherit config pkgs lib; }) {
+        enable = true;
+      };
 
       programs.autorandr.hooks.postswitch.restart-polybar = ''
         systemctl --no-block --user restart polybar.service

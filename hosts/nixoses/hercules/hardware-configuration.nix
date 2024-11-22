@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   inherit (lib)
@@ -14,62 +19,146 @@ let
 
   datasets = {
     # NixOS
-    "/" = { device = "olympus/system/nixos/root"; };
-    "/home/yl" = { device = "olympus/user/yl/nixos-home"; };
-    "/home/yl/.SynologyDrive/data" = { device = "olympus/user/yl/synology-drive/data"; };
-    "/home/yl/.config/Signal" = { device = "olympus/user/yl/signal"; };
-    "/home/yl/SynologyDrive" = { device = "olympus/user/yl/synology-drive/drive"; };
-    "/home/yl/code" = { device = "olympus/user/yl/code"; };
-    "/nix" = { device = "olympus/system/nixos/nix"; };
-    "/var" = { device = "olympus/system/nixos/var"; };
+    "/" = {
+      device = "olympus/system/nixos/root";
+    };
+    "/home/yl" = {
+      device = "olympus/user/yl/nixos-home";
+    };
+    "/home/yl/.SynologyDrive/data" = {
+      device = "olympus/user/yl/synology-drive/data";
+    };
+    "/home/yl/.config/Signal" = {
+      device = "olympus/user/yl/signal";
+    };
+    "/home/yl/SynologyDrive" = {
+      device = "olympus/user/yl/synology-drive/drive";
+    };
+    "/home/yl/code" = {
+      device = "olympus/user/yl/code";
+    };
+    "/nix" = {
+      device = "olympus/system/nixos/nix";
+    };
+    "/var" = {
+      device = "olympus/system/nixos/var";
+    };
 
     ## Arch Linux
     # Arch Linux within NixOS
-    "/mnt/arch" = { device = "olympus/system/arch/root"; };
-    "/mnt/arch/home/yl" = { device = "olympus/user/yl/arch-home"; };
-    "/mnt/arch/home/yl/.SynologyDrive/data" = { device = "olympus/user/yl/synology-drive/data"; };
-    "/mnt/arch/home/yl/.config/Signal" = { device = "olympus/user/yl/signal"; };
-    "/mnt/arch/home/yl/SynologyDrive" = { device = "olympus/user/yl/synology-drive/drive"; };
-    "/mnt/arch/home/yl/code" = { device = "olympus/user/yl/code"; };
-    "/mnt/arch/nix" = { device = "olympus/system/arch/nix"; };
-    "/mnt/arch/var" = { device = "olympus/system/arch/var"; };
+    "/mnt/arch" = {
+      device = "olympus/system/arch/root";
+    };
+    "/mnt/arch/home/yl" = {
+      device = "olympus/user/yl/arch-home";
+    };
+    "/mnt/arch/home/yl/.SynologyDrive/data" = {
+      device = "olympus/user/yl/synology-drive/data";
+    };
+    "/mnt/arch/home/yl/.config/Signal" = {
+      device = "olympus/user/yl/signal";
+    };
+    "/mnt/arch/home/yl/SynologyDrive" = {
+      device = "olympus/user/yl/synology-drive/drive";
+    };
+    "/mnt/arch/home/yl/code" = {
+      device = "olympus/user/yl/code";
+    };
+    "/mnt/arch/nix" = {
+      device = "olympus/system/arch/nix";
+    };
+    "/mnt/arch/var" = {
+      device = "olympus/system/arch/var";
+    };
 
     # NixOS within Arch Linux
-    "/mnt/arch/mnt/nixos" = { device = "olympus/system/nixos/root"; };
-    "/mnt/arch/mnt/nixos/home/yl" = { device = "olympus/user/yl/nixos-home"; };
-    "/mnt/arch/mnt/nixos/home/yl/.SynologyDrive/data" = { device = "olympus/user/yl/synology-drive/data"; };
-    "/mnt/arch/mnt/nixos/home/yl/.config/Signal" = { device = "olympus/user/yl/signal"; };
-    "/mnt/arch/mnt/nixos/home/yl/SynologyDrive" = { device = "olympus/user/yl/synology-drive/drive"; };
-    "/mnt/arch/mnt/nixos/home/yl/code" = { device = "olympus/user/yl/code"; };
-    "/mnt/arch/mnt/nixos/nix" = { device = "olympus/system/nixos/nix"; };
-    "/mnt/arch/mnt/nixos/var" = { device = "olympus/system/nixos/var"; };
+    "/mnt/arch/mnt/nixos" = {
+      device = "olympus/system/nixos/root";
+    };
+    "/mnt/arch/mnt/nixos/home/yl" = {
+      device = "olympus/user/yl/nixos-home";
+    };
+    "/mnt/arch/mnt/nixos/home/yl/.SynologyDrive/data" = {
+      device = "olympus/user/yl/synology-drive/data";
+    };
+    "/mnt/arch/mnt/nixos/home/yl/.config/Signal" = {
+      device = "olympus/user/yl/signal";
+    };
+    "/mnt/arch/mnt/nixos/home/yl/SynologyDrive" = {
+      device = "olympus/user/yl/synology-drive/drive";
+    };
+    "/mnt/arch/mnt/nixos/home/yl/code" = {
+      device = "olympus/user/yl/code";
+    };
+    "/mnt/arch/mnt/nixos/nix" = {
+      device = "olympus/system/nixos/nix";
+    };
+    "/mnt/arch/mnt/nixos/var" = {
+      device = "olympus/system/nixos/var";
+    };
 
     ## Ubuntu
     # Ubuntu within NixOS
-    "/mnt/ubuntu" = { device = "olympus/system/ubuntu/root"; };
-    "/mnt/ubuntu/home/yl" = { device = "olympus/user/yl/ubuntu-home"; };
-    "/mnt/ubuntu/home/yl/.SynologyDrive/data" = { device = "olympus/user/yl/synology-drive/data"; };
-    "/mnt/ubuntu/home/yl/.config/Signal" = { device = "olympus/user/yl/signal"; };
-    "/mnt/ubuntu/home/yl/SynologyDrive" = { device = "olympus/user/yl/synology-drive/drive"; };
-    "/mnt/ubuntu/home/yl/code" = { device = "olympus/user/yl/code"; };
-    "/mnt/ubuntu/nix" = { device = "olympus/system/ubuntu/nix"; };
-    "/mnt/ubuntu/var" = { device = "olympus/system/ubuntu/var"; };
+    "/mnt/ubuntu" = {
+      device = "olympus/system/ubuntu/root";
+    };
+    "/mnt/ubuntu/home/yl" = {
+      device = "olympus/user/yl/ubuntu-home";
+    };
+    "/mnt/ubuntu/home/yl/.SynologyDrive/data" = {
+      device = "olympus/user/yl/synology-drive/data";
+    };
+    "/mnt/ubuntu/home/yl/.config/Signal" = {
+      device = "olympus/user/yl/signal";
+    };
+    "/mnt/ubuntu/home/yl/SynologyDrive" = {
+      device = "olympus/user/yl/synology-drive/drive";
+    };
+    "/mnt/ubuntu/home/yl/code" = {
+      device = "olympus/user/yl/code";
+    };
+    "/mnt/ubuntu/nix" = {
+      device = "olympus/system/ubuntu/nix";
+    };
+    "/mnt/ubuntu/var" = {
+      device = "olympus/system/ubuntu/var";
+    };
 
     # NixOS within Ubuntu
-    "/mnt/ubuntu/mnt/nixos" = { device = "olympus/system/nixos/root"; };
-    "/mnt/ubuntu/mnt/nixos/home/yl" = { device = "olympus/user/yl/nixos-home"; };
-    "/mnt/ubuntu/mnt/nixos/home/yl/.SynologyDrive/data" = { device = "olympus/user/yl/synology-drive/data"; };
-    "/mnt/ubuntu/mnt/nixos/home/yl/.config/Signal" = { device = "olympus/user/yl/signal"; };
-    "/mnt/ubuntu/mnt/nixos/home/yl/SynologyDrive" = { device = "olympus/user/yl/synology-drive/drive"; };
-    "/mnt/ubuntu/mnt/nixos/home/yl/code" = { device = "olympus/user/yl/code"; };
-    "/mnt/ubuntu/mnt/nixos/nix" = { device = "olympus/system/nixos/nix"; };
-    "/mnt/ubuntu/mnt/nixos/var" = { device = "olympus/system/nixos/var"; };
+    "/mnt/ubuntu/mnt/nixos" = {
+      device = "olympus/system/nixos/root";
+    };
+    "/mnt/ubuntu/mnt/nixos/home/yl" = {
+      device = "olympus/user/yl/nixos-home";
+    };
+    "/mnt/ubuntu/mnt/nixos/home/yl/.SynologyDrive/data" = {
+      device = "olympus/user/yl/synology-drive/data";
+    };
+    "/mnt/ubuntu/mnt/nixos/home/yl/.config/Signal" = {
+      device = "olympus/user/yl/signal";
+    };
+    "/mnt/ubuntu/mnt/nixos/home/yl/SynologyDrive" = {
+      device = "olympus/user/yl/synology-drive/drive";
+    };
+    "/mnt/ubuntu/mnt/nixos/home/yl/code" = {
+      device = "olympus/user/yl/code";
+    };
+    "/mnt/ubuntu/mnt/nixos/nix" = {
+      device = "olympus/system/nixos/nix";
+    };
+    "/mnt/ubuntu/mnt/nixos/var" = {
+      device = "olympus/system/nixos/var";
+    };
   };
 
-  mkZFSDataSet = mountPoint: { device }:
-    nameValuePair
-      (mountPoint)
-      ({ inherit device; fsType = "zfs"; options = [ "relatime" ]; });
+  mkZFSDataSet =
+    mountPoint:
+    { device }:
+    nameValuePair (mountPoint) ({
+      inherit device;
+      fsType = "zfs";
+      options = [ "relatime" ];
+    });
 
   exports = [
     # "Anime"
@@ -89,10 +178,12 @@ let
     # "music"
   ];
 
-  toFSEntry = export: nameValuePair "/nas/${export}" {
-    device = "192.168.50.2:/volume1/${export}";
-    fsType = "nfs";
-  };
+  toFSEntry =
+    export:
+    nameValuePair "/nas/${export}" {
+      device = "192.168.50.2:/volume1/${export}";
+      fsType = "nfs";
+    };
 
   nfsFSEntries = builtins.listToAttrs (map toFSEntry exports);
 in
@@ -110,7 +201,16 @@ in
   networking.hostId = "007f0200";
 
   # configure kernel and modules
-  boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "vmd" "nvme" "usbhid" "usb_storage" "sd_mod" "sdhci_pci" ];
+  boot.initrd.availableKernelModules = [
+    "xhci_pci"
+    "thunderbolt"
+    "vmd"
+    "nvme"
+    "usbhid"
+    "usb_storage"
+    "sd_mod"
+    "sdhci_pci"
+  ];
   boot.kernelModules = [ "kvm-intel" ];
 
   # configure boot loader
@@ -177,51 +277,103 @@ in
   console.font = "Lat2-Terminus16";
 
   boot.initrd.luks.devices = {
-    cryptkey = { device = "/dev/disk/by-uuid/00f72dbb-eb46-468f-b1c3-dd63adc542f0"; };
-    cryptroot = { device = "/dev/disk/by-uuid/809f49a2-0edb-49ac-aab6-fc0c77565e74"; keyFile = "/dev/mapper/cryptkey"; };
+    cryptkey = {
+      device = "/dev/disk/by-uuid/00f72dbb-eb46-468f-b1c3-dd63adc542f0";
+    };
+    cryptroot = {
+      device = "/dev/disk/by-uuid/809f49a2-0edb-49ac-aab6-fc0c77565e74";
+      keyFile = "/dev/mapper/cryptkey";
+    };
   };
 
-  fileSystems = mergeAttrs
-    (mergeAttrs nfsFSEntries (mapAttrs' mkZFSDataSet datasets))
-    {
-      # Boot device
-      "/boot" = { device = bootDevice; fsType = "vfat"; options = [ "fmask=0022" "dmask=0022" ]; };
-
-      # Arch non-zfs mounts
-      "/mnt/arch/boot" = { device = bootDevice; fsType = "vfat"; options = [ "fmask=0022" "dmask=0022" ]; };
-      "/mnt/arch/dev" = { device = "/dev"; options = [ "bind" ]; };
-      "/mnt/arch/dev/pts" = { device = "/dev/pts"; options = [ "bind" ]; };
-      "/mnt/arch/proc" = { device = "proc"; fsType = "proc"; };
-      "/mnt/arch/sys" = { device = "sys"; fsType = "sysfs"; };
-
-      # Ubuntu non-zfs device
-      # TODO: Figure out how to configure Ubuntu where to put kernel instead of the /boot-real /boot hack
-      "/mnt/ubuntu/boot" = { device = "/mnt/ubuntu/boot-real/EFI/ubuntu"; options = [ "bind" ]; };
-      "/mnt/ubuntu/boot-real" = { device = bootDevice; fsType = "vfat"; options = [ "fmask=0022" "dmask=0022" ]; };
-      "/mnt/ubuntu/dev" = { device = "/dev"; options = [ "bind" ]; };
-      "/mnt/ubuntu/dev/pts" = { device = "/dev/pts"; options = [ "bind" ]; };
-      "/mnt/ubuntu/proc" = { device = "proc"; fsType = "proc"; };
-      "/mnt/ubuntu/sys" = { device = "sys"; fsType = "sysfs"; };
-
-      # Windows
-      "/mnt/windows" = {
-        device = windowsDevice;
-        fsType = "ntfs";
-        options = [
-          "gid=${builtins.toString config.users.groups."${config.users.users.yl.group}".gid}"
-          "uid=${builtins.toString config.users.users.yl.uid}"
-        ];
-      };
-
-      # SoxinCFG secrets
-      "/home/yl/code/repositories/github.com/kalbasit/soxincfg/profiles/work/secret-store" = {
-        device = "/home/yl/code/repositories/keybase/private/ylcodes/secrets/soxincfg/work/secret-store";
-        options = [ "bind" ];
-        depends = [ "/home/yl" "/home/yl/code" ];
-      };
+  fileSystems = mergeAttrs (mergeAttrs nfsFSEntries (mapAttrs' mkZFSDataSet datasets)) {
+    # Boot device
+    "/boot" = {
+      device = bootDevice;
+      fsType = "vfat";
+      options = [
+        "fmask=0022"
+        "dmask=0022"
+      ];
     };
 
-  swapDevices = [
-    { device = swapDevice; }
-  ];
+    # Arch non-zfs mounts
+    "/mnt/arch/boot" = {
+      device = bootDevice;
+      fsType = "vfat";
+      options = [
+        "fmask=0022"
+        "dmask=0022"
+      ];
+    };
+    "/mnt/arch/dev" = {
+      device = "/dev";
+      options = [ "bind" ];
+    };
+    "/mnt/arch/dev/pts" = {
+      device = "/dev/pts";
+      options = [ "bind" ];
+    };
+    "/mnt/arch/proc" = {
+      device = "proc";
+      fsType = "proc";
+    };
+    "/mnt/arch/sys" = {
+      device = "sys";
+      fsType = "sysfs";
+    };
+
+    # Ubuntu non-zfs device
+    # TODO: Figure out how to configure Ubuntu where to put kernel instead of the /boot-real /boot hack
+    "/mnt/ubuntu/boot" = {
+      device = "/mnt/ubuntu/boot-real/EFI/ubuntu";
+      options = [ "bind" ];
+    };
+    "/mnt/ubuntu/boot-real" = {
+      device = bootDevice;
+      fsType = "vfat";
+      options = [
+        "fmask=0022"
+        "dmask=0022"
+      ];
+    };
+    "/mnt/ubuntu/dev" = {
+      device = "/dev";
+      options = [ "bind" ];
+    };
+    "/mnt/ubuntu/dev/pts" = {
+      device = "/dev/pts";
+      options = [ "bind" ];
+    };
+    "/mnt/ubuntu/proc" = {
+      device = "proc";
+      fsType = "proc";
+    };
+    "/mnt/ubuntu/sys" = {
+      device = "sys";
+      fsType = "sysfs";
+    };
+
+    # Windows
+    "/mnt/windows" = {
+      device = windowsDevice;
+      fsType = "ntfs";
+      options = [
+        "gid=${builtins.toString config.users.groups."${config.users.users.yl.group}".gid}"
+        "uid=${builtins.toString config.users.users.yl.uid}"
+      ];
+    };
+
+    # SoxinCFG secrets
+    "/home/yl/code/repositories/github.com/kalbasit/soxincfg/profiles/work/secret-store" = {
+      device = "/home/yl/code/repositories/keybase/private/ylcodes/secrets/soxincfg/work/secret-store";
+      options = [ "bind" ];
+      depends = [
+        "/home/yl"
+        "/home/yl/code"
+      ];
+    };
+  };
+
+  swapDevices = [ { device = swapDevice; } ];
 }

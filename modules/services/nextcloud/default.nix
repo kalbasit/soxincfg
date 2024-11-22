@@ -1,4 +1,11 @@
-{ config, lib, mode, options, pkgs, ... }:
+{
+  config,
+  lib,
+  mode,
+  options,
+  pkgs,
+  ...
+}:
 
 with lib;
 let
@@ -10,7 +17,10 @@ in
   config = mkIf cfg.enable (mkMerge [
     (optionalAttrs (mode == "NixOS") {
       networking.firewall.enable = mkForce false; # TODO
-      networking.firewall.allowedTCPPorts = [ 80 443 ];
+      networking.firewall.allowedTCPPorts = [
+        80
+        443
+      ];
 
       services.postgresql = {
         enable = true;

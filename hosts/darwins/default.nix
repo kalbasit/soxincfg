@@ -1,10 +1,14 @@
-inputs@{ self, darwin, deploy-rs, lib ? nixpkgs.lib, nixpkgs, ... }:
+inputs@{
+  self,
+  darwin,
+  deploy-rs,
+  lib ? nixpkgs.lib,
+  nixpkgs,
+  ...
+}:
 
 let
-  inherit (lib)
-    mapAttrs
-    recursiveUpdate
-    ;
+  inherit (lib) mapAttrs recursiveUpdate;
 
   # the default channel to follow.
   channelName = "nixpkgs";
@@ -16,32 +20,28 @@ let
   hostType = "nix-darwin";
 in
 mapAttrs
-  (n: v: recursiveUpdate
+  (
+    n: v:
+    recursiveUpdate {
+      inherit mode;
+
+      specialArgs = {
+        inherit hostType;
+      };
+    } v
+  )
   {
-    inherit
-      mode
-      ;
+    ###
+    # x86_64-darwin
+    ###
 
-    specialArgs = {
-      inherit hostType;
-    };
+    poseidon =
+      let
+        system = "x86_64-darwin";
+      in
+      {
+        inherit channelName system;
+
+        modules = [ ./poseidon/darwin.nix ];
+      };
   }
-    v)
-{
-  ###
-  # x86_64-darwin
-  ###
-
-  poseidon =
-    let
-      system = "x86_64-darwin";
-    in
-    {
-      inherit
-        channelName
-        system
-        ;
-
-      modules = [ ./poseidon/darwin.nix ];
-    };
-}

@@ -1,9 +1,12 @@
-{ config, lib, mode, ... }:
+{
+  config,
+  lib,
+  mode,
+  ...
+}:
 
 let
-  inherit (lib)
-    optionals
-    ;
+  inherit (lib) optionals;
 in
 {
   imports =

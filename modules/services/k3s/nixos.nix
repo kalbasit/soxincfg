@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   inherit (lib)
@@ -27,14 +32,14 @@ in
         1883 # MQTT
 
         10250 # Kubelet metrics
-      ] ++ optionals (cfg.role == "server") [
+      ]
+      ++ optionals (cfg.role == "server") [
         6443 # k3s: required so that pods can reach the API server (running on port 6443 by default)
       ];
 
-    networking.firewall.allowedUDPPorts =
-      [
-        8472 # k3s, flannel: required for VXLAN
-      ];
+    networking.firewall.allowedUDPPorts = [
+      8472 # k3s, flannel: required for VXLAN
+    ];
 
     # Error seen in Cloudflared
     # https://github.com/quic-go/quic-go/wiki/UDP-Buffer-Sizes
@@ -58,11 +63,15 @@ in
 
     sops.secrets = mkMerge [
       {
-        "services-k3s-tokenFile" = { inherit sopsFile; };
+        "services-k3s-tokenFile" = {
+          inherit sopsFile;
+        };
       }
 
       (mkIf (cfg.role == "server") {
-        "services-k3s-environmentFile" = { inherit sopsFile; };
+        "services-k3s-environmentFile" = {
+          inherit sopsFile;
+        };
       })
     ];
   };

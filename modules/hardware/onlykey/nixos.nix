@@ -1,11 +1,12 @@
-{ config, lib, mode, ... }:
-
+{
+  config,
+  lib,
+  mode,
+  ...
+}:
 
 let
-  inherit (lib)
-    mkIf
-    mkMerge
-    ;
+  inherit (lib) mkIf mkMerge;
 
   cfg = config.soxincfg.hardware.onlykey;
 
@@ -18,7 +19,10 @@ in
     { hardware.onlykey.enable = true; }
 
     (mkIf cfg.ssh-support.enable {
-      sops.secrets._ssh_id_ed25519_sk_rk = { inherit owner sopsFile; path = "${yl_home}/.ssh/id_ed25519_sk_rk"; };
+      sops.secrets._ssh_id_ed25519_sk_rk = {
+        inherit owner sopsFile;
+        path = "${yl_home}/.ssh/id_ed25519_sk_rk";
+      };
     })
   ]);
 }

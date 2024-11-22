@@ -1,4 +1,9 @@
-{ mode, config, lib, ... }:
+{
+  mode,
+  config,
+  lib,
+  ...
+}:
 
 let
   cfg = config.soxincfg.settings.users;

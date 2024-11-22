@@ -20,7 +20,8 @@
   #
   #  > ssh zeus
   #  Error: remote port forwarding failed for listen path /run/user/2000/gnupg/S.gpg-agent
-  systemd.services."user-runtime-dir@".serviceConfig.ExecStartPost = with pkgs;
+  systemd.services."user-runtime-dir@".serviceConfig.ExecStartPost =
+    with pkgs;
     let
       script = writeScript "create-run-user-gnupg.sh" ''
         #!${runtimeShell}

@@ -6,3 +6,4 @@
 
 # work related stuff
 /profiles/work/secret-store
+/.pre-commit-config.yaml
