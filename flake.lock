@@ -740,16 +740,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1731564428,
-        "narHash": "sha256-BtUJWsPRSpqBiTsdDahGSQAJoKn4yBbXHGPyma01vZg=",
+        "lastModified": 1732308611,
+        "narHash": "sha256-5GdGNi0JAbdaxsQ7zSndVLDdFEoedywfq69TkeblNFo=",
         "owner": "SoxinOS",
         "repo": "soxin",
-        "rev": "c737fb68316d4442a88f254ee556ce7f8036f2ba",
+        "rev": "1f88ad1415b595c2529b97cb6a740225cbf86d93",
         "type": "github"
       },
       "original": {
         "owner": "SoxinOS",
-        "ref": "improve-git-integration",
+        "ref": "wael-delete-me",
         "repo": "soxin",
         "type": "github"
       }

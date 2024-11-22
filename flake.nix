@@ -44,7 +44,7 @@
 
     soxin = {
       # url = "github:SoxinOS/soxin";
-      url = "github:SoxinOS/soxin/improve-git-integration";
+      url = "github:SoxinOS/soxin/wael-delete-me";
       inputs = {
         darwin.follows = "darwin";
         deploy-rs.follows = "deploy-rs";
