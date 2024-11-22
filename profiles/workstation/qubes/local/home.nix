@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, inputs, pkgs, lib, ... }:
 
 let
   inherit (lib)
@@ -24,6 +24,8 @@ in
     };
 
     home.packages = with pkgs; [
+      inputs.nixvim.packages."${pkgs.stdenv.hostPlatform.system}".default
+
       amazon-ecr-credential-helper
       awscli2
       binutils # for strings
