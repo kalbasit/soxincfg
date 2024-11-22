@@ -24,7 +24,7 @@ mapAttrs
     } v
   )
   {
-    code-template =
+    code =
       let
         system = "x86_64-linux";
       in
@@ -32,7 +32,7 @@ mapAttrs
         inherit system;
 
         modules = [
-          ./code-template/home.nix
+          ./code/home.nix
           {
             home = {
               username = "user";
