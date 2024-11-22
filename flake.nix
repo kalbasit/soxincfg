@@ -23,6 +23,12 @@
       };
     };
 
+    nixvim = {
+      url = "github:kalbasit/nixvim";
+      # NOTE: nixvim fails to build on NixOS 24.05
+      # inputs. nixpkgs.follows = "nixpkgs";
+    };
+
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs = {
