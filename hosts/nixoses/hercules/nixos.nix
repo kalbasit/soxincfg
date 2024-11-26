@@ -24,6 +24,7 @@ in
 
     ./hardware-configuration.nix
     ./nvidia.nix
+    ./spectrum.nix
   ] ++ (soxincfg.nixosModules.profiles.work.imports { hostName = "hercules"; });
 
   # TODO: Remove this once I can work out:
