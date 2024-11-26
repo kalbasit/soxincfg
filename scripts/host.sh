@@ -82,11 +82,11 @@ case "${action}" in
     build)
         >&2 echo "Building $host"
         if isNixOS; then
-            nix build "path:.#nixosConfigurations.${host}.config.system.build.toplevel"
+            nom build "path:.#nixosConfigurations.${host}.config.system.build.toplevel"
         elif isDarwin; then
-            nix build "path:.#darwinConfigurations.${host}.system" --show-trace
+            nom build "path:.#darwinConfigurations.${host}.system" --show-trace
         else
-            nix build "path:.#homeConfigurations.${host}.activationPackage"
+            nom build "path:.#homeConfigurations.${host}.activationPackage"
         fi
         ;;
     test)

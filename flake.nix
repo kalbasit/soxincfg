@@ -173,7 +173,10 @@
             with pkgs;
             mkShell {
               inherit (pre-commit-check) shellHook;
-              buildInputs = [ nixfmt-rfc-style ];
+              buildInputs = [
+                nixfmt-rfc-style
+                nix-output-monitor
+              ];
             };
 
           formatter = pkgs.nixfmt-rfc-style;
