@@ -1,4 +1,4 @@
-{ soxincfg, ... }:
+{ config, soxincfg, ... }:
 
 {
   imports = [
@@ -33,6 +33,14 @@
       miimon = "100";
       mode = "802.3ad";
     };
+  };
+
+  networking.firewall.interfaces."snbond0" = {
+    allowedTCPPorts = config.networking.firewall.allowedTCPPorts;
+    allowedTCPPortRanges = config.networking.firewall.allowedTCPPortRanges;
+
+    allowedUDPPorts = config.networking.firewall.allowedUDPPorts;
+    allowedUDPPortRanges = config.networking.firewall.allowedUDPPortRanges;
   };
 
   # This option defines the first version of NixOS you have installed on this particular machine,
