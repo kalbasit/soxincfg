@@ -29,7 +29,7 @@ let
       device = "olympus/user/yl/synology-drive/data";
     };
     "/home/yl/.config/Signal" = {
-      device = "olympus/user/yl/signal";
+      device = "olympus/user/yl/nixos-signal";
     };
     "/home/yl/SynologyDrive" = {
       device = "olympus/user/yl/synology-drive/drive";
@@ -56,7 +56,7 @@ let
       device = "olympus/user/yl/synology-drive/data";
     };
     "/mnt/arch/home/yl/.config/Signal" = {
-      device = "olympus/user/yl/signal";
+      device = "olympus/user/yl/arch-signal";
     };
     "/mnt/arch/home/yl/SynologyDrive" = {
       device = "olympus/user/yl/synology-drive/drive";
@@ -82,7 +82,7 @@ let
       device = "olympus/user/yl/synology-drive/data";
     };
     "/mnt/arch/mnt/nixos/home/yl/.config/Signal" = {
-      device = "olympus/user/yl/signal";
+      device = "olympus/user/yl/nixos-signal";
     };
     "/mnt/arch/mnt/nixos/home/yl/SynologyDrive" = {
       device = "olympus/user/yl/synology-drive/drive";
@@ -109,7 +109,7 @@ let
       device = "olympus/user/yl/synology-drive/data";
     };
     "/mnt/ubuntu/home/yl/.config/Signal" = {
-      device = "olympus/user/yl/signal";
+      device = "olympus/user/yl/ubuntu-signal";
     };
     "/mnt/ubuntu/home/yl/SynologyDrive" = {
       device = "olympus/user/yl/synology-drive/drive";
@@ -135,7 +135,7 @@ let
       device = "olympus/user/yl/synology-drive/data";
     };
     "/mnt/ubuntu/mnt/nixos/home/yl/.config/Signal" = {
-      device = "olympus/user/yl/signal";
+      device = "olympus/user/yl/nixos-signal";
     };
     "/mnt/ubuntu/mnt/nixos/home/yl/SynologyDrive" = {
       device = "olympus/user/yl/synology-drive/drive";
