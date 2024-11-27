@@ -24,6 +24,9 @@ in
 
         # Cronus - ChromeOS 2024-10-23
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHDMWCJ+hjoFsZdUzOzlQ1xZKngq/OnoBflf3fsemK4s Cronus - ChromeOS 2024-10-23"
+
+        # Hercules - Qubes Vault
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILWRLQQGw8+4ubG+113iHDfR08Wf6MJBCErjwfYxDvgZ Hercules - Qubes Vault"
       ];
 
       uid = 2000;
