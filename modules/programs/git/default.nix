@@ -247,7 +247,6 @@ in
         "coverage/"
         "lib/bundler/man/"
         "pickle-email-*.html"
-        "pkg/"
         "rerun.txt"
         "spec/reports/"
         "spec/tmp/*"
