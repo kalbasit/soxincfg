@@ -70,6 +70,11 @@
     ];
   };
 
+  fileSystems."/storage/slow" = {
+    device = "/dev/disk/by-uuid/e2df8145-5ebe-4c08-bbbf-b3f4bf36326c";
+    fsType = "ext4";
+  };
+
   swapDevices = [
     { device = "/dev/disk/by-uuid/035b5999-31ce-478f-b039-e6ef339ebf49"; }
     { device = "/dev/disk/by-uuid/ddcb0f40-5c0e-437b-b30b-db490b27bc5a"; }
