@@ -35,13 +35,16 @@
     };
   };
 
-  networking.firewall.interfaces."snbond0" = {
-    allowedTCPPorts = config.networking.firewall.allowedTCPPorts;
-    allowedTCPPortRanges = config.networking.firewall.allowedTCPPortRanges;
-
-    allowedUDPPorts = config.networking.firewall.allowedUDPPorts;
-    allowedUDPPortRanges = config.networking.firewall.allowedUDPPortRanges;
-  };
+  # when firewall is enabled it breaks my k3s setup.
+  # TODO: Fix firewall, remove the next line and uncomment the rest.
+  networking.firewall.enable = false;
+  # networking.firewall.interfaces."snbond0" = {
+  #   allowedTCPPorts = config.networking.firewall.allowedTCPPorts;
+  #   allowedTCPPortRanges = config.networking.firewall.allowedTCPPortRanges;
+  #
+  #   allowedUDPPorts = config.networking.firewall.allowedUDPPorts;
+  #   allowedUDPPortRanges = config.networking.firewall.allowedUDPPortRanges;
+  # };
 
   # This option defines the first version of NixOS you have installed on this particular machine,
   # and is used to maintain compatibility with application data (e.g. databases) created on older NixOS versions.
