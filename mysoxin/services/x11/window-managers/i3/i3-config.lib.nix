@@ -57,8 +57,8 @@ in
     bars = [ ];
 
     fonts = {
-      names = [ "pango:Source Code Pro for Powerline" ];
-      size = 8.0;
+      names = [ "pango:0xProto Nerd Font" ];
+      size = 12.0;
     };
 
     window = {
