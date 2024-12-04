@@ -267,8 +267,7 @@ in
       "${meta}+${alt}+c" = "exec CM_LAUNCHER=rofi ${getBin pkgs.clipmenu}/bin/clipmenu && ${getBin pkgs.xdotool}/bin/xdotool key Shift+Insert";
 
       # Terminals
-      "${meta}+Return" = "exec ${nosid} ${getBin pkgs.wezterm}/bin/wezterm";
-      "${meta}+${shift}+Return" = "exec ${getBin pkgs.termite}/bin/termite";
+      "${meta}+Return" = "exec ${getBin pkgs.termite}/bin/termite";
 
       # Modes
       "${meta}+${alt}+r" = "mode resize";
@@ -341,7 +340,7 @@ in
         notification = false;
       }
       {
-        command = "i3-msg \"workspace personal; exec ${nosid} ${getBin pkgs.wezterm}/bin/wezterm\"";
+        command = "i3-msg \"workspace personal; exec ${nosid} ${getBin pkgs.termite}/bin/termite\"";
         always = false;
         notification = true;
       }

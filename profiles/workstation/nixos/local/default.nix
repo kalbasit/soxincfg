@@ -158,7 +158,6 @@ in
         starship.enable = true;
         termite.enable = true;
         tmux.enable = true;
-        wezterm.enable = true;
         zsh.enable = true;
       };
 
