@@ -66,7 +66,7 @@ in
         # layout but I still need NeoVim and everything else to configure
         # themselves as if it's Colemak layout as they rely on Soxin's
         # configuration for that.
-        services.xserver.xkbVariant = mkForce "";
+        services.xserver.xkb.variant = mkForce "";
         console.keyMap = mkForce "us";
       }
     ))

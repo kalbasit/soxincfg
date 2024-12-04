@@ -23,7 +23,8 @@ in
 
   config = mkIf cfg.enable (mkMerge [
     (optionalAttrs (mode == "NixOS") {
-      sound.enable = true;
+      # TODO: Possibly replace pulseaudio with pipewire but for now, in order to build on 24.11 and not sure why it's enabled in the first place.
+      services.pipewire.enable = false;
 
       hardware = {
         pulseaudio = {
