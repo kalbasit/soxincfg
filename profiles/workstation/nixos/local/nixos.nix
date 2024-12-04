@@ -34,9 +34,11 @@ in
 
   # Require Password and U2F to login
   security.pam.u2f = {
-    enable = true;
-    cue = true;
     control = "required";
+    settings = {
+      enable = true;
+      cue = true;
+    };
   };
 
   # Redshift

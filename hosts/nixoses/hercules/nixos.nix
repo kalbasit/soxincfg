@@ -57,7 +57,7 @@ in
   soxin.hardware.intelBacklight.enable = true;
 
   # store u2f for onlykey
-  security.pam.u2f.authFile = pkgs.writeText "u2f-mappings" ''
+  security.pam.u2f.settings.authFile = pkgs.writeText "u2f-mappings" ''
     yl:*,4uA7dsphf1nPxyQ6ncgKrOGi3qwGxHnzq9bweBisoz1Dl5ocpv9r8EnJX/GOWGrNtoXodSlSAhZ25CZOghx0Xw==,es256,+presence
   '';
 

@@ -87,7 +87,8 @@ in
       android-tools
       arduino
       blender # 3d modeling software
-      cura # slicing software for 3d printers
+      # TODO: Re-enable once it builds again. It depends on libarcus and it has been marked as broken.
+      # cura # slicing software for 3d printers
       dnsutils # for dig
       element-desktop # Element client
       esptool

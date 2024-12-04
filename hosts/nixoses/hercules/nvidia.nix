@@ -25,10 +25,9 @@ in
     initrd.kernelModules = [ "nvidia" ];
     blacklistedKernelModules = [ "nouveau" ];
   };
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true; # Must be enabled
-    driSupport = true;
-    driSupport32Bit = true;
+    enable32Bit = true;
   };
   services.xserver = {
     videoDrivers = [ "nvidia" ];

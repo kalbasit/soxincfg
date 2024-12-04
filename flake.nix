@@ -6,11 +6,11 @@
     flake-utils-plus.url = "github:gytis-ivaskevicius/flake-utils-plus/v1.5.1";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs.url = "github:NixOS/nixpkgs/release-24.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/release-24.11";
     nur.url = "github:nix-community/NUR";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.05";
+      url = "github:nix-community/home-manager/release-24.11";
       inputs = {
         nixpkgs.follows = "nixpkgs";
       };
@@ -25,7 +25,7 @@
 
     nixvim = {
       url = "github:kalbasit/nixvim";
-      # NOTE: nixvim fails to build on NixOS 24.05
+      # NOTE: nixvim fails to build on NixOS 24.11
       # inputs. nixpkgs.follows = "nixpkgs";
     };
 
@@ -42,7 +42,8 @@
     };
 
     soxin = {
-      url = "github:SoxinOS/soxin";
+      # url = "github:SoxinOS/soxin";
+      url = "github:SoxinOS/soxin/fix-for-24.11";
       inputs = {
         darwin.follows = "darwin";
         deploy-rs.follows = "deploy-rs";
@@ -99,7 +100,7 @@
           };
 
           # Yep, you see it first folks - you can patch nixpkgs!
-          patches = [ ./patches/fix-pubkey-lookup.patch ];
+          patches = [ ];
         };
       };
 

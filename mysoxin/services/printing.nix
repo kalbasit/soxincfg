@@ -57,7 +57,7 @@ in
 
       services.avahi = mkIf cfg.autoDiscovery {
         enable = true;
-        nssmdns = true;
+        nssmdns4 = true;
       };
     })
   ]);
