@@ -14,7 +14,7 @@ fi
 host="$1"
 readonly host
 
-hm_generation="$(nix build --print-out-paths ".#homeConfigurations.${host}.activationPackage")"
+hm_generation="$(nom build --print-out-paths ".#homeConfigurations.${host}.activationPackage")"
 readonly hm_generation
 
 echo "Install the hm generation link and the installation script"
