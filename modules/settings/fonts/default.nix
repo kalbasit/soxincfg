@@ -10,19 +10,17 @@ with lib;
 let
   cfg = config.soxincfg.settings.fonts;
   packages = with pkgs; [
-    corefonts
+    material-design-icons
+    font-awesome
 
-    powerline-fonts
-    twemoji-color-font
-
-    noto-fonts
-    noto-fonts-extra
-    noto-fonts-emoji
-    noto-fonts-cjk-sans
-
-    b612
-    symbola
-    vegur
+    (nerdfonts.override {
+      fonts = [
+        # symbols icon only
+        "NerdFontsSymbolsOnly"
+        # Characters
+        "0xProto"
+      ];
+    })
   ];
 in
 {
