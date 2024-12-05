@@ -59,6 +59,7 @@ in
       pv # generic progress of data through a pipeline
       scrcpy # mirror Android device via USB
       screen # needed to open up terminal devices
+      sqlitebrowser # graphical sqlite3 client
       unzip
     ];
   };
