@@ -42,8 +42,7 @@
     };
 
     soxin = {
-      # url = "github:SoxinOS/soxin";
-      url = "github:SoxinOS/soxin/fix-for-24.11";
+      url = "github:SoxinOS/soxin";
       inputs = {
         darwin.follows = "darwin";
         deploy-rs.follows = "deploy-rs";
