@@ -25,6 +25,7 @@
   boot.extraModulePackages = [ ];
 
   # Allow Docker to access Nvidia containers
+  hardware.nvidia.open = false;
   hardware.nvidia-container-toolkit.enable = true;
   services.xserver.videoDrivers = [ "nvidia" ]; # enable Nvidia on the system
 
