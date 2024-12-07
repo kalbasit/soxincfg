@@ -66,6 +66,7 @@ in
       scrcpy # mirror Android device via USB
       screen # needed to open up terminal devices
       signal-cli
+      sqlitebrowser # graphical sqlite3 client
       todoist
       unzip
       weechat
