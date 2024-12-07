@@ -5,9 +5,6 @@
   pkgs,
   ...
 }:
-let
-  sopsFile = ./secrets.sops.yaml;
-in
 {
   imports = [
     soxincfg.nixosModules.profiles.server
@@ -29,12 +26,6 @@ in
       speedtest-cli
     ];
 
-  sops.secrets = {
-    "networking.wireless.environmentFile" = {
-      inherit sopsFile;
-    };
-  };
-
   # Don't allow systemd to stop the Tailscale service because that wreck havoc
   # on my network and containers.
   systemd.services.tailscaled.restartIfChanged = false;
@@ -45,17 +36,6 @@ in
   # interface. It's possible that I need to define that on the interface
   # directly.
   networking.firewall.enable = false;
-
-  # define the networking by hand
-  networking.wireless = {
-    enable = true;
-    environmentFile = config.sops.secrets."networking.wireless.environmentFile".path;
-    networks = {
-      "Nasreddine-ServerNetwork0" = {
-        psk = "@PSK_NASREDDINE_SERVERNETWORK0@";
-      };
-    };
-  };
 
   system.stateVersion = "23.05";
 }
