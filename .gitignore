@@ -1,9 +1,6 @@
 *.qcow2
+/.pre-commit-config.yaml
 /result*
 
 # soxin is used as a symlink to allow me to work on both projects in one editor
 /soxin
-
-# work related stuff
-/profiles/work/secret-store
-/.pre-commit-config.yaml
