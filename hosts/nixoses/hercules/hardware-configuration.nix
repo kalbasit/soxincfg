@@ -362,16 +362,6 @@ in
         "uid=${builtins.toString config.users.users.yl.uid}"
       ];
     };
-
-    # SoxinCFG secrets
-    "/home/yl/code/repositories/github.com/kalbasit/soxincfg/profiles/work/secret-store" = {
-      device = "/home/yl/code/repositories/keybase/private/ylcodes/secrets/soxincfg/work/secret-store";
-      options = [ "bind" ];
-      depends = [
-        "/home/yl"
-        "/home/yl/code"
-      ];
-    };
   };
 
   swapDevices = [ { device = swapDevice; } ];

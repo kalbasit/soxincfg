@@ -1,5 +1,6 @@
 {
   config,
+  inputs,
   soxincfg,
   nixos-hardware,
   pkgs,
@@ -24,7 +25,7 @@ in
 
     ./hardware-configuration.nix
     ./win10.nix
-  ] ++ (soxincfg.nixosModules.profiles.work.imports { hostName = "hades"; });
+  ] ++ (inputs.secret-flake-work.importForHostname { hostName = "hades"; });
 
   services.foldingathome = {
     daemonNiceLevel = 19;

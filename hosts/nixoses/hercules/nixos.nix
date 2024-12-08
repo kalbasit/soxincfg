@@ -1,5 +1,6 @@
 {
   config,
+  inputs,
   soxincfg,
   nixos-hardware,
   pkgs,
@@ -25,7 +26,7 @@ in
     ./hardware-configuration.nix
     ./nvidia.nix
     ./spectrum.nix
-  ] ++ (soxincfg.nixosModules.profiles.work.imports { hostName = "hercules"; });
+  ] ++ (inputs.secret-flake-work.importForHostname { hostName = "hercules"; });
 
   # TODO: Remove this once I can work out:
   #   - How to ssh into my machine if U2F is required.

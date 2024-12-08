@@ -6,15 +6,6 @@ readonly action="${1:-}"
 readonly host="${2:-$(hostname)}"
 
 readonly root_dir="$(cd $(dirname "$BASH_SOURCE[0]")/.. && pwd)"
-readonly work_secret_store_path="$root_dir/profiles/work/secret-store"
-
-if [[ -L "$work_secret_store_path" ]]; then
-    readonly rp="$(readlink -f "$root_dir/profiles/work/secret-store")"
-    trap "rm -rf $work_secret_store_path && ln -nsf $rp $work_secret_store_path" EXIT
-
-    rm -rf "$work_secret_store_path"
-    cp -r "$rp" "$work_secret_store_path"
-fi
 
 isDarwin() {
 	local os="$(uname -s)"
@@ -82,17 +73,17 @@ case "${action}" in
     build)
         >&2 echo "Building $host"
         if isNixOS; then
-            nom build "path:.#nixosConfigurations.${host}.config.system.build.toplevel"
+            nom build ".#nixosConfigurations.${host}.config.system.build.toplevel"
         elif isDarwin; then
-            nom build "path:.#darwinConfigurations.${host}.system" --show-trace
+            nom build ".#darwinConfigurations.${host}.system" --show-trace
         else
-            nom build "path:.#homeConfigurations.${host}.activationPackage"
+            nom build ".#homeConfigurations.${host}.activationPackage"
         fi
         ;;
     test)
         >&2 echo "Testing $host"
         if isNixOS; then
-            nixos-rebuild --use-remote-sudo --flake "path:.#${host}" test # --show-trace
+            nixos-rebuild --use-remote-sudo --flake ".#${host}" test # --show-trace
         elif isDarwin; then
             >&2 echo test is not support on nix-darwin
             exit 1
@@ -104,7 +95,7 @@ case "${action}" in
     switch)
         >&2 echo "Switching $host"
         if isNixOS; then
-            nixos-rebuild --use-remote-sudo --flake "path:.#${host}" switch # --show-trace
+            nixos-rebuild --use-remote-sudo --flake ".#${host}" switch # --show-trace
         elif isDarwin; then
             # steps taken from https://github.com/LnL7/nix-darwin/blob/8b6ea26d5d2e8359d06278364f41fbc4b903b28a/pkgs/nix-tools/darwin-rebuild.sh
 
@@ -119,14 +110,14 @@ case "${action}" in
             # 3. call darwin-rebuild activate
             ./result/sw/bin/darwin-rebuild activate
         else
-            home-manager switch --flake "path:.#${host}"
-            $(nix path-info "path:.#homeConfigurations.${host}.activationPackage")/activate
+            home-manager switch --flake ".#${host}"
+            $(nix path-info ".#homeConfigurations.${host}.activationPackage")/activate
         fi
         ;;
     boot)
         >&2 echo "Booting $host"
         if isNixOS; then
-            nixos-rebuild --use-remote-sudo --flake "path:.#${host}" boot # --show-trace
+            nixos-rebuild --use-remote-sudo --flake ".#${host}" boot # --show-trace
         elif isDarwin; then
             >&2 echo boot is not support on nix-darwin
             exit 1

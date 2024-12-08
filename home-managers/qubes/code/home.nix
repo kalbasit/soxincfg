@@ -1,13 +1,8 @@
 {
-  config,
-  pkgs,
-  home-manager,
   lib,
   soxincfg,
   ...
 }:
-
-with lib;
 
 {
   imports = [

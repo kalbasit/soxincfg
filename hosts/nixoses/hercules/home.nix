@@ -4,6 +4,7 @@
   config,
   pkgs,
   home-manager,
+  inputs,
   lib,
   ...
 }:
@@ -14,7 +15,7 @@ with lib;
   imports = [
     soxincfg.nixosModules.profiles.myself
     soxincfg.nixosModules.profiles.workstation.nixos.local
-  ] ++ (soxincfg.nixosModules.profiles.work.imports { hostName = "hercules"; });
+  ] ++ (inputs.secret-flake-work.importForHostname { hostName = "hercules"; });
 
   # Setup the name of the wireless interface in Polybar
   soxin.services.xserver.windowManager.bar.modules.network.wlan = singleton "wlp110s0";
