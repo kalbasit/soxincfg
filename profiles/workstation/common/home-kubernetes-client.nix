@@ -1,6 +1,4 @@
 {
-  config,
-  lib,
   pkgs,
   ...
 }:
@@ -17,6 +15,7 @@
     pkgs.kubespy
     pkgs.kubetail
     pkgs.kubeval
+    pkgs.kustomize
   ];
 
   programs.zsh.shellAliases = {
