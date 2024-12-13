@@ -160,10 +160,6 @@ in
           defaultBranch = "main";
         };
 
-        log = {
-          showSignature = true;
-        };
-
         merge = {
           log = true;
           tool = "vimdiff";
