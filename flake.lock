@@ -847,10 +847,13 @@
         ]
       },
       "locked": {
-        "lastModified": 1734479611,
-        "narHash": "sha256-uI27sfLfcYGyhHSWLhobu1tZ1MP5ErtD/mBPLClsxwo=",
-        "path": "/home/user/code/repositories/keybase/private/ylcodes/secret-flake-work",
-        "type": "path"
+        "lastModified": 1733623108,
+        "narHash": "sha256-7pa14l8ZaW64h3dYu1xxMmrSEZk4Aepu94RovqGSXTI=",
+        "ref": "refs/heads/master",
+        "rev": "e1a811a800a4504aedaccee23403bf5bf411a092",
+        "revCount": 40,
+        "type": "git",
+        "url": "file:///home/yl/code/repositories/keybase/private/ylcodes/secret-flake-work"
       },
       "original": {
         "id": "secret-flake-work",
