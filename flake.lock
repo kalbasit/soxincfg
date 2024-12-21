@@ -665,11 +665,11 @@
         "pre-commit-hooks": "pre-commit-hooks"
       },
       "locked": {
-        "lastModified": 1734561137,
-        "narHash": "sha256-mfZRFe6M07Y3EmUOHvYYb9CFgirgoa9MZjtfUmIw0c8=",
+        "lastModified": 1734807295,
+        "narHash": "sha256-Q+5SLgbwKiHqgkNZp5DQM0dh9s0kI5xd7VayUBd/n8w=",
         "owner": "kalbasit",
         "repo": "nixvim",
-        "rev": "be11b2fbc12dbeda1e166d8710e5a9c79dc1cf90",
+        "rev": "db449009e8d03690144408b5aa90413541580231",
         "type": "github"
       },
       "original": {
