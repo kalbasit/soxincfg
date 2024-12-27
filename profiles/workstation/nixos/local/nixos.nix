@@ -44,7 +44,7 @@ in
   # Redshift
   services.redshift = {
     brightness.day = "1.0";
-    brightness.night = "0.6";
+    brightness.night = "1.0";
     enable = true;
     temperature.day = 5900;
     temperature.night = 3700;
