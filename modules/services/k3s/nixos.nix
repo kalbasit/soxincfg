@@ -31,6 +31,8 @@ in
 
         1883 # MQTT
 
+        9100 # Prometheus
+
         10250 # Kubelet metrics
       ]
       ++ optionals (cfg.role == "server") [
