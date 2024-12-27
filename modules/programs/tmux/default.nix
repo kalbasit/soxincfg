@@ -168,6 +168,7 @@ in
           logging
           prefix-highlight
           fzf-tmux-url
+          tmux-thumbs
         ];
       };
     })
