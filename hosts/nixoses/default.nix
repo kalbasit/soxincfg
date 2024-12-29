@@ -124,6 +124,24 @@ mapAttrs
         };
       };
 
+    laptop-server-x86-4 =
+      let
+        system = "x86_64-linux";
+      in
+      {
+        inherit channelName system;
+        modules = [ ./laptop-cluster/laptop-server-x86-4/nixos.nix ];
+
+        deploy = {
+          hostname = "laptop-server-x86-4.bigeye-bushi.ts.net";
+          profiles.system = {
+            sshUser = "root";
+            user = "root";
+            path = deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.laptop-server-x86-4;
+          };
+        };
+      };
+
     prometheus =
       let
         system = "x86_64-linux";
