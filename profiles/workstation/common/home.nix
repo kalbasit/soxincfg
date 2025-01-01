@@ -44,6 +44,7 @@ in
       gnugrep
       gnupg
       go
+      graphite-cli
       hexyl # hex viewer with nice colors
       imagemagick # for convert
       inetutils # for telnet
