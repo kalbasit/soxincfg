@@ -95,7 +95,6 @@
                 # inherit packages from unstable.
                 debootstrap
                 devbox
-                graphite-cli
                 protonvpn-gui
                 ;
             })
