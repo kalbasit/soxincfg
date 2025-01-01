@@ -7,11 +7,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1735478292,
-        "narHash": "sha256-Ys9pSP9ch0SthhpbjnkCSJ9ZLfaNKnt/dcy7swjmS1A=",
+        "lastModified": 1735685839,
+        "narHash": "sha256-62xAPSs5VRZoPH7eRanUn5S5vZEd+8vM4bD5I+zxokc=",
         "owner": "LnL7",
         "repo": "nix-darwin",
-        "rev": "71a3a075e3229a7518d76636bb762aef2bcb73ac",
+        "rev": "6a1fdb2a1204c0de038847b601cff5012e162b5e",
         "type": "github"
       },
       "original": {
@@ -611,11 +611,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1735603999,
-        "narHash": "sha256-yQPkdkRY2qW8yD6XQPPrtoXz/5+rT0rNh1HpA+0thEo=",
+        "lastModified": 1735685556,
+        "narHash": "sha256-H/N85UY0AicQsLzdlxr+KUPMoABk4AZl71GtqpoHHyg=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "45d5d08a58d023743d8920354179ed3bffb853f8",
+        "rev": "69d73692cf69f45390b77c98982618b01ba94d1d",
         "type": "github"
       },
       "original": {
@@ -714,11 +714,11 @@
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1735616682,
-        "narHash": "sha256-9Vm7xTjCpgf9f8WTQMVmL2Orr7hma2lr+FUBO9bf44g=",
+        "lastModified": 1735714346,
+        "narHash": "sha256-/M/83RHGZaGGapqAnCfKC6jLPm9+usQaxQ9/BuSmnu0=",
         "owner": "nix-community",
         "repo": "NUR",
-        "rev": "69511c5b411995a238d2ecb0409d7f018d4a05e4",
+        "rev": "0dae436ca5421a4e90bc174bec823792d83354df",
         "type": "github"
       },
       "original": {
@@ -847,10 +847,13 @@
         ]
       },
       "locked": {
-        "lastModified": 1735273804,
-        "narHash": "sha256-VvcgUqBs+W6tVYRrmBdaiVC3RX+t9+zpXge+jmZmRlA=",
-        "path": "/home/user/code/repositories/keybase/private/ylcodes/secret-flake-work",
-        "type": "path"
+        "lastModified": 1733623108,
+        "narHash": "sha256-7pa14l8ZaW64h3dYu1xxMmrSEZk4Aepu94RovqGSXTI=",
+        "ref": "refs/heads/master",
+        "rev": "e1a811a800a4504aedaccee23403bf5bf411a092",
+        "revCount": 40,
+        "type": "git",
+        "url": "file:///home/yl/code/repositories/keybase/private/ylcodes/secret-flake-work"
       },
       "original": {
         "id": "secret-flake-work",
