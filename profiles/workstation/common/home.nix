@@ -110,6 +110,7 @@ in
       slack
       smartmontools
       synology-drive-client
+      vlc
       whatsapp-for-linux
       xfce.thunar
       xfce.thunar-archive-plugin
