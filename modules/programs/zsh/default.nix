@@ -25,9 +25,6 @@ let
 
           rm -f $out/default.nix
 
-          substituteInPlace $out/c \
-            --subst-var-by archiver_bin ${getBin archiver}/bin/arc
-
           substituteInPlace $out/gcim \
             --subst-var-by git_bin ${getBin git}/bin/git
 
@@ -57,9 +54,6 @@ let
 
           substituteInPlace $out/vim_clean_swap \
             --subst-var-by vim_bin ${getBin vim}/bin/vim
-
-          substituteInPlace $out/x \
-            --subst-var-by archiver_bin ${getBin archiver}/bin/arc
 
           substituteInPlace $out/xmlpp \
             --subst-var-by xmllint_bin ${getBin libxml2Python}/bin/xmllint
