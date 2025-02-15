@@ -103,6 +103,7 @@ in
       kdenlive # video editing
       libreoffice
       mbuffer # memory buffer within pipeline
+      mplayer
       obs-studio # video recording
       protonvpn-gui
       quickemu
