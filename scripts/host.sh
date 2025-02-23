@@ -43,7 +43,7 @@ isSupported() {
     if [[ -f /etc/os-release ]]; then
         local os="$(awk -F= '/^ID=/ {print $2}' /etc/os-release | tr -d '\n')"
         case "$os" in
-            nixos|debian)
+            nixos|debian|ubuntu)
                 return 0
                 ;;
             *)
