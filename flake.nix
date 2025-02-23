@@ -118,8 +118,8 @@
       };
 
       nixosModules = {
-        soxin = import ./mysoxin/soxin.nix; # TODO: Get rid of this!
         profiles = import ./profiles;
+        soxin = import ./mysoxin/soxin.nix; # TODO: Get rid of this!
         soxincfg = import ./modules;
       };
 
