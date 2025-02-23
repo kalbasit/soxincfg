@@ -1,1 +1,4 @@
-{ local = import ./local; }
+{
+  local = import ./local;
+  remote = import ./remote;
+}
