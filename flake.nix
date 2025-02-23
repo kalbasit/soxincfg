@@ -75,15 +75,13 @@
       ...
     }:
     let
+      inherit (flake-utils-plus.lib) flattenTree;
+
       # Enable deploy-rs support
       withDeploy = true;
 
       # Enable sops support
       withSops = true;
-
-      inherit (nixpkgs) lib;
-      inherit (lib) optionalAttrs recursiveUpdate singleton;
-      inherit (flake-utils-plus.lib) flattenTree;
 
       # Channel definitions. `channels.<name>.{input,overlaysBuilder,config,patches}`
       channels = {
@@ -119,11 +117,10 @@
         permittedInsecurePackages = [ ];
       };
 
-      nixosModules = (import ./modules) // {
+      nixosModules = {
         soxin = import ./mysoxin/soxin.nix; # TODO: Get rid of this!
-        soxincfg = import ./modules/soxincfg.nix;
         profiles = import ./profiles;
-
+        soxincfg = import ./modules;
       };
 
       nixosModule = nixosModules.soxincfg;
