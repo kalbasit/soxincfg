@@ -1,12 +1,11 @@
 {
   config,
-  pkgs,
   lib,
   ...
 }:
 
 let
-  inherit (lib) mkIf mkMerge;
+  inherit (lib) mkIf;
 
   cfg = config.soxincfg.programs.pet;
 in
@@ -34,38 +33,17 @@ in
         #
 
         {
-          description = "nixos-system-list-generations";
-          command = "sudo nix-env -p /nix/var/nix/profiles/system --list-generations";
-          tag = [ "nixos" ];
-        }
-
-        {
-          description = "nixos-system-delete-old-generations";
-          command = "sudo nix-env -p /nix/var/nix/profiles/system --delete-generations old";
-          tag = [ "nixos" ];
-        }
-
-        {
           description = "nix-collect-garbage";
-          command = "sudo nix-collect-garbage --delete-older-than <days>d && nix-store --gc && sudo nixos-rebuild switch";
+          command = "sudo nix-collect-garbage --delete-older-than <days>d";
           tag = [ "nix" ];
         }
 
         {
           description = "nix-diff /run/current-system result";
-          command = "nix run nixpkgs.nix-diff -c nix-diff \"$(nix-store -q --deriver /run/current-system)\" \"$(nix-store -q --deriver result)\"";
+          command = "nix run nixpkgs#nix-diff \"$(nix-store -q --deriver /run/current-system)\" \"$(nix-store -q --deriver result)\"";
           tag = [
             "nix"
             "nix-diff"
-          ];
-        }
-
-        {
-          description = "nix-review pr";
-          command = "nix-review pr <prnumber>";
-          tag = [
-            "nix"
-            "nix-review"
           ];
         }
 
