@@ -34,13 +34,6 @@
       url = "github:cachix/pre-commit-hooks.nix";
     };
 
-    private-flake = {
-      url = "flake:private-flake";
-      inputs = {
-        nixpkgs.follows = "nixpkgs";
-      };
-    };
-
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs = {
