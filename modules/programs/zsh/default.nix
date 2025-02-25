@@ -35,12 +35,6 @@ let
           substituteInPlace $out/jspp \
             --subst-var-by js-beautify_bin ${getBin python3Packages.jsbeautifier}/bin/js-beautify
 
-          substituteInPlace $out/kcc \
-            --subst-var-by kubectl ${getBin kubectl}/bin/kubectl
-
-          substituteInPlace $out/kcn \
-            --subst-var-by kubectl ${getBin kubectl}/bin/kubectl
-
           substituteInPlace $out/sapg \
             --subst-var-by apg_bin ${getBin apg}/bin/apg
 

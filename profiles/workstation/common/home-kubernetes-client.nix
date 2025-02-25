@@ -20,5 +20,7 @@
 
   programs.zsh.shellAliases = {
     kc = "kubecolor";
+    kcc = "kubectx";
+    kcn = "kubens";
   };
 }
