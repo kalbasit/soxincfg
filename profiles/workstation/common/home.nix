@@ -28,7 +28,6 @@ in
       audacity
       awscli2
       binutils # for strings
-      bitwarden-cli
       # TODO: build is failing on darwin because the dependency python3.11-agate-dbf-0.2.3 is failing.
       #csvkit
       devbox
@@ -88,6 +87,7 @@ in
       android-studio
       android-tools
       arduino
+      bitwarden-cli
       blender # 3d modeling software
       # TODO: Re-enable once it builds again. It depends on libarcus and it has been marked as broken.
       # cura # slicing software for 3d printers
