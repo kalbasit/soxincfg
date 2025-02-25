@@ -19,11 +19,6 @@ in
   config = mkIf cfg.enable {
     home.packages = [ pkgs.dbeaver-bin ];
 
-    sops.age = mkIf isDarwin {
-      generateKey = true;
-      keyFile = "${yl_home}/.local/share/soxincfg/sops/age.key";
-    };
-
     sops.secrets = mkIf isDarwin {
       credentials-config-json = {
         inherit sopsFile;

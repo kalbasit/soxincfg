@@ -4,11 +4,8 @@
   config,
   pkgs,
   home-manager,
-  lib,
   ...
 }:
-
-with lib;
 
 {
   imports = [
@@ -17,4 +14,6 @@ with lib;
   ];
 
   home.stateVersion = "23.05";
+
+  sops.age.keyFile = "${config.home.homeDirectory}/.local/share/soxincfg/sops/age.key";
 }
