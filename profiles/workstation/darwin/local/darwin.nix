@@ -66,7 +66,7 @@
 
           # Don’t group windows by application in Mission Control
           # (i.e. use the old Exposé behavior instead)
-          expose-group-by-app = false;
+          expose-group-apps = false;
 
           # Don’t show Dashboard as a Space
           dashboard-in-overlay = true;
@@ -174,12 +174,6 @@
           "com.apple.springing.delay" = 0.0;
         };
 
-        keyboard = {
-          # Remap CapsLock to Control
-          enableKeyMapping = true;
-          remapCapsLockToControl = true;
-        };
-
         trackpad = {
           # Trackpad: enable tap to click
           Clicking = true;
@@ -197,6 +191,12 @@
         # Save screenshots to the desktop
         screencapture.location = "$HOME/Desktop";
 
+      };
+
+      keyboard = {
+        # Remap CapsLock to Control
+        enableKeyMapping = true;
+        remapCapsLockToControl = true;
       };
 
       # TODO: Rewrite as much of these as possible using nix-darwin
