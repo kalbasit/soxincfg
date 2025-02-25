@@ -100,7 +100,7 @@ in
   };
 
   config = mkIf cfg.enable (mkMerge [
-    (optionalAttrs (mode == "NixOS" || mode == "home-manager") {
+    {
       soxin.programs.tmux = {
         inherit (cfg) enable;
 
@@ -111,34 +111,47 @@ in
             # Settings
             #
 
+            # tmux messages are displayed for 4 seconds
+            set-option -g display-time 4000
+
             # don't allow the terminal to rename windows
             set-window-option -g allow-rename off
 
             # show the current command in the border of the pane
-            set -g pane-border-status "top"
-            set -g pane-border-format "#P: #{pane_current_command}"
+            set-option -g pane-border-status "top"
+            set-option -g pane-border-format "#P: #{pane_current_command}"
 
             # Terminal emulator window title
-            set -g set-titles on
-            set -g set-titles-string '#S:#I.#P #W'
+            set-option -g set-titles on
+            set-option -g set-titles-string '#S:#I.#P #W'
 
             # Status Bar
             set-option -g status on
 
+            # refresh 'status-left' and 'status-right' more often
+            set-option -g status-interval 5
+
+            # emacs key bindings in tmux command prompt (prefix + :) are better than
+            # vi keys, even for vim users
+            set-option -g status-keys emacs
+
+            # focus events enabled for terminals that support them
+            set-option -g focus-events on
+
             # Notifying if other windows has activities
             #setw -g monitor-activity off
-            set -g visual-activity on
+            set-option -g visual-activity on
 
             # Trigger the bell for any action
             set-option -g bell-action any
             set-option -g visual-bell off
 
             # No Mouse!
-            set -g mouse off
+            set-option -g mouse off
 
             # Do not update the environment, keep everything from what it was
             # started with except for my ZSH_PROFILE.
-            set -g update-environment "ZSH_PROFILE"
+            set-option -g update-environment "ZSH_PROFILE"
 
             # Remove internal environment variables of nix-darwin/home-manager
             setenv -gu __NIX_DARWIN_SET_ENVIRONMENT_DONE
@@ -165,7 +178,11 @@ in
           tmux-thumbs
         ];
       };
-    })
+    }
+
+    # turn off sensibleOnTop
+    # TODO: Remove this after 24.11 because it's now defaults to false
+    (optionalAttrs (mode == "home-manager") { programs.tmux.sensibleOnTop = false; })
 
     (optionalAttrs (mode == "NixOS" || mode == "home-manager") {
       programs.tmux = {
