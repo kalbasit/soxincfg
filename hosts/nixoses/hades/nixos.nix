@@ -25,7 +25,7 @@ in
 
     ./hardware-configuration.nix
     ./win10.nix
-  ] ++ (inputs.secret-flake-work.importForHostname { hostName = "hades"; });
+  ];
 
   services.foldingathome = {
     daemonNiceLevel = 19;

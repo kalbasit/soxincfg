@@ -26,7 +26,7 @@ in
     ./hardware-configuration.nix
     ./nvidia.nix
     ./spectrum.nix
-  ] ++ (inputs.secret-flake-work.importForHostname { hostName = "hercules"; });
+  ];
 
   # TODO: Remove this once I can work out:
   #   - How to ssh into my machine if U2F is required.
