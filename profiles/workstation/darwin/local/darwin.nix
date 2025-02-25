@@ -10,31 +10,11 @@
         "arc" # Arc Browser
         "charles"
         "dbeaver-community" # Database GUI
-        "discord"
-        "dosbox" # MS-DOS game emulator
-        "flotato" # Makes applications of any website.
-        "gimp"
-        "goland"
-        "google-chrome"
-        "homebrew/cask-fonts/font-sf-pro" # SF Pro used by SketchyBar
+        "font-0xproto-nerd-font" # Nerd font
         "iterm2"
         "keybase"
-        "postico" # Yet another GUI for Postgres
         "postman" # API
-        "raycast" # Alfred replacement
-        "rectangle" # macOS window manager
-        "sequel-pro" # MySQL frontend supporting connections through a tunnel
-        "signal"
-        "slack"
-        "synology-drive"
-        "tailscale"
-        "viscosity" # VPN Application
-        "vlc"
-        "whatsapp" # WhatsApp application
-        "zoom"
       ];
-
-      taps = [ "homebrew/cask-fonts" ];
     };
 
     system = {
