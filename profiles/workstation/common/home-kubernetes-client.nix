@@ -6,6 +6,7 @@
 {
   home.packages = [
     pkgs.argocd
+    pkgs.k9s
     pkgs.kubecolor
     pkgs.kubeconform
     pkgs.kubectl
