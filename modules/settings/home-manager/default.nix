@@ -10,51 +10,65 @@ let
   inherit (lib) mkIf optionalAttrs;
 in
 optionalAttrs (mode == "home-manager") {
-  home.activation.aws-credentials = mkIf (config.sops.secrets != { }) (
-    lib.hm.dag.entryAfter [ "setupLaunchAgents" ] ''
+  home.activation.sops-nix-post = mkIf (config.sops.secrets != { }) (
+    lib.hm.dag.entryAfter [ "sops-nix" ] ''
       isDarwin() {
-        local _soxin_aws_configure_os="$(uname -s)"
-        [[ "''${_soxin_aws_configure_os}" == "Darwin" ]]
+        local _os="$(uname -s)"
+        [[ "''${_os}" == "Darwin" ]]
       }
 
       isLinux() {
-        local _soxin_aws_configure_os="$(uname -s)"
-        [[ "''${_soxin_aws_configure_os}" == "Linux" ]]
+        local _os="$(uname -s)"
+        [[ "''${_os}" == "Linux" ]]
       }
 
+      # wait few seconds before we start
+      noteEcho "Waiting for secrets to show up"
+      sleep 3
+
       if isLinux; then
-        _soxin_aws_configure_secretsPath="/run/secrets"
+        _sops_secretsPath="/run/secrets"
       elif isDarwin; then
-        noteEcho "Waiting for secrets..."
-        sleep 3
-        _soxin_aws_configure_secretsPath="${config.xdg.configHome}/sops-nix/secrets"
-        for i in $(seq 1 10)
-        do
-          if [[ ! -d "$_soxin_aws_configure_secretsPath" ]]; then
-            noteEcho "Waiting for secrets..."
-            sleep 1
-          else
-            break
-          fi
-        done
+        _sops_secretsPath="${config.xdg.configHome}/sops-nix/secrets"
       else
-        warnEcho "AWS Configuration: OS '$os' is not supported"
+        warnEcho "SOPS Nix Post: OS is not supported"
         exit 1
       fi
 
-      _soxin_aws_configure_profiles_found=0
-      for sh in "$_soxin_aws_configure_secretsPath"/_aws_configure_profile_*_sh; do
-        _soxin_aws_configure_profiles_found=1
-        # run it in a subshell but only if it's executable
-        if [[ -x $sh ]]; then
-          (PATH=${pkgs.awscli2}/bin:$PATH exec $sh)
-        else
-          warnEcho "$sh is not executable, skipping it."
-        fi
-      done
+      runPost() {
+        local _sh
 
-      if [[ $_soxin_aws_configure_profiles_found -eq 0 ]]; then
-        warnEcho "No AWS configurators were found"
+        if [[ "$(find "$_sops_secretsPath/" -name "_aws_configure_profile_*_sh" | wc -l)" -gt 0 ]]; then
+          for _sh in "$_sops_secretsPath"/_aws_configure_profile_*_sh; do
+            # run it in a subshell but only if it's executable
+            if [[ -x $_sh ]]; then
+              (PATH=${pkgs.awscli2}/bin:$PATH exec $_sh)
+            else
+              warnEcho "$_sh is not executable, skipping it."
+            fi
+          done
+        else
+          warnEcho "No aws configure profile were found"
+        fi
+
+        if [[ "$(find "$_sops_secretsPath/" -name "_kube_configure_profile_*_sh" | wc -l)" -gt 0 ]]; then
+          for _sh in "$_sops_secretsPath"/_kube_configure_profile_*_sh; do
+            # run it in a subshell but only if it's executable
+            if [[ -x $_sh ]]; then
+              (exec $_sh)
+            else
+              warnEcho "$_sh is not executable, skipping it."
+            fi
+          done
+        else
+          warnEcho "No kube configure profile were found"
+        fi
+      }
+
+      if [[ -d "$_sops_secretsPath" ]]; then
+        runPost
+      else
+        warnEcho "No secrets were found"
       fi
     ''
   );
