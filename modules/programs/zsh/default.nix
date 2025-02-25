@@ -128,6 +128,24 @@ let
         less_bin = "${getBin less}/bin/less";
         tput_bin = "${getBin ncurses}/bin/tput";
       }))
+
+      # TODO: Move this to pet once there is a way to put stuff at the bottom
+      (optionalString config.programs.pet.enable ''
+        function pet_select() {
+          BUFFER=$(pet search --query "$LBUFFER")
+          CURSOR=$#BUFFER
+          zle redisplay
+        }
+        function pet_prev() {
+          PREV=$(fc -lrn | head -n 1)
+          sh -c "pet new $(printf %q "$PREV")"
+        }
+        if [[ -o interactive ]]; then
+          zle -N pet_select
+          stty -ixon
+          bindkey '^p' pet_select
+        fi
+      '')
     ];
 in
 {
