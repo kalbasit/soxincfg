@@ -156,13 +156,7 @@ in
             bind s split-window -p 20 -v ${pkgs.nur.repos.kalbasit.swm}/bin/swm tmux switch-client --kill-pane
           ''
           + copyPaste
-          + optionalString (keyboardLayout == "colemak") colemakBindings
-          + optionalString pkgs.stdenv.isLinux ''
-            set  -g default-terminal "tmux-256color"
-          ''
-          + optionalString pkgs.stdenv.isDarwin ''
-            set  -g default-terminal "xterm-256color"
-          '';
+          + optionalString (keyboardLayout == "colemak") colemakBindings;
 
         plugins = with pkgs.tmuxPlugins; [
           logging
@@ -182,6 +176,14 @@ in
         keyMode = "vi";
         secureSocket = pkgs.stdenv.isLinux;
         shortcut = "t";
+
+        terminal =
+          if pkgs.stdenv.isLinux then
+            "tmux-256color"
+          else if pkgs.stdenv.isDarwin then
+            "screen-256color"
+          else
+            "screen";
       };
     })
   ]);
