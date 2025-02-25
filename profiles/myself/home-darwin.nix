@@ -5,11 +5,6 @@ let
   yl_home = config.home.homeDirectory;
 in
 {
-  sops.age = {
-    generateKey = true;
-    keyFile = "${yl_home}/.local/share/soxincfg/sops/age.key";
-  };
-
   sops.secrets = {
     _aws_configure_profile_personal_sh = {
       inherit sopsFile;

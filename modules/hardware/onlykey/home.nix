@@ -51,11 +51,6 @@ in
     { home.packages = [ onlykey-cli ] ++ optionals isLinux [ onlykey ]; }
 
     (mkIf isDarwin {
-      sops.age = {
-        generateKey = true;
-        keyFile = "${yl_home}/.local/share/soxincfg/sops/age.key";
-      };
-
       sops.secrets._ssh_id_ed25519_sk_rk = {
         inherit sopsFile;
         path = "${yl_home}/.ssh/id_ed25519_sk_rk";
