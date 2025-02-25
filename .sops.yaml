@@ -19,122 +19,122 @@ creation_rules:
   - path_regex: hosts/nixoses/hades/[^/]+\.sops[^/]*
     key_groups:
       - pgp:
-        - *user_yl_0x8EBD95DC147755A2
-        - *host_pgp_hades
+          - *user_yl_0x8EBD95DC147755A2
+          - *host_pgp_hades
 
   - path_regex: hosts/nixoses/hercules/[^/]+\.sops[^/]*
     key_groups:
       - pgp:
-        - *user_yl_0x8EBD95DC147755A2
+          - *user_yl_0x8EBD95DC147755A2
         age:
-        - *host_age_hercules
+          - *host_age_hercules
 
   - path_regex: hosts/nixoses/kore/[^/]+\.sops[^/]*
     key_groups:
       - pgp:
-        - *user_yl_0x8EBD95DC147755A2
-        - *host_pgp_kore
+          - *user_yl_0x8EBD95DC147755A2
+          - *host_pgp_kore
 
   - path_regex: hosts/nixoses/prometheus/[^/]+\.sops[^/]*
     key_groups:
       - pgp:
-        - *user_yl_0x8EBD95DC147755A2
-        - *host_pgp_prometheus
+          - *user_yl_0x8EBD95DC147755A2
+          - *host_pgp_prometheus
 
   - path_regex: hosts/nixoses/laptop-server-x86-1/[^/]+\.sops[^/]*
     key_groups:
       - pgp:
-        - *user_yl_0x8EBD95DC147755A2
-        - *host_pgp_laptop_server_x86_1
+          - *user_yl_0x8EBD95DC147755A2
+          - *host_pgp_laptop_server_x86_1
 
   - path_regex: hosts/nixoses/laptop-server-x86-2/[^/]+\.sops[^/]*
     key_groups:
       - pgp:
-        - *user_yl_0x8EBD95DC147755A2
-        - *host_pgp_laptop_server_x86_2
+          - *user_yl_0x8EBD95DC147755A2
+          - *host_pgp_laptop_server_x86_2
 
   - path_regex: hosts/nixoses/laptop-server-x86-3/[^/]+\.sops[^/]*
     key_groups:
       - pgp:
-        - *user_yl_0x8EBD95DC147755A2
-        - *host_pgp_laptop_server_x86_3
+          - *user_yl_0x8EBD95DC147755A2
+          - *host_pgp_laptop_server_x86_3
 
   - path_regex: hosts/nixoses/laptop-server-x86-4/[^/]+\.sops[^/]*
     key_groups:
       - pgp:
-        - *user_yl_0x8EBD95DC147755A2
-        - *host_pgp_laptop_server_x86_4
+          - *user_yl_0x8EBD95DC147755A2
+          - *host_pgp_laptop_server_x86_4
 
   - path_regex: hosts/nixoses/zeus/[^/]+\.sops[^/]*
     key_groups:
       - pgp:
-        - *user_yl_0x8EBD95DC147755A2
-        - *host_pgp_zeus
+          - *user_yl_0x8EBD95DC147755A2
+          - *host_pgp_zeus
 
   - path_regex: hosts/darwins/saturn/[^/]+\.sops[^/]*
     key_groups:
       - pgp:
-        - *user_yl_0x8EBD95DC147755A2
+          - *user_yl_0x8EBD95DC147755A2
         age:
-        - *host_age_saturn
+          - *host_age_saturn
 
   - path_regex: profiles/cluster/laptop/common/[^/]+\.sops[^/]*
     key_groups:
       - pgp:
-        - *user_yl_0x8EBD95DC147755A2
-        - *host_pgp_laptop_server_x86_1
-        - *host_pgp_laptop_server_x86_2
-        - *host_pgp_laptop_server_x86_3
-        - *host_pgp_laptop_server_x86_4
+          - *user_yl_0x8EBD95DC147755A2
+          - *host_pgp_laptop_server_x86_1
+          - *host_pgp_laptop_server_x86_2
+          - *host_pgp_laptop_server_x86_3
+          - *host_pgp_laptop_server_x86_4
 
   - path_regex: profiles/workstation/darwin/(local|remote)/[^/]+\.sops[^/]*
     key_groups:
       - pgp:
-        - *user_yl_0x8EBD95DC147755A2
+          - *user_yl_0x8EBD95DC147755A2
         age:
-        - *host_age_saturn
+          - *host_age_saturn
 
   - path_regex: profiles/workstation/nixos/(local|remote)/[^/]+\.sops[^/]*
     key_groups:
       - pgp:
-        - *user_yl_0x8EBD95DC147755A2
-        - *host_pgp_hades
-        - *host_pgp_kore
-        - *host_pgp_prometheus
-        - *host_pgp_laptop_server_x86_1
-        - *host_pgp_laptop_server_x86_2
-        - *host_pgp_laptop_server_x86_3
-        - *host_pgp_laptop_server_x86_4
-        - *host_pgp_zeus
+          - *user_yl_0x8EBD95DC147755A2
+          - *host_pgp_hades
+          - *host_pgp_kore
+          - *host_pgp_prometheus
+          - *host_pgp_laptop_server_x86_1
+          - *host_pgp_laptop_server_x86_2
+          - *host_pgp_laptop_server_x86_3
+          - *host_pgp_laptop_server_x86_4
+          - *host_pgp_zeus
         age:
-        - *host_age_hercules
+          - *host_age_hercules
 
   - path_regex: profiles/workstation/qubes/local/[^/]+\.sops[^/]*
     key_groups:
       - pgp:
-        - *user_yl_0x8EBD95DC147755A2
+          - *user_yl_0x8EBD95DC147755A2
 
   - path_regex: profiles/myself/[^/]+\.sops[^/]*
     key_groups:
       - pgp:
-        - *user_yl_0x8EBD95DC147755A2
-        - *host_pgp_hades
+          - *user_yl_0x8EBD95DC147755A2
+          - *host_pgp_hades
         age:
-        - *host_age_hercules
-        - *host_age_saturn
+          - *host_age_hercules
+          - *host_age_saturn
 
   - path_regex: modules/.*/[^/]+\.sops[^/]*
     key_groups:
       - pgp:
-        - *user_yl_0x8EBD95DC147755A2
-        - *host_pgp_hades
-        - *host_pgp_kore
-        - *host_pgp_prometheus
-        - *host_pgp_laptop_server_x86_1
-        - *host_pgp_laptop_server_x86_2
-        - *host_pgp_laptop_server_x86_3
-        - *host_pgp_laptop_server_x86_4
-        - *host_pgp_zeus
+          - *user_yl_0x8EBD95DC147755A2
+          - *host_pgp_hades
+          - *host_pgp_kore
+          - *host_pgp_prometheus
+          - *host_pgp_laptop_server_x86_1
+          - *host_pgp_laptop_server_x86_2
+          - *host_pgp_laptop_server_x86_3
+          - *host_pgp_laptop_server_x86_4
+          - *host_pgp_zeus
         age:
-        - *host_age_hercules
-        - *host_age_saturn
+          - *host_age_hercules
+          - *host_age_saturn
