@@ -1,14 +1,9 @@
 {
-  config,
   soxincfg,
   nixos-hardware,
-  pkgs,
-  lib,
   ...
 }:
-let
-  sopsFile = ./secrets.sops.yaml;
-in
+
 {
   imports = [
     soxincfg.nixosModules.profiles.server
