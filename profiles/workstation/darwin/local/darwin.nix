@@ -167,10 +167,6 @@
 
         # Disable the “Are you sure you want to open this application?” dialog
         LaunchServices.LSQuarantine = false;
-
-        # Save screenshots to the desktop
-        screencapture.location = "$HOME/Desktop";
-
       };
 
       keyboard = {
