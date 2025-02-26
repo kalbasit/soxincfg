@@ -195,7 +195,9 @@ in
 
           if [ "$XDG_RUNTIME_DIR" = "" ]; then
             if [ "$(uname -s)" = "Darwin" ]; then
-              export XDG_RUNTIME_DIR="$(getconf DARWIN_USER_TEMP_DIR)"
+              XDG_RUNTIME_DIR="$(getconf DARWIN_USER_TEMP_DIR)"
+              XDG_RUNTIME_DIR="''${XDG_RUNTIME_DIR%/}"
+              export XDG_RUNTIME_DIR
             else
               >&2 "echo XDG_RUNTIME_DIR is not defined, will not link the SSH_AUTH_SOCK to its known location"
               exit 1
