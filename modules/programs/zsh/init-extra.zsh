@@ -161,7 +161,9 @@ fi
 
 # setup XDG_RUNTIME_DIR to be used by other settings
 if [[ ! -v XDG_RUNTIME_DIR ]] && [[ "$(uname -s)" == "Darwin" ]]; then
-  export XDG_RUNTIME_DIR="$(getconf DARWIN_USER_TEMP_DIR)"
+  XDG_RUNTIME_DIR="$(getconf DARWIN_USER_TEMP_DIR)"
+  XDG_RUNTIME_DIR="${XDG_RUNTIME_DIR%/}"
+  export XDG_RUNTIME_DIR
 fi
 
 if [[ -v XDG_RUNTIME_DIR ]] &&
