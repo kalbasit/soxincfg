@@ -159,6 +159,17 @@ fi
 # exports
 #####################################################################
 
+# setup XDG_RUNTIME_DIR to be used by other settings
+if [[ ! -v XDG_RUNTIME_DIR ]] && [[ "$(uname -s)" == "Darwin" ]]; then
+  export XDG_RUNTIME_DIR="$(getconf DARWIN_USER_TEMP_DIR)"
+fi
+
+if [[ -v XDG_RUNTIME_DIR ]] &&
+  [[ "$SSH_AUTH_SOCK" != "$XDG_RUNTIME_DIR/ssh-agent" ]] &&
+  [[ -S "$XDG_RUNTIME_DIR/ssh-agent" ]]; then
+  export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent"
+fi
+
 # setup fzf
 if [[ -o interactive ]]; then
 	export ENHANCD_FILTER=@fzf_bin@
