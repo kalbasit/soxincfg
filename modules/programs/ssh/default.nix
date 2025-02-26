@@ -185,6 +185,29 @@ in
     })
 
     (optionalAttrs (mode == "home-manager") {
+      home.file.".ssh/rc" = {
+        executable = true;
+
+        source = pkgs.writeText "ssh-rc" ''
+          if [ "$SSH_AUTH_SOCK" = "" ] || [ ! -S "$SSH_AUTH_SOCK" ]; then
+            exit 0
+          fi
+
+          if [ "$XDG_RUNTIME_DIR" = "" ]; then
+            if [ "$(uname -s)" = "Darwin" ]; then
+              export XDG_RUNTIME_DIR="$(getconf DARWIN_USER_TEMP_DIR)"
+            else
+              >&2 "echo XDG_RUNTIME_DIR is not defined, will not link the SSH_AUTH_SOCK to its known location"
+              exit 1
+            fi
+          fi
+
+          # XXX: "$XDG_RUNTIME_DIR/ssh-agent" matches NixOS's programs.ssh.startAgent option.
+          mkdir -p "$XDG_RUNTIME_DIR"
+          ln -nsf "$SSH_AUTH_SOCK" "$XDG_RUNTIME_DIR/ssh-agent"
+        '';
+      };
+
       programs.ssh = {
         inherit (cfg) package;
 
