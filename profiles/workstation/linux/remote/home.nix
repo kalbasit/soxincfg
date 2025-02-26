@@ -25,6 +25,7 @@
       awscli2
       binutils # for strings
       bitwarden-cli
+      colordiff
       devbox
       dnsutils # for dig
       docker-credential-gcr
