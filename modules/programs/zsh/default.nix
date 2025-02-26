@@ -159,6 +159,7 @@ in
         g = "git";
 
         cat = "${bat}/bin/bat";
+        diff = "${colordiff}/bin/colordiff";
         e = "\${EDITOR:-nvim}";
         gl = "github_commit_link";
         http = "http --print=HhBb";
