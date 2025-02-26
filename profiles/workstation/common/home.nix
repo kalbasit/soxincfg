@@ -51,7 +51,6 @@ in
       jq
       jrnl
       killall
-      lastpass-cli
       lazygit
       lf # curses-based file manager
       libnotify
