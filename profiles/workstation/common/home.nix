@@ -30,6 +30,7 @@ in
       binutils # for strings
       # TODO: build is failing on darwin because the dependency python3.11-agate-dbf-0.2.3 is failing.
       #csvkit
+      colordiff
       devbox
       docker-credential-gcr
       dosbox
