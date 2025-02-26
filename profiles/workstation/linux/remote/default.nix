@@ -10,8 +10,7 @@ let
 in
 {
   imports = [
-    # TODO: Enable once I have added a way to configure neovim from soxin
-    # soxincfg.nixosModules.profiles.neovim
+    soxincfg.nixosModules.profiles.neovim
   ] ++ optionals (mode == "home-manager") [ ./home.nix ];
 
   config = {
