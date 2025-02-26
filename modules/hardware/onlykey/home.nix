@@ -43,7 +43,6 @@ let
   '';
 
   yl_home = config.home.homeDirectory;
-  owner = config.users.users.yl.name;
   sopsFile = ./secrets.sops.yaml;
 in
 {
