@@ -184,14 +184,6 @@ in
       };
     })
 
-    (optionalAttrs (mode == "home-manager") (
-      mkIf (cfg.enableSSHAgent && pkgs.stdenv.hostPlatform.isDarwin) {
-        programs.zsh.initExtra = ''
-          eval "$(${pkgs.keychain}/bin/keychain --eval -q)"
-        '';
-      }
-    ))
-
     (optionalAttrs (mode == "home-manager") {
       programs.ssh = {
         inherit (cfg) package;
