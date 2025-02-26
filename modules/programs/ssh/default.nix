@@ -10,7 +10,6 @@ let
   inherit (lib)
     concatStringsSep
     isString
-    mkDefault
     mkEnableOption
     mkIf
     mkMerge
@@ -18,7 +17,6 @@ let
     mkPackageOption
     optionalAttrs
     optionalString
-    singleton
     types
     ;
 
@@ -79,7 +77,7 @@ in
       };
 
       hostKeyAlgorithms = mkOption {
-        type = with types; types.listOf types.str;
+        type = types.listOf types.str;
         default = [
           "ssh-ed25519-cert-v01@openssh.com"
           "ssh-rsa-cert-v01@openssh.com"
