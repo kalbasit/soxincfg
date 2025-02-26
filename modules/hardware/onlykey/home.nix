@@ -69,7 +69,15 @@ in
 
     (mkIf (cfg.ssh-support.enable && pkgs.stdenv.hostPlatform.isDarwin) {
       programs.zsh.initExtra = ''
-        eval "$(${pkgs.keychain}/bin/keychain --eval --agents ssh id_ed25519_sk_rk -q)"
+        if [[ -e "$HOME/.ssh/rc" ]]; then
+          (
+            eval "$(${pkgs.keychain}/bin/keychain --eval --agents ssh id_ed25519_sk_rk -q)"
+
+            /bin/sh "$HOME/.ssh/rc"
+          )
+        else
+          eval "$(${pkgs.keychain}/bin/keychain --eval --agents ssh id_ed25519_sk_rk -q)"
+        fi
       '';
     })
 
