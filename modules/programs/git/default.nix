@@ -59,6 +59,23 @@ in
           for-each-ref --sort=-committerdate --format='%(committerdate:short) %(refname:short) %(authorname) %(authoremail)' refs/heads refs/remotes
         '';
 
+        tidy =
+          let
+            tidy' = pkgs.writeShellScript "git-tidy.sh" ''
+              set -euo pipefail
+
+              source ${../zsh/plugins/functions/prompt}
+
+              TIDY_BRANCHES=`comm -12 <(git branch | grep -v '\*\|master\|main' | awk '{print $1}' | sort) <(gh pr list -A "@me" --state merged --json headRefName | jq '.[].headRefName' -r | sort)`
+              for b in $TIDY_BRANCHES; do
+                if prompt "Delete branch? $b"; then
+                  git branch -D $b
+                fi
+              done
+            '';
+          in
+          "!${tidy'}";
+
         # bunch of different helpful aliases
         aa = "add --all .";
         aap = "!git aa -p";
