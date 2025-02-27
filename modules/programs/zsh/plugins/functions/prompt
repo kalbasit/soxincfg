@@ -1,0 +1,17 @@
+#
+# vim:ft=zsh:
+#
+
+# prompt reads y/n over a question and returns true only if given answer was Y/y.
+function prompt() {
+  local question="$@" answer
+
+  printf "$question (y/n)? "
+  read answer
+
+  if [[ "$answer" != "${answer#[Yy]}" ]]; then
+    return 0
+  else
+    return 1
+  fi
+}
