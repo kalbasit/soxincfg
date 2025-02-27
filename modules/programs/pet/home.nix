@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 
@@ -26,6 +27,15 @@ in
         {
           description = "swm-tmux-kill-server";
           command = "swm tmux kill-server --vim-exit";
+        }
+
+        #
+        # Kubernetes
+        #
+
+        {
+          description = "kubectl get secret in plain text";
+          command = "${pkgs.kubectl}/bin/kubectl get secret -o json <secret name> | jq '.data|map_values(@base64d)' -";
         }
 
         #
