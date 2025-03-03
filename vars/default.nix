@@ -1,6 +1,6 @@
-inputs@{ ... }:
+inputs:
 
 {
-  users = import ./users inputs;
-  assets = import ./assets inputs;
+  users = import ./users;
+  assets = import ./assets;
 }

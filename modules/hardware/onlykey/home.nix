@@ -93,9 +93,10 @@ in
         enable = true;
 
         settings = {
+          inherit (cfg.gnupg-support) default-key;
+
           agent-program = toString gpg-agent-program;
           personal-digest-preferences = "SHA512";
-          default-key = cfg.gnupg-support.default-key;
         };
 
         publicKeys = [

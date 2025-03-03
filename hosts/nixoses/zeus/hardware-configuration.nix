@@ -4,7 +4,6 @@
 {
   config,
   lib,
-  pkgs,
   modulesPath,
   ...
 }:
@@ -12,68 +11,74 @@
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
-  boot.initrd.availableKernelModules = [
-    "xhci_pci"
-    "ahci"
-    "nvme"
-    "usbhid"
-    "usb_storage"
-    "sd_mod"
-  ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
+  boot = {
+    initrd.availableKernelModules = [
+      "xhci_pci"
+      "ahci"
+      "nvme"
+      "usbhid"
+      "usb_storage"
+      "sd_mod"
+    ];
+    initrd.kernelModules = [ ];
+    kernelModules = [ "kvm-intel" ];
+    extraModulePackages = [ ];
+
+    # Use the systemd-boot EFI boot loader.
+    loader = {
+      systemd-boot.enable = true;
+      systemd-boot.configurationLimit = 3;
+      efi.canTouchEfiVariables = true;
+    };
+  };
 
   # Allow Docker to access Nvidia containers
   hardware.nvidia.open = false;
   hardware.nvidia-container-toolkit.enable = true;
   services.xserver.videoDrivers = [ "nvidia" ]; # enable Nvidia on the system
 
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.systemd-boot.configurationLimit = 3;
-  boot.loader.efi.canTouchEfiVariables = true;
-
   # ZFS requires a networking hostId
   networking.hostId = "adeb4b43";
 
-  fileSystems."/" = {
-    device = "rpool/nixos/root";
-    fsType = "zfs";
-  };
+  fileSystems = {
+    "/" = {
+      device = "rpool/nixos/root";
+      fsType = "zfs";
+    };
 
-  fileSystems."/home" = {
-    device = "rpool/nixos/home";
-    fsType = "zfs";
-  };
+    "/home" = {
+      device = "rpool/nixos/home";
+      fsType = "zfs";
+    };
 
-  fileSystems."/var" = {
-    device = "rpool/nixos/var";
-    fsType = "zfs";
-  };
+    "/var" = {
+      device = "rpool/nixos/var";
+      fsType = "zfs";
+    };
 
-  fileSystems."/var/lib" = {
-    device = "rpool/nixos/var/lib";
-    fsType = "zfs";
-  };
+    "/var/lib" = {
+      device = "rpool/nixos/var/lib";
+      fsType = "zfs";
+    };
 
-  fileSystems."/var/log" = {
-    device = "rpool/nixos/var/log";
-    fsType = "zfs";
-  };
+    "/var/log" = {
+      device = "rpool/nixos/var/log";
+      fsType = "zfs";
+    };
 
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/9BBB-48AE";
-    fsType = "vfat";
-    options = [
-      "fmask=0022"
-      "dmask=0022"
-    ];
-  };
+    "/boot" = {
+      device = "/dev/disk/by-uuid/9BBB-48AE";
+      fsType = "vfat";
+      options = [
+        "fmask=0022"
+        "dmask=0022"
+      ];
+    };
 
-  fileSystems."/storage/slow" = {
-    device = "/dev/disk/by-uuid/e2df8145-5ebe-4c08-bbbf-b3f4bf36326c";
-    fsType = "ext4";
+    "/storage/slow" = {
+      device = "/dev/disk/by-uuid/e2df8145-5ebe-4c08-bbbf-b3f4bf36326c";
+      fsType = "ext4";
+    };
   };
 
   swapDevices = [

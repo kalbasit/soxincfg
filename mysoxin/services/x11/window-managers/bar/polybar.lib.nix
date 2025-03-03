@@ -208,7 +208,8 @@ let
         "module/filesystem" = mkOrder cfg.modules.filesystems.order {
           type = "internal/fs";
           interval = 60;
-          mount-0 = (builtins.head cfg.modules.filesystems.mountPoints); # TODO: support more than one mountpoint. How to iterate over a list and increment a number in nix ?
+          # TODO: support more than one mountpoint. How to iterate over a list and increment a number in nix ?
+          mount-0 = builtins.head cfg.modules.filesystems.mountPoints;
           label-mounted = "%{F#0a81f5}%mountpoint%%{F-}: %percentage_free%%";
           label-unmounted = "%mountpoint% unmounted";
           label-unmounted-foreground = "\${colors.foreground-alt}";
@@ -385,8 +386,8 @@ in
 
           modules-left = "i3";
           modules-center = "";
-          modules-right = (
-            builtins.concatStringsSep " " (map (removePrefix "module/") (builtins.attrNames modulesConfig))
+          modules-right = builtins.concatStringsSep " " (
+            map (removePrefix "module/") (builtins.attrNames modulesConfig)
           );
         }
         // optionalAttrs (cfg.dpi != null) { inherit (cfg) dpi; }
