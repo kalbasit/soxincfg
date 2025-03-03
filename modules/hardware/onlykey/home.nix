@@ -58,6 +58,7 @@ in
 
     (mkIf cfg.ssh-support.enable {
       soxincfg.programs.ssh = {
+        addKeysToAgent = mkDefault true;
         identitiesOnly = mkDefault true;
         identityFiles = singleton "~/.ssh/id_ed25519_sk_rk";
       };
