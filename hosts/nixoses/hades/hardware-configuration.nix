@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ lib, ... }:
 
 with lib;
 let
@@ -34,41 +34,63 @@ let
       subvol,
       options ? [ ],
     }:
-    nameValuePair (mountPoint) ({
+    nameValuePair mountPoint {
       inherit device;
       fsType = "btrfs";
       options = [ "subvol=${subvol}" ] ++ options;
-    });
-
+    };
 in
 {
   # Common firmware, i.e. for wifi cards
   hardware.enableRedistributableFirmware = true;
 
-  boot.initrd.availableKernelModules = [
-    "xhci_pci"
-    "ahci"
-    "nvme"
-    "usb_storage"
-    "usbhid"
-    "sd_mod"
-  ];
-  boot.kernelModules = [ "kvm-intel" ];
+  boot = {
+    initrd.availableKernelModules = [
+      "xhci_pci"
+      "ahci"
+      "nvme"
+      "usb_storage"
+      "usbhid"
+      "sd_mod"
+    ];
 
-  boot.loader.grub = {
-    configurationLimit = 5;
-    device = "nodev";
-    efiSupport = true;
-    enable = true;
-    enableCryptodisk = true;
+    kernelModules = [ "kvm-intel" ];
+
+    loader = {
+      efi.canTouchEfiVariables = true;
+
+      grub = {
+        configurationLimit = 5;
+        device = "nodev";
+        efiSupport = true;
+        enable = true;
+        enableCryptodisk = true;
+      };
+
+      systemd-boot.enable = false;
+    };
+
+    initrd.luks.devices = {
+      cryptkey = {
+        device = "/dev/disk/by-uuid/3830842b-a589-45e0-a51d-4ed516472575";
+      };
+      cryptroot = {
+        device = "/dev/disk/by-uuid/ec133595-6294-4756-95ea-3891297f6477";
+        keyFile = "/dev/mapper/cryptkey";
+      };
+      cryptswap = {
+        device = "/dev/disk/by-uuid/71aab354-3872-4316-a26c-b4090d73275c";
+        keyFile = "/dev/mapper/cryptkey";
+      };
+      cryptstorage = {
+        device = "/dev/disk/by-uuid/d339f141-7544-44d4-89ec-312af0e087cc";
+        keyFile = "/dev/mapper/cryptkey";
+      };
+    };
   };
 
   # enable focusrite Gen3 support.
   soxin.hardware.sound.focusRiteGen3Support = true;
-
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  boot.loader.systemd-boot.enable = false;
 
   nix.settings.max-jobs = 1;
 
@@ -77,24 +99,6 @@ in
   services.xserver.videoDrivers = mkForce [ "modesetting" ];
 
   console.font = "Lat2-Terminus16";
-
-  boot.initrd.luks.devices = {
-    cryptkey = {
-      device = "/dev/disk/by-uuid/3830842b-a589-45e0-a51d-4ed516472575";
-    };
-    cryptroot = {
-      device = "/dev/disk/by-uuid/ec133595-6294-4756-95ea-3891297f6477";
-      keyFile = "/dev/mapper/cryptkey";
-    };
-    cryptswap = {
-      device = "/dev/disk/by-uuid/71aab354-3872-4316-a26c-b4090d73275c";
-      keyFile = "/dev/mapper/cryptkey";
-    };
-    cryptstorage = {
-      device = "/dev/disk/by-uuid/d339f141-7544-44d4-89ec-312af0e087cc";
-      keyFile = "/dev/mapper/cryptkey";
-    };
-  };
 
   fileSystems = mergeAttrs (mapAttrs' mkBtrfsSubvolume subVolumes) {
     # NixOS

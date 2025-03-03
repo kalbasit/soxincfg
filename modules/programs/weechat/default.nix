@@ -43,20 +43,22 @@ in
 
   config = mkIf cfg.enable (mkMerge [
     (optionalAttrs (mode == "NixOS") {
-      sops.secrets."_config_weechat_certs_freenode.pem" = {
-        inherit owner;
-        format = "binary";
-        sopsFile = ./config/certs/freenode.pem.sops;
-      };
-      sops.secrets."_config_weechat_irc.conf" = {
-        inherit owner;
-        format = "binary";
-        sopsFile = ./config/irc.conf.sops;
-      };
-      sops.secrets."_config_weechat_sec.conf" = {
-        inherit owner;
-        format = "binary";
-        sopsFile = ./config/sec.conf.sops;
+      sops.secrets = {
+        "_config_weechat_certs_freenode.pem" = {
+          inherit owner;
+          format = "binary";
+          sopsFile = ./config/certs/freenode.pem.sops;
+        };
+        "_config_weechat_irc.conf" = {
+          inherit owner;
+          format = "binary";
+          sopsFile = ./config/irc.conf.sops;
+        };
+        "_config_weechat_sec.conf" = {
+          inherit owner;
+          format = "binary";
+          sopsFile = ./config/sec.conf.sops;
+        };
       };
     })
 

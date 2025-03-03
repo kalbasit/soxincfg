@@ -11,14 +11,12 @@ let
   intel_bus = "PCI:0:2:0";
   nvidia_bus = "PCI:1:0:0";
 
-  nvidia_driver = (
-    config.boot.kernelPackages.nvidiaPackages.beta.overrideAttrs {
-      src = pkgs.fetchurl {
-        url = "https://us.download.nvidia.com/XFree86/Linux-x86_64/550.40.07/NVIDIA-Linux-x86_64-550.40.07.run";
-        sha256 = "sha256-KYk2xye37v7ZW7h+uNJM/u8fNf7KyGTZjiaU03dJpK0=";
-      };
-    }
-  );
+  nvidia_driver = config.boot.kernelPackages.nvidiaPackages.beta.overrideAttrs {
+    src = pkgs.fetchurl {
+      url = "https://us.download.nvidia.com/XFree86/Linux-x86_64/550.40.07/NVIDIA-Linux-x86_64-550.40.07.run";
+      sha256 = "sha256-KYk2xye37v7ZW7h+uNJM/u8fNf7KyGTZjiaU03dJpK0=";
+    };
+  };
 in
 {
   boot = {

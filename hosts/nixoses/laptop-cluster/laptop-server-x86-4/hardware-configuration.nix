@@ -4,7 +4,6 @@
 {
   config,
   lib,
-  pkgs,
   modulesPath,
   ...
 }:
@@ -14,35 +13,39 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.systemd-boot = {
-    configurationLimit = 2;
-    enable = true;
+  boot = {
+    # Use the systemd-boot EFI boot loader.
+    loader.efi.canTouchEfiVariables = true;
+    loader.systemd-boot = {
+      configurationLimit = 2;
+      enable = true;
+    };
+
+    initrd.availableKernelModules = [
+      "xhci_pci"
+      "ahci"
+      "usbhid"
+      "usb_storage"
+      "sd_mod"
+    ];
+    initrd.kernelModules = [ ];
+    kernelModules = [
+      "kvm-intel"
+      "wl"
+    ];
+    extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
   };
 
-  boot.initrd.availableKernelModules = [
-    "xhci_pci"
-    "ahci"
-    "usbhid"
-    "usb_storage"
-    "sd_mod"
-  ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [
-    "kvm-intel"
-    "wl"
-  ];
-  boot.extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
+  fileSystems = {
+    "/" = {
+      device = "/dev/disk/by-uuid/f7a093c5-55e8-4601-b8a6-0f7900da4281";
+      fsType = "ext4";
+    };
 
-  fileSystems."/" = {
-    device = "/dev/disk/by-uuid/f7a093c5-55e8-4601-b8a6-0f7900da4281";
-    fsType = "ext4";
-  };
-
-  fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/8A36-00B0";
-    fsType = "vfat";
+    "/boot" = {
+      device = "/dev/disk/by-uuid/8A36-00B0";
+      fsType = "vfat";
+    };
   };
 
   swapDevices = [ ];

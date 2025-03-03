@@ -12,8 +12,7 @@ let
 in
 {
   imports =
-    [ ]
-    ++ optionals (mode == "NixOS") [ ./nixos.nix ]
+    optionals (mode == "NixOS") [ ./nixos.nix ]
     ++ optionals (mode == "home-manager") [ ./home.nix ];
 
   options = {
@@ -98,7 +97,7 @@ in
 
   config = mkIf cfg.enable {
     soxincfg.programs.ssh = mkIf cfg.gnupg-support.ssh-support.enable {
-      identitiesOnly = mkDefault true;
+      addKeysToAgent = mkDefault true;
       identityFiles = mkIf (cfg.gnupg-support.ssh-support.public-certificate-pem != null) (
         singleton cfg.gnupg-support.ssh-support.public-certificate-pem
       );

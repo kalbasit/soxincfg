@@ -20,7 +20,7 @@ in
     };
   };
 
-  config = mkIf (cfg.enable) (mkMerge [
+  config = mkIf cfg.enable (mkMerge [
     (optionalAttrs (mode == "NixOS") {
       virtualisation.virtualbox.host.enable = true;
       virtualisation.virtualbox.host.enableExtensionPack = true;

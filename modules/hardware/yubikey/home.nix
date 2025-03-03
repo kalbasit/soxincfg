@@ -1,21 +1,11 @@
 {
-  mode,
   config,
-  pkgs,
   lib,
   ...
 }:
 
 let
   inherit (lib) mkIf;
-
-  inherit (pkgs)
-    yubico-piv-tool
-    yubikey-manager
-    yubikey-personalization
-    yubikey-personalization-gui
-    yubioath-desktop
-    ;
 
   cfg = config.soxincfg.hardware.yubikey;
 in

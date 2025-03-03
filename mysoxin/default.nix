@@ -1,1 +1,1 @@
-builtins.mapAttrs (_: moduleFile: import moduleFile) (import ./list.nix)
+builtins.mapAttrs (_: import) (import ./list.nix)
