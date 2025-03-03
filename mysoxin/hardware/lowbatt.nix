@@ -63,7 +63,7 @@ in
       description = ''
         Battery level at which a notification shall be sent.
       '';
-      apply = value: toString value;
+      apply = toString;
     };
 
     hibernateCapacity = mkOption {
@@ -72,7 +72,7 @@ in
       description = ''
         Battery level at which a hibernate unless connected shall be sent.
       '';
-      apply = value: toString value;
+      apply = toString;
     };
   };
 
