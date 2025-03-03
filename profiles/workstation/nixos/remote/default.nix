@@ -9,7 +9,7 @@
 }:
 
 let
-  inherit (lib) mkForce optionals;
+  inherit (lib) optionals;
 
   inherit (home-manager.lib.hm.dag) entryBefore entryAnywhere;
 in
@@ -19,7 +19,8 @@ in
       soxincfg.nixosModules.profiles.neovim
       soxincfg.nixosModules.profiles.workstation.common
     ]
-    ++ optionals (mode == "NixOS") [ ./nixos.nix ] ++ optionals (mode == "home-manager") [ ./home.nix ];
+    ++ optionals (mode == "NixOS") [ ./nixos.nix ]
+    ++ optionals (mode == "home-manager") [ ./home.nix ];
 
   soxin = {
     hardware = {
@@ -48,12 +49,7 @@ in
       git.enable = true;
       mosh.enable = true;
       pet.enable = true;
-      ssh = {
-        enable = true;
-
-        # XXX: Remote machines do not have any keys (or shouldn't) and must use my SSH agent instead.
-        identitiesOnly = mkForce false;
-      };
+      ssh.enable = true;
       starship.enable = true;
       tmux.enable = true;
       zsh.enable = true;
