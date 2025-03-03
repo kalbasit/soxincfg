@@ -155,8 +155,7 @@
           pre-commit-check = pre-commit-hooks.lib.${pkgs.hostPlatform.system}.run {
             src = ./.;
             hooks = {
-              # TODO: Fix all errors and enable statix
-              # statix.enable = true;
+              statix.enable = true;
               nixfmt-rfc-style.enable = true;
             };
           };

@@ -89,7 +89,7 @@ let
   shellInit =
     with pkgs;
     builtins.concatStringsSep "\n\n" [
-      (''
+      ''
         # source in the LS_COLORS
         source "${nur.repos.kalbasit.ls-colors}/ls-colors/bourne-shell.sh"
 
@@ -100,7 +100,7 @@ let
         elif [[ -r "${config.home.homeDirectory}/.nix-profile/etc/profile.d/nix.sh" ]]; then
           source "${config.home.homeDirectory}/.nix-profile/etc/profile.d/nix.sh"
         fi
-      '')
+      ''
 
       (optionalString stdenv.isLinux ''
         # are we running on ChromeOS
@@ -227,72 +227,74 @@ in
     })
 
     (optionalAttrs (mode == "home-manager") {
-      programs.eza = {
-        enable = true;
-        enableZshIntegration = true;
-        extraOptions = [ "--group-directories-first" ];
-      };
-
-      programs.zsh = {
-        autocd = true;
-        oh-my-zsh = ohMyZsh;
-        history = {
-          expireDuplicatesFirst = true;
-          save = 100000000;
-          size = 1000000000;
+      programs = {
+        eza = {
+          enable = true;
+          enableZshIntegration = true;
+          extraOptions = [ "--group-directories-first" ];
         };
 
-        initExtra = shellInit;
+        zsh = {
+          autocd = true;
+          oh-my-zsh = ohMyZsh;
+          history = {
+            expireDuplicatesFirst = true;
+            save = 100000000;
+            size = 1000000000;
+          };
 
-        plugins =
-          let
-            inherit (pkgs) fetchFromGitHub;
-          in
-          [
-            {
-              name = "zsh-completions";
-              src = fetchFromGitHub {
-                owner = "zsh-users";
-                repo = "zsh-completions";
-                rev = "0.34.0";
-                sha256 = "sha256-qSobM4PRXjfsvoXY6ENqJGI9NEAaFFzlij6MPeTfT0o=";
-              };
-            }
-            {
-              name = "zsh-history-substring-search";
-              src = fetchFromGitHub {
-                owner = "zsh-users";
-                repo = "zsh-history-substring-search";
-                rev = "400e58a87f72ecec14f783fbd29bc6be4ff1641c";
-                sha256 = "sha256-GSEvgvgWi1rrsgikTzDXokHTROoyPRlU0FVpAoEmXG4=";
-              };
-            }
-            {
-              name = "zsh-syntax-highlighting";
-              src = fetchFromGitHub {
-                owner = "zsh-users";
-                repo = "zsh-syntax-highlighting";
-                rev = "754cefe0181a7acd42fdcb357a67d0217291ac47";
-                sha256 = "sha256-kWgPe7QJljERzcv4bYbHteNJIxCehaTu4xU9r64gUM4=";
-              };
-            }
-            {
-              name = "nix-shell";
-              src = fetchFromGitHub {
-                owner = "chisui";
-                repo = "zsh-nix-shell";
-                rev = "v0.6.0";
-                sha256 = "sha256-B0mdmIqefbm5H8wSG1h41c/J4shA186OyqvivmSK42Q=";
-              };
-            }
-            {
-              name = "functions";
-              src = myFunctions;
-            }
-          ];
+          initExtra = shellInit;
+
+          plugins =
+            let
+              inherit (pkgs) fetchFromGitHub;
+            in
+            [
+              {
+                name = "zsh-completions";
+                src = fetchFromGitHub {
+                  owner = "zsh-users";
+                  repo = "zsh-completions";
+                  rev = "0.34.0";
+                  sha256 = "sha256-qSobM4PRXjfsvoXY6ENqJGI9NEAaFFzlij6MPeTfT0o=";
+                };
+              }
+              {
+                name = "zsh-history-substring-search";
+                src = fetchFromGitHub {
+                  owner = "zsh-users";
+                  repo = "zsh-history-substring-search";
+                  rev = "400e58a87f72ecec14f783fbd29bc6be4ff1641c";
+                  sha256 = "sha256-GSEvgvgWi1rrsgikTzDXokHTROoyPRlU0FVpAoEmXG4=";
+                };
+              }
+              {
+                name = "zsh-syntax-highlighting";
+                src = fetchFromGitHub {
+                  owner = "zsh-users";
+                  repo = "zsh-syntax-highlighting";
+                  rev = "754cefe0181a7acd42fdcb357a67d0217291ac47";
+                  sha256 = "sha256-kWgPe7QJljERzcv4bYbHteNJIxCehaTu4xU9r64gUM4=";
+                };
+              }
+              {
+                name = "nix-shell";
+                src = fetchFromGitHub {
+                  owner = "chisui";
+                  repo = "zsh-nix-shell";
+                  rev = "v0.6.0";
+                  sha256 = "sha256-B0mdmIqefbm5H8wSG1h41c/J4shA186OyqvivmSK42Q=";
+                };
+              }
+              {
+                name = "functions";
+                src = myFunctions;
+              }
+            ];
+        };
+
+        zoxide.enable = true;
       };
-
-      programs.zoxide.enable = true;
     })
   ]);
 }

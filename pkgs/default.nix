@@ -1,12 +1,10 @@
-channels@{ ... }:
+channels:
 
 let
-  inherit (channels.nixpkgs) callPackage lib system;
+  inherit (channels.nixpkgs) lib system;
   inherit (lib) findSingle filterAttrs platforms;
 
-  pkgs = {
-    terraform-providers-unifi = callPackage ./terraform-provider-unifi.nix { };
-  };
+  pkgs = { };
 
   hasElement = list: elem: (findSingle (x: x == elem) "none" "multiple" list) != "none";
 in

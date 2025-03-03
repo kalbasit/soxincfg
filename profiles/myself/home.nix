@@ -5,8 +5,7 @@ let
 in
 {
   imports =
-    [ ]
-    ++ optionals (hostType == "nix-darwin") [ ./home-darwin.nix ]
+    optionals (hostType == "nix-darwin") [ ./home-darwin.nix ]
     ++ optionals (hostType == "qubes-os") [ ./home-qubes.nix ];
 
   config = {

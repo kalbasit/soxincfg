@@ -13,7 +13,6 @@ let
   cfg = config.soxincfg.services.xserver.windowManager.i3;
 
   defaultModifier = "Mod4";
-  secondModifier = "Shift";
   thirdModifier = "Mod1";
   nosid = "--no-startup-id";
 in
@@ -77,7 +76,8 @@ in
       xsession.windowManager.i3.config = mkMerge [
         {
           keybindings = {
-            "${defaultModifier}+${thirdModifier}+s" = "exec ${nosid} ${getBin pkgs.pulseaudio}/bin/pactl set-source-mute @DEFAULT_SOURCE@ toggle";
+            "${defaultModifier}+${thirdModifier}+s" =
+              "exec ${nosid} ${getBin pkgs.pulseaudio}/bin/pactl set-source-mute @DEFAULT_SOURCE@ toggle";
           };
 
           startup = [
@@ -89,9 +89,9 @@ in
           ];
         }
 
-        (mkIf (
-          true # TODO: config.soxin.settings.theme == "gruvbox-dark"
-        ) (config.soxin.settings.theme.i3.config))
+        # TODO: mkIf config.soxin.settings.theme == "gruvbox-dark"
+        # why this todo?
+        config.soxin.settings.theme.i3.config
       ];
     })
   ]);

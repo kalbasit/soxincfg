@@ -1,15 +1,12 @@
 {
   mode,
-  config,
   lib,
   ...
 }:
 
 let
-  cfg = config.soxincfg.settings.users;
 
   inherit (lib)
-    mapAttrs
     mkOption
     optionals
     types
@@ -17,8 +14,7 @@ let
 in
 {
   imports =
-    [ ]
-    ++ optionals (mode == "NixOS") [ ./nixos.nix ]
+    optionals (mode == "NixOS") [ ./nixos.nix ]
     ++ optionals (mode == "nix-darwin") [ ./darwin.nix ];
 
   options.soxincfg.settings.users = {

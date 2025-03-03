@@ -187,7 +187,7 @@ in
     (optionalAttrs (mode == "NixOS" || mode == "home-manager") {
       programs.tmux = {
         clock24 = true;
-        customPaneNavigationAndResize = !(keyboardLayout == "colemak");
+        customPaneNavigationAndResize = keyboardLayout != "colemak";
         escapeTime = 0;
         historyLimit = 10000;
         keyMode = "vi";

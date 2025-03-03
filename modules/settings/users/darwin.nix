@@ -1,7 +1,5 @@
 {
-  mode,
   config,
-  options,
   pkgs,
   lib,
   ...
@@ -11,26 +9,10 @@ with lib;
 let
   cfg = config.soxincfg.settings.users;
 
-  defaultGroups = [
-    "builders"
-    "dialout"
-    "fuse"
-    "plugdev" # to access ZSA keyboards.
-    "users"
-    "video"
-  ];
-
   # makeUser = userName: { isAdmin, sshKeys, ... }@user:
   makeUser =
-    userName:
-    { ... }@user:
+    userName: user:
     {
-      # group = "mine";
-      # extraGroups =
-      #   defaultGroups
-      #   ++ cfg.groups
-      #   ++ (optionals isAdmin [ "wheel" ]);
-
       shell = pkgs.zsh;
     }
     // (builtins.removeAttrs user [

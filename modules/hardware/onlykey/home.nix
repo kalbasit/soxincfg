@@ -58,7 +58,7 @@ in
 
     (mkIf cfg.ssh-support.enable {
       soxincfg.programs.ssh = {
-        identitiesOnly = mkDefault true;
+        addKeysToAgent = mkDefault true;
         identityFiles = singleton "~/.ssh/id_ed25519_sk_rk";
       };
 
@@ -93,9 +93,10 @@ in
         enable = true;
 
         settings = {
+          inherit (cfg.gnupg-support) default-key;
+
           agent-program = toString gpg-agent-program;
           personal-digest-preferences = "SHA512";
-          default-key = cfg.gnupg-support.default-key;
         };
 
         publicKeys = [

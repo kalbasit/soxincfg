@@ -68,7 +68,7 @@ in
             "confirm"
           ]
         );
-        default = cfg.enableSSHAgent;
+        default = false;
         description = ''
           Whether to automatically add a private key that is used during
           authentication to ssh-agent if it is running (with confirmation

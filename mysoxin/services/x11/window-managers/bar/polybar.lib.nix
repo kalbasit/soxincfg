@@ -208,7 +208,8 @@ let
         "module/filesystem" = mkOrder cfg.modules.filesystems.order {
           type = "internal/fs";
           interval = 60;
-          mount-0 = (builtins.head cfg.modules.filesystems.mountPoints); # TODO: support more than one mountpoint. How to iterate over a list and increment a number in nix ?
+          # TODO: support more than one mountpoint. How to iterate over a list and increment a number in nix ?
+          mount-0 = builtins.head cfg.modules.filesystems.mountPoints;
           label-mounted = "%{F#0a81f5}%mountpoint%%{F-}: %percentage_free%%";
           label-unmounted = "%mountpoint% unmounted";
           label-unmounted-foreground = "\${colors.foreground-alt}";
@@ -351,46 +352,43 @@ in
         screenchange-reload = true;
       };
 
-      "bar/default" = (
-        {
-          inherit (cfg) height;
+      "bar/default" = {
+        inherit (cfg) height;
 
-          monitor = "\${env:MONITOR:}";
-          width = "100%";
-          bottom = cfg.location == "bottom";
-          radius = "0.0";
-          fixed-center = false;
-          background = "\${colors.background}";
-          foreground = "\${colors.foreground}";
-          line-size = 1;
-          line-color = "#f00";
-          padding-left = 0;
-          padding-right = 2;
+        monitor = "\${env:MONITOR:}";
+        width = "100%";
+        bottom = cfg.location == "bottom";
+        radius = "0.0";
+        fixed-center = false;
+        background = "\${colors.background}";
+        foreground = "\${colors.foreground}";
+        line-size = 1;
+        line-color = "#f00";
+        padding-left = 0;
+        padding-right = 2;
 
-          enable-ipc = true;
+        enable-ipc = true;
 
-          # validate the font with `fc-match '<full-font-string-here>'`
-          font-0 = "0xProto Nerd Font:style=Regular:size=12:antialias=true";
-          font-1 = "0xProto Nerd Font:style=Regular:size=12:antialias=true";
+        # validate the font with `fc-match '<full-font-string-here>'`
+        font-0 = "0xProto Nerd Font:style=Regular:size=12:antialias=true";
+        font-1 = "0xProto Nerd Font:style=Regular:size=12:antialias=true";
 
-          module-margin-left = 1;
-          module-margin-right = 2;
+        module-margin-left = 1;
+        module-margin-right = 2;
 
-          tray-position = "right";
-          tray-padding = 5;
-          scroll-up = "i3wm-wsnext";
-          scroll-down = "i3wm-wsprev";
-          cursor-click = "pointer";
-          cursor-scroll = "ns-resize";
+        tray-position = "right";
+        tray-padding = 5;
+        scroll-up = "i3wm-wsnext";
+        scroll-down = "i3wm-wsprev";
+        cursor-click = "pointer";
+        cursor-scroll = "ns-resize";
 
-          modules-left = "i3";
-          modules-center = "";
-          modules-right = (
-            builtins.concatStringsSep " " (map (removePrefix "module/") (builtins.attrNames modulesConfig))
-          );
-        }
-        // optionalAttrs (cfg.dpi != null) { inherit (cfg) dpi; }
-      );
+        modules-left = "i3";
+        modules-center = "";
+        modules-right = builtins.concatStringsSep " " (
+          map (removePrefix "module/") (builtins.attrNames modulesConfig)
+        );
+      } // optionalAttrs (cfg.dpi != null) { inherit (cfg) dpi; };
 
       "module/i3" = {
         type = "internal/i3";

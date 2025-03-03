@@ -5,7 +5,6 @@ let
 in
 {
   imports =
-    [ ]
-    ++ optionals (mode == "nix-darwin") [ ./darwin-darwin.nix ]
+    optionals (mode == "nix-darwin") [ ./darwin-darwin.nix ]
     ++ optionals (mode == "home-manager") [ ./common-home.nix ];
 }

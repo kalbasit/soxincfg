@@ -21,7 +21,7 @@ in
     };
   };
 
-  config = mkIf (cfg.enable) (mkMerge [
+  config = mkIf cfg.enable (mkMerge [
     (optionalAttrs (mode == "NixOS") {
       virtualisation.libvirtd = {
         enable = true;
