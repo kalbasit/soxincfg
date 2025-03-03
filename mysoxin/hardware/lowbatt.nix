@@ -58,6 +58,7 @@ in
     };
 
     notifyCapacity = mkOption {
+      type = types.int;
       default = 10;
       description = ''
         Battery level at which a notification shall be sent.
@@ -66,6 +67,7 @@ in
     };
 
     hibernateCapacity = mkOption {
+      type = types.int;
       default = 5;
       description = ''
         Battery level at which a hibernate unless connected shall be sent.

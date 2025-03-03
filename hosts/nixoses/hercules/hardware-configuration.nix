@@ -154,11 +154,11 @@ let
   mkZFSDataSet =
     mountPoint:
     { device }:
-    nameValuePair (mountPoint) ({
+    nameValuePair mountPoint {
       inherit device;
       fsType = "zfs";
       options = [ "relatime" ];
-    });
+    };
 
   exports = [
     # "Anime"
@@ -188,76 +188,95 @@ let
   nfsFSEntries = builtins.listToAttrs (map toFSEntry exports);
 in
 {
-  # Common firmware, i.e. for wifi cards
-  hardware.enableRedistributableFirmware = true;
+  boot = {
+    # Topology config for routing audio/microphone on Razer laptops
+    # copied from https://github.com/eureka-cpu/dotfiles/blob/tensorbook/nixos/configuration.nix
+    extraModprobeConfig = ''
+      options snd-sof-pci tplg_filename=sof-hda-generic-2ch-pdm1.tplg
+    '';
 
-  # Topology config for routing audio/microphone on Razer laptops
-  # copied from https://github.com/eureka-cpu/dotfiles/blob/tensorbook/nixos/configuration.nix
-  boot.extraModprobeConfig = ''
-    options snd-sof-pci tplg_filename=sof-hda-generic-2ch-pdm1.tplg
-  '';
+    # configure kernel and modules
+    initrd.availableKernelModules = [
+      "xhci_pci"
+      "thunderbolt"
+      "vmd"
+      "nvme"
+      "usbhid"
+      "usb_storage"
+      "sd_mod"
+      "sdhci_pci"
+    ];
+    kernelModules = [ "kvm-intel" ];
+
+    # configure boot loader
+    loader.efi.canTouchEfiVariables = true;
+    loader.systemd-boot = {
+      editor = false;
+      enable = true;
+      extraEntries = {
+        "archlinux.conf" = ''
+          title Arch Linux
+          sort-key 30-arch
+          version Main
+          linux /EFI/arch/vmlinuz-linux
+          initrd /EFI/arch/initramfs-linux.img
+          options spl.spl_hostid=0x007f0200 cryptdevice=/dev/disk/by-uuid/809f49a2-0edb-49ac-aab6-fc0c77565e74:cryptroot zfs=olympus/system/arch/root rw
+          machine-id eb9cb30c8e1d473e91ef3c792d4af65c
+        '';
+
+        "archlinux-fallback.conf" = ''
+          title Arch Linux
+          sort-key 30-arch
+          version Fallback
+          linux /EFI/arch/vmlinuz-linux
+          initrd /EFI/arch/initramfs-linux-fallback.img
+          options spl.spl_hostid=0x007f0200 cryptdevice=/dev/disk/by-uuid/809f49a2-0edb-49ac-aab6-fc0c77565e74:cryptroot zfs=olympus/system/arch/root rw
+          machine-id eb9cb30c8e1d473e91ef3c792d4af65c
+        '';
+
+        "qubes-os.conf" = ''
+          title Qubes OS
+          sort-key 10-qubes-os
+          linux /EFI/qubes/grubx64.efi
+        '';
+
+        "ubuntu.conf" = ''
+          title Ubuntu
+          sort-key 40-ubuntu
+          version Main
+          linux /EFI/ubuntu/vmlinuz
+          initrd /EFI/ubuntu/initrd.img
+          options spl.spl_hostid=0x007f0200 root=ZFS=olympus/system/ubuntu/root rw quiet splash
+          machine-id eb9cb30c8e1d473e91ef3c792d4af65c
+        '';
+      };
+      configurationLimit = 3;
+      sortKey = "20-nixos";
+    };
+
+    initrd.luks.devices = {
+      cryptkey = {
+        device = "/dev/disk/by-uuid/00f72dbb-eb46-468f-b1c3-dd63adc542f0";
+      };
+      cryptroot = {
+        device = "/dev/disk/by-uuid/809f49a2-0edb-49ac-aab6-fc0c77565e74";
+        keyFile = "/dev/mapper/cryptkey";
+      };
+    };
+  };
+
+  hardware = {
+    # Common firmware, i.e. for wifi cards
+    enableRedistributableFirmware = true;
+
+    cpu.intel.updateMicrocode = mkDefault config.hardware.enableRedistributableFirmware;
+
+    # nvidia-drm.modeset=1 is required for some wayland compositors, e.g. sway
+    nvidia.modesetting.enable = true;
+  };
 
   # ZFS requires a networking hostId
   networking.hostId = "007f0200";
-
-  # configure kernel and modules
-  boot.initrd.availableKernelModules = [
-    "xhci_pci"
-    "thunderbolt"
-    "vmd"
-    "nvme"
-    "usbhid"
-    "usb_storage"
-    "sd_mod"
-    "sdhci_pci"
-  ];
-  boot.kernelModules = [ "kvm-intel" ];
-
-  # configure boot loader
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.systemd-boot = {
-    editor = false;
-    enable = true;
-    extraEntries = {
-      "archlinux.conf" = ''
-        title Arch Linux
-        sort-key 30-arch
-        version Main
-        linux /EFI/arch/vmlinuz-linux
-        initrd /EFI/arch/initramfs-linux.img
-        options spl.spl_hostid=0x007f0200 cryptdevice=/dev/disk/by-uuid/809f49a2-0edb-49ac-aab6-fc0c77565e74:cryptroot zfs=olympus/system/arch/root rw
-        machine-id eb9cb30c8e1d473e91ef3c792d4af65c
-      '';
-
-      "archlinux-fallback.conf" = ''
-        title Arch Linux
-        sort-key 30-arch
-        version Fallback
-        linux /EFI/arch/vmlinuz-linux
-        initrd /EFI/arch/initramfs-linux-fallback.img
-        options spl.spl_hostid=0x007f0200 cryptdevice=/dev/disk/by-uuid/809f49a2-0edb-49ac-aab6-fc0c77565e74:cryptroot zfs=olympus/system/arch/root rw
-        machine-id eb9cb30c8e1d473e91ef3c792d4af65c
-      '';
-
-      "qubes-os.conf" = ''
-        title Qubes OS
-        sort-key 10-qubes-os
-        linux /EFI/qubes/grubx64.efi
-      '';
-
-      "ubuntu.conf" = ''
-        title Ubuntu
-        sort-key 40-ubuntu
-        version Main
-        linux /EFI/ubuntu/vmlinuz
-        initrd /EFI/ubuntu/initrd.img
-        options spl.spl_hostid=0x007f0200 root=ZFS=olympus/system/ubuntu/root rw quiet splash
-        machine-id eb9cb30c8e1d473e91ef3c792d4af65c
-      '';
-    };
-    configurationLimit = 3;
-    sortKey = "20-nixos";
-  };
 
   # enable focusrite Gen3 support.
   soxin.hardware.sound.focusRiteGen3Support = true;
@@ -266,24 +285,9 @@ in
 
   powerManagement.cpuFreqGovernor = "powersave";
 
-  hardware.cpu.intel.updateMicrocode = mkDefault config.hardware.enableRedistributableFirmware;
-
   services.xserver.videoDrivers = [ "nvidia" ];
 
-  # nvidia-drm.modeset=1 is required for some wayland compositors, e.g. sway
-  hardware.nvidia.modesetting.enable = true;
-
   console.font = "Lat2-Terminus16";
-
-  boot.initrd.luks.devices = {
-    cryptkey = {
-      device = "/dev/disk/by-uuid/00f72dbb-eb46-468f-b1c3-dd63adc542f0";
-    };
-    cryptroot = {
-      device = "/dev/disk/by-uuid/809f49a2-0edb-49ac-aab6-fc0c77565e74";
-      keyFile = "/dev/mapper/cryptkey";
-    };
-  };
 
   fileSystems = mergeAttrs (mergeAttrs nfsFSEntries (mapAttrs' mkZFSDataSet datasets)) {
     # Boot device

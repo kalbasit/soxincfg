@@ -33,8 +33,11 @@
   };
 
   # Allow Docker to access Nvidia containers
-  hardware.nvidia.open = false;
-  hardware.nvidia-container-toolkit.enable = true;
+  hardware = {
+    nvidia.open = false;
+    nvidia-container-toolkit.enable = true;
+  };
+
   services.xserver.videoDrivers = [ "nvidia" ]; # enable Nvidia on the system
 
   # ZFS requires a networking hostId

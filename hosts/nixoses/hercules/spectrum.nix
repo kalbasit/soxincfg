@@ -1,5 +1,3 @@
-{ ... }:
-
 {
   nix.settings.substituters = [ "https://cache.dataaturservice.se/spectrum/" ];
   nix.settings.trusted-public-keys = [

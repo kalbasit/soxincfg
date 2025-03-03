@@ -1,5 +1,4 @@
 {
-  config,
   lib,
   mode,
   ...
@@ -7,13 +6,10 @@
 
 let
   inherit (lib) mkEnableOption optionals recursiveUpdate;
-
-  cfg = config.soxin.virtualisation.docker;
 in
 {
   imports =
-    [ ]
-    ++ optionals (mode == "NixOS") [ ./nixos.nix ]
+    optionals (mode == "NixOS") [ ./nixos.nix ]
     ++ optionals (mode == "nix-darwin") [ ./darwin.nix ];
 
   options = {

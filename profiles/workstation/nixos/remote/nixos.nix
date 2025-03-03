@@ -3,16 +3,18 @@
 {
   environment.homeBinInPath = true;
 
-  services.eternal-terminal.enable = true;
+  services = {
+    eternal-terminal.enable = true;
 
-  # Enable TailScale for zero-config VPN service.
-  services.tailscale.enable = true;
+    # Enable TailScale for zero-config VPN service.
+    tailscale.enable = true;
 
-  # Allow the forwarding of the GnuPG extra socket.
-  # https://wiki.gnupg.org/AgentForwarding
-  services.openssh.extraConfig = ''
-    StreamLocalBindUnlink yes
-  '';
+    # Allow the forwarding of the GnuPG extra socket.
+    # https://wiki.gnupg.org/AgentForwarding
+    openssh.extraConfig = ''
+      StreamLocalBindUnlink yes
+    '';
+  };
 
   # While creating the user runtime directories, create the gnupg directories
   # as well if the user is YL.

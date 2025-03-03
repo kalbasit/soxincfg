@@ -1,4 +1,4 @@
-channels@{ ... }:
+channels:
 
 let
   inherit (channels.nixpkgs) lib system;

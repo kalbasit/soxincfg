@@ -4,5 +4,5 @@ let
   inherit (lib) optionals;
 in
 {
-  imports = [ ] ++ optionals (mode == "NixOS") [ ./nixos.nix ];
+  imports = optionals (mode == "NixOS") [ ./nixos.nix ];
 }

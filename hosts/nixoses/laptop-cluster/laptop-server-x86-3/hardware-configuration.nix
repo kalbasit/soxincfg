@@ -4,7 +4,6 @@
 {
   config,
   lib,
-  pkgs,
   modulesPath,
   ...
 }:
@@ -12,26 +11,28 @@
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
-  # Use the systemd-boot EFI boot loader.
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.systemd-boot = {
-    configurationLimit = 2;
-    enable = true;
-  };
+  boot = {
+    # Use the systemd-boot EFI boot loader.
+    loader.efi.canTouchEfiVariables = true;
+    loader.systemd-boot = {
+      configurationLimit = 2;
+      enable = true;
+    };
 
-  boot.initrd.availableKernelModules = [
-    "xhci_pci"
-    "ahci"
-    "usbhid"
-    "usb_storage"
-    "sd_mod"
-  ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [
-    "kvm-intel"
-    "wl"
-  ];
-  boot.extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
+    initrd.availableKernelModules = [
+      "xhci_pci"
+      "ahci"
+      "usbhid"
+      "usb_storage"
+      "sd_mod"
+    ];
+    initrd.kernelModules = [ ];
+    kernelModules = [
+      "kvm-intel"
+      "wl"
+    ];
+    extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
+  };
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/8ceba00e-3e10-44a2-b4ec-5fb11d067690";

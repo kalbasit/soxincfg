@@ -2,17 +2,20 @@
   config,
   lib,
   mode,
-  pkgs,
   ...
 }:
 
 let
-  inherit (lib) mkIf mkEnableOption optionals;
+  inherit (lib)
+    mkEnableOption
+    mkIf
+    optionals
+    ;
 
   cfg = config.soxincfg.programs.rofi;
 in
 {
-  imports = [ ] ++ optionals (mode == "home-manager") [ ./home.nix ];
+  imports = optionals (mode == "home-manager") [ ./home.nix ];
 
   options.soxincfg.programs.rofi = {
     enable = mkEnableOption "programs.rofi";
