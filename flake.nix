@@ -57,147 +57,29 @@
   };
 
   outputs =
-    inputs@{
-      flake-utils-plus,
-      nixos-hardware,
-      nixpkgs,
-      pre-commit-hooks,
-      self,
-      sops-nix,
-      soxin,
-      ...
-    }:
+    inputs:
     let
-      inherit (flake-utils-plus.lib) flattenTree;
+      home-managers = import ./home-managers inputs;
 
-      # Enable deploy-rs support
-      withDeploy = true;
+      hosts = import ./hosts inputs;
 
-      # Enable sops support
-      withSops = true;
+      mkFlake = import ./lib/mk-flake.nix inputs;
 
-      # Channel definitions. `channels.<name>.{input,overlaysBuilder,config,patches}`
-      channels = {
-        nixpkgs = {
-          # Channel specific overlays
-          overlaysBuilder = channels: [
-            (_: super: {
-              inherit (channels.nixpkgs-unstable)
-                # inherit packages from unstable.
-                debootstrap
-                devbox
-                protonvpn-gui
-                ;
-            })
-          ];
-
-          # Channel specific configuration. Overwrites `channelsConfig` argument
-          config = {
-            permittedInsecurePackages = [ ];
-          };
-
-          # Yep, you see it first folks - you can patch nixpkgs!
-          patches = [ ];
-        };
-      };
-
-      # Default configuration values for `channels.<name>.config = {...}`
-      channelsConfig = {
-        # allowBroken = true;
-        allowUnfree = true;
-        # allowUnsupportedSystem = true;
-
-        permittedInsecurePackages = [ ];
-      };
-
-      nixosModules = {
-        profiles = import ./profiles;
-        soxin = import ./mysoxin/soxin.nix; # TODO: Get rid of this!
-        soxincfg = import ./modules;
-      };
-
-      nixosModule = nixosModules.soxincfg;
-
-    in
-    soxin.lib.mkFlake {
-      inherit
-        channels
-        channelsConfig
-        inputs
-        withDeploy
-        withSops
-        nixosModules
-        nixosModule
-        ;
-
-      # add Soxin's main module to all builders
-      extraGlobalModules = [
-        nixosModule
-        nixosModules.profiles.core
-
-        # import mysoxin
-        # TODO: Get rid of this!
-        nixosModules.soxin
-      ];
-
-      # Supported systems, used for packages, apps, devShell and multiple other definitions. Defaults to `flake-utils.lib.defaultSystems`
       supportedSystems = [
         "aarch64-darwin"
         "aarch64-linux"
         "x86_64-darwin"
         "x86_64-linux"
       ];
-
-      outputsBuilder =
-        channels:
-        let
-          pkgs = channels.nixpkgs;
-          pre-commit-check = pre-commit-hooks.lib.${pkgs.hostPlatform.system}.run {
-            src = ./.;
-            hooks = {
-              statix.enable = true;
-              nixfmt-rfc-style.enable = true;
-            };
-          };
-        in
-        {
-          checks = {
-            inherit pre-commit-check;
-          };
-
-          devShell =
-            with pkgs;
-            mkShell {
-              inherit (pre-commit-check) shellHook;
-              buildInputs = [
-                nixfmt-rfc-style
-                nix-output-monitor
-              ];
-            };
-
-          formatter = pkgs.nixfmt-rfc-style;
-        };
-
-      # pull in all hosts
-      hosts = import ./hosts inputs;
-
-      # create all home-managers
-      home-managers = import ./home-managers inputs;
-
-      # Evaluates to `packages.<system>.<pname> = <unstable-channel-reference>.<pname>`.
-      packagesBuilder = channels: flattenTree (import ./pkgs channels);
-
-      # declare the vars
-      vars = import ./vars inputs;
-
-      # include all overlays
-      overlay = import ./overlays;
-
-      # set the nixos specialArgs
-      nixosSpecialArgs = {
-        inherit nixos-hardware;
-      };
-
-      extraHomeManagerModules = [ "${sops-nix.sourceInfo.outPath}/modules/home-manager/sops.nix" ];
-    };
+    in
+    {
+      lib = { inherit mkFlake; };
+    }
+    // (mkFlake {
+      inherit
+        home-managers
+        hosts
+        supportedSystems
+        ;
+    });
 }
