@@ -1,0 +1,40 @@
+#
+# vim:ft=zsh:
+#
+
+function s() {
+	{ # begin the always block
+		function $0_help()
+		{
+			print_info "${log_depth}" "USAGE: s [story]"
+			print_info "${log_depth}" "\t -h, --help        - this message"
+		}
+
+		local log_depth=0
+
+		while [[ $# -ge 1 ]]; do
+			case "${1}" in
+				-h|--help)
+					$0_help
+					return 0
+					;;
+				*)
+					local story="${@}"
+					break
+					;;
+			esac
+		done
+
+		if [[ -n "${story}" ]]; then
+      if ! swm story list --name-only | grep -q "^${story}$"; then
+        swm story create --name "$story" --branch-name "user/$USER/$story"
+      fi
+
+      swm --story-name "$story" tmux switch-client
+    else
+      swm tmux switch-client
+		fi
+	} always {
+		unfunction -m "$0_*"
+	}
+}

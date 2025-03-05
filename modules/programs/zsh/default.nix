@@ -171,8 +171,6 @@ in
         vim = "nvim";
 
         # TODO: move this to the swm package
-        s = "swm tmux switch-client";
-        sb = "swm --story base tmux switch-client";
         vim_ready = "sleep 1";
 
         # TODO: move to docker-config, how to tell ZSH to import them?
