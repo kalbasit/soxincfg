@@ -78,6 +78,18 @@
 
           # Disable the warning when changing a file extension
           FXEnableExtensionChangeWarning = false;
+
+          # Show path breadcrumbs on path bar
+          ShowPathbar = true;
+
+          # Show status bar at the bottom of finder windows
+          ShowStatusBar = true;
+
+          # Keep folders on top when sorting by name
+          _FXSortFoldersFirst = true;
+
+          # Default the current search scope to current folder not this mac
+          FXDefaultSearchScope = "SCcf";
         };
 
         NSGlobalDomain = {
@@ -289,18 +301,6 @@
         defaults write com.apple.finder ShowHardDrivesOnDesktop -bool true
         defaults write com.apple.finder ShowMountedServersOnDesktop -bool true
         defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool true
-
-        # Finder: show status bar
-        defaults write com.apple.finder ShowStatusBar -bool true
-
-        # Finder: show path bar
-        defaults write com.apple.finder ShowPathbar -bool true
-
-        # Keep folders on top when sorting by name
-        defaults write com.apple.finder _FXSortFoldersFirst -bool true
-
-        # When performing a search, search the current folder by default
-        defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
 
         # Avoid creating .DS_Store files on network or USB volumes
         defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
