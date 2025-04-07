@@ -79,6 +79,12 @@
           # Disable the warning when changing a file extension
           FXEnableExtensionChangeWarning = false;
 
+          # Do not show any items on the Desktop
+          ShowExternalHardDrivesOnDesktop = false;
+          ShowHardDrivesOnDesktop = false;
+          ShowRemovableMediaOnDesktop = false;
+          ShowMountedServersOnDesktop = false;
+
           # Show path breadcrumbs on path bar
           ShowPathbar = true;
 
@@ -295,12 +301,6 @@
         # For other paths, use `PfLo` and `file:///full/path/here/`
         # defaults write com.apple.finder NewWindowTarget -string "PfDe"
         # defaults write com.apple.finder NewWindowTargetPath -string "file://$HOME/Desktop/"
-
-        # Show icons for hard drives, servers, and removable media on the desktop
-        defaults write com.apple.finder ShowExternalHardDrivesOnDesktop -bool true
-        defaults write com.apple.finder ShowHardDrivesOnDesktop -bool true
-        defaults write com.apple.finder ShowMountedServersOnDesktop -bool true
-        defaults write com.apple.finder ShowRemovableMediaOnDesktop -bool true
 
         # Avoid creating .DS_Store files on network or USB volumes
         defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
