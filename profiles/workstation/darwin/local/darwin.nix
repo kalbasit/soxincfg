@@ -98,6 +98,9 @@
           FXDefaultSearchScope = "SCcf";
         };
 
+        # Disable the “Are you sure you want to open this application?” dialog
+        LaunchServices.LSQuarantine = false;
+
         NSGlobalDomain = {
           # Enable “natural” (Lion-style) scrolling (mths.be/macos disables it)
           "com.apple.swipescrolldirection" = true;
@@ -183,8 +186,10 @@
           TrackpadRightClick = true;
         };
 
-        # Disable the “Are you sure you want to open this application?” dialog
-        LaunchServices.LSQuarantine = false;
+        WindowManager = {
+          # Hide all items from Desktop
+          StandardHideDesktopIcons = true;
+        };
       };
 
       keyboard = {
