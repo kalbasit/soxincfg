@@ -1,0 +1,7 @@
+#
+# vim:ft=zsh:
+#
+
+function ugroups() {
+  id -Gn $1 | sed 's/ /\n/g'
+}
