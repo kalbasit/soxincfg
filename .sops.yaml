@@ -17,6 +17,11 @@ keys:
   - &host_age_hercules age1g3f7pkzwth395ydm4yzf7qh7tgkj22spdlz68qjt5kszw078l4js3tyq2d
   - &host_age_work0_laptop age1ecard9k3qfwyg64vu4xleldqxsyd0e70uk4rvzr7mc09aptsafcslhaacv
 creation_rules:
+  - path_regex: hosts/darwins/saturn/[^/]+\.sops[^/]*
+    key_groups:
+      - age:
+          - *host_age_saturn
+
   - path_regex: hosts/nixoses/hades/[^/]+\.sops[^/]*
     key_groups:
       - pgp:

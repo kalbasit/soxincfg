@@ -1,3 +1,5 @@
+{ config, ... }:
+
 {
   config = {
     homebrew = {
@@ -174,6 +176,8 @@
           # Remove the spring loading delay for directories
           "com.apple.springing.delay" = 0.0;
         };
+
+        screencapture.location = "${config.users.users.wnasreddine.home}/Pictures/Screenshots";
 
         trackpad = {
           # Trackpad: enable tap to click
