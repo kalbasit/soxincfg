@@ -88,6 +88,7 @@ in
       # chromium = { enable = true; surfingkeys.enable = true; };
       fzf.enable = true;
       git.enable = true;
+      iterm2.enable = true;
       mosh.enable = true;
       pet.enable = true;
       ssh.enable = true;

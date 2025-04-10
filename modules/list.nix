@@ -11,6 +11,7 @@
   dbeaver = ./programs/dbeaver;
   fzf = ./programs/fzf;
   git = ./programs/git;
+  iterm2 = ./programs/iterm2;
   mosh = ./programs/mosh;
   neovim = ./programs/neovim;
   pet = ./programs/pet;
