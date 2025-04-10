@@ -19,6 +19,8 @@ in
   homebrew = {
     casks = [
       "autodesk-fusion"
+      "synology-drive"
+      "tailscale"
     ];
   };
 
