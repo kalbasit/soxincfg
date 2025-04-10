@@ -112,6 +112,11 @@
           # Always show scrollbars
           AppleShowScrollBars = "Always";
 
+          # Metric everywhere
+          AppleMeasurementUnits = "Centimeters";
+          AppleMetricUnits = 1;
+          AppleTemperatureUnit = "Celsius";
+
           # Disable the over-the-top focus ring animation
           NSUseAnimatedFocusRing = false;
 
