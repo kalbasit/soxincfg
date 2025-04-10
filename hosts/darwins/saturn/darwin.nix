@@ -21,6 +21,7 @@ in
     casks = [
       "autodesk-fusion"
       "obsidian"
+      "orcaslicer"
       "synology-drive"
       "tailscale"
     ];
