@@ -24,6 +24,8 @@ in
       	<integer>1</integer>
       	<key>AppleWindowTabbingMode</key>
       	<string>manual</string>
+        <key>AllowClipboardAccess</key>
+        <true/>
       	<key>Default Bookmark Guid</key>
       	<string>2F414D00-285D-4D3D-A82F-6D271BD3DB9B</string>
       	<key>HapticFeedbackForEsc</key>
