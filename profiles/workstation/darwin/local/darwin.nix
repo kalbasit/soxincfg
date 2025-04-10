@@ -202,8 +202,14 @@
         remapCapsLockToControl = true;
       };
 
-      # TODO: Rewrite as much of these as possible using nix-darwin
+      # XXX: None of these are working because this has to be set to the following instead!
+      # system.activationScripts.userDefaults.text = ''
+      #   ...
+      # '';
+      # TODO: Move one by one either to nix-darwin option or to the above format if needed.
       activationScripts.postActivation.text = ''
+        echo Setting up the system defaults
+
         # From https://github.com/mathiasbynens/dotfiles/blob/master/.macos taken
         # at commit e72d1060f3df8c157f93af52ea59508dae36ef50.
 
