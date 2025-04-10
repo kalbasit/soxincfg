@@ -10,7 +10,7 @@ in
       inherit sopsFile;
       mode = "0500";
     };
-    _config_swm_config_yaml = {
+    _config_swm_config_yaml_darwin = {
       inherit sopsFile;
       path = "${yl_home}/Library/Application Support/swm/config.yaml";
     };
