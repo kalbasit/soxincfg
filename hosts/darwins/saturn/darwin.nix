@@ -1,5 +1,4 @@
 {
-  config,
   lib,
   soxincfg,
   ...
@@ -16,6 +15,12 @@ in
     soxincfg.nixosModules.profiles.neovim
     soxincfg.nixosModules.profiles.workstation.darwin.local
   ];
+
+  homebrew = {
+    casks = [
+      "autodesk-fusion"
+    ];
+  };
 
   # Determinate systems uses its own daemon and we shouldn't let nix-darwin manage Nix
   nix.enable = false;
