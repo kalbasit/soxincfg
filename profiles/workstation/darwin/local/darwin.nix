@@ -13,6 +13,7 @@
         "charles"
         "dbeaver-community" # Database GUI
         "font-0xproto-nerd-font" # Nerd font
+        "istat-menus"
         "keybase"
         "postman" # API
       ];
