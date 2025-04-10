@@ -37,7 +37,7 @@ in
 
     programs.ssh = {
       extraConfig = ''
-        Include ~/.ssh/config_include_myself
+        Include ~/.ssh/config_include_personal
       '';
     };
   };

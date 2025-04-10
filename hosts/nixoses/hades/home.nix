@@ -13,6 +13,7 @@ with lib;
 {
   imports = [
     soxincfg.nixosModules.profiles.myself
+    soxincfg.nixosModules.profiles.personal
     soxincfg.nixosModules.profiles.workstation.nixos.local
   ];
 

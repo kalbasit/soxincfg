@@ -113,7 +113,7 @@ creation_rules:
       - pgp:
           - *user_yl_0x8EBD95DC147755A2
 
-  - path_regex: profiles/myself/[^/]+\.sops[^/]*
+  - path_regex: profiles/personal/[^/]+\.sops[^/]*
     key_groups:
       - pgp:
           - *user_yl_0x8EBD95DC147755A2
