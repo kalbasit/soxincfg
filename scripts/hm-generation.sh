@@ -32,8 +32,8 @@ if isLinux; then
 
     awk '/ExecStart=/ {print $2}' "${homeManagerService}"
 elif isDarwin; then
-    readonly activation_yl="$(awk '/activation-yl/ {print $5}' result/activate)"
-    readonly activate="$(awk '/exec/ {print $2}' "$activation_yl")"
+    readonly activation_user="$(awk "/activation-$userName/ {print \$5}" result/activate)"
+    readonly activate="$(awk '/exec/ {print $2}' "$activation_user")"
     dirname "$activate"
 else
     >&2 echo "OS is not supported"
