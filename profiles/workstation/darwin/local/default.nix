@@ -86,6 +86,7 @@ in
       # android.enable = true;
       # brave.enable = true;
       # chromium = { enable = true; surfingkeys.enable = true; };
+      aidente.enable = true;
       fzf.enable = true;
       git.enable = true;
       iterm2.enable = true;

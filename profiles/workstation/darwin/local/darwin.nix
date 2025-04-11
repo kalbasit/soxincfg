@@ -8,7 +8,6 @@
       brews = [ ];
 
       casks = [
-        "aldente" # Battery management
         "alfred" # spotlight replacement
         "arc" # Arc Browser
         "charles"
