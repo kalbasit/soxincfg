@@ -36,7 +36,7 @@ in
         "normal_window_opacity" = "0.0";
         "right_padding" = "8";
         "split_ratio" = "0.50";
-        "top_padding" = "12";
+        "top_padding" = "8";
         "window_animation_duration" = "010";
         "window_animation_frame_rate" = "120";
         "window_border" = "on";
