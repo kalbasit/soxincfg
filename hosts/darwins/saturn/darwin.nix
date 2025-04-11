@@ -24,7 +24,11 @@ in
       "orcaslicer"
       "synology-drive"
       "tailscale"
+
+      "grishka/grishka/neardrop"
     ];
+
+    taps = [ "grishka/grishka" ];
   };
 
   # Determinate systems uses its own daemon and we shouldn't let nix-darwin manage Nix
