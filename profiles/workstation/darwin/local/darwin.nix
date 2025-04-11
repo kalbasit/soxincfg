@@ -109,12 +109,18 @@
         # Disable the “Are you sure you want to open this application?” dialog
         LaunchServices.LSQuarantine = false;
 
+        # Show the clock in 24 hours format
+        menuExtraClock.Show24Hour = true;
+
         NSGlobalDomain = {
           # Enable “natural” (Lion-style) scrolling (mths.be/macos disables it)
           "com.apple.swipescrolldirection" = true;
 
           # Set sidebar icon size to medium
           NSTableViewDefaultSizeMode = 2;
+
+          # Force clock to be 24-hours
+          AppleICUForce24HourTime = true;
 
           # Always show scrollbars
           AppleShowScrollBars = "Always";
