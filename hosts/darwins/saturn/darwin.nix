@@ -1,14 +1,8 @@
 {
-  lib,
   soxincfg,
   ...
 }:
 
-let
-  inherit (lib)
-    mkForce
-    ;
-in
 {
   imports = [
     soxincfg.nixosModules.profiles.myself
@@ -37,12 +31,6 @@ in
 
   # load YL's home-manager configuration
   home-manager.users.wnasreddine = import ./home.nix { inherit soxincfg; };
-
-  # turn off i3-like stuff for now
-  soxincfg.services = {
-    borders.enable = mkForce false;
-    sketchybar.enable = mkForce false;
-  };
 
   system.stateVersion = 5;
 }
