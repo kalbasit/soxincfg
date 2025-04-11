@@ -38,6 +38,11 @@ in
       inherit sopsFile;
       path = "${homePath}/.jrnl_config";
     };
+    _kube_config = { inherit sopsFile; };
+    _kube_configure_profile_personal_sh = {
+      inherit sopsFile;
+      mode = "700";
+    };
     _netrc = {
       inherit sopsFile;
       path = "${homePath}/.netrc";
