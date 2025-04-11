@@ -100,7 +100,6 @@ in
 
     services = {
       borders.enable = true;
-      sketchybar.enable = true;
       skhd.enable = true;
       yabai.enable = true;
     };
