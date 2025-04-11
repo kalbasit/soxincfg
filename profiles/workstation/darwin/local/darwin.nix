@@ -12,6 +12,7 @@
         "arc" # Arc Browser
         "charles"
         "dbeaver-community" # Database GUI
+        "displaylink" # software to drive the USB-C hub
         "font-0xproto-nerd-font" # Nerd font
         "istat-menus"
         "keybase"
