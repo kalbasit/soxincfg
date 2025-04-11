@@ -22,6 +22,7 @@ in
       "autodesk-fusion"
       "obsidian"
       "orcaslicer"
+      "protonvpn"
       "synology-drive"
       "tailscale"
 
