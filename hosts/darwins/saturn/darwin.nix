@@ -42,8 +42,6 @@ in
   soxincfg.services = {
     borders.enable = mkForce false;
     sketchybar.enable = mkForce false;
-    skhd.enable = mkForce false;
-    yabai.enable = mkForce false;
   };
 
   system.stateVersion = 5;
