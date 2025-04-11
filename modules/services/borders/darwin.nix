@@ -3,7 +3,7 @@
 let
   inherit (lib) mkIf;
 
-  cfg = config.soxincfg.services.sketchybar;
+  cfg = config.soxincfg.services.borders;
 in
 {
   config = mkIf cfg.enable {
