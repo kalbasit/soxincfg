@@ -16,6 +16,7 @@
       "autodesk-fusion"
       "obsidian"
       "orcaslicer"
+      "proton-mail"
       "protonvpn"
       "synology-drive"
       "tailscale"
