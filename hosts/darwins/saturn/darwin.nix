@@ -20,6 +20,7 @@
       "protonvpn"
       "synology-drive"
       "tailscale"
+      "zen-browser"
 
       "grishka/grishka/neardrop"
     ];
