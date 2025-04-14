@@ -19,6 +19,7 @@
       "proton-mail"
       "protonvpn"
       "synology-drive"
+      "utm" # QEMU frontend
       "tailscale"
       "zen-browser"
 
