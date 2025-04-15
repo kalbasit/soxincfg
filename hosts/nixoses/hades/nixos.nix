@@ -1,6 +1,5 @@
 {
   config,
-  inputs,
   soxincfg,
   nixos-hardware,
   pkgs,
@@ -56,7 +55,7 @@ in
   };
 
   # load home-manager configuration
-  home-manager.users."${config.soxincfg.settings.users.user.name}" = import ./home.nix {
+  home-manager.users."${config.soxincfg.settings.users.username}" = import ./home.nix {
     inherit soxincfg;
   };
 

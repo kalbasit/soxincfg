@@ -34,7 +34,7 @@
   nix.enable = false;
 
   # load home-manager configuration
-  home-manager.users."${config.soxincfg.settings.users.user.name}" = import ./home.nix {
+  home-manager.users."${config.soxincfg.settings.users.userName}" = import ./home.nix {
     inherit soxincfg;
   };
 

@@ -1,8 +1,6 @@
 {
   config,
   lib,
-  pkgs,
-  inputs,
   soxincfg,
   ...
 }:
@@ -21,7 +19,7 @@ in
   soxincfg.settings.users.userName = "yl";
 
   # load home-manager configuration
-  home-manager.users."${config.soxincfg.settings.users.user.name}" = import ./home.nix {
+  home-manager.users."${config.soxincfg.settings.users.userName}" = import ./home.nix {
     inherit soxincfg;
   };
 
