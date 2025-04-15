@@ -15,7 +15,7 @@ in
   imports = [
     soxincfg.nixosModules.profiles.myself
     soxincfg.nixosModules.profiles.personal
-    soxincfg.nixosModules.profiles.workstation.nixos.local
+    # soxincfg.nixosModules.profiles.workstation.nixos.local
 
     ./hardware-configuration.nix
   ];
