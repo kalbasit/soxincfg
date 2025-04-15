@@ -15,27 +15,29 @@ fi
 readonly BUILDER
 
 case "${action}" in
-    build)
-        $BUILDER build ".#darwinConfigurations.${host}.system" --show-trace
-        ;;
-    switch)
-        >&2 echo "Switching $host"
+  build)
+    >&2 echo "Building $host"
 
-        # steps taken from https://github.com/LnL7/nix-darwin/blob/8b6ea26d5d2e8359d06278364f41fbc4b903b28a/pkgs/nix-tools/darwin-rebuild.sh
+    $BUILDER build ".#darwinConfigurations.${host}.system" --show-trace
+    ;;
+  switch)
+    >&2 echo "Switching $host"
 
-        # 1. build the host
-        "$0" build "$host"
+    # steps taken from https://github.com/LnL7/nix-darwin/blob/8b6ea26d5d2e8359d06278364f41fbc4b903b28a/pkgs/nix-tools/darwin-rebuild.sh
 
-        # 2. setup the profile
-        profile=/nix/var/nix/profiles/system
-        systemConfig="$(readlink -f result)"
-        sudo -H nix-env -p "$profile" --set "$systemConfig"
+    # 1. build the host
+    "$0" build "$host"
 
-        # 3. call darwin-rebuild activate
-        ./result/sw/bin/darwin-rebuild activate
-        ;;
-    *)
-        usage
-        exit 1
-        ;;
+    # 2. setup the profile
+    profile=/nix/var/nix/profiles/system
+    systemConfig="$(readlink -f result)"
+    sudo -H nix-env -p "$profile" --set "$systemConfig"
+
+    # 3. call darwin-rebuild activate
+    ./result/sw/bin/darwin-rebuild activate
+    ;;
+  *)
+    usage
+    exit 1
+    ;;
 esac
