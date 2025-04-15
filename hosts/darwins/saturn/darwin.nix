@@ -1,4 +1,5 @@
 {
+  config,
   soxincfg,
   ...
 }:
@@ -32,8 +33,10 @@
   # Determinate systems uses its own daemon and we shouldn't let nix-darwin manage Nix
   nix.enable = false;
 
-  # load YL's home-manager configuration
-  home-manager.users.wnasreddine = import ./home.nix { inherit soxincfg; };
+  # load home-manager configuration
+  home-manager.users."${config.soxincfg.settings.users.user.name}" = import ./home.nix {
+    inherit soxincfg;
+  };
 
   system.stateVersion = 5;
 }
