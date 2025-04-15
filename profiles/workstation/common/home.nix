@@ -110,7 +110,6 @@ in
       remmina
       slack
       smartmontools
-      synology-drive-client
       vlc
       whatsapp-for-linux
       xfce.thunar
@@ -120,5 +119,8 @@ in
       xfce.tumbler
       xkb-switch # Switch your X keyboard layouts from the command line
       zoom-us
+    ])
+    ++ (optionals (stdenv.isLinux && config.nixpkgs.hostPlatform != "aarch64-linux") [
+      synology-drive-client
     ]);
 }

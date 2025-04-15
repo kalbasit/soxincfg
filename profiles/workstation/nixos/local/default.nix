@@ -1,9 +1,7 @@
 {
-  config,
   home-manager,
   lib,
   mode,
-  pkgs,
   soxincfg,
   ...
 }:
@@ -19,7 +17,8 @@ in
       soxincfg.nixosModules.profiles.neovim
       soxincfg.nixosModules.profiles.workstation.common
     ]
-    ++ optionals (mode == "NixOS") [ ./nixos.nix ] ++ optionals (mode == "home-manager") [ ./home.nix ];
+    ++ optionals (mode == "NixOS") [ ./nixos.nix ]
+    ++ optionals (mode == "home-manager") [ ./home.nix ];
 
   config = {
     soxin = {
