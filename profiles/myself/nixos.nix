@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   mode,
   soxincfg,
@@ -11,7 +12,10 @@
       # allow my user to access secrets
       groups = [ "keys" ];
 
-      users = soxincfg.vars.users { inherit lib mode; };
+      users = soxincfg.vars.users {
+        inherit lib mode;
+        inherit (config.soxincfg.settings.users) userName;
+      };
     };
   };
 }

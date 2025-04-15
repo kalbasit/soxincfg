@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   soxin,
   soxincfg,
@@ -8,9 +9,6 @@
   ...
 }:
 
-let
-  users = soxincfg.vars.users { inherit lib mode; };
-in
 {
   nix = {
     settings = {
@@ -43,11 +41,21 @@ in
   boot.tmp.useTmpfs = true;
 
   # Set the ssh authorized keys for the root user
-  users.users.root = {
-    inherit (users.yl) hashedPassword;
+  users.users.root =
+    let
+      users = soxincfg.vars.users {
+        inherit lib mode;
+        inherit (config.soxincfg.settings.users) userName;
+      };
 
-    openssh.authorizedKeys.keys = users.yl.sshKeys;
-  };
+      inherit (config.soxincfg.settings.users) userName;
+      userAttrs = users."${userName}";
+    in
+    {
+      inherit (userAttrs) hashedPassword;
+
+      openssh.authorizedKeys.keys = userAttrs.sshKeys;
+    };
 
   # set the default locale and the timeZone
   i18n.defaultLocale = "en_US.UTF-8";
