@@ -16,7 +16,7 @@ readonly BUILDER
 
 case "${action}" in
     build)
-        $BUILDER build ".#darwinConfigurations.${host}.system"
+        $BUILDER build ".#darwinConfigurations.${host}.system" --show-trace
         ;;
     switch)
         >&2 echo "Switching $host"
