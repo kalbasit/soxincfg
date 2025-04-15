@@ -56,7 +56,7 @@ in
 
     user = mkOption {
       type = types.attrs;
-      default = cfg.users."${cfg.userName}";
+      default = config.users.users."${cfg.userName}";
       readOnly = true;
       description = ''
         The computed attributes of the main user.

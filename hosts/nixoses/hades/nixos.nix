@@ -8,8 +8,8 @@
   ...
 }:
 let
-  yl_home = config.users.users.yl.home;
-  owner = config.users.users.yl.name;
+  homePath = config.soxincfg.settings.users.user.home;
+  owner = config.soxincfg.settings.users.user.name;
   sopsFile = ./secrets.sops.yaml;
 
   inherit (lib) mkForce;
@@ -51,7 +51,7 @@ in
     _yl_bw_session_session = {
       inherit owner sopsFile;
       mode = "0400";
-      path = "${yl_home}/.bw_session";
+      path = "${homePath}/.bw_session";
     };
   };
 

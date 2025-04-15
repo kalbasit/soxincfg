@@ -8,7 +8,7 @@
   ...
 }:
 let
-  yl_home = config.users.users.yl.home;
+  homePath = config.users.users.yl.home;
   owner = config.users.users.yl.name;
   sopsFile = ./secrets.sops.yaml;
 
@@ -46,7 +46,7 @@ in
     _yl_bw_session_session = {
       inherit owner sopsFile;
       mode = "0400";
-      path = "${yl_home}/.bw_session";
+      path = "${homePath}/.bw_session";
     };
   };
 

@@ -9,7 +9,7 @@ in
   # allow the store to be accessed for store paths via SSH
   nix.sshServe = {
     enable = true;
-    keys = config.soxincfg.settings.users.users.yl.sshKeys;
+    keys = config.soxincfg.settings.users.user.sshKeys;
   };
 
   services = {

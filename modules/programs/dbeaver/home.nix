@@ -10,7 +10,7 @@ let
 
   inherit (pkgs.hostPlatform) isDarwin;
 
-  yl_home = config.home.homeDirectory;
+  homePath = config.home.homeDirectory;
   sopsFile = ./credentials-config.json.sops;
 
   cfg = config.soxincfg.programs.dbeaver;
@@ -23,13 +23,13 @@ in
       credentials-config-json = {
         inherit sopsFile;
         format = "binary";
-        path = "${yl_home}/.local/share/DBeaverData/workspace6/General/.dbeaver/credentials-config.json";
+        path = "${homePath}/.local/share/DBeaverData/workspace6/General/.dbeaver/credentials-config.json";
       };
 
       data-sources-json = {
         inherit sopsFile;
         format = "binary";
-        path = "${yl_home}/.local/share/DBeaverData/workspace6/General/.dbeaver/data-sources.json";
+        path = "${homePath}/.local/share/DBeaverData/workspace6/General/.dbeaver/data-sources.json";
       };
     };
   };
