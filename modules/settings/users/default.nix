@@ -1,11 +1,11 @@
 {
-  mode,
+  config,
   lib,
+  mode,
   ...
 }:
 
 let
-
   inherit (lib)
     mkOption
     optionals
