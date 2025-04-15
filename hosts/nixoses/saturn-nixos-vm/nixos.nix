@@ -26,11 +26,15 @@ in
   #     wait 3 seconds between U2F presence check and accepting password tap.
   security.pam.u2f.enable = mkForce false;
 
-  sops.secrets = {
-    _yl_bw_session_session = {
-      inherit owner sopsFile;
-      mode = "0400";
-      path = "${homePath}/.bw_session";
+  sops = {
+    age.keyFile = "${homePath}/.config/sops/age/keys.txt";
+
+    secrets = {
+      _yl_bw_session_session = {
+        inherit owner sopsFile;
+        mode = "0400";
+        path = "${homePath}/.bw_session";
+      };
     };
   };
 
