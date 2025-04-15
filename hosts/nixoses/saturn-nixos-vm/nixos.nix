@@ -5,7 +5,7 @@
   ...
 }:
 let
-  home = config.users.users.wnasreddine.home;
+  homePath = config.users.users.wnasreddine.home;
   owner = config.users.users.wnasreddine.name;
   sopsFile = ./secrets.sops.yaml;
 
@@ -30,7 +30,7 @@ in
     _yl_bw_session_session = {
       inherit owner sopsFile;
       mode = "0400";
-      path = "${home}/.bw_session";
+      path = "${homePath}/.bw_session";
     };
   };
 
