@@ -54,6 +54,15 @@ in
       '';
     };
 
+    user = mkOption {
+      type = types.attrs;
+      default = cfg.users."${cfg.userName}";
+      readOnly = true;
+      description = ''
+        The computed attributes of the main user.
+      '';
+    };
+
     users = mkOption {
       type = types.attrs;
       default = { };
