@@ -35,7 +35,7 @@ in
   };
 
   # load YL's home-manager configuration
-  home-manager.users.yl = import ./home.nix { inherit soxincfg; };
+  home-manager.users.wnasreddine = import ./home.nix { inherit soxincfg; };
 
   networking.firewall.allowedTCPPorts = [
     # allow me to use serve_this on my main machine
