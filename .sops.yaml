@@ -101,7 +101,7 @@ creation_rules:
         age:
           - *host_age_saturn
 
-  - path_regex: profiles/workstation/nixos/(local|remote)/[^/]+\.sops[^/]*
+  - path_regex: profiles/workstation/nixos/(local|remote|vm-guest)/[^/]+\.sops[^/]*
     key_groups:
       - pgp:
           - *user_yl_0x8EBD95DC147755A2
