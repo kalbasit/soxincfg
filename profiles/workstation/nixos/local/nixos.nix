@@ -8,8 +8,9 @@ in
 
   # allow the store to be accessed for store paths via SSH
   nix.sshServe = {
+    inherit (config.soxincfg.settings.users.user.openssh.authorizedKeys) keys;
+
     enable = true;
-    keys = config.soxincfg.settings.users.users.yl.sshKeys;
   };
 
   services = {

@@ -23,30 +23,41 @@ let
 
 in
 {
-  options.soxincfg.settings.users.users = mkOption {
-    type = types.attrs;
-    default = { };
-    description = ''
-      The list of users to create.
-    '';
+  options.soxincfg.settings.users = {
+    user = mkOption {
+      type = types.attrs;
+      default = config.users.users."${cfg.userName}";
+      readOnly = true;
+      description = ''
+        The computed attributes of the main user.
+      '';
+    };
 
-    # for each user, first use the default, then make sure the name is always
-    # set and finally pass the user. Each step will override attributes from
-    # the previous one, so it's important the passed-in value is evaluated
-    # last.
-    apply =
-      users:
-      let
-        defaults = name: {
-          inherit name;
-          # hashedPassword = "";
-          home = "/Users/${name}";
-          # isAdmin = false;
-          # isNixTrustedUser = false;
-          # sshKeys = [ ];
-        };
-      in
-      mapAttrs (name: user: recursiveUpdate (defaults name) user) users;
+    users = mkOption {
+      type = types.attrs;
+      default = { };
+      description = ''
+        The list of users to create.
+      '';
+
+      # for each user, first use the default, then make sure the name is always
+      # set and finally pass the user. Each step will override attributes from
+      # the previous one, so it's important the passed-in value is evaluated
+      # last.
+      apply =
+        users:
+        let
+          defaults = name: {
+            inherit name;
+            # hashedPassword = "";
+            home = "/Users/${name}";
+            # isAdmin = false;
+            # isNixTrustedUser = false;
+            # sshKeys = [ ];
+          };
+        in
+        mapAttrs (name: user: recursiveUpdate (defaults name) user) users;
+    };
   };
 
   config = mkIf cfg.enable {

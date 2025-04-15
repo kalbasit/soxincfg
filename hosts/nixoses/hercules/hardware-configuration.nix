@@ -362,8 +362,8 @@ in
       device = windowsDevice;
       fsType = "ntfs";
       options = [
-        "gid=${builtins.toString config.users.groups."${config.users.users.yl.group}".gid}"
-        "uid=${builtins.toString config.users.users.yl.uid}"
+        "gid=${builtins.toString config.users.groups."${config.soxincfg.settings.users.user.group}".gid}"
+        "uid=${builtins.toString config.soxincfg.settings.users.user.uid}"
       ];
     };
   };
