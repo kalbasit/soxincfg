@@ -8,8 +8,8 @@
   ...
 }:
 let
-  homePath = config.users.users.yl.home;
-  owner = config.users.users.yl.name;
+  homePath = config.soxincfg.settings.users.user.home;
+  owner = config.soxincfg.settings.users.user.name;
   sopsFile = ./secrets.sops.yaml;
 
   inherit (lib) mkForce;

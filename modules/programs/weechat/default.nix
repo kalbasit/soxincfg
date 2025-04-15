@@ -32,7 +32,7 @@ let
       '';
     };
 
-  owner = config.users.users.yl.name;
+  owner = config.soxincfg.settings.users.user.name;
 in
 {
   options = {
