@@ -42,7 +42,7 @@ let
       $*
   '';
 
-  yl_home = config.home.homeDirectory;
+  homePath = config.home.homeDirectory;
   sopsFile = ./secrets.sops.yaml;
 in
 {
@@ -52,7 +52,7 @@ in
     (mkIf isDarwin {
       sops.secrets._ssh_id_ed25519_sk_rk = {
         inherit sopsFile;
-        path = "${yl_home}/.ssh/id_ed25519_sk_rk";
+        path = "${homePath}/.ssh/id_ed25519_sk_rk";
       };
     })
 

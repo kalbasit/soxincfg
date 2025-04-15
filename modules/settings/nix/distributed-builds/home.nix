@@ -11,9 +11,9 @@ let
   inherit (pkgs.hostPlatform) isDarwin;
 
   sopsFile = ./secrets.sops.yaml;
-  yl_home = config.home.homeDirectory;
+  homePath = config.home.homeDirectory;
 
-  keyStore = "${yl_home}/.config/nix/distributed-builds";
+  keyStore = "${homePath}/.config/nix/distributed-builds";
 
   cfg = config.soxincfg.settings.nix.distributed-builds;
 in
@@ -21,7 +21,7 @@ in
   config = mkIf cfg.enable {
     sops.age = mkIf isDarwin {
       generateKey = true;
-      keyFile = "${yl_home}/.local/share/soxincfg/sops/age.key";
+      keyFile = "${homePath}/.local/share/soxincfg/sops/age.key";
     };
 
     sops.secrets = mkIf isDarwin {

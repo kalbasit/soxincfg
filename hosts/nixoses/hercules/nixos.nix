@@ -1,6 +1,5 @@
 {
   config,
-  inputs,
   soxincfg,
   nixos-hardware,
   pkgs,
@@ -8,8 +7,8 @@
   ...
 }:
 let
-  yl_home = config.users.users.yl.home;
-  owner = config.users.users.yl.name;
+  homePath = config.soxincfg.settings.users.user.home;
+  owner = config.soxincfg.settings.users.user.name;
   sopsFile = ./secrets.sops.yaml;
 
   inherit (lib) mkForce;
@@ -46,12 +45,16 @@ in
     _yl_bw_session_session = {
       inherit owner sopsFile;
       mode = "0400";
-      path = "${yl_home}/.bw_session";
+      path = "${homePath}/.bw_session";
     };
   };
 
-  # load YL's home-manager configuration
-  home-manager.users.yl = import ./home.nix { inherit soxincfg; };
+  # load home-manager configuration
+  # TODO: Use users.user.name once the following commit is used
+  # https://github.com/nix-community/home-manager/commit/216690777e47aa0fb1475e4dbe2510554ce0bc4b
+  home-manager.users."${config.soxincfg.settings.users.userName}" = import ./home.nix {
+    inherit soxincfg;
+  };
 
   networking.firewall.allowedTCPPorts = [
     # allow me to use serve_this on my main machine
