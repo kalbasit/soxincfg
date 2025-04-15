@@ -232,7 +232,8 @@ in
       "${meta}+d" = "focus child";
 
       # start a region screenshot
-      "${meta}+${shift}+4" = "exec ${getBin pkgs.flameshot}/bin/flameshot gui --delay 500 --path ${config.home.homeDirectory}/Desktop";
+      "${meta}+${shift}+4" =
+        "exec ${getBin pkgs.flameshot}/bin/flameshot gui --delay 500 --path ${config.home.homeDirectory}/Desktop";
 
       # start a screen recorder
       "${meta}+${shift}+5" = "exec ${getBin pkgs.simplescreenrecorder}/bin/simplescreenrecorder";
@@ -246,16 +247,22 @@ in
       "${meta}+apostrophe" = "exec i3-input -F '[con_mark=\"%s\"] focus' -l 1 -P 'Go to: '";
 
       # volume support
-      "XF86AudioRaiseVolume" = "exec ${nosid} ${getBin pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ false, exec ${nosid} ${getBin pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%";
-      "XF86AudioLowerVolume" = "exec ${nosid} ${getBin pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ false, exec ${nosid} ${getBin pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%";
-      "XF86AudioMute" = "exec ${nosid} ${getBin pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
-      "XF86AudioMicMute" = "exec ${nosid} ${getBin pkgs.pulseaudio}/bin/pactl set-source-mute @DEFAULT_SOURCE@ toggle";
+      "XF86AudioRaiseVolume" =
+        "exec ${nosid} ${getBin pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ false, exec ${nosid} ${getBin pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ +5%";
+      "XF86AudioLowerVolume" =
+        "exec ${nosid} ${getBin pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ false, exec ${nosid} ${getBin pkgs.pulseaudio}/bin/pactl set-sink-volume @DEFAULT_SINK@ -5%";
+      "XF86AudioMute" =
+        "exec ${nosid} ${getBin pkgs.pulseaudio}/bin/pactl set-sink-mute @DEFAULT_SINK@ toggle";
+      "XF86AudioMicMute" =
+        "exec ${nosid} ${getBin pkgs.pulseaudio}/bin/pactl set-source-mute @DEFAULT_SOURCE@ toggle";
 
       # brightness support
       "XF86MonBrightnessUp" = "exec ${nosid} ${getBin pkgs.brightnessctl}/bin/brightnessctl s +5%";
       "XF86MonBrightnessDown" = "exec ${nosid} ${getBin pkgs.brightnessctl}/bin/brightnessctl s 5%-";
-      "${shift}+XF86MonBrightnessUp" = "exec ${nosid} ${getBin pkgs.brightnessctl}/bin/brightnessctl s +1%";
-      "${shift}+XF86MonBrightnessDown" = "exec ${nosid} ${getBin pkgs.brightnessctl}/bin/brightnessctl s 1%-";
+      "${shift}+XF86MonBrightnessUp" =
+        "exec ${nosid} ${getBin pkgs.brightnessctl}/bin/brightnessctl s +1%";
+      "${shift}+XF86MonBrightnessDown" =
+        "exec ${nosid} ${getBin pkgs.brightnessctl}/bin/brightnessctl s 1%-";
 
       # sleep support
       "XF86PowerOff" = "exec ${nosid} systemctl suspend";
@@ -264,7 +271,8 @@ in
       "${meta}+l" = "exec ${nosid} ${locker}";
 
       # clipboard history
-      "${meta}+${alt}+c" = "exec CM_LAUNCHER=rofi ${getBin pkgs.clipmenu}/bin/clipmenu && ${getBin pkgs.xdotool}/bin/xdotool key Shift+Insert";
+      "${meta}+${alt}+c" =
+        "exec CM_LAUNCHER=rofi ${getBin pkgs.clipmenu}/bin/clipmenu && ${getBin pkgs.xdotool}/bin/xdotool key Shift+Insert";
 
       # Terminals
       "${meta}+Return" = "exec ${getBin pkgs.termite}/bin/termite";
@@ -333,23 +341,26 @@ in
       };
     };
 
-    startup = [
-      {
-        command = "${getBin pkgs.xorg.xset}/bin/xset r rate 300 30";
-        always = false;
-        notification = false;
-      }
-      {
-        command = "i3-msg \"workspace personal; exec ${nosid} ${getBin pkgs.termite}/bin/termite\"";
-        always = false;
-        notification = true;
-      }
-      {
-        command = "${getBin pkgs.synology-drive-client}/bin/synology-drive";
-        always = false;
-        notification = true;
-      }
-    ];
+    startup =
+      [
+        {
+          command = "${getBin pkgs.xorg.xset}/bin/xset r rate 300 30";
+          always = false;
+          notification = false;
+        }
+        {
+          command = "i3-msg \"workspace personal; exec ${nosid} ${getBin pkgs.termite}/bin/termite\"";
+          always = false;
+          notification = true;
+        }
+      ]
+      ++ (optionals (config.nixpkgs.hostPlatform != "aarch64-linux") [
+        {
+          command = "${getBin pkgs.synology-drive-client}/bin/synology-drive";
+          always = false;
+          notification = true;
+        }
+      ]);
   };
 
   extraConfig = ''

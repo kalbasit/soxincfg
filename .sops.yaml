@@ -14,6 +14,7 @@ keys:
 
   # Age host keys
   - &host_age_saturn age1cdyuywjxswv3t0yhk8ch7tkh6s5ncwexdgsyzgav8804nu775a6qm0l4y2
+  - &host_age_saturn_nixos_vm age1mmx0lc49e8wfev6suf5jsf743ddafqngwk4swel37pyrfx82vc0svx6yyp
   - &host_age_hercules age1g3f7pkzwth395ydm4yzf7qh7tgkj22spdlz68qjt5kszw078l4js3tyq2d
   - &host_age_work0_laptop age1ecard9k3qfwyg64vu4xleldqxsyd0e70uk4rvzr7mc09aptsafcslhaacv
 creation_rules:
@@ -71,6 +72,13 @@ creation_rules:
           - *user_yl_0x8EBD95DC147755A2
           - *host_pgp_laptop_server_x86_4
 
+  - path_regex: hosts/nixoses/saturn-nixos-vm/[^/]+\.sops[^/]*
+    key_groups:
+      - pgp:
+          - *user_yl_0x8EBD95DC147755A2
+        age:
+          - *host_age_saturn_nixos_vm
+
   - path_regex: hosts/nixoses/zeus/[^/]+\.sops[^/]*
     key_groups:
       - pgp:
@@ -93,7 +101,7 @@ creation_rules:
         age:
           - *host_age_saturn
 
-  - path_regex: profiles/workstation/nixos/(local|remote)/[^/]+\.sops[^/]*
+  - path_regex: profiles/workstation/nixos/(local|remote|vm-guest)/[^/]+\.sops[^/]*
     key_groups:
       - pgp:
           - *user_yl_0x8EBD95DC147755A2
@@ -107,6 +115,7 @@ creation_rules:
           - *host_pgp_zeus
         age:
           - *host_age_hercules
+          - *host_age_saturn_nixos_vm
 
   - path_regex: profiles/workstation/qubes/local/[^/]+\.sops[^/]*
     key_groups:
@@ -121,6 +130,7 @@ creation_rules:
         age:
           - *host_age_hercules
           - *host_age_saturn
+          - *host_age_saturn_nixos_vm
 
   - path_regex: modules/settings/nix/[^/]+\.sops[^/]*
     key_groups:
@@ -131,6 +141,7 @@ creation_rules:
         age:
           - *host_age_hercules
           - *host_age_saturn
+          - *host_age_saturn_nixos_vm
 
   - path_regex: modules/settings/nix/distributed-builds/[^/]+\.sops[^/]*
     key_groups:
@@ -141,6 +152,7 @@ creation_rules:
         age:
           - *host_age_hercules
           - *host_age_saturn
+          - *host_age_saturn_nixos_vm
 
   - path_regex: modules/hardware/onlykey/[^/]+\.sops[^/]*
     key_groups:
@@ -151,6 +163,7 @@ creation_rules:
         age:
           - *host_age_hercules
           - *host_age_saturn
+          - *host_age_saturn_nixos_vm
           - *host_age_work0_laptop
 
   - path_regex: modules/programs/dbeaver/[^/]+\.sops[^/]*
@@ -161,6 +174,7 @@ creation_rules:
         age:
           - *host_age_hercules
           - *host_age_saturn
+          - *host_age_saturn_nixos_vm
 
   - path_regex: modules/programs/weechat/[^/]+\.sops[^/]*
     key_groups:
@@ -170,6 +184,7 @@ creation_rules:
         age:
           - *host_age_hercules
           - *host_age_saturn
+          - *host_age_saturn_nixos_vm
 
   - path_regex: modules/programs/weechat/config/[^/]+\.sops[^/]*
     key_groups:
@@ -179,6 +194,7 @@ creation_rules:
         age:
           - *host_age_hercules
           - *host_age_saturn
+          - *host_age_saturn_nixos_vm
 
   - path_regex: modules/programs/weechat/config/certs/[^/]+\.sops[^/]*
     key_groups:
@@ -188,6 +204,7 @@ creation_rules:
         age:
           - *host_age_hercules
           - *host_age_saturn
+          - *host_age_saturn_nixos_vm
 
   - path_regex: modules/services/nextcloud/[^/]+\.sops[^/]*
     key_groups:
@@ -197,6 +214,7 @@ creation_rules:
         age:
           - *host_age_hercules
           - *host_age_saturn
+          - *host_age_saturn_nixos_vm
 
   - path_regex: modules/services/sleep-on-lan/[^/]+\.sops[^/]*
     key_groups:
@@ -206,6 +224,7 @@ creation_rules:
         age:
           - *host_age_hercules
           - *host_age_saturn
+          - *host_age_saturn_nixos_vm
 
   - path_regex: modules/services/k3s/[^/]+\.sops[^/]*
     key_groups:

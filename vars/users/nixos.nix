@@ -21,6 +21,9 @@ userName:
 
       # Hercules - Qubes Vault
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILWRLQQGw8+4ubG+113iHDfR08Wf6MJBCErjwfYxDvgZ Hercules - Qubes Vault"
+
+      # Saturn - Nixos VM
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILYQAoPIUZm5gDc4jhkebnTN1Db9BBAQtDI8O9c82Wrq Saturn - Nixos VM"
     ];
 
     uid = 2000;
