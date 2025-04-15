@@ -1,5 +1,4 @@
 {
-  home-manager,
   lib,
   mode,
   soxincfg,
@@ -8,8 +7,6 @@
 
 let
   inherit (lib) optionals;
-
-  inherit (home-manager.lib.hm.dag) entryBefore entryAnywhere;
 in
 {
   imports =
