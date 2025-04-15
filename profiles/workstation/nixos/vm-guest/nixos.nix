@@ -14,6 +14,8 @@ in
   # };
 
   services = {
+    qemuGuest.enable = true;
+
     # gnome.gnome-keyring.enable = true;
 
     # Enable TailScale for zero-config VPN service.
