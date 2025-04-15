@@ -20,6 +20,12 @@ in
     ./hardware-configuration.nix
   ];
 
+  services.xserver = {
+    enable = true;
+    displayManager.gdm.enable = true;
+    desktopManager.gnome.enable = true;
+  };
+
   # TODO: Remove this once I can work out:
   #   - How to ssh into my machine if U2F is required.
   #   - How make 'sudo' ask for password before U2F because Onlykey makes me
