@@ -17,6 +17,9 @@ with lib;
     soxincfg.nixosModules.profiles.workstation.nixos.local
   ];
 
+  # XXX: This host was created prior to changing my username to wnasreddine.
+  soxincfg.settings.users.userName = "yl";
+
   # Setup the name of the wireless interface in Polybar
   soxin.services.xserver.windowManager.bar.modules.network.wlan = singleton "wlp110s0";
 
