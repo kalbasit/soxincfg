@@ -14,6 +14,7 @@ keys:
 
   # Age host keys
   - &host_age_saturn age1cdyuywjxswv3t0yhk8ch7tkh6s5ncwexdgsyzgav8804nu775a6qm0l4y2
+  - &host_age_saturn_nixos_vm age1mmx0lc49e8wfev6suf5jsf743ddafqngwk4swel37pyrfx82vc0svx6yyp
   - &host_age_hercules age1g3f7pkzwth395ydm4yzf7qh7tgkj22spdlz68qjt5kszw078l4js3tyq2d
   - &host_age_work0_laptop age1ecard9k3qfwyg64vu4xleldqxsyd0e70uk4rvzr7mc09aptsafcslhaacv
 creation_rules:
