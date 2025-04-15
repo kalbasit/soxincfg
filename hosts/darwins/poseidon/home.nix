@@ -14,6 +14,9 @@
     soxincfg.nixosModules.profiles.workstation.darwin.local
   ];
 
+  # XXX: This host was created prior to changing my username to wnasreddine.
+  soxincfg.settings.users.userName = "yl";
+
   home.stateVersion = "23.05";
 
   sops.age.keyFile = "${config.home.homeDirectory}/.local/share/soxincfg/sops/age.key";

@@ -1,7 +1,11 @@
-{ mode, lib }:
+{
+  mode,
+  lib,
+  userName,
+}:
 
 let
   inherit (lib) optionalAttrs;
 in
-optionalAttrs (mode == "NixOS") (import ./nixos.nix)
-// optionalAttrs (mode == "nix-darwin") (import ./darwin.nix)
+optionalAttrs (mode == "NixOS") (import ./nixos.nix userName)
+// optionalAttrs (mode == "nix-darwin") (import ./darwin.nix userName)

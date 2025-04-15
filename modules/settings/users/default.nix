@@ -26,6 +26,14 @@ in
       '';
     };
 
+    userName = mkOption {
+      type = types.str;
+      default = "wnasreddine";
+      description = ''
+        The default username for the main user.
+      '';
+    };
+
     groups = mkOption {
       type = types.listOf types.str;
       default = [ ];

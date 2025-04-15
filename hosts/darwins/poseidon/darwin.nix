@@ -17,6 +17,9 @@ in
     soxincfg.nixosModules.profiles.workstation.darwin.local
   ];
 
+  # XXX: This host was created prior to changing my username to wnasreddine.
+  soxincfg.settings.users.userName = "yl";
+
   # load YL's home-manager configuration
   home-manager.users.yl = import ./home.nix { inherit soxincfg; };
 

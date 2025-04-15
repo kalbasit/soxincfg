@@ -29,6 +29,9 @@ in
     ./spectrum.nix
   ];
 
+  # XXX: This host was created prior to changing my username to wnasreddine.
+  soxincfg.settings.users.userName = "yl";
+
   # TODO: Remove this once I can work out:
   #   - How to ssh into my machine if U2F is required.
   #   - How make 'sudo' ask for password before U2F because Onlykey makes me

@@ -1,5 +1,7 @@
+userName:
+
 {
-  wnasreddine = {
-    home = "/Users/wnasreddine";
+  "${userName}" = {
+    home = "/Users/${userName}";
   };
 }
