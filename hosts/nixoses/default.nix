@@ -200,4 +200,13 @@ mapAttrs
           };
         };
       };
+
+    saturn-nixos-vm =
+      let
+        system = "aarch64-linux";
+      in
+      {
+        inherit channelName system;
+        modules = [ ./saturn-nixos-vm/nixos.nix ];
+      };
   }

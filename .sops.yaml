@@ -71,6 +71,13 @@ creation_rules:
           - *user_yl_0x8EBD95DC147755A2
           - *host_pgp_laptop_server_x86_4
 
+  - path_regex: hosts/nixoses/saturn-nixos-vm/[^/]+\.sops[^/]*
+    key_groups:
+      - pgp:
+          - *user_yl_0x8EBD95DC147755A2
+        # age:
+        #   - *host_age_saturn_nixos_vm
+
   - path_regex: hosts/nixoses/zeus/[^/]+\.sops[^/]*
     key_groups:
       - pgp:
