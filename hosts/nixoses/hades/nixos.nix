@@ -28,6 +28,9 @@ in
     ./win10.nix
   ];
 
+  # XXX: This host was created prior to changing my username to wnasreddine.
+  soxincfg.settings.users.userName = "yl";
+
   services.foldingathome = {
     daemonNiceLevel = 19;
     enable = true;
