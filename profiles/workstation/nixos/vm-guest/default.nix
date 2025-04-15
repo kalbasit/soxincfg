@@ -21,52 +21,52 @@ in
     ++ optionals (mode == "home-manager") [ ./home.nix ];
 
   config = {
-    # soxin = {
-    #   hardware = {
-    #     bluetooth.enable = true;
-    #     fwupd.enable = true;
-    #     lowbatt.enable = true;
-    #     sound.enable = true;
-    #     zsa.enable = true;
-    #   };
-    #
-    #   programs = {
-    #     keybase.enable = true;
-    #     less.enable = true;
-    #     rbrowser = {
-    #       enable = true;
-    #       setMimeList = true;
-    #       browsers = {
-    #         "chromium@personal" = entryBefore [ "firefox@personal" ] { };
-    #         "firefox@personal" = entryBefore [ "chromium@private" ] { };
-    #         "chromium@private" = entryBefore [ "chromium@anya" ] { };
-    #         "chromium@anya" = entryAnywhere { };
-    #         "chromium@vanya" = entryAnywhere { };
-    #         "chromium@tanya" = entryAnywhere { };
-    #         "chromium@ihab" = entryAnywhere { };
-    #         "chromium@sahar" = entryAnywhere { };
-    #       };
-    #     };
-    #   };
-    #
-    #   services = {
-    #     caffeine.enable = true;
-    #     dunst.enable = true;
-    #     networkmanager.enable = true;
-    #     openssh.enable = true;
-    #     printing = {
-    #       enable = true;
-    #       brands = [ "epson" ];
-    #     };
-    #     xserver.enable = true;
-    #   };
-    #
-    #   virtualisation = {
-    #     docker.enable = true;
-    #     libvirtd.enable = true;
-    #     virtualbox.enable = true;
-    #   };
-    # };
+    soxin = {
+      #   hardware = {
+      #     bluetooth.enable = true;
+      #     fwupd.enable = true;
+      #     lowbatt.enable = true;
+      #     sound.enable = true;
+      #     zsa.enable = true;
+      #   };
+      #
+      #   programs = {
+      #     keybase.enable = true;
+      #     less.enable = true;
+      #     rbrowser = {
+      #       enable = true;
+      #       setMimeList = true;
+      #       browsers = {
+      #         "chromium@personal" = entryBefore [ "firefox@personal" ] { };
+      #         "firefox@personal" = entryBefore [ "chromium@private" ] { };
+      #         "chromium@private" = entryBefore [ "chromium@anya" ] { };
+      #         "chromium@anya" = entryAnywhere { };
+      #         "chromium@vanya" = entryAnywhere { };
+      #         "chromium@tanya" = entryAnywhere { };
+      #         "chromium@ihab" = entryAnywhere { };
+      #         "chromium@sahar" = entryAnywhere { };
+      #       };
+      #     };
+      #   };
+      #
+      services = {
+        #     caffeine.enable = true;
+        #     dunst.enable = true;
+        #     networkmanager.enable = true;
+        openssh.enable = true;
+        #     printing = {
+        #       enable = true;
+        #       brands = [ "epson" ];
+        #     };
+        #     xserver.enable = true;
+      };
+      #
+      #   virtualisation = {
+      #     docker.enable = true;
+      #     libvirtd.enable = true;
+      #     virtualbox.enable = true;
+      #   };
+    };
 
     soxincfg = {
       # hardware = {
