@@ -1,15 +1,12 @@
 {
   config,
   soxincfg,
-  lib,
   ...
 }:
 let
   homePath = config.users.users.wnasreddine.home;
   owner = config.users.users.wnasreddine.name;
   sopsFile = ./secrets.sops.yaml;
-
-  inherit (lib) mkForce;
 in
 {
   imports = [
@@ -19,18 +16,6 @@ in
 
     ./hardware-configuration.nix
   ];
-
-  services.xserver = {
-    enable = true;
-    displayManager.gdm.enable = true;
-    desktopManager.gnome.enable = true;
-  };
-
-  # TODO: Remove this once I can work out:
-  #   - How to ssh into my machine if U2F is required.
-  #   - How make 'sudo' ask for password before U2F because Onlykey makes me
-  #     wait 3 seconds between U2F presence check and accepting password tap.
-  security.pam.u2f.enable = mkForce false;
 
   sops = {
     age.keyFile = "${homePath}/.config/sops/age/keys.txt";
