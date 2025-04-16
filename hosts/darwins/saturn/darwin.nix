@@ -19,9 +19,11 @@
       "orcaslicer"
       "proton-mail"
       "protonvpn"
+      "signal"
       "synology-drive"
       "utm" # QEMU frontend
       "tailscale"
+      "whatsapp"
       "zen-browser"
 
       "grishka/grishka/neardrop"
