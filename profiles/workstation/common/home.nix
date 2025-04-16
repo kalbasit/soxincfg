@@ -84,7 +84,6 @@ in
         ];
       })
       _2048-in-terminal
-      android-studio
       android-tools
       arduino
       bitwarden-cli
@@ -108,7 +107,6 @@ in
       protonvpn-gui
       quickemu
       remmina
-      slack
       smartmontools
       vlc
       whatsapp-for-linux
@@ -118,9 +116,11 @@ in
       xfce.thunar-volman
       xfce.tumbler
       xkb-switch # Switch your X keyboard layouts from the command line
-      zoom-us
     ])
-    ++ (optionals (stdenv.isLinux && config.nixpkgs.hostPlatform != "aarch64-linux") [
+    ++ (optionals (stdenv.isLinux && !stdenv.hostPlatform.isAarch64) [
+      android-studio
+      slack
       synology-drive-client
+      zoom-us
     ]);
 }
