@@ -23,8 +23,8 @@ case "${action}" in
   switch)
     >&2 echo "Switching $host"
 
-    home-manager switch --flake ".#${host}"
-    $(nix path-info ".#homeConfigurations.${host}.activationPackage")/activate
+    $0 build "$host"
+    ./result/activate
     ;;
   *)
     usage
