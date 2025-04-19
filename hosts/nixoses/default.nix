@@ -1,4 +1,4 @@
-inputs@{
+{
   self,
   deploy-rs,
   lib ? nixpkgs.lib,

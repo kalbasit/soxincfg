@@ -1,20 +1,4 @@
 {
-  config,
-  lib,
-  pkgs,
-  soxincfg,
-  ...
-}:
-
-with lib;
-let
-  unifi_config_gateway =
-    let
-      config = { };
-    in
-    pkgs.writeText "config.gateway.json" (builtins.toJSON config);
-in
-{
   # Unifi now runs on the Kubernetes cluster
 
   # Allow unifi controller inform on all interfaces

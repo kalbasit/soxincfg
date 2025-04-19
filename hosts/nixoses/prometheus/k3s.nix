@@ -1,5 +1,3 @@
-{ soxincfg, ... }:
-
 {
   services.k3s.extraFlags = builtins.concatStringsSep " " [
     "--node-taint CriticalAddonsOnly=:NoExecute"

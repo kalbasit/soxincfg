@@ -1,7 +1,5 @@
 {
-  config,
   soxincfg,
-  modulesPath,
   pkgs,
   ...
 }:
