@@ -1,7 +1,15 @@
-{ config, ... }:
+{
+  config,
+  pkgs,
+  ...
+}:
 
 {
   config = {
+    environment.systemPackages = [
+      pkgs.iina
+    ];
+
     homebrew = {
       enable = true;
 
