@@ -69,6 +69,7 @@ in
       sqlitebrowser # graphical sqlite3 client
       todoist
       unzip
+      watch
       weechat
       xsel
     ]
