@@ -187,11 +187,6 @@ if [[ "$OSTYPE" = linux* ]]; then
 	export CHROME_BIN="$(which chromium)"
 fi
 
-# Export Github's token if it's readable.
-if [[ "$OSTYPE" = darwin* ]] && [[ -o interactive ]] && [[ -r "@home_path@/.github_token" ]]; then
-	export HOMEBREW_GITHUB_API_TOKEN="$(head -1 "@home_path@/.github_token")"
-fi
-
 # opsgenie
 if [[ -o interactive ]]; then
 	export LAMP_CONF_PATH="@home_path@/.config/lamp/opsgenie-integration.conf"
@@ -221,9 +216,6 @@ export BAT_PAGER="@less_bin@"
 export LANG=en_US.UTF-8
 export LC_ALL="${LANG}"
 [[ -n "${LC_CTYPE}" ]] && unset LC_CTYPE
-
-# Tell nix-review what GitHub token to use
-[[ -r ~/.github_token ]] && export GITHUB_TOKEN="$(tr -d '\n' < ~/.github_token)"
 
 # load the Emscripten environment
 pathprepend PATH "/usr/lib/emsdk"
