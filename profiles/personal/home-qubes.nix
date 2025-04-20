@@ -19,21 +19,9 @@ in
       inherit sopsFile;
       path = "${homePath}/.config/swm/config.yaml";
     };
-    _gist = {
-      inherit sopsFile;
-      path = "${homePath}/.gist";
-    };
-    _gist_vim = {
-      inherit sopsFile;
-      path = "${homePath}/.gist-vim";
-    };
     _gitconfig_secrets = {
       inherit sopsFile;
       path = "${homePath}/.gitconfig.secrets";
-    };
-    _github_token = {
-      inherit sopsFile;
-      path = "${homePath}/.github_token";
     };
     _netrc = {
       inherit sopsFile;

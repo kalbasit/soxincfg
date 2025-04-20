@@ -27,21 +27,9 @@ in
         inherit owner sopsFile;
         path = "${homePath}/.config/tiny/config.yml";
       };
-      _gist = {
-        inherit owner sopsFile;
-        path = "${homePath}/.gist";
-      };
-      _gist_vim = {
-        inherit owner sopsFile;
-        path = "${homePath}/.gist-vim";
-      };
       _gitconfig_secrets = {
         inherit owner sopsFile;
         path = "${homePath}/.gitconfig.secrets";
-      };
-      _github_token = {
-        inherit owner sopsFile;
-        path = "${homePath}/.github_token";
       };
       _jrnl_config = {
         inherit owner sopsFile;
