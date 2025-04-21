@@ -7,6 +7,7 @@
 {
   config = {
     environment.systemPackages = [
+      pkgs.keka
       pkgs.iina
     ];
 
