@@ -60,6 +60,23 @@ in
             for-each-ref --sort=-committerdate --format='%(committerdate:short) %(refname:short) %(authorname) %(authoremail)' refs/heads refs/remotes
           '';
 
+          sp =
+            let
+              sp' = pkgs.writeShellScript "git-sp.sh" ''
+                set -euo pipefail
+
+                if ! git rev-parse --abbrev-ref --symbolic-full-name HEAD @{upstream} &> /dev/null
+                then
+                  >&2 echo "Your current branch is not tracking an upstream branch, refusing to do anything."
+                  >&2 echo "If your branch exists upstream then configure it with: git branch -u <upstream>/<branch_name>"
+                  exit 1
+                fi
+
+                git pull --rebase --autostash --no-all --no-tags $(git rev-parse --abbrev-ref --symbolic-full-name HEAD @{upstream} | tail -1 | tr '/' ' ')
+              '';
+            in
+            "!${sp'}";
+
           tidy =
             let
               tidy' = pkgs.writeShellScript "git-tidy.sh" ''
@@ -101,7 +118,6 @@ in
           ls-ignored = "ls-files --others -i --exclude-standard";
           pob = ''!f() { git push --set-upstream "''${1:-origin}" "$(git symbolic-ref HEAD)"; }; f'';
           pobf = ''!f() { git push --set-upstream --force "''${1:-origin}" "$(git symbolic-ref HEAD)"; }; f'';
-          sp = "pull --rebase --autostash";
           st = "status";
           unstage = "reset HEAD --";
           who = "shortlog -s -s";
