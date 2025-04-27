@@ -13,6 +13,10 @@
   ];
 
   homebrew = {
+    brews = [
+      "qemu" # QEMU backend
+    ];
+
     casks = [
       "autodesk-fusion"
       "obsidian"
