@@ -20,6 +20,7 @@
     casks = [
       "autodesk-fusion"
       "obsidian"
+      "discord"
       "orcaslicer"
       "proton-mail"
       "protonvpn"
