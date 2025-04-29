@@ -24,5 +24,6 @@
     kc = "kubecolor";
     kcc = "kubectx";
     kcn = "kubens";
+    kt = "kubetail";
   };
 }
