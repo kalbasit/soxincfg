@@ -13,6 +13,7 @@
     pkgs.kubectl-tree
     pkgs.kubectx
     pkgs.kubernetes-helm
+    pkgs.kubeseal
     pkgs.kubespy
     pkgs.kubetail
     pkgs.kubeval
