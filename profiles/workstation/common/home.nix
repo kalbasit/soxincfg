@@ -65,6 +65,7 @@ in
       pv # generic progress of data through a pipeline
       scrcpy # mirror Android device via USB
       screen # needed to open up terminal devices
+      skopeo # inspect docker images
       signal-cli
       sqlitebrowser # graphical sqlite3 client
       todoist
