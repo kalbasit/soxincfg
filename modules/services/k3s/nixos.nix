@@ -56,6 +56,7 @@ in
       {
         inherit (cfg) enable role serverAddr;
         tokenFile = config.sops.secrets.services-k3s-tokenFile.path;
+        nofile = 1024 * 1024 * 2;
       }
 
       (mkIf (cfg.role == "server") {
