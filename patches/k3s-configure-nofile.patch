@@ -1,16 +1,22 @@
+commit 391d0f1dfb0f783bfb0eeaa03791b83ee889da2a
+Author: Wael Nasreddine <wael.nasreddine@gmail.com>
+Date:   Thu May 1 08:01:14 2025 -0700
+
+    nixos/k3s: add an option to configure the limit of number of file descriptors
+
 diff --git a/nixos/modules/services/cluster/k3s/default.nix b/nixos/modules/services/cluster/k3s/default.nix
-index fe73c178d491..aa7d3d5e41a6 100644
+index fe73c178d491..f7036839cb13 100644
 --- a/nixos/modules/services/cluster/k3s/default.nix
 +++ b/nixos/modules/services/cluster/k3s/default.nix
 @@ -574,6 +574,14 @@ in
        '';
      };
  
-+    nofile = lib.mkOption {
++    limit-nofile = lib.mkOption {
 +      type = lib.types.ints.positive;
 +      default = 1048576;
 +      description = ''
-+        Limit of number of file descriptors.
++        Set the limit of number of file descriptors.
 +      '';
 +    };
 +
@@ -22,7 +28,32 @@ index fe73c178d491..aa7d3d5e41a6 100644
            Restart = "always";
            RestartSec = "5s";
 -          LimitNOFILE = 1048576;
-+          LimitNOFILE = cfg.nofile;
++          LimitNOFILE = cfg.limit-nofile;
            LimitNPROC = "infinity";
            LimitCORE = "infinity";
            TasksMax = "infinity";
+diff --git a/nixos/tests/k3s/multi-node.nix b/nixos/tests/k3s/multi-node.nix
+index 335b8f8e6426..a75b524ca28d 100644
+--- a/nixos/tests/k3s/multi-node.nix
++++ b/nixos/tests/k3s/multi-node.nix
+@@ -147,6 +147,7 @@ import ../make-test-python.nix (
+             package = k3s;
+             images = [ pauseImage ];
+             serverAddr = "https://${nodes.server2.networking.primaryIPAddress}:6443";
++            limit-nofile = 1024 * 1024 * 2;
+             extraFlags = [
+               "--pause-image test.local/pause:local"
+               "--node-ip ${nodes.agent.networking.primaryIPAddress}"
+@@ -169,6 +170,12 @@ import ../make-test-python.nix (
+         # wait for the agent to show up
+         server.wait_until_succeeds("k3s kubectl get node agent")
+ 
++        # assert LimitNOFILE
++        resp = server.succeed("systemctl cat k3s | grep LimitNOFILE | tail -n 1 | cut -d= -f2")
++        assert resp.strip() == "1048576"
++        resp = agent.succeed("systemctl cat k3s | grep LimitNOFILE | tail -n 1 | cut -d= -f2")
++        assert resp.strip() == "2048576"
++
+         for m in machines:
+             m.succeed("k3s check-config")
+ 
