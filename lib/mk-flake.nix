@@ -44,7 +44,9 @@ let
       };
 
       # Yep, you see it first folks - you can patch nixpkgs!
-      patches = [ ];
+      patches = [
+        ../patches/k3s-configure-nofile.patch
+      ];
     };
   };
 
