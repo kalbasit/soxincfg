@@ -18,6 +18,7 @@
     ];
 
     casks = [
+      "audacity"
       "autodesk-fusion"
       "obsidian"
       "discord"
