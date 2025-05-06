@@ -14,6 +14,7 @@
 
   homebrew = {
     brews = [
+      "ffmpeg" # Used by Audacity to open AAC files
       "qemu" # QEMU backend
     ];
 
