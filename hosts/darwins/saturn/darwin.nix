@@ -28,6 +28,7 @@
       "protonvpn"
       "signal"
       "synology-drive"
+      "tor-browser"
       "utm" # QEMU frontend
       "tailscale"
       "whatsapp"
