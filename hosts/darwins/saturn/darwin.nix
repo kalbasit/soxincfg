@@ -32,7 +32,7 @@
       "utm" # QEMU frontend
       "tailscale"
       "whatsapp"
-      "zen-browser"
+      "zen"
 
       "grishka/grishka/neardrop"
     ];
