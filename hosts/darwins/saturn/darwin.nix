@@ -23,6 +23,7 @@
       "autodesk-fusion"
       "obsidian"
       "discord"
+      "gimp"
       "orcaslicer"
       "proton-mail"
       "protonvpn"
