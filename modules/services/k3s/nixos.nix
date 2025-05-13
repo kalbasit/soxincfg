@@ -56,6 +56,7 @@ in
       {
         inherit (cfg) enable role serverAddr;
         tokenFile = config.sops.secrets.services-k3s-tokenFile.path;
+        extraFlags = [ "--disable=traefik" ];
       }
 
       (mkIf (cfg.role == "server") {
