@@ -2,6 +2,7 @@ inputs@{
   flake-utils-plus,
   nixos-hardware,
   nixpkgs,
+  nixpkgs-unstable,
   pre-commit-hooks,
   self,
   sops-nix,
@@ -26,7 +27,10 @@ let
   # Channel definitions. `channels.<name>.{input,overlaysBuilder,config,patches}`
   channels = {
     nixpkgs = {
-      # Channel specific overlays
+      config = { };
+
+      input = nixpkgs;
+
       overlaysBuilder = channels: [
         (_: super: {
           inherit (channels.nixpkgs-unstable)
@@ -38,12 +42,16 @@ let
         })
       ];
 
-      # Channel specific configuration. Overwrites `channelsConfig` argument
-      config = {
-        permittedInsecurePackages = [ ];
-      };
+      patches = [ ];
+    };
 
-      # Yep, you see it first folks - you can patch nixpkgs!
+    nixpkgs-unstable = {
+      config = { };
+
+      input = nixpkgs-unstable;
+
+      overlaysBuilder = channels: [ ];
+
       patches = [ ];
     };
   };
