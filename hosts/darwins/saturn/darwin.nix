@@ -31,6 +31,7 @@
       "synology-drive"
       "tor-browser"
       "utm" # QEMU frontend
+      "visual-studio-code"
       "tailscale"
       "whatsapp"
       "zen"
