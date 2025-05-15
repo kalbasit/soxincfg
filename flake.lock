@@ -384,12 +384,10 @@
         ]
       },
       "locked": {
-        "lastModified": 1747225851,
-        "narHash": "sha256-4IbmZrNOdXP143kZEUzxBS5SqyxUlaSHLgdpeJfP2ZU=",
-        "owner": "nix-community",
-        "repo": "home-manager",
-        "rev": "6bf057fc8326e83bda05a669fc08d106547679fb",
-        "type": "github"
+        "lastModified": 1747271533,
+        "narHash": "sha256-ZQ0skJQ4a/w/ePYc7JfRgdQvh67swq0q2f5/7LhJ/j8=",
+        "path": "/Users/wnasreddine/code/repositories/github.com/nix-community/home-manager",
+        "type": "path"
       },
       "original": {
         "owner": "nix-community",
