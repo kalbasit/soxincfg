@@ -5,18 +5,20 @@
     deploy-rs.url = "github:serokell/deploy-rs";
     flake-utils-plus.url = "github:gytis-ivaskevicius/flake-utils-plus/v1.5.1";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs";
-    nixpkgs.url = "github:NixOS/nixpkgs";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/release-25.05";
     nur.url = "github:nix-community/NUR";
 
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/release-25.05";
       inputs = {
         nixpkgs.follows = "nixpkgs";
       };
     };
 
     darwin = {
+      # TODO: once nix-darwin is branched off
+      # url = "github:LnL7/nix-darwin/nix-darwin-25.05";
       url = "github:LnL7/nix-darwin";
       inputs = {
         nixpkgs.follows = "nixpkgs";
@@ -25,8 +27,7 @@
 
     nixvim = {
       url = "github:kalbasit/nixvim";
-      # NOTE: nixvim fails to build on NixOS 24.11
-      # inputs. nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     pre-commit-hooks = {
