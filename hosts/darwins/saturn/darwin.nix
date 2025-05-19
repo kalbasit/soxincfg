@@ -16,6 +16,8 @@
     brews = [
       "ffmpeg" # Used by Audacity to open AAC files
       "qemu" # QEMU backend
+
+      "siderolabs/tap/talosctl"
     ];
 
     casks = [
@@ -39,7 +41,10 @@
       "grishka/grishka/neardrop"
     ];
 
-    taps = [ "grishka/grishka" ];
+    taps = [
+      "grishka/grishka"
+      "siderolabs/tap"
+    ];
   };
 
   # Determinate systems uses its own daemon and we shouldn't let nix-darwin manage Nix
