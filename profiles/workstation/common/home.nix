@@ -68,6 +68,7 @@ in
       skopeo # inspect docker images
       signal-cli
       sqlitebrowser # graphical sqlite3 client
+      talosctl
       todoist
       unzip
       watch

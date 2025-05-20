@@ -38,6 +38,7 @@ let
             debootstrap
             devbox
             protonvpn-gui
+            talosctl
             ;
         })
       ];
