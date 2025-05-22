@@ -17,9 +17,7 @@
     };
 
     darwin = {
-      # TODO: once nix-darwin is branched off
-      # url = "github:LnL7/nix-darwin/nix-darwin-25.05";
-      url = "github:LnL7/nix-darwin";
+      url = "github:nix-darwin/nix-darwin/nix-darwin-25.05";
       inputs = {
         nixpkgs.follows = "nixpkgs";
       };
