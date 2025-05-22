@@ -354,7 +354,7 @@ in
           notification = true;
         }
       ]
-      ++ (optionals (config.nixpkgs.hostPlatform != "aarch64-linux") [
+      ++ (optionals (pkgs.hostPlatform.system != "aarch64-linux") [
         {
           command = "${getBin pkgs.synology-drive-client}/bin/synology-drive";
           always = false;
