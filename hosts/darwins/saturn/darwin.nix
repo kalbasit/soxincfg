@@ -25,6 +25,7 @@
       "autodesk-fusion"
       "obsidian"
       "discord"
+      "element"
       "gimp"
       "orcaslicer"
       "proton-mail"
