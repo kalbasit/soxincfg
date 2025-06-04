@@ -10,6 +10,7 @@
     pkgs.kubecolor
     pkgs.kubeconform
     pkgs.kubectl
+    pkgs.kubectl-neat
     pkgs.kubectl-tree
     pkgs.kubectx
     pkgs.kubernetes-helm
