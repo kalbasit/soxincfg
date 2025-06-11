@@ -73,6 +73,7 @@ in
       watch
       weechat
       xsel
+      yq-go
     ]
     ++ (optionals stdenv.isLinux [
       #
