@@ -20,15 +20,6 @@ in
           system = "aarch64-linux";
           supportedFeatures = [ "big-parallel" ];
         }
-
-        # {
-        #   hostName = "kore.wael-nasreddine.gmail.com.beta.tailscale.net";
-        #   maxJobs = 1;
-        #   sshKey = builtins.toString config.sops.secrets.ssh_key_kore.path;
-        #   sshUser = "builder";
-        #   system = "aarch64-linux";
-        #   supportedFeatures = [ ];
-        # }
       ];
     };
 
