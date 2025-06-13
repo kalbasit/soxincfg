@@ -20,10 +20,6 @@ in
 {
   config = mkIf cfg.enable {
     sops.secrets = mkIf isDarwin {
-      ssh_key_aarch64_nixos_community = {
-        inherit sopsFile;
-        path = "${keyStore}/aarch64_nixos_community.key";
-      };
       ssh_key_kore = {
         inherit sopsFile;
         path = "${keyStore}/kore.key";
