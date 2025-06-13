@@ -6,8 +6,6 @@ let
   cfg = config.soxincfg.settings.nix.distributed-builds;
 
   keyStore = "${config.users.users.yl.home}/.config/nix/distributed-builds";
-
-  sopsFile = ./secrets.sops.yaml;
 in
 {
   config = mkIf cfg.enable {
