@@ -6,6 +6,7 @@ let
   cfg = config.soxincfg.settings.nix.distributed-builds;
 
   keyStore = "${config.users.users.wnasreddine.home}/.config/nix/distributed-builds";
+
 in
 {
   config = mkIf cfg.enable {
