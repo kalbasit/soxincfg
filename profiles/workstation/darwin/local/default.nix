@@ -106,6 +106,7 @@ in
 
     settings = {
       fonts.enable = true;
+      nix.distributed-builds.enable = true;
     };
   };
 }
