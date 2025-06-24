@@ -6,5 +6,5 @@ let
   cfg = config.soxin.virtualisation.docker;
 in
 {
-  config = mkIf cfg.enable { homebrew.casks = singleton "docker"; };
+  config = mkIf cfg.enable { homebrew.casks = singleton "docker-desktop"; };
 }
