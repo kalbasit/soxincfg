@@ -35,7 +35,7 @@
       "tor-browser"
       "utm" # QEMU frontend
       "visual-studio-code"
-      "tailscale"
+      "tailscale-app"
       "whatsapp"
       "zen"
 
