@@ -28,6 +28,7 @@
       "element"
       "google-drive"
       "gimp"
+      "nextcloud"
       "orcaslicer"
       "proton-mail"
       "protonvpn"
