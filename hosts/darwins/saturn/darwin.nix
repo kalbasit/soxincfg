@@ -26,6 +26,7 @@
       "obsidian"
       "discord"
       "element"
+      "google-drive"
       "gimp"
       "orcaslicer"
       "proton-mail"
