@@ -341,26 +341,18 @@ in
       };
     };
 
-    startup =
-      [
-        {
-          command = "${getBin pkgs.xorg.xset}/bin/xset r rate 300 30";
-          always = false;
-          notification = false;
-        }
-        {
-          command = "i3-msg \"workspace personal; exec ${nosid} ${getBin pkgs.termite}/bin/termite\"";
-          always = false;
-          notification = true;
-        }
-      ]
-      ++ (optionals (pkgs.hostPlatform.system != "aarch64-linux") [
-        {
-          command = "${getBin pkgs.synology-drive-client}/bin/synology-drive";
-          always = false;
-          notification = true;
-        }
-      ]);
+    startup = [
+      {
+        command = "${getBin pkgs.xorg.xset}/bin/xset r rate 300 30";
+        always = false;
+        notification = false;
+      }
+      {
+        command = "i3-msg \"workspace personal; exec ${nosid} ${getBin pkgs.termite}/bin/termite\"";
+        always = false;
+        notification = true;
+      }
+    ];
   };
 
   extraConfig = ''
