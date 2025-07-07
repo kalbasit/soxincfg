@@ -33,7 +33,6 @@
       "proton-mail"
       "protonvpn"
       "signal"
-      "synology-drive"
       "tor-browser"
       "utm" # QEMU frontend
       "visual-studio-code"

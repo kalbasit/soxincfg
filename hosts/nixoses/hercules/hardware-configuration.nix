@@ -24,14 +24,8 @@ let
     "/home/yl" = {
       device = "olympus/user/yl/nixos-home";
     };
-    "/home/yl/.SynologyDrive/data" = {
-      device = "olympus/user/yl/synology-drive/data";
-    };
     "/home/yl/.config/Signal" = {
       device = "olympus/user/yl/nixos-signal";
-    };
-    "/home/yl/SynologyDrive" = {
-      device = "olympus/user/yl/synology-drive/drive";
     };
     "/home/yl/code" = {
       device = "olympus/user/yl/code";
@@ -51,14 +45,8 @@ let
     "/mnt/arch/home/yl" = {
       device = "olympus/user/yl/arch-home";
     };
-    "/mnt/arch/home/yl/.SynologyDrive/data" = {
-      device = "olympus/user/yl/synology-drive/data";
-    };
     "/mnt/arch/home/yl/.config/Signal" = {
       device = "olympus/user/yl/arch-signal";
-    };
-    "/mnt/arch/home/yl/SynologyDrive" = {
-      device = "olympus/user/yl/synology-drive/drive";
     };
     "/mnt/arch/home/yl/code" = {
       device = "olympus/user/yl/code";
@@ -77,14 +65,8 @@ let
     "/mnt/arch/mnt/nixos/home/yl" = {
       device = "olympus/user/yl/nixos-home";
     };
-    "/mnt/arch/mnt/nixos/home/yl/.SynologyDrive/data" = {
-      device = "olympus/user/yl/synology-drive/data";
-    };
     "/mnt/arch/mnt/nixos/home/yl/.config/Signal" = {
       device = "olympus/user/yl/nixos-signal";
-    };
-    "/mnt/arch/mnt/nixos/home/yl/SynologyDrive" = {
-      device = "olympus/user/yl/synology-drive/drive";
     };
     "/mnt/arch/mnt/nixos/home/yl/code" = {
       device = "olympus/user/yl/code";
@@ -104,14 +86,8 @@ let
     "/mnt/ubuntu/home/yl" = {
       device = "olympus/user/yl/ubuntu-home";
     };
-    "/mnt/ubuntu/home/yl/.SynologyDrive/data" = {
-      device = "olympus/user/yl/synology-drive/data";
-    };
     "/mnt/ubuntu/home/yl/.config/Signal" = {
       device = "olympus/user/yl/ubuntu-signal";
-    };
-    "/mnt/ubuntu/home/yl/SynologyDrive" = {
-      device = "olympus/user/yl/synology-drive/drive";
     };
     "/mnt/ubuntu/home/yl/code" = {
       device = "olympus/user/yl/code";
@@ -130,14 +106,8 @@ let
     "/mnt/ubuntu/mnt/nixos/home/yl" = {
       device = "olympus/user/yl/nixos-home";
     };
-    "/mnt/ubuntu/mnt/nixos/home/yl/.SynologyDrive/data" = {
-      device = "olympus/user/yl/synology-drive/data";
-    };
     "/mnt/ubuntu/mnt/nixos/home/yl/.config/Signal" = {
       device = "olympus/user/yl/nixos-signal";
-    };
-    "/mnt/ubuntu/mnt/nixos/home/yl/SynologyDrive" = {
-      device = "olympus/user/yl/synology-drive/drive";
     };
     "/mnt/ubuntu/mnt/nixos/home/yl/code" = {
       device = "olympus/user/yl/code";
