@@ -52,6 +52,9 @@
   # Determinate systems uses its own daemon and we shouldn't let nix-darwin manage Nix
   nix.enable = false;
 
+  # Enable Nix Distributed builds
+  soxincfg.settings.nix.distributed-builds.enable = true;
+
   # load home-manager configuration
   # TODO: Use users.user.name once the following commit is used
   # https://github.com/nix-community/home-manager/commit/216690777e47aa0fb1475e4dbe2510554ce0bc4b
