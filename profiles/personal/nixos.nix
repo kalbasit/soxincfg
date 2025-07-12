@@ -71,9 +71,9 @@ in
         inherit owner sopsFile;
         path = "${homePath}/.ssh/per-host/hermes-gl-mt3000.bigeye-bushi.ts.net_ed25519";
       };
-      _ssh_per-host_serial_nasreddine_com_rsa = {
+      _ssh_per-host_embedded_i386-0_bigeye-bushi_net_ed25519_rsa = {
         inherit owner sopsFile;
-        path = "${homePath}/.ssh/per-host/serial.nasreddine.com_rsa";
+        path = "${homePath}/.ssh/per-host/embedded-i386-0.bigeye-bushi.net_ed25519";
       };
       _ssh_per-host_unifi_nasreddine_com_rsa = {
         inherit owner sopsFile;

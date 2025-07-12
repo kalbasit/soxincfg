@@ -26,8 +26,8 @@ in
         ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOLQj0aTkBIM3rSvwDJCnW/Jv/VXNEzymYO6t/w18QVf hermes-gl-mt3000.bigeye-bushi.ts.net
       '';
 
-      ".ssh/per-host/serial.nasreddine.com_rsa.pub".text = ''
-        ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCp/KlF/8dqGXPvwe86+nHkBaNQ9Y6MqWxGethvZUXEaaigKRXaz1h45XbaUy0yvQetzPnVM/6bL2j2zdxyOSVvfpxJG0UgsVu5Y+HPw5KDVLB/tpgi6JdLsfUJBFJt48dL3vKFUB/PXzmFx7YKFxHO3S9GIYUHvQ70G64zMWcx3DIZh9/ARWTSb8HjtwB7qhKu0v2p+q7JDvkx5b7yirVGkeTXW7WI0xNbC8L/mp3eWKs+DohHPQSgwW0nt6ZgpXdVoei/031Ekf76NmQ75jl1EHkyyXMN9k1hr/23ZbDvAPkptdjLus3XV0qJZ/TeLQcCmXx5c4llaXZZypDt9WDxgihvTVcwX9FVtT/qzlOAMrVNAQUE5zSTfqxrPf2gkQts88HbSIyLFou+bfrqhbdh9A/ID1594y3456ASfK7Cjekxz4CRtxiQ/4wWys4jOgRawBWNXLtDMIqgEK+cEtHlSHps7FuUa2/VlnuU2zG4H7RmPadNn5wnoiPryAzEdOACiP13YXXvSKjApu+ncNDLQFA960oWpOuZR3gqJlJPLAHqzfBEjXwKvlQUsqW61HeEdM+gV0P/yJ91TIiBtttOmbSpS3wJn+abykSICTLOcSH4goUWup5CnpP8YHntqgT0FZON7Z0QILySMf5h1uLi7T2xiibp7DXGu/Hy/om6aQ== serial.nasreddine.com
+      ".ssh/per-host/embedded-i386-0.bigeye-bushi.net_ed25519.pub".text = ''
+        ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPgeSciv2WDBDTqRoDeGb0iqF4syxAM706d3f1dKaYWK embedded-i386-0
       '';
 
       ".ssh/per-host/unifi.nasreddine.com_rsa.pub".text = ''
