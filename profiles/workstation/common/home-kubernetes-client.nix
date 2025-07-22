@@ -7,25 +7,36 @@
   home.packages = [
     pkgs.argocd
     pkgs.k9s
-    pkgs.kubecolor
     pkgs.kubeconform
     pkgs.kubectl
     pkgs.kubectl-neat
     pkgs.kubectl-tree
-    pkgs.kubectx
     pkgs.kubernetes-helm
-    pkgs.kubeseal
     pkgs.kubespy
-    pkgs.kubetail
     pkgs.kubeval
     pkgs.kustomize
-  ];
 
-  programs.zsh.shellAliases = {
-    kc = "kubecolor";
-    kcc = "kubectx";
-    kcn = "kubens";
-    ks = "kubeseal";
-    kt = "kubetail";
-  };
+    pkgs.kubecolor
+    (pkgs.writeShellScriptBin "k" ''
+      ${pkgs.kubecolor}/bin/kubecolor "$@"
+    '')
+
+    pkgs.kubectx
+    (pkgs.writeShellScriptBin "kcc" ''
+      ${pkgs.kubectx}/bin/kubectx "$@"
+    '')
+    (pkgs.writeShellScriptBin "kcn" ''
+      ${pkgs.kubectx}/bin/kubens "$@"
+    '')
+
+    pkgs.kubeseal
+    (pkgs.writeShellScriptBin "ks" ''
+      ${pkgs.kubeseal}/bin/kubeseal "$@"
+    '')
+
+    pkgs.kubetail
+    (pkgs.writeShellScriptBin "kt" ''
+      ${pkgs.kubetail}/bin/kubetail "$@"
+    '')
+  ];
 }
