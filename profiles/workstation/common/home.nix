@@ -73,6 +73,7 @@ in
       watch
       weechat
       xsel
+      yq-go
     ]
     ++ (optionals stdenv.isLinux [
       #
@@ -122,7 +123,6 @@ in
     ++ (optionals (stdenv.isLinux && !stdenv.hostPlatform.isAarch64) [
       android-studio
       slack
-      synology-drive-client
       zoom-us
     ]);
 }

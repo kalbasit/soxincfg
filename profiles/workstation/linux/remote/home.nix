@@ -52,6 +52,7 @@
       screen # needed to open up terminal devices
       sqlitebrowser # graphical sqlite3 client
       unzip
+      yq-go
     ];
   };
 }

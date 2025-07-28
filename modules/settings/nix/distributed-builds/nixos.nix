@@ -13,22 +13,13 @@ in
       distributedBuilds = true;
       buildMachines = [
         {
-          hostName = "aarch64.nixos.community";
-          maxJobs = 64;
-          sshKey = builtins.toString config.sops.secrets.ssh_key_aarch64_nixos_community.path;
-          sshUser = "kalbasit";
+          hostName = "kore.bigeye-bushi.ts.net";
+          maxJobs = 1;
+          sshKey = builtins.toString config.sops.secrets.ssh_key_kore.path;
+          sshUser = "builder";
           system = "aarch64-linux";
-          supportedFeatures = [ "big-parallel" ];
+          supportedFeatures = [ ];
         }
-
-        # {
-        #   hostName = "kore.wael-nasreddine.gmail.com.beta.tailscale.net";
-        #   maxJobs = 1;
-        #   sshKey = builtins.toString config.sops.secrets.ssh_key_kore.path;
-        #   sshUser = "builder";
-        #   system = "aarch64-linux";
-        #   supportedFeatures = [ ];
-        # }
       ];
     };
 

@@ -26,16 +26,17 @@
       "obsidian"
       "discord"
       "element"
+      "google-drive"
       "gimp"
+      "nextcloud"
       "orcaslicer"
       "proton-mail"
       "protonvpn"
       "signal"
-      "synology-drive"
       "tor-browser"
       "utm" # QEMU frontend
       "visual-studio-code"
-      "tailscale"
+      "tailscale-app"
       "whatsapp"
       "zen"
 
@@ -50,6 +51,9 @@
 
   # Determinate systems uses its own daemon and we shouldn't let nix-darwin manage Nix
   nix.enable = false;
+
+  # Enable Nix Distributed builds
+  soxincfg.settings.nix.distributed-builds.enable = true;
 
   # load home-manager configuration
   # TODO: Use users.user.name once the following commit is used
