@@ -35,8 +35,11 @@ let
         (_: super: {
           inherit (channels.nixpkgs-unstable)
             # inherit packages from unstable.
+            cilium-cli
             debootstrap
             devbox
+            fluxcd
+            hubble
             protonvpn-gui
             talosctl
             ;
