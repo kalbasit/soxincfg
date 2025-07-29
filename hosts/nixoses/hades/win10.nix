@@ -16,9 +16,7 @@ let
 
     script =
       let
-        xml = pkgs.substituteAll {
-          src = ./win10.xml;
-
+        xml = pkgs.replaceVars ./win10.xml {
           name = vmName;
           admin_source_dev = "eno1";
           admin_mac_address = "ea:5e:04:11:a1:a3";

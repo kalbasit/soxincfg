@@ -62,5 +62,8 @@
     inherit soxincfg;
   };
 
+  # Inform nix-darwin of the primaryUser
+  system.primaryUser = config.soxincfg.settings.users.userName;
+
   system.stateVersion = 5;
 }

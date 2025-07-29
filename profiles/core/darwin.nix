@@ -11,8 +11,6 @@
     # TODO: Re-enable the sandbox once https://github.com/NixOS/nix/issues/4119 is resolved.
     #settings.sandbox = true;
 
-    useDaemon = true;
-
     # setup NIX_PATH to allow users to access the nixpkgs that built the system
     nixPath = [
       "nixpkgs-unstable=${inputs.nixpkgs-unstable}"
