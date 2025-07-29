@@ -80,12 +80,13 @@ in
       # Linux applications
       #
 
-      (retroarch.override {
-        cores = with libretro; [
-          beetle-psx
-          beetle-psx-hw
-        ];
-      })
+      # (retroarch.override {
+      #   cores = with libretro; [
+      #     beetle-psx
+      #     beetle-psx-hw
+      #   ];
+      # })
+
       _2048-in-terminal
       android-tools
       arduino
@@ -102,7 +103,7 @@ in
       go-mtpfs
       gotop
       inotify-tools
-      kdenlive # video editing
+      # kdenlive # video editing
       libreoffice
       mbuffer # memory buffer within pipeline
       mplayer
