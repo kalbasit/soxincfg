@@ -235,13 +235,6 @@ if [[ -d "${MYFS}" ]]; then
 	pathappend LD_LIBRARY_PATH "${MYFS}/lib"
 fi
 
-# add any libexec directory
-if [[ -d @out_dir@/libexec ]]; then
-	for dir in @out_dir@/libexec/*; do
-		pathappend PATH "${dir}"
-	done
-fi
-
 # add cargo
 pathprepend PATH "@home_path@/.cargo/bin"
 
