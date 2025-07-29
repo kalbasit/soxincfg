@@ -111,17 +111,16 @@ let
         fi
       '')
 
-      (builtins.readFile (replaceVars {
-        src = ./init-extra.zsh;
-
-        bat_bin = "${getBin bat}/bin/bat";
-        fortune_bin = "${getBin fortune}/bin/fortune";
-        fzf_bin = "${getBin fzf}/bin/fzf-tmux";
-        home_path = "$HOME";
-        jq_bin = "${getBin jq}/bin/jq";
-        less_bin = "${getBin less}/bin/less";
-        tput_bin = "${getBin ncurses}/bin/tput";
-      }))
+      (builtins.readFile (
+        replaceVars ./init-extra.zsh {
+          bat_bin = "${getBin bat}/bin/bat";
+          fortune_bin = "${getBin fortune}/bin/fortune";
+          fzf_bin = "${getBin fzf}/bin/fzf-tmux";
+          home_path = "$HOME";
+          jq_bin = "${getBin jq}/bin/jq";
+          less_bin = "${getBin less}/bin/less";
+        }
+      ))
 
       # TODO: Move this to pet once there is a way to put stuff at the bottom
       (optionalString config.programs.pet.enable ''

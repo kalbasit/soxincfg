@@ -30,8 +30,7 @@ in
     (optionalAttrs (mode == "home-manager") {
       home.packages = singleton pkgs.wezterm;
 
-      xdg.configFile."wezterm/wezterm.lua".source = replaceVars {
-        src = ./wezterm.lua;
+      xdg.configFile."wezterm/wezterm.lua".source = replaceVars ./wezterm.lua {
         terminfo_dirs = "${wezterm.terminfo}/share/terminfo";
       };
     })

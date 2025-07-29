@@ -18,9 +18,7 @@ in
 
     (mkIf cfg.surfingkeys.enable {
       home.file.".surfingkeys.js".text = builtins.readFile (
-        pkgs.replaceVars {
-          src = ./surfingkeys.js;
-
+        pkgs.replaceVars ./surfingkeys.js {
           home_dir = "${config.home.homeDirectory}";
         }
       );
