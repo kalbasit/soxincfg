@@ -111,7 +111,7 @@ let
         fi
       '')
 
-      (builtins.readFile (substituteAll {
+      (builtins.readFile (replaceVars {
         src = ./init-extra.zsh;
 
         bat_bin = "${getBin bat}/bin/bat";

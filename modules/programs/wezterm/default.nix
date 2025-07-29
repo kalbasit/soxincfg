@@ -15,7 +15,7 @@ let
     singleton
     ;
 
-  inherit (pkgs) substituteAll wezterm;
+  inherit (pkgs) replaceVars wezterm;
 
   cfg = config.soxincfg.programs.wezterm;
 in
@@ -30,7 +30,7 @@ in
     (optionalAttrs (mode == "home-manager") {
       home.packages = singleton pkgs.wezterm;
 
-      xdg.configFile."wezterm/wezterm.lua".source = substituteAll {
+      xdg.configFile."wezterm/wezterm.lua".source = replaceVars {
         src = ./wezterm.lua;
         terminfo_dirs = "${wezterm.terminfo}/share/terminfo";
       };

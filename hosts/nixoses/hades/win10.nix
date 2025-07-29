@@ -16,7 +16,7 @@ let
 
     script =
       let
-        xml = pkgs.substituteAll {
+        xml = pkgs.replaceVars {
           src = ./win10.xml;
 
           name = vmName;
