@@ -685,16 +685,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1753772403,
+        "lastModified": 1753794792,
         "narHash": "sha256-dHe1TodSVPisUtsjN62XFhPwTpE0h7n8xBp1dUeJ/G4=",
         "owner": "SoxinOS",
         "repo": "soxin",
-        "rev": "74476f065245df4ce7b6c2736666cef612a9e365",
+        "rev": "48e905883bce7f573aa73098de1a93e468d71ad4",
         "type": "github"
       },
       "original": {
         "owner": "SoxinOS",
-        "ref": "fix-on-release-25.05",
         "repo": "soxin",
         "type": "github"
       }

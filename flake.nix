@@ -25,7 +25,7 @@
 
     nixvim = {
       url = "github:kalbasit/nixvim";
-      # NOTE: nixvim fails to build on NixOS 25.05
+      # XXX: Leave nixvim with its own tested nixpkgs.
       # inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -42,8 +42,7 @@
     };
 
     soxin = {
-      # url = "github:SoxinOS/soxin";
-      url = "github:SoxinOS/soxin/fix-on-release-25.05";
+      url = "github:SoxinOS/soxin";
       inputs = {
         darwin.follows = "darwin";
         deploy-rs.follows = "deploy-rs";
