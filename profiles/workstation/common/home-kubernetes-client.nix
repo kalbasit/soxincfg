@@ -6,6 +6,9 @@
 {
   home.packages = [
     pkgs.argocd
+    pkgs.cilium-cli
+    pkgs.fluxcd
+    pkgs.hubble # Cilium Observability.
     pkgs.k9s
     pkgs.kubeconform
     pkgs.kubectl
