@@ -58,14 +58,9 @@
   # load home-manager configuration
   # TODO: Use users.user.name once the following commit is used
   # https://github.com/nix-community/home-manager/commit/216690777e47aa0fb1475e4dbe2510554ce0bc4b
-  # home-manager.users."${config.soxincfg.settings.users.userName}" = import ./home.nix {
-  #   inherit soxincfg;
-  # };
-  users.users.wnasreddine = {
-    name = "wnasreddine";
-    home = "/Users/wnasreddine";
+  home-manager.users."${config.soxincfg.settings.users.userName}" = import ./home.nix {
+    inherit soxincfg;
   };
-  home-manager.users.wnasreddine = { };
 
   system.stateVersion = 5;
 }
