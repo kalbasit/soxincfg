@@ -34,7 +34,7 @@ case "${action}" in
     sudo -H nix-env -p "$profile" --set "$systemConfig"
 
     # 3. call darwin-rebuild activate
-    ./result/sw/bin/darwin-rebuild activate
+    sudo ./result/sw/bin/darwin-rebuild activate
     ;;
   *)
     usage
