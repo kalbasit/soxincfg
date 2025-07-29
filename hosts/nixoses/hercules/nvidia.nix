@@ -1,8 +1,6 @@
 # copied from https://github.com/eureka-cpu/dotfiles/blob/tensorbook/nixos/configuration.nix
 
 {
-  config,
-  pkgs,
   lib,
   ...
 }:
@@ -11,12 +9,6 @@ let
   intel_bus = "PCI:0:2:0";
   nvidia_bus = "PCI:1:0:0";
 
-  nvidia_driver = config.boot.kernelPackages.nvidiaPackages.beta.overrideAttrs {
-    src = pkgs.fetchurl {
-      url = "https://us.download.nvidia.com/XFree86/Linux-x86_64/550.40.07/NVIDIA-Linux-x86_64-550.40.07.run";
-      sha256 = "sha256-KYk2xye37v7ZW7h+uNJM/u8fNf7KyGTZjiaU03dJpK0=";
-    };
-  };
 in
 {
   boot = {
@@ -43,8 +35,6 @@ in
     open = false;
     # Enable the nvidia settings menu
     nvidiaSettings = true;
-    # Optionally, you may need to select the appropriate driver version for your specific GPU.
-    package = nvidia_driver;
     # Optimus PRIME: Bus ID Values (Mandatory for laptop dGPUs)
     prime = {
       sync.enable = true;
