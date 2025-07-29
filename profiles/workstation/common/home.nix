@@ -33,7 +33,7 @@ in
       colordiff
       devbox
       docker-credential-gcr
-      dosbox
+      # dosbox
       duf # du replacement on steroids
       eternal-terminal
       file
