@@ -241,7 +241,7 @@ in
             size = 1000000000;
           };
 
-          initExtra = shellInit;
+          initContent = shellInit;
 
           plugins =
             let
