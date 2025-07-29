@@ -26,7 +26,7 @@ in
       # TODO: Possibly replace pulseaudio with pipewire but for now, in order to build on 24.11 and not sure why it's enabled in the first place.
       services.pipewire.enable = false;
 
-      hardware = {
+      services = {
         pulseaudio = {
           enable = true;
           package = mkIf config.soxin.hardware.bluetooth.enable pkgs.pulseaudioFull;

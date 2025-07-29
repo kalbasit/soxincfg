@@ -13,14 +13,8 @@ let
     material-design-icons
     font-awesome
 
-    (nerdfonts.override {
-      fonts = [
-        # symbols icon only
-        "NerdFontsSymbolsOnly"
-        # Characters
-        "0xProto"
-      ];
-    })
+    nerd-fonts._0xproto
+    nerd-fonts.symbols-only
   ];
 in
 {
