@@ -40,7 +40,7 @@ in
 {
   options.soxincfg.settings.users = {
     defaultGroups = mkOption {
-      type = with types; listOf string;
+      type = with types; listOf str;
       default = [
         "builders"
         "dialout"
