@@ -33,7 +33,7 @@
       modules = [ ./dns0/nixos.nix ];
 
       deploy = {
-        hostname = "192.168.20.10";
+        hostname = "192.168.20.2";
         profiles.system = {
           sshUser = "root";
           user = "root";
@@ -69,7 +69,7 @@
       modules = [ ./dns2/nixos.nix ];
 
       deploy = {
-        hostname = "192.168.20.30";
+        hostname = "192.168.20.4";
         profiles.system = {
           sshUser = "root";
           user = "root";
