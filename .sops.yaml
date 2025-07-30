@@ -61,15 +61,6 @@ creation_rules:
           - *user_yl_0x8EBD95DC147755A2
           - *host_pgp_zeus
 
-  - path_regex: profiles/cluster/laptop/common/[^/]+\.sops[^/]*
-    key_groups:
-      - pgp:
-          - *user_yl_0x8EBD95DC147755A2
-          - *host_pgp_laptop_server_x86_1
-          - *host_pgp_laptop_server_x86_2
-          - *host_pgp_laptop_server_x86_3
-          - *host_pgp_laptop_server_x86_4
-
   - path_regex: profiles/workstation/darwin/(local|remote)/[^/]+\.sops[^/]*
     key_groups:
       - pgp:

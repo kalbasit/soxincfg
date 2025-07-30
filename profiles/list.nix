@@ -1,5 +1,4 @@
 {
-  cluster = ./cluster;
   core = ./core;
   miniserver = ./miniserver;
   myself = ./myself;
