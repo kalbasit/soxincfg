@@ -17,19 +17,8 @@ let
 
   # the hostType of the installation
   hostType = "NixOS";
-in
-mapAttrs
-  (
-    n: v:
-    recursiveUpdate {
-      inherit mode;
 
-      specialArgs = {
-        inherit hostType;
-      };
-    } v
-  )
-  {
+  hosts = {
     ###
     # x86_64-linux
     ###
@@ -48,42 +37,6 @@ mapAttrs
             sshUser = "root";
             user = "root";
             path = deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.hercules;
-          };
-        };
-      };
-
-    pve-nixos-25-05 =
-      let
-        system = "x86_64-linux";
-      in
-      {
-        inherit channelName system;
-        modules = [ ./pve/nixos-25.05/nixos.nix ];
-
-        deploy = {
-          hostname = "192.168.150.6";
-          profiles.system = {
-            sshUser = "root";
-            user = "root";
-            path = deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.pve-nixos-25-05;
-          };
-        };
-      };
-
-    pve-tailscale2 =
-      let
-        system = "x86_64-linux";
-      in
-      {
-        inherit channelName system;
-        modules = [ ./pve/tailscale2/nixos.nix ];
-
-        deploy = {
-          hostname = "192.168.100.10";
-          profiles.system = {
-            sshUser = "root";
-            user = "root";
-            path = deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.pve-tailscale2;
           };
         };
       };
@@ -119,4 +72,18 @@ mapAttrs
         inherit channelName system;
         modules = [ ./saturn-nixos-vm/nixos.nix ];
       };
-  }
+  };
+
+  pve-hosts = import ./pve { inherit channelName deploy-rs self; };
+
+  createHostMapFn =
+    n: v:
+    recursiveUpdate {
+      inherit mode;
+
+      specialArgs = {
+        inherit hostType;
+      };
+    } v;
+in
+mapAttrs createHostMapFn (hosts // pve-hosts)
