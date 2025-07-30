@@ -52,6 +52,24 @@ mapAttrs
         };
       };
 
+    pve-nixos-25-05 =
+      let
+        system = "x86_64-linux";
+      in
+      {
+        inherit channelName system;
+        modules = [ ./pve/nixos-25.05/nixos.nix ];
+
+        deploy = {
+          hostname = "192.168.100.9";
+          profiles.system = {
+            sshUser = "root";
+            user = "root";
+            path = deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.hercules;
+          };
+        };
+      };
+
     ###
     # aarch64-linux
     ###
