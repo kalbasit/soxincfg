@@ -10,5 +10,8 @@
     ./hardware-configuration.nix
   ];
 
+  # Run QEMU Quest Agent
+  services.qemuGuest.enable = true;
+
   system.stateVersion = "25.05";
 }
