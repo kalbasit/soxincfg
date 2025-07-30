@@ -1,25 +1,20 @@
 {
-  config,
-  lib,
   pkgs,
   ...
 }:
 
-let
-  inherit (lib) optionals;
-in
 {
-  home.packages = with pkgs; [
-    binutils # for strings
-    dnsutils # for dig
-    screen
-    duf # du replacement on steroids
-    ncdu
-    file
-    gnupg
-    jq
-    killall
-    nix-zsh-completions
-    unzip
+  home.packages = [
+    pkgs.binutils # for strings
+    pkgs.dnsutils # for dig
+    pkgs.screen
+    pkgs.duf # du replacement on steroids
+    pkgs.ncdu
+    pkgs.file
+    pkgs.gnupg
+    pkgs.jq
+    pkgs.killall
+    pkgs.nix-zsh-completions
+    pkgs.unzip
   ];
 }
