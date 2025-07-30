@@ -30,7 +30,6 @@
   dnsmasq = ./services/dnsmasq;
   i3 = ./services/x11/window-managers/i3.nix;
   iscsid = ./services/iscsid.nix;
-  k3s = ./services/k3s;
   nextcloud = ./services/nextcloud;
   sketchybar = ./services/sketchybar;
   skhd = ./services/skhd;
