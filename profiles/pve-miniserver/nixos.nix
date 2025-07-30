@@ -50,9 +50,6 @@
     # Feed the kernel some entropy
     haveged.enable = true;
 
-    # Enable TailScale for zero-config VPN service.
-    tailscale.enable = true;
-
     # Explicitly disable the X server, sound, and related services.
     xserver.enable = false;
     pulseaudio.enable = false;
