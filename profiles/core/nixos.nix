@@ -24,7 +24,7 @@
       ];
 
       trusted-public-keys = [
-        "nix-cache.cluster.nasreddine.com:gAaW+smlYAvg/u94P1XmbI45aIhJ9/5upB5QrKY33B0="
+        "ncps.bigeye-bushi.ts.net:EYvKWn44YJquaYg2qPevn53ckpSvQmEPSrFoTj5KVdk="
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       ];
     };
