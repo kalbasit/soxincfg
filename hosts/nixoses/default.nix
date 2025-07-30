@@ -70,24 +70,6 @@ mapAttrs
         };
       };
 
-    prometheus =
-      let
-        system = "x86_64-linux";
-      in
-      {
-        inherit channelName system;
-        modules = [ ./prometheus/nixos.nix ];
-
-        deploy = {
-          hostname = "prometheus.bigeye-bushi.ts.net";
-          profiles.system = {
-            sshUser = "root";
-            user = "root";
-            path = deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.prometheus;
-          };
-        };
-      };
-
     zeus =
       let
         system = "x86_64-linux";
