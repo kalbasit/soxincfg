@@ -16,9 +16,6 @@
     resolveLocalQueries = false;
 
     settings = {
-      # Listen on the local LAN interface.
-      # listen-address=127.0.0.1,192.168.100.7
-
       # Forward ALL queries to Tailscale's resolver. It will handle the rest.
       server = [ "100.100.100.100" ];
 
