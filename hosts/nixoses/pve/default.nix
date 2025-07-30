@@ -51,7 +51,7 @@
       modules = [ ./dns1/nixos.nix ];
 
       deploy = {
-        hostname = "192.168.20.20";
+        hostname = "192.168.20.3";
         profiles.system = {
           sshUser = "root";
           user = "root";
