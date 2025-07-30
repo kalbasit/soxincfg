@@ -72,6 +72,7 @@
         server = {
           # General and security options
           interface = [ "0.0.0.0" ];
+          interface-automatic = true; # Allow replying from the VIP configured by KeepAlived
           access-control = "192.168.0.0/16 allow";
           do-ip4 = true;
           do-udp = true;
