@@ -1,4 +1,9 @@
-{ soxincfg, ... }:
+{
+  config,
+  lib,
+  soxincfg,
+  ...
+}:
 
 {
   imports = [
@@ -6,4 +11,14 @@
 
     ../nixos-25.05/nixos.nix
   ];
+
+  services.keepalived.vrrpInstances.dns0 = {
+    interface = "ens18";
+    priority = 103;
+    virtualRouterId = 20;
+    virtualIps = [
+      { addr = "192.168.20.20/24"; }
+    ];
+    trackScripts = lib.attrNames config.services.keepalived.vrrpScripts;
+  };
 }
