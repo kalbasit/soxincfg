@@ -7,10 +7,6 @@ keys:
   - &host_pgp_kore 882BE5435E81479DDBFFEF70F5DC39FB0D1A991D
   - &host_pgp_prometheus 42EFF1BA24BF1181C0C4B20329532C0000EE00E4
   - &host_pgp_zeus 1C589E495DBBEFF2F4DA370685F1A3641FBEFD44
-  - &host_pgp_laptop_server_x86_1 21CC4032C3EA56261C2F096DB7B315CF6141FE6F
-  - &host_pgp_laptop_server_x86_2 E9D632250421A9360CEA6185D71690EA67E853C6
-  - &host_pgp_laptop_server_x86_3 86D7B916A771B0C9F19025157C5552A043B01BFB
-  - &host_pgp_laptop_server_x86_4 36A30882A22EFD86FE6ACFD9FBADC37EA70009FE
 
   # Age host keys
   - &host_age_saturn age1cdyuywjxswv3t0yhk8ch7tkh6s5ncwexdgsyzgav8804nu775a6qm0l4y2
@@ -75,10 +71,6 @@ creation_rules:
           - *host_pgp_hades
           - *host_pgp_kore
           - *host_pgp_prometheus
-          - *host_pgp_laptop_server_x86_1
-          - *host_pgp_laptop_server_x86_2
-          - *host_pgp_laptop_server_x86_3
-          - *host_pgp_laptop_server_x86_4
           - *host_pgp_zeus
         age:
           - *host_age_hercules
