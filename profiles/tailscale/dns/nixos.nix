@@ -34,12 +34,16 @@
 
       vrrpScripts = {
         check_dnsmasq_process = {
+          fall = 1;
+          interval = 3;
           script = "${lib.getExe' pkgs.procps "pidof"} dnsmasq";
           user = "root";
           weight = 20;
         };
 
         check_dnsmasq_liveness = {
+          fall = 1;
+          interval = 3;
           script = "${lib.getExe' pkgs.dnsutils "dig"} @127.0.0.1 -p 53 google.com +time=1 | ${lib.getExe pkgs.gnugrep} -q 'status: NOERROR'";
           user = "root";
           weight = 20;
