@@ -78,20 +78,20 @@
       };
     };
 
-  pve-tailscale2 =
+  pve-tailscale0 =
     let
       system = "x86_64-linux";
     in
     {
       inherit channelName system;
-      modules = [ ./tailscale2/nixos.nix ];
+      modules = [ ./tailscale0/nixos.nix ];
 
       deploy = {
         hostname = "192.168.100.10";
         profiles.system = {
           sshUser = "root";
           user = "root";
-          path = deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.pve-tailscale2;
+          path = deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.pve-tailscale0;
         };
       };
     };
