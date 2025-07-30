@@ -70,6 +70,24 @@ mapAttrs
         };
       };
 
+    pve-tailscale2 =
+      let
+        system = "x86_64-linux";
+      in
+      {
+        inherit channelName system;
+        modules = [ ./pve/tailscale2/nixos.nix ];
+
+        deploy = {
+          hostname = "192.168.100.10";
+          profiles.system = {
+            sshUser = "root";
+            user = "root";
+            path = deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.pve-tailscale2;
+          };
+        };
+      };
+
     ###
     # aarch64-linux
     ###
