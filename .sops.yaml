@@ -3,10 +3,7 @@ keys:
   - &user_yl_0x8EBD95DC147755A2 8C67A027B7CAC398C88820578EBD95DC147755A2
 
   # PGP host keys
-  - &host_pgp_hades 40F574563C054BDCC05FDF8CC83DFFD75179DF76
   - &host_pgp_kore 882BE5435E81479DDBFFEF70F5DC39FB0D1A991D
-  - &host_pgp_prometheus 42EFF1BA24BF1181C0C4B20329532C0000EE00E4
-  - &host_pgp_zeus 1C589E495DBBEFF2F4DA370685F1A3641FBEFD44
 
   # Age host keys
   - &host_age_saturn age1cdyuywjxswv3t0yhk8ch7tkh6s5ncwexdgsyzgav8804nu775a6qm0l4y2
@@ -18,12 +15,6 @@ creation_rules:
     key_groups:
       - age:
           - *host_age_saturn
-
-  - path_regex: hosts/nixoses/hades/[^/]+\.sops[^/]*
-    key_groups:
-      - pgp:
-          - *user_yl_0x8EBD95DC147755A2
-          - *host_pgp_hades
 
   - path_regex: hosts/nixoses/hercules/[^/]+\.sops[^/]*
     key_groups:
@@ -38,24 +29,12 @@ creation_rules:
           - *user_yl_0x8EBD95DC147755A2
           - *host_pgp_kore
 
-  - path_regex: hosts/nixoses/prometheus/[^/]+\.sops[^/]*
-    key_groups:
-      - pgp:
-          - *user_yl_0x8EBD95DC147755A2
-          - *host_pgp_prometheus
-
   - path_regex: hosts/nixoses/saturn-nixos-vm/[^/]+\.sops[^/]*
     key_groups:
       - pgp:
           - *user_yl_0x8EBD95DC147755A2
         age:
           - *host_age_saturn_nixos_vm
-
-  - path_regex: hosts/nixoses/zeus/[^/]+\.sops[^/]*
-    key_groups:
-      - pgp:
-          - *user_yl_0x8EBD95DC147755A2
-          - *host_pgp_zeus
 
   - path_regex: profiles/workstation/darwin/(local|remote)/[^/]+\.sops[^/]*
     key_groups:
@@ -68,10 +47,7 @@ creation_rules:
     key_groups:
       - pgp:
           - *user_yl_0x8EBD95DC147755A2
-          - *host_pgp_hades
           - *host_pgp_kore
-          - *host_pgp_prometheus
-          - *host_pgp_zeus
         age:
           - *host_age_hercules
           - *host_age_saturn_nixos_vm
@@ -85,7 +61,6 @@ creation_rules:
     key_groups:
       - pgp:
           - *user_yl_0x8EBD95DC147755A2
-          - *host_pgp_hades
         age:
           - *host_age_hercules
           - *host_age_saturn
@@ -95,7 +70,6 @@ creation_rules:
     key_groups:
       - pgp:
           - *user_yl_0x8EBD95DC147755A2
-          - *host_pgp_hades
           - *host_pgp_kore
         age:
           - *host_age_hercules
@@ -106,7 +80,6 @@ creation_rules:
     key_groups:
       - pgp:
           - *user_yl_0x8EBD95DC147755A2
-          - *host_pgp_hades
           - *host_pgp_kore
         age:
           - *host_age_hercules
@@ -117,7 +90,6 @@ creation_rules:
     key_groups:
       - pgp:
           - *user_yl_0x8EBD95DC147755A2
-          - *host_pgp_hades
           - *host_pgp_kore
         age:
           - *host_age_hercules
@@ -129,7 +101,6 @@ creation_rules:
     key_groups:
       - pgp:
           - *user_yl_0x8EBD95DC147755A2
-          - *host_pgp_hades
         age:
           - *host_age_hercules
           - *host_age_saturn
@@ -139,7 +110,6 @@ creation_rules:
     key_groups:
       - pgp:
           - *user_yl_0x8EBD95DC147755A2
-          - *host_pgp_hades
         age:
           - *host_age_hercules
           - *host_age_saturn
@@ -149,7 +119,6 @@ creation_rules:
     key_groups:
       - pgp:
           - *user_yl_0x8EBD95DC147755A2
-          - *host_pgp_hades
         age:
           - *host_age_hercules
           - *host_age_saturn
@@ -159,7 +128,6 @@ creation_rules:
     key_groups:
       - pgp:
           - *user_yl_0x8EBD95DC147755A2
-          - *host_pgp_hades
         age:
           - *host_age_hercules
           - *host_age_saturn
@@ -169,7 +137,6 @@ creation_rules:
     key_groups:
       - pgp:
           - *user_yl_0x8EBD95DC147755A2
-          - *host_pgp_hades
         age:
           - *host_age_hercules
           - *host_age_saturn
@@ -179,7 +146,6 @@ creation_rules:
     key_groups:
       - pgp:
           - *user_yl_0x8EBD95DC147755A2
-          - *host_pgp_hades
         age:
           - *host_age_hercules
           - *host_age_saturn
