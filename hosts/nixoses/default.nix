@@ -34,24 +34,6 @@ mapAttrs
     # x86_64-linux
     ###
 
-    hades =
-      let
-        system = "x86_64-linux";
-      in
-      {
-        inherit channelName system;
-        modules = [ ./hades/nixos.nix ];
-
-        deploy = {
-          hostname = "hades.bigeye-bushi.ts.net";
-          profiles.system = {
-            sshUser = "root";
-            user = "root";
-            path = deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.hades;
-          };
-        };
-      };
-
     hercules =
       let
         system = "x86_64-linux";
