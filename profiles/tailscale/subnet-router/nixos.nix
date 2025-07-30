@@ -14,6 +14,8 @@ let
 in
 {
   services.tailscale = {
+    enable = true;
+
     disableTaildrop = true;
     extraSetFlags = [
       "--advertise-routes=${builtins.concatStringsSep "," advertiseRoutes}"
