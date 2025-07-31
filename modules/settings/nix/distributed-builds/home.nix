@@ -20,6 +20,10 @@ in
 {
   config = mkIf cfg.enable {
     sops.secrets = mkIf isDarwin {
+      ssh_key_hercules = {
+        inherit sopsFile;
+        path = "${keyStore}/hercules.key";
+      };
       ssh_key_kore = {
         inherit sopsFile;
         path = "${keyStore}/kore.key";
