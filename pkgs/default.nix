@@ -1,11 +1,15 @@
-channels:
+{
+  callPackage,
+  lib,
+  system,
+  ...
+}:
 
 let
-  inherit (channels.nixpkgs) lib system;
-  inherit (lib) findSingle filterAttrs platforms;
+  inherit (lib) findSingle filterAttrs;
 
   pkgs = { };
 
   hasElement = list: elem: (findSingle (x: x == elem) "none" "multiple" list) != "none";
 in
-filterAttrs (name: pkg: hasElement (pkg.meta.platforms or platforms.all) system) pkgs
+filterAttrs (name: pkg: hasElement pkg.meta.platforms system) pkgs

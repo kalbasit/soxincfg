@@ -137,10 +137,14 @@ soxin.lib.mkFlake {
         };
 
       formatter = pkgs.nixfmt-rfc-style;
-    };
 
-  # Evaluates to `packages.<system>.<pname> = <unstable-channel-reference>.<pname>`.
-  packagesBuilder = channels: flattenTree (import ../pkgs channels);
+      packages =
+        let
+          inherit (channels) nixpkgs;
+        in
+        # these packages construct themselves if and only if the system is supported.
+        import ../pkgs nixpkgs;
+    };
 
   vars = recursiveUpdate (import ../vars inputs) vars;
 
