@@ -26,6 +26,7 @@ in
     ./hardware-configuration.nix
     ./nvidia.nix
     ./spectrum.nix
+    ./nix-builder.nix
   ];
 
   # XXX: This host was created prior to changing my username to wnasreddine.
