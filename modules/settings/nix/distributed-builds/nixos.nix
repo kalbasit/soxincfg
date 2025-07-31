@@ -36,6 +36,9 @@ in
     };
 
     sops.secrets = {
+      ssh_key_hercules = {
+        inherit sopsFile;
+      };
       ssh_key_kore = {
         inherit sopsFile;
       };
