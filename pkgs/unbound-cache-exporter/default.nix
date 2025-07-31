@@ -14,6 +14,7 @@ python3.pkgs.buildPythonApplication {
   propagatedBuildInputs = with python3.pkgs; [
     requests
     publicsuffixlist
+    unbound
   ];
 
   # --- Enable Testing ---
@@ -38,6 +39,7 @@ python3.pkgs.buildPythonApplication {
   meta = {
     description = "A script to export active domains from the Unbound cache using the Public Suffix List for filtering.";
     license = lib.licenses.mit;
+    mainProgram = "unbound-cache-exporter";
     platforms = lib.lists.intersectLists python3.meta.platforms unbound.meta.platforms;
   };
 }
