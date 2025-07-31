@@ -10,13 +10,12 @@ let
   inherit (lib) optionals;
 in
 {
-  imports =
-    [
-      soxincfg.nixosModules.profiles.neovim
-      soxincfg.nixosModules.profiles.workstation.common
-    ]
-    ++ optionals (mode == "NixOS") [ ./nixos.nix ]
-    ++ optionals (mode == "home-manager") [ ./home.nix ];
+  imports = [
+    soxincfg.nixosModules.profiles.neovim
+    soxincfg.nixosModules.profiles.workstation.common
+  ]
+  ++ optionals (mode == "NixOS") [ ./nixos.nix ]
+  ++ optionals (mode == "home-manager") [ ./home.nix ];
 
   soxin = {
     hardware = {

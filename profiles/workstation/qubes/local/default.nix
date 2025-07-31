@@ -11,7 +11,8 @@ in
 {
   imports = [
     soxincfg.nixosModules.profiles.neovim
-  ] ++ optionals (mode == "home-manager") [ ./home.nix ];
+  ]
+  ++ optionals (mode == "home-manager") [ ./home.nix ];
 
   config = {
     soxin = {

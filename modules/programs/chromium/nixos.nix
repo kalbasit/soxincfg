@@ -25,7 +25,8 @@ in
         "djflhoibgkdhkhhcedjiklpkjnoahfmg" # User-Agent Switcher for Chrome
         "fpnmgdkabkmnadcjpehmlllkndpkmiak" # Wayback Machine
         "cjpalhdlnbpafiamejdnhcphjbkeiagm" # uBlock Origin
-      ] ++ optional cfg.surfingkeys.enable "gfbliohnnapiefjpjlpjnehglfpaknnc";
+      ]
+      ++ optional cfg.surfingkeys.enable "gfbliohnnapiefjpjlpjnehglfpaknnc";
 
       extraOpts = {
         BasicAuthOverHttpEnabled = false;
