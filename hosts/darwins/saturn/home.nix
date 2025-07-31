@@ -11,7 +11,7 @@ in
   imports = [
     soxincfg.nixosModules.profiles.myself
     soxincfg.nixosModules.profiles.personal
-    soxincfg.nixosModules.profiles.neovim
+    soxincfg.nixosModules.profiles.neovim.full
     soxincfg.nixosModules.profiles.workstation.darwin.local
   ];
 

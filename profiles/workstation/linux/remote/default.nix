@@ -10,7 +10,7 @@ let
 in
 {
   imports = [
-    soxincfg.nixosModules.profiles.neovim
+    soxincfg.nixosModules.profiles.neovim.full
   ]
   ++ optionals (mode == "home-manager") [ ./home.nix ];
 
