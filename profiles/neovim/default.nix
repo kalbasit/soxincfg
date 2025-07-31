@@ -1,1 +1,3 @@
-{ soxincfg.programs.neovim.enable = true; }
+{
+  full = import ./full;
+}
