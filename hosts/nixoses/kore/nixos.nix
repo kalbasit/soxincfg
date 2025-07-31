@@ -6,7 +6,7 @@
 
 {
   imports = [
-    soxincfg.nixosModules.profiles.miniserver
+    soxincfg.nixosModules.profiles.miniserver.metal
 
     ./hardware-configuration.nix
   ];
@@ -31,6 +31,8 @@
       isNormalUser = true;
     };
   };
+
+  services.tailscale.enable = true;
 
   system.stateVersion = "23.05";
 }

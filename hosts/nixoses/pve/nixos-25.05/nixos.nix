@@ -5,7 +5,7 @@
 
 {
   imports = [
-    soxincfg.nixosModules.profiles.pve-miniserver
+    soxincfg.nixosModules.profiles.miniserver.qemu-vm-guest
 
     ./hardware-configuration.nix
   ];
