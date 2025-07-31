@@ -1,6 +1,7 @@
 {
   lib,
   mode,
+  soxincfg,
   ...
 }:
 
@@ -10,7 +11,10 @@ let
     ;
 in
 {
-  imports = optionals (mode == "NixOS") [ ./nixos.nix ];
+  imports = [
+    soxincfg.nixosModules.profiles.neovim.mini
+  ]
+  ++ optionals (mode == "NixOS") [ ./nixos.nix ];
 
   config = {
     soxin = {

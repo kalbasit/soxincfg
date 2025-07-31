@@ -17,12 +17,6 @@
     pkgs.jq
     pkgs.killall
     pkgs.unzip
-
-    (pkgs.vim.customize {
-      vimrcConfig.packages.myVimPackage = with pkgs.vimPlugins; {
-        start = [ vim-colemak ];
-      };
-    })
   ];
 
   # Setup my keyboard layout
