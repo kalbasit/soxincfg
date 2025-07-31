@@ -15,6 +15,7 @@ in
     soxincfg.nixosModules.profiles.workstation.nixos.vm-guest
 
     ./hardware-configuration.nix
+    ./nix-builder.nix
   ];
 
   sops = {
