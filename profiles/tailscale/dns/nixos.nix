@@ -30,17 +30,33 @@ in
         check_unbound_process = {
           fall = 1;
           interval = 3;
-          script = "${lib.getExe' pkgs.procps "pidof"} unbound";
           user = "root";
           weight = 20;
+
+          script =
+            let
+              script = pkgs.writeShellScript "check-unbound-process.sh" ''
+                set -eo pipefail
+                ${lib.getExe' pkgs.procps "pidof"} unbound
+              '';
+            in
+            builtins.toString script;
         };
 
         check_unbound_liveness = {
           fall = 1;
           interval = 3;
-          script = "${lib.getExe' pkgs.dnsutils "dig"} @127.0.0.1 -p 53 google.com +time=1 | ${lib.getExe pkgs.gnugrep} -q 'status: NOERROR'";
           user = "root";
           weight = 20;
+
+          script =
+            let
+              script = pkgs.writeShellScript "check-unbound-liveness.sh" ''
+                set -eo pipefail
+                ${lib.getExe' pkgs.dnsutils "dig"} @127.0.0.1 -p 53 google.com +time=1 | ${lib.getExe pkgs.gnugrep} -q 'status: NOERROR'
+              '';
+            in
+            builtins.toString script;
         };
       };
     };
