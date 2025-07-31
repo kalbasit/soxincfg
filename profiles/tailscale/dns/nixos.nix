@@ -9,6 +9,12 @@ let
   k8s_overrides_path = "/etc/unbound/k8s-overrides.conf";
   nfs_overrides_path = "/mnt/shared_unbound_config/k8s-overrides.conf";
   main_unbound_config = "/etc/unbound/unbound.conf";
+
+  # Path to the shared NFS mount
+  shared_path = "/mnt/shared_unbound_config";
+
+  # The keepalived Virtual IP
+  virtual_ip = "192.168.20.20/24";
 in
 {
   # Allow traffic on port 53
@@ -16,7 +22,7 @@ in
   networking.firewall.allowedUDPPorts = [ 53 ];
 
   fileSystems = {
-    "/mnt/shared_unbound_config" = {
+    "${shared_path}" = {
       device = "192.168.52.10:/mnt/tank/proxmoxVE/pve_dns_unbound/unbound";
       fsType = "nfs";
     };
@@ -31,7 +37,7 @@ in
         interface = "ens18";
         virtualRouterId = 20;
         virtualIps = [
-          { addr = "192.168.20.20/24"; }
+          { addr = virtual_ip; }
         ];
         trackScripts = lib.attrNames config.services.keepalived.vrrpScripts;
       };
