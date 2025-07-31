@@ -33,6 +33,14 @@ in
           system = "aarch64-linux";
           supportedFeatures = [ ];
         }
+        {
+          hostName = "saturn-nixos-vm.bigeye-bushi.ts.net";
+          maxJobs = 4;
+          sshKey = "${keyStore}/saturn-nixos-vm.key";
+          sshUser = "builder";
+          system = "aarch64-linux";
+          supportedFeatures = [ "big-parallel" ];
+        }
       ];
     };
   };
