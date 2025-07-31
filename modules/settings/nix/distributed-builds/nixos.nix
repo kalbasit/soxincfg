@@ -24,9 +24,6 @@ in
     };
 
     sops.secrets = {
-      ssh_key_aarch64_nixos_community = {
-        inherit sopsFile;
-      };
       ssh_key_kore = {
         inherit sopsFile;
       };
