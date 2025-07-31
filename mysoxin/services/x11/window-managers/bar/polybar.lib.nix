@@ -388,7 +388,8 @@ in
         modules-right = builtins.concatStringsSep " " (
           map (removePrefix "module/") (builtins.attrNames modulesConfig)
         );
-      } // optionalAttrs (cfg.dpi != null) { inherit (cfg) dpi; };
+      }
+      // optionalAttrs (cfg.dpi != null) { inherit (cfg) dpi; };
 
       "module/i3" = {
         type = "internal/i3";
