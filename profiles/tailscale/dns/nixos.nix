@@ -15,6 +15,9 @@ let
 
   # The keepalived Virtual IP
   virtual_ip = "192.168.20.20/24";
+
+  # The interface keepalived is running on
+  vrrp_interface = "ens18";
 in
 {
   # Allow traffic on port 53
@@ -34,7 +37,8 @@ in
       enable = true;
 
       vrrpInstances.dns_vip = {
-        interface = "ens18";
+        interface = vrrp_interface;
+
         virtualRouterId = 20;
         virtualIps = [
           { addr = virtual_ip; }
