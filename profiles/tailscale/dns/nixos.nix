@@ -112,6 +112,7 @@ in
           prefetch = true; # Refreshes popular items before they expire
           prefetch-key = true; # Use DNSKEY to validate pre-fetched records
 
+          # Include overrides from k8s cronjob.
           include = k8s_overrides_path;
         };
       };
