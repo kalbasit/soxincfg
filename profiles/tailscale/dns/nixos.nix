@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   pkgs,
   ...
@@ -25,6 +26,15 @@ in
     # Enable keepalived
     keepalived = {
       enable = true;
+
+      vrrpInstances.dns_vip = {
+        interface = "ens18";
+        virtualRouterId = 20;
+        virtualIps = [
+          { addr = "192.168.20.20/24"; }
+        ];
+        trackScripts = lib.attrNames config.services.keepalived.vrrpScripts;
+      };
 
       vrrpScripts = {
         check_unbound_process = {
