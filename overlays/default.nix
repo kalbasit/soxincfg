@@ -1,1 +1,3 @@
-final: prev: { }
+final: prev: {
+  soxincfg = import ../pkgs prev;
+}

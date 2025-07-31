@@ -149,7 +149,9 @@ soxin.lib.mkFlake {
   vars = recursiveUpdate (import ../vars inputs) vars;
 
   # include all overlays
-  overlay = import ../overlays;
+  sharedOverlays = [
+    (import ../overlays)
+  ];
 
   # set the nixos specialArgs
   nixosSpecialArgs = {
