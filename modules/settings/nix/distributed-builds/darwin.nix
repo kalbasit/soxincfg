@@ -26,14 +26,6 @@ in
           ];
         }
         {
-          hostName = "kore.bigeye-bushi.ts.net";
-          maxJobs = 1;
-          sshKey = "${keyStore}/kore.key";
-          sshUser = "builder";
-          system = "aarch64-linux";
-          supportedFeatures = [ ];
-        }
-        {
           hostName = "saturn-nixos-vm.bigeye-bushi.ts.net";
           maxJobs = 4;
           sshKey = "${keyStore}/saturn-nixos-vm.key";

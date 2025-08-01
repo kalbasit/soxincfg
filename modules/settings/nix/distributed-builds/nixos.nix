@@ -25,14 +25,6 @@ in
           ];
         }
         {
-          hostName = "kore.bigeye-bushi.ts.net";
-          maxJobs = 1;
-          sshKey = builtins.toString config.sops.secrets.ssh_key_kore.path;
-          sshUser = "builder";
-          system = "aarch64-linux";
-          supportedFeatures = [ ];
-        }
-        {
           hostName = "saturn-nixos-vm.bigeye-bushi.ts.net";
           maxJobs = 4;
           sshKey = builtins.toString config.sops.secrets.ssh_key_saturn-nixos-vm.path;
@@ -45,9 +37,6 @@ in
 
     sops.secrets = {
       ssh_key_hercules = {
-        inherit sopsFile;
-      };
-      ssh_key_kore = {
         inherit sopsFile;
       };
       ssh_key_saturn-nixos-vm = {

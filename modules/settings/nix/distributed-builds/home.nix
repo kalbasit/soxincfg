@@ -24,10 +24,6 @@ in
         inherit sopsFile;
         path = "${keyStore}/hercules.key";
       };
-      ssh_key_kore = {
-        inherit sopsFile;
-        path = "${keyStore}/kore.key";
-      };
       ssh_key_saturn-nixos-vm = {
         inherit sopsFile;
         path = "${keyStore}/saturn-nixos-vm.key";
