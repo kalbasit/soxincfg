@@ -35,9 +35,10 @@ in
 
     package = mkOption {
       type = types.package;
-      default = inputs.nixvim.packages."${pkgs.stdenv.hostPlatform.system}".default.extend cfg.config;
-      defaultText = "kalbasit/nixvim extended with config";
+      default = inputs.nixvim.packages."${pkgs.stdenv.hostPlatform.system}".full;
+      defaultText = "A package created with nixvim's makeNixvim or makeNixvimWithModule";
       description = "The package to use for NeoVim";
+      apply = pkg: pkg.extend cfg.config;
     };
   };
 }
