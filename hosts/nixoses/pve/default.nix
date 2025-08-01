@@ -24,6 +24,42 @@
       };
     };
 
+  pve-basicdns0 =
+    let
+      system = "x86_64-linux";
+    in
+    {
+      inherit channelName system;
+      modules = [ ./basicdns0/nixos.nix ];
+
+      deploy = {
+        hostname = "192.168.20.10";
+        profiles.system = {
+          sshUser = "root";
+          user = "root";
+          path = deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.pve-basicdns0;
+        };
+      };
+    };
+
+  pve-basicdns1 =
+    let
+      system = "x86_64-linux";
+    in
+    {
+      inherit channelName system;
+      modules = [ ./basicdns1/nixos.nix ];
+
+      deploy = {
+        hostname = "192.168.20.11";
+        profiles.system = {
+          sshUser = "root";
+          user = "root";
+          path = deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.pve-basicdns1;
+        };
+      };
+    };
+
   pve-dns0 =
     let
       system = "x86_64-linux";

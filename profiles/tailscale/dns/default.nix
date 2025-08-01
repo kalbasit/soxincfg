@@ -1,8 +1,16 @@
-{ lib, mode, ... }:
+{
+  lib,
+  mode,
+  soxincfg,
+  ...
+}:
 
 let
   inherit (lib) optionals;
 in
 {
-  imports = optionals (mode == "NixOS") [ ./nixos.nix ];
+  imports = [
+    soxincfg.nixosModules.profiles.tailscale.basicdns
+  ]
+  ++ optionals (mode == "NixOS") [ ./nixos.nix ];
 }
