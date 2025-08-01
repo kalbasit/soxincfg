@@ -27,7 +27,6 @@ in
       arduino-cli
       audacity
       awscli2
-      awsume
       binutils # for strings
       # TODO: build is failing on darwin because the dependency python3.11-agate-dbf-0.2.3 is failing.
       #csvkit
