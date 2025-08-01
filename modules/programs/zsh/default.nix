@@ -166,8 +166,6 @@ in
         rot13 = "tr \"[A-Za-z]\" \"[N-ZA-Mn-za-m]\"";
         serve_this = "${python3}/bin/python -m http.server"; # Use port 8000 by default, open in firewall
         utf8test = "${curl}/bin/curl -L https://github.com/tmux/tmux/raw/master/tools/UTF-8-demo.txt";
-        vi = "nvim";
-        vim = "nvim";
 
         # TODO: move this to the swm package
         vim_ready = "sleep 1";
