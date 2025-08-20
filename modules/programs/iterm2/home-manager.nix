@@ -16,16 +16,6 @@ in
       <dict>
       	<key>AllowClipboardAccess</key>
       	<true/>
-      	<key>AppleAntiAliasingThreshold</key>
-      	<integer>1</integer>
-      	<key>ApplePressAndHoldEnabled</key>
-      	<false/>
-      	<key>AppleScrollAnimationEnabled</key>
-      	<integer>0</integer>
-      	<key>AppleSmoothFixedFontsSizeThreshold</key>
-      	<integer>1</integer>
-      	<key>AppleWindowTabbingMode</key>
-      	<string>manual</string>
       	<key>Custom Color Presets</key>
       	<dict>
       		<key>catppuccin-macchiato</key>
@@ -1917,7 +1907,7 @@ in
       			<key>Description</key>
       			<string>Default</string>
       			<key>Disable Window Resizing</key>
-      			<true/>
+      			<false/>
       			<key>Faint Text Alpha</key>
       			<real>0.5</real>
       			<key>Faint Text Alpha (Dark)</key>
