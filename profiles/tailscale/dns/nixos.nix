@@ -50,110 +50,6 @@ in
 
   systemd = {
     services = {
-      # EXPORTER: Each server exports its own list to the shared mount.
-      unbound-cache-exporter = {
-        after = [
-          "mnt-shared_unbound_config.mount"
-          "unbound.service"
-        ];
-        requires = [
-          "mnt-shared_unbound_config.mount"
-          "unbound.service"
-        ];
-        description = "Export this server's active domains to the shared mount";
-        path = [
-          pkgs.inetutils
-          pkgs.soxincfg.unbound-cache-exporter
-        ];
-        serviceConfig = {
-          Type = "oneshot";
-          User = "root";
-        };
-        script =
-          let
-            script = pkgs.writeShellScript "unbound-cache-exporter.sh" ''
-              set -euo pipefail
-              # The script now calls the Python script with a unique output file path
-              # based on the server's hostname. e.g., popular-domains-pve-dns0.txt
-              unbound-cache-exporter "${shared_path}/popular-domains-$(hostname).txt"
-            '';
-          in
-          builtins.toString script;
-      };
-
-      # MERGER: The keepalived MASTER server merges all lists into a master list.
-      unbound-list-merger = {
-        description = "Merge all individual domain lists into a master list (only runs on keepalived MASTER)";
-
-        path = [
-          pkgs.coreutils
-          pkgs.findutils
-          pkgs.gnugrep
-          pkgs.iproute2
-        ];
-
-        serviceConfig.Type = "oneshot";
-
-        script =
-          let
-            script = pkgs.writeShellScript "unbound-list-merger.sh" ''
-              set -euo pipefail
-
-              log() {
-                  echo "unbound-list-merger: $1"
-              }
-
-              log "This node is the keepalived MASTER. Merging domain lists..."
-              # Use find to handle the case where no files exist, preventing an error.
-              # Then, concatenate all lists, sort them, remove duplicates, and write to the master file atomically.
-              find "${shared_path}" -name 'popular-domains-*.txt' -print0 | xargs -0 cat | grep -v '^#' | sort -u > "${shared_path}/popular-domains-master.tmp"
-              mv "${shared_path}/popular-domains-master.tmp" "${shared_path}/popular-domains-master.txt"
-              log "Master domain list updated."
-            '';
-          in
-          builtins.toString script;
-      };
-
-      # PRIMER: All servers prime their cache from the shared master list.
-      unbound = {
-        after = [
-          "mnt-shared_unbound_config.mount"
-          "unbound-ensure-k8s-overrides-exists.service"
-        ];
-        serviceConfig = {
-          # This command runs AFTER the main Unbound process has started on ALL servers
-          ExecStartPost =
-            let
-              script = pkgs.writeShellScript "prime-dns.sh" ''
-                set -euo pipefail
-
-                MASTER_LIST_FILE="${shared_path}/popular-domains-master.txt"
-
-                log() {
-                    echo "unbound-cache-primer: $1"
-                }
-
-                if [ -f "$MASTER_LIST_FILE" ]; then
-                  log "Priming Unbound cache from shared master list..."
-                  # Read the file line by line
-                  while IFS= read -r domain || [[ -n "$domain" ]]; do
-                    # Skip empty lines or comments
-                    if [[ -z "$domain" || "$domain" == \#* ]]; then
-                        continue
-                    fi
-                    # Query the local server for each domain to populate the cache
-                    ${pkgs.dnsutils}/bin/dig @127.0.0.1 "$domain" > /dev/null 2>&1 || true
-                  done < "$MASTER_LIST_FILE"
-                  log "Cache priming complete."
-                else
-                  log "Master domain list not found, skipping cache priming."
-                fi
-              '';
-            in
-            [ script ];
-        };
-      };
-
       # make sure the k8s-overrides is available before starting unbound
       unbound-ensure-k8s-overrides-exists = {
         description = "Ensure ${k8s_overrides_path} exists";
@@ -284,25 +180,6 @@ in
             in
             script;
           RemainAfterExit = "yes";
-        };
-      };
-    };
-
-    timers = {
-      # EXPORTER: Each server exports its own list to the shared mount.
-      unbound-cache-exporter = {
-        timerConfig = {
-          OnBootSec = "5min";
-          OnUnitActiveSec = "1h";
-        };
-        wantedBy = [ "timers.target" ];
-      };
-
-      # MERGER: The keepalived MASTER server merges all lists into a master list.
-      unbound-list-merger = {
-        timerConfig = {
-          OnBootSec = "10min";
-          OnUnitActiveSec = "2h";
         };
       };
     };
