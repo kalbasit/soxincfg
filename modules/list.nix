@@ -23,6 +23,7 @@
   tmux = ./programs/tmux;
   weechat = ./programs/weechat;
   wezterm = ./programs/wezterm;
+  zellij = ./programs/zellij;
   zsh = ./programs/zsh;
 
   # services
