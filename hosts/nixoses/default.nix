@@ -71,6 +71,16 @@ let
       {
         inherit channelName system;
         modules = [ ./saturn-nixos-vm/nixos.nix ];
+
+        deploy = {
+          hostname = "saturn-nixos-vm.bigeye-bushi.ts.net";
+          profiles.system = {
+            sshUser = "root";
+            user = "root";
+            path = deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.saturn-nixos-vm;
+            confirmTimeout = 5 * 60;
+          };
+        };
       };
   };
 
