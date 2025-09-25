@@ -84,9 +84,14 @@ in
 
                 source ${../zsh/plugins/functions/prompt}
 
+                ask=1
+                if [[ "$#" -eq 1 ]] && [[ "$1" == "-y" ]]; then
+                  ask=0
+                fi
+
                 TIDY_BRANCHES=`comm -12 <(git branch | grep -v '\*\|master\|main' | awk '{print $1}' | sort) <(gh pr list -A "@me" --state merged --json headRefName | jq '.[].headRefName' -r | sort)`
                 for b in $TIDY_BRANCHES; do
-                  if prompt "Delete branch? $b"; then
+                  if [[ "$ask" -eq 0 ]] || prompt "Delete branch? $b"; then
                     git branch -D $b
                   fi
                 done
