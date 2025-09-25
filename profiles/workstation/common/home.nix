@@ -1,5 +1,6 @@
 {
   config,
+  hostType,
   lib,
   pkgs,
   ...
@@ -9,7 +10,10 @@ let
   inherit (lib) optionals;
 in
 {
-  imports = [ ./home-kubernetes-client.nix ];
+  imports = [
+    ./home-kubernetes-client.nix
+  ]
+  ++ optionals (hostType == "nix-darwin") [ ./home-darwin.nix ];
 
   # programs
   programs.bat.enable = true;
