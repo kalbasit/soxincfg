@@ -68,13 +68,12 @@ in
         };
       };
 
-      unbound-auto-reload-k8s-overrides = {
+      unbound-reload-k8s-overrides = {
         after = [
           "mnt-shared_unbound_config.mount"
           "unbound.service"
         ];
         description = "Reload ${k8s_overrides_path} from NFS if it changes";
-        wantedBy = [ "multi-user.target" ];
         path = [
           pkgs.coreutils
           pkgs.gawk
@@ -84,7 +83,7 @@ in
           ConditionPathExists = nfs_overrides_path;
         };
         serviceConfig = {
-          Type = "simple";
+          Type = "oneshot";
           ExecStart =
             let
               script = pkgs.writeShellScript "reload-unbound-overrides.sh" ''
@@ -95,9 +94,6 @@ in
                 ACTIVE_CONFIG_FILE="${k8s_overrides_path}"
                 BACKUP_CONFIG_FILE="$ACTIVE_CONFIG_FILE.bak"
                 MAIN_UNBOUND_CONFIG="${main_unbound_config}"
-
-                # Initialize with an empty hash
-                CURRENT_HASH=""
 
                 log() {
                     # Log to the systemd journal
@@ -156,31 +152,34 @@ in
                   fi
                 }
 
-                # --- Main Loop ---
-                log "Watching for changes in $NFS_CONFIG_FILE..."
-                while true; do
-                  NEW_HASH=$(sha256sum "$NFS_CONFIG_FILE" | awk '{print $1}')
+                # Read the hash of the current file
+                CURRENT_HASH=$(sha256sum "$ACTIVE_CONFIG_FILE" | awk '{print $1}')
 
-                  if [ "$NEW_HASH" != "$CURRENT_HASH" ]; then
-                    log "Detected change. Starting safe update process."
-                    if ! reload; then
-                      log "The latest version failed validation."
-                    else
-                      CURRENT_HASH="$NEW_HASH"
-                    fi
-                    reload || "Failed to install the latest version"
-                  else
-                    log "No change detected."
-                  fi
+                # Read the hash of the file on NFS
+                NEW_HASH=$(sha256sum "$NFS_CONFIG_FILE" | awk '{print $1}')
 
-                  # Wait for 60 seconds before checking again
-                  sleep 60
-                done
+                # Reloading if the hash does not match
+                if [ "$NEW_HASH" != "$CURRENT_HASH" ]; then
+                  log "Detected change. Starting safe update process."
+                  reload || "Failed to install the latest version"
+                else
+                  log "No change detected."
+                fi
               '';
             in
             script;
-          RemainAfterExit = "yes";
         };
+      };
+    };
+
+    timers = {
+      unbound-reload-k8s-overrides = {
+        timerConfig = {
+          OnBootSec = "5min";
+          OnUnitActiveSec = "1m";
+          Persistent = true;
+        };
+        wantedBy = [ "timers.target" ];
       };
     };
   };
