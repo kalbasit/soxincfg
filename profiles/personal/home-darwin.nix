@@ -39,6 +39,10 @@ in
       inherit sopsFile;
       path = "${homePath}/.ssh/config_include_personal";
     };
+    _ssh_per-host_arista_rsa = {
+      inherit sopsFile;
+      path = "${homePath}/.ssh/per-host/arista_rsa";
+    };
     _ssh_per-host_bitbucket_org_rsa = {
       inherit sopsFile;
       path = "${homePath}/.ssh/per-host/bitbucket.org_rsa";
