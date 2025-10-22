@@ -14,7 +14,7 @@ in
 {
   fileSystems = {
     "${shared_path}" = {
-      device = "192.168.52.10:/mnt/tank/proxmoxVE/pve_dns_unbound/unbound";
+      device = "nfs.truenas.pve.nasreddine.com:/mnt/tank/proxmoxVE/pve_dns_unbound/unbound";
       fsType = "nfs";
     };
   };
