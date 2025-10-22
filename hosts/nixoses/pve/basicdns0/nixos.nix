@@ -26,6 +26,29 @@
         prefixLength = 24;
       }
     ];
+
+    interfaces.ens19.ipv4 = {
+      addresses = [
+        {
+          address = "192.168.120.10";
+          prefixLength = 24;
+        }
+      ];
+
+      routes = [
+        {
+          address = "192.168.150.0";
+          prefixLength = 24;
+          via = "192.168.120.1";
+        }
+
+        {
+          address = "192.168.151.0";
+          prefixLength = 24;
+          via = "192.168.120.1";
+        }
+      ];
+    };
   };
 
   services.keepalived.vrrpInstances.dns_vip = {
