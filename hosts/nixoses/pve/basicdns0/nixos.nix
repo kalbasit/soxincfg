@@ -10,6 +10,10 @@
     ../nixos-25.05/nixos.nix
   ];
 
+  fileSystems."/".device = "/dev/disk/by-uuid/90f8e0aa-fec8-4f77-9c2e-f8500a8df389";
+
+  fileSystems."/boot".device = "/dev/disk/by-uuid/51C0-2740";
+
   networking = {
     defaultGateway = {
       address = "192.168.20.1";
