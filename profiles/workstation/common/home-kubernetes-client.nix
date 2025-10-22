@@ -13,6 +13,7 @@
     pkgs.kubeconform
     pkgs.kubectl
     pkgs.kubectl-neat
+    pkgs.kubectl-node-shell
     pkgs.kubectl-tree
     pkgs.kubernetes-helm
     pkgs.kubespy
