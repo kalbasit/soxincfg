@@ -10,5 +10,10 @@
     ./hardware-configuration.nix
   ];
 
+  networking.nameservers = [
+    "8.8.8.8"
+    "8.8.4.4"
+  ];
+
   system.stateVersion = "25.05";
 }
