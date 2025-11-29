@@ -10,6 +10,7 @@
     pkgs.fluxcd
     pkgs.hubble # Cilium Observability.
     pkgs.k9s
+    pkgs.kube-capacity
     pkgs.kubeconform
     pkgs.kubectl
     pkgs.kubectl-neat
