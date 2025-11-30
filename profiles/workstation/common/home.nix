@@ -59,6 +59,7 @@ in
       lf # curses-based file manager
       libnotify
       mercurial
+      minio-client
       nix-index
       nixpkgs-review
       nix-zsh-completions
