@@ -26,7 +26,7 @@ in
       lidSwitch = "ignore";
       lidSwitchDocked = "ignore";
       lidSwitchExternalPower = "ignore";
-      extraConfig = ''
+      settings.Login = ''
         HandlePowerKey=suspend
       '';
     };
