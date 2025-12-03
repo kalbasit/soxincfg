@@ -26,9 +26,9 @@ in
       lidSwitch = "ignore";
       lidSwitchDocked = "ignore";
       lidSwitchExternalPower = "ignore";
-      settings.Login = ''
-        HandlePowerKey=suspend
-      '';
+      settings.Login = {
+        HandlePowerKey = "suspend";
+      };
     };
 
     redshift = {
