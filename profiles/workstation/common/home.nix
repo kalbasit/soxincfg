@@ -119,7 +119,7 @@ in
       remmina
       smartmontools
       vlc
-      whatsapp-for-linux
+      wasistlos
       xfce.thunar
       xfce.thunar-archive-plugin
       xfce.thunar-media-tags-plugin
