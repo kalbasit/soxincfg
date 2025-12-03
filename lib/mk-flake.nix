@@ -27,7 +27,12 @@ let
   # Channel definitions. `channels.<name>.{input,overlaysBuilder,config,patches}`
   channels = {
     nixpkgs = {
-      config = { };
+      config = {
+        permittedInsecurePackages = [
+          # https://github.com/trustcrypto/python-onlykey/issues/82#issuecomment-3503421686
+          "python3.13-ecdsa-0.19.1"
+        ];
+      };
 
       input = nixpkgs;
 
