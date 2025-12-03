@@ -182,6 +182,8 @@ in
 
         startAgent = cfg.enableSSHAgent;
       };
+
+      services.gnome.gcr-ssh-agent.enable = lib.mkDefault false;
     })
 
     (optionalAttrs (mode == "home-manager") {
