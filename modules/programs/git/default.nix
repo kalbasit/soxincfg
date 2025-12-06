@@ -36,99 +36,99 @@ in
       ];
 
       programs.git = {
-        aliases = {
-          # list files which have changed since REVIEW_BASE
-          # (REVIEW_BASE defaults to 'master' in my zshrc)
-          files = ''!git diff --name-only ''$(git merge-base HEAD "''${REVIEW_BASE:-master}")'';
+        settings = {
+          aliases = {
+            # list files which have changed since REVIEW_BASE
+            # (REVIEW_BASE defaults to 'master' in my zshrc)
+            files = ''!git diff --name-only ''$(git merge-base HEAD "''${REVIEW_BASE:-master}")'';
 
-          # Same as above, but with a diff stat instead of just names
-          # (better for interactive use)
-          stat = ''!git diff --stat ''$(git merge-base HEAD ''${REVIEW_BASE:-master})'';
+            # Same as above, but with a diff stat instead of just names
+            # (better for interactive use)
+            stat = ''!git diff --stat ''$(git merge-base HEAD ''${REVIEW_BASE:-master})'';
 
-          # Open all files changed since REVIEW_BASE in Vim tabs
-          # Then, run fugitive's :Gdiff in each tab, and finally
-          review = ''!nvim ''$(git files) +"tabdo Gdiff ''${REVIEW_BASE:-master}"'';
+            # Open all files changed since REVIEW_BASE in Vim tabs
+            # Then, run fugitive's :Gdiff in each tab, and finally
+            review = ''!nvim ''$(git files) +"tabdo Gdiff ''${REVIEW_BASE:-master}"'';
 
-          # Same as the above, except specify names of files as arguments,
-          # instead of opening all files:
-          # git reviewone foo.js bar.js
-          reviewone = ''!nvim -p +"tabdo Gdiff ''${REVIEW_BASE:-master}"'';
+            # Same as the above, except specify names of files as arguments,
+            # instead of opening all files:
+            # git reviewone foo.js bar.js
+            reviewone = ''!nvim -p +"tabdo Gdiff ''${REVIEW_BASE:-master}"'';
 
-          show-pointer = ''!f() { git cat-file blob "HEAD:$1" }; f'';
+            show-pointer = ''!f() { git cat-file blob "HEAD:$1" }; f'';
 
-          branches = ''
-            for-each-ref --sort=-committerdate --format='%(committerdate:short) %(refname:short) %(authorname) %(authoremail)' refs/heads refs/remotes
-          '';
+            branches = ''
+              for-each-ref --sort=-committerdate --format='%(committerdate:short) %(refname:short) %(authorname) %(authoremail)' refs/heads refs/remotes
+            '';
 
-          sp =
-            let
-              sp' = pkgs.writeShellScript "git-sp.sh" ''
-                set -euo pipefail
+            sp =
+              let
+                sp' = pkgs.writeShellScript "git-sp.sh" ''
+                  set -euo pipefail
 
-                if ! git rev-parse --abbrev-ref --symbolic-full-name HEAD @{upstream} &> /dev/null
-                then
-                  >&2 echo "Your current branch is not tracking an upstream branch, refusing to do anything."
-                  >&2 echo "If your branch exists upstream then configure it with: git branch -u <upstream>/<branch_name>"
-                  exit 1
-                fi
-
-                git pull --rebase --autostash --no-all --no-tags $(git rev-parse --abbrev-ref --symbolic-full-name HEAD @{upstream} | tail -1 | tr '/' ' ')
-              '';
-            in
-            "!${sp'}";
-
-          tidy =
-            let
-              tidy' = pkgs.writeShellScript "git-tidy.sh" ''
-                set -euo pipefail
-
-                source ${../zsh/plugins/functions/prompt}
-
-                ask=1
-                if [[ "$#" -eq 1 ]] && [[ "$1" == "-y" ]]; then
-                  ask=0
-                fi
-
-                TIDY_BRANCHES=`comm -12 <(git branch | grep -v '\*\|master\|main' | awk '{print $1}' | sort) <(gh pr list -A "@me" --state merged --json headRefName | jq '.[].headRefName' -r | sort)`
-                for b in $TIDY_BRANCHES; do
-                  if [[ "$ask" -eq 0 ]] || prompt "Delete branch? $b"; then
-                    git branch -D $b
+                  if ! git rev-parse --abbrev-ref --symbolic-full-name HEAD @{upstream} &> /dev/null
+                  then
+                    >&2 echo "Your current branch is not tracking an upstream branch, refusing to do anything."
+                    >&2 echo "If your branch exists upstream then configure it with: git branch -u <upstream>/<branch_name>"
+                    exit 1
                   fi
-                done
-              '';
-            in
-            "!${tidy'}";
 
-          # bunch of different helpful aliases
-          aa = "add --all .";
-          aap = "!git aa -p";
-          amend = "commit --amend";
-          cb = "checkout -b";
-          ci = "commit";
-          ciam = "commit -a -m";
-          cim = "commit -m";
-          co = "checkout";
-          cob = "checkout -b";
-          com = "checkout master";
-          credit = ''!f() { git commit --amend --author "$1 <$2>" -C HEAD; }; f'';
-          dc = "diff --cached";
-          di = "diff";
-          fa = "fetch --all";
-          famff = "!git fetch --all && git merge --ff-only origin/master";
-          famm = "!git fetch --all && git merge origin/master";
-          faro = "!git fetch --all && git rebase origin/master";
-          generate-patch = "!git-format-patch --patch-with-stat --raw --signoff";
-          l = "log --graph --pretty=format':%C(yellow)%h %Cgreen%G?%Cblue%d%Creset %s %C(white) %an, %ar%Creset'";
-          lol = "log --pretty=oneline --abbrev-commit --graph --decorate --all";
-          ls-ignored = "ls-files --others -i --exclude-standard";
-          pob = ''!f() { git push --set-upstream "''${1:-origin}" "$(git symbolic-ref HEAD)"; }; f'';
-          pobf = ''!f() { git push --set-upstream --force "''${1:-origin}" "$(git symbolic-ref HEAD)"; }; f'';
-          st = "status";
-          unstage = "reset HEAD --";
-          who = "shortlog -s -s";
-        };
+                  git pull --rebase --autostash --no-all --no-tags $(git rev-parse --abbrev-ref --symbolic-full-name HEAD @{upstream} | tail -1 | tr '/' ' ')
+                '';
+              in
+              "!${sp'}";
 
-        extraConfig = {
+            tidy =
+              let
+                tidy' = pkgs.writeShellScript "git-tidy.sh" ''
+                  set -euo pipefail
+
+                  source ${../zsh/plugins/functions/prompt}
+
+                  ask=1
+                  if [[ "$#" -eq 1 ]] && [[ "$1" == "-y" ]]; then
+                    ask=0
+                  fi
+
+                  TIDY_BRANCHES=`comm -12 <(git branch | grep -v '\*\|master\|main' | awk '{print $1}' | sort) <(gh pr list -A "@me" --state merged --json headRefName | jq '.[].headRefName' -r | sort)`
+                  for b in $TIDY_BRANCHES; do
+                    if [[ "$ask" -eq 0 ]] || prompt "Delete branch? $b"; then
+                      git branch -D $b
+                    fi
+                  done
+                '';
+              in
+              "!${tidy'}";
+
+            # bunch of different helpful aliases
+            aa = "add --all .";
+            aap = "!git aa -p";
+            amend = "commit --amend";
+            cb = "checkout -b";
+            ci = "commit";
+            ciam = "commit -a -m";
+            cim = "commit -m";
+            co = "checkout";
+            cob = "checkout -b";
+            com = "checkout master";
+            credit = ''!f() { git commit --amend --author "$1 <$2>" -C HEAD; }; f'';
+            dc = "diff --cached";
+            di = "diff";
+            fa = "fetch --all";
+            famff = "!git fetch --all && git merge --ff-only origin/master";
+            famm = "!git fetch --all && git merge origin/master";
+            faro = "!git fetch --all && git rebase origin/master";
+            generate-patch = "!git-format-patch --patch-with-stat --raw --signoff";
+            l = "log --graph --pretty=format':%C(yellow)%h %Cgreen%G?%Cblue%d%Creset %s %C(white) %an, %ar%Creset'";
+            lol = "log --pretty=oneline --abbrev-commit --graph --decorate --all";
+            ls-ignored = "ls-files --others -i --exclude-standard";
+            pob = ''!f() { git push --set-upstream "''${1:-origin}" "$(git symbolic-ref HEAD)"; }; f'';
+            pobf = ''!f() { git push --set-upstream --force "''${1:-origin}" "$(git symbolic-ref HEAD)"; }; f'';
+            st = "status";
+            unstage = "reset HEAD --";
+            who = "shortlog -s -s";
+          };
+
           apply = {
             whitespace = "strip";
           };

@@ -685,15 +685,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1753794792,
-        "narHash": "sha256-dHe1TodSVPisUtsjN62XFhPwTpE0h7n8xBp1dUeJ/G4=",
+        "lastModified": 1765004785,
+        "narHash": "sha256-g5+Ly/kYQvMYqQ9yAZ9rbIvRaDTAdSyxYz94hY960u8=",
         "owner": "SoxinOS",
         "repo": "soxin",
-        "rev": "48e905883bce7f573aa73098de1a93e468d71ad4",
+        "rev": "81b24a76f7031e7c1f79baa9b13f4fb93e4c2723",
         "type": "github"
       },
       "original": {
         "owner": "SoxinOS",
+        "ref": "release-25.11",
         "repo": "soxin",
         "type": "github"
       }

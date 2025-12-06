@@ -118,7 +118,7 @@ soxin.lib.mkFlake {
     channels:
     let
       pkgs = channels.nixpkgs;
-      pre-commit-check = pre-commit-hooks.lib.${pkgs.hostPlatform.system}.run {
+      pre-commit-check = pre-commit-hooks.lib.${pkgs.stdenv.hostPlatform.system}.run {
         src = ../.;
         hooks = {
           statix.enable = true;

@@ -8,7 +8,7 @@
 let
   inherit (lib) mkIf;
 
-  inherit (pkgs.hostPlatform) isDarwin;
+  inherit (pkgs.stdenv.hostPlatform) isDarwin;
 
   homePath = config.home.homeDirectory;
   sopsFile = ./credentials-config.json.sops;
