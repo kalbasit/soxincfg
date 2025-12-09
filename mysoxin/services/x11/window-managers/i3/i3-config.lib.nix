@@ -384,12 +384,11 @@ in
     }
     bindsym ${meta}+${alt}+l mode "$launcher"
 
-      set $app_mode Applications: (a)stroid, (b)itwarden (o)bsidian, (m)elloPlayer, (s)ocial
+      set $app_mode Applications: (a)stroid, (b)itwarden (o)bsidian, (s)ocial
       mode "$app_mode" {
         bindsym a exec astroid, mode default
-        bindsym b exec ${getBin pkgs.bitwarden}/bin/bitwarden, mode default
+        bindsym b exec ${getBin pkgs.bitwarden-desktop}/bin/bitwarden, mode default
         bindsym o exec ${getBin pkgs.obsidian}/bin/obsidian, mode default
-        bindsym m exec ${getBin pkgs.mellowplayer}/bin/MellowPlayer, mode default
         bindsym s mode "$social_mode"
 
         bindsym Escape mode "$launcher"
@@ -402,7 +401,7 @@ in
           ${optionalString config.soxin.programs.keybase.enable "bindsym k exec ${getBin pkgs.keybase-gui}/bin/keybase-gui, mode default"}
           bindsym l exec ${getBin pkgs.slack}/bin/slack, mode default
           bindsym s exec ${getBin pkgs.signal-desktop}/bin/signal-desktop, mode default
-          bindsym w exec ${getBin pkgs.whatsapp-for-linux}/bin/whatsapp-for-linux, mode default
+          bindsym w exec ${getBin pkgs.wasistlos}/bin/wasistlos, mode default
 
           bindsym Escape mode "$launcher"
         }

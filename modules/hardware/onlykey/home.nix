@@ -21,7 +21,7 @@ let
     writeShellScript
     ;
 
-  inherit (pkgs.hostPlatform) isLinux isDarwin;
+  inherit (pkgs.stdenv.hostPlatform) isLinux isDarwin;
 
   cfg = config.soxincfg.hardware.onlykey;
 

@@ -182,6 +182,8 @@ in
 
         startAgent = cfg.enableSSHAgent;
       };
+
+      services.gnome.gcr-ssh-agent.enable = lib.mkDefault false;
     })
 
     (optionalAttrs (mode == "home-manager") {
@@ -214,11 +216,20 @@ in
         inherit (cfg) package;
 
         enable = true;
+        enableDefaultConfig = false;
 
-        compression = true;
-        serverAliveInterval = 20;
-        controlMaster = "auto";
-        controlPersist = "yes";
+        matchBlocks."*" = {
+          compression = true;
+          serverAliveInterval = 20;
+          controlMaster = "auto";
+          controlPersist = "yes";
+          forwardAgent = false;
+          addKeysToAgent = "no";
+          serverAliveCountMax = 3;
+          hashKnownHosts = false;
+          userKnownHostsFile = "~/.ssh/known_hosts";
+          controlPath = "~/.ssh/master-%r@%n:%p";
+        };
 
         extraConfig = ''
           IdentitiesOnly=${yesOrNo cfg.identitiesOnly}

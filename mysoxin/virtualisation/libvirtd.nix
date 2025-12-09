@@ -26,10 +26,6 @@ in
       virtualisation.libvirtd = {
         enable = true;
         qemu = {
-          ovmf = {
-            enable = true;
-            packages = [ pkgs.OVMFFull.fd ];
-          };
           package = pkgs.qemu_kvm;
           runAsRoot = false;
           swtpm.enable = true;
