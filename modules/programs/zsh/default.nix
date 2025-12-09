@@ -29,7 +29,7 @@ let
             --subst-var-by git_bin ${getBin git}/bin/git
 
           substituteInPlace $out/jsonpp \
-            --subst-var-by python_bin ${getBin python3Full}/bin/python \
+            --subst-var-by python_bin ${getBin python3}/bin/python \
             --subst-var-by pygmentize_bin ${getBin python3Packages.pygments}/bin/pygmentize
 
           substituteInPlace $out/jspp \
