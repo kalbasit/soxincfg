@@ -183,7 +183,7 @@ in
         startAgent = cfg.enableSSHAgent;
       };
 
-      services.gnome.gcr-ssh-agent.enable = lib.mkDefault false;
+      services.gnome.gcr-ssh-agent = mkIf cfg.enableSSHAgent { enable = lib.mkForce false; };
     })
 
     (optionalAttrs (mode == "home-manager") {
