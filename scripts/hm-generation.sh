@@ -32,7 +32,7 @@ if isLinux; then
 
     awk '/ExecStart=/ {print $2}' "${homeManagerService}"
 elif isDarwin; then
-    readonly activation_user="$(awk "/activation-$userName/ {print \$5}" result/activate)"
+    readonly activation_user="$(awk "/activation-$userName/ {print \$10}" result/activate)"
     readonly activate="$(awk '/exec/ {print $2}' "$activation_user")"
     dirname "$activate"
 else
