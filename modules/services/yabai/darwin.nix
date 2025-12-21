@@ -53,22 +53,27 @@ in
         "window_zoom_persist" = "off";
       };
 
-      extraConfig = ''
-        yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
-        yabai -m signal --add event=window_focused action="sketchybar --trigger window_focus"
+      extraConfig = lib.mkMerge [
+        ''
+          yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
 
-        # Exclude problematic apps from being managed:
-        yabai -m rule --add app="^(LuLu|Calculator|Software Update|Dictionary|VLC|System Preferences|System Settings|zoom.us|Photo Booth|Archive Utility|Python|LibreOffice|App Store|Steam|Alfred|Activity Monitor|DOSBox|Tor Browser)$" manage=off
-        yabai -m rule --add app="^Fusion$" sub-layer=above manage=off
-        yabai -m rule --add label="About This Mac" app="System Information" title="About This Mac" manage=off
-        yabai -m rule --add label="Finder" app="^Finder$" title="(Co(py|nnect)|Move|Info|Pref)" manage=off
-        yabai -m rule --add label="Safari" app="^Safari$" title="^(General|(Tab|Password|Website|Extension)s|AutoFill|Se(arch|curity)|Privacy|Advance)$" manage=off
-        yabai -m rule --add label="Select file to save to" app="^Inkscape$" title="Select file to save to" manage=off
+          # Exclude problematic apps from being managed:
+          yabai -m rule --add app="^(LuLu|Calculator|Software Update|Dictionary|VLC|System Preferences|System Settings|zoom.us|Photo Booth|Archive Utility|Python|LibreOffice|App Store|Steam|Alfred|Activity Monitor|DOSBox|Tor Browser)$" manage=off
+          yabai -m rule --add app="^Fusion$" sub-layer=above manage=off
+          yabai -m rule --add label="About This Mac" app="System Information" title="About This Mac" manage=off
+          yabai -m rule --add label="Finder" app="^Finder$" title="(Co(py|nnect)|Move|Info|Pref)" manage=off
+          yabai -m rule --add label="Safari" app="^Safari$" title="^(General|(Tab|Password|Website|Extension)s|AutoFill|Se(arch|curity)|Privacy|Advance)$" manage=off
+          yabai -m rule --add label="Select file to save to" app="^Inkscape$" title="Select file to save to" manage=off
 
-        # https://github.com/koekeishiya/yabai/issues/1622#issuecomment-1493105964
-        yabai -m rule --add app="^Arc$" subrole='AXSystemDialog' manage=off mouse_follows_focus=off
-        yabai -m rule --add app='^Arc$' title='^Space.*$' manage=off
-      '';
+          # https://github.com/koekeishiya/yabai/issues/1622#issuecomment-1493105964
+          yabai -m rule --add app="^Arc$" subrole='AXSystemDialog' manage=off mouse_follows_focus=off
+          yabai -m rule --add app='^Arc$' title='^Space.*$' manage=off
+        ''
+
+        (lib.mkIf config.soxincfg.services.sketchybar.enable ''
+          yabai -m signal --add event=window_focused action="sketchybar --trigger window_focus"
+        '')
+      ];
     };
   };
 }
