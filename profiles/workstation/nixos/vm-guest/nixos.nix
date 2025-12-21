@@ -7,11 +7,11 @@
     # Feed the kernel some entropy
     haveged.enable = true;
 
-    xserver = {
-      enable = true;
-      displayManager.gdm.enable = true;
-      desktopManager.gnome.enable = true;
-    };
+    desktopManager.gnome.enable = true;
+
+    displayManager.gdm.enable = true;
+
+    xserver.enable = true;
   };
 
   # Enable dconf required by most guis
