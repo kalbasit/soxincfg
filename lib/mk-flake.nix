@@ -145,10 +145,10 @@ soxin.lib.mkFlake {
 
       packages =
         let
-          inherit (channels) nixpkgs;
+          pkgs = channels.nixpkgs;
         in
         # these packages construct themselves if and only if the system is supported.
-        import ../pkgs nixpkgs;
+        import ../pkgs { inherit inputs pkgs; };
     };
 
   vars = recursiveUpdate (import ../vars inputs) vars;

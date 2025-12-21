@@ -29,6 +29,10 @@
       # inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nvix = {
+      url = "github:niksingh710/nvix";
+    };
+
     pre-commit-hooks = {
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:cachix/pre-commit-hooks.nix";
