@@ -37,7 +37,7 @@ in
 
       programs.git = {
         settings = {
-          aliases = {
+          alias = {
             # list files which have changed since REVIEW_BASE
             # (REVIEW_BASE defaults to 'master' in my zshrc)
             files = ''!git diff --name-only ''$(git merge-base HEAD "''${REVIEW_BASE:-master}")'';
