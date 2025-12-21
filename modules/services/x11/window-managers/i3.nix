@@ -7,8 +7,6 @@
 }:
 
 with lib;
-
-with lib;
 let
   cfg = config.soxincfg.services.xserver.windowManager.i3;
 
