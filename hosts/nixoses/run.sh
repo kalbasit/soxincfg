@@ -5,6 +5,10 @@ set -euo pipefail
 readonly action="${1:-}"
 readonly host="${2:-$(hostname)}"
 
+function usage() {
+  >&2 echo "USAGE: $0 <action> [hostname]"
+}
+
 if type nom &> /dev/null
 then
   BUILDER=nom
