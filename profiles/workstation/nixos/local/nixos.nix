@@ -25,9 +25,9 @@ in
     logind = {
       settings.Login = {
         HandlePowerKey = "suspend";
-        lidSwitch = "ignore";
-        lidSwitchDocked = "ignore";
-        lidSwitchExternalPower = "ignore";
+        HandleLidSwitch = "ignore";
+        HandleLidSwitchDocked = "ignore";
+        HandleLidSwitchExternalPower = "ignore";
       };
     };
 
