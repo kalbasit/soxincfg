@@ -10,6 +10,7 @@
     pkgs.fluxcd
     pkgs.hubble # Cilium Observability.
     pkgs.k9s
+    pkgs.kind # for local dev clusters
     pkgs.kube-capacity
     pkgs.kubeconform
     pkgs.kubectl
