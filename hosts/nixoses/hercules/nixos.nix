@@ -62,6 +62,9 @@ in
     8000
   ];
 
+  # https://nixos.wiki/wiki/Visual_Studio_Code#Remote_SSH
+  programs.nix-ld.enable = true;
+
   # hmm do I need this?
   soxin.hardware.intelBacklight.enable = true;
 
