@@ -27,17 +27,15 @@ in
   home.packages =
     with pkgs;
     [
+      # dosbox
       amazon-ecr-credential-helper
       arduino-cli
       audacity
       awscli2
       binutils # for strings
-      # TODO: build is failing on darwin because the dependency python3.11-agate-dbf-0.2.3 is failing.
-      #csvkit
       colordiff
       devbox
       docker-credential-gcr
-      # dosbox
       duf # du replacement on steroids
       eternal-terminal
       file
@@ -61,18 +59,18 @@ in
       mercurial
       minio-client
       nix-index
-      nixpkgs-review
       nix-zsh-completions
       nixfmt
       nixos-generators
+      nixpkgs-review
       nur.repos.kalbasit.nixify
       nur.repos.kalbasit.swm
       obsidian
       pv # generic progress of data through a pipeline
       scrcpy # mirror Android device via USB
       screen # needed to open up terminal devices
-      skopeo # inspect docker images
       signal-cli
+      skopeo # inspect docker images
       sqlitebrowser # graphical sqlite3 client
       talosctl
       todoist
