@@ -63,6 +63,7 @@ in
       nix-index
       nixpkgs-review
       nix-zsh-completions
+      nixfmt
       nixos-generators
       nur.repos.kalbasit.nixify
       nur.repos.kalbasit.swm
