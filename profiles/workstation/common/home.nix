@@ -78,6 +78,7 @@ in
       unzip
       watch
       weechat
+      wget
       xsel
       yq-go
     ]
