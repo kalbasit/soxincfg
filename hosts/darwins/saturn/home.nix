@@ -1,6 +1,7 @@
 { soxincfg }:
 {
   config,
+  lib,
   ...
 }:
 
@@ -14,6 +15,13 @@ in
     soxincfg.nixosModules.profiles.neovim.full
     soxincfg.nixosModules.profiles.workstation.darwin.local
   ];
+
+  # TODO: removet this override if the experiment of living without it fails.
+  soxincfg.services = {
+    borders.enable = lib.mkForce false;
+    skhd.enable = lib.mkForce false;
+    yabai.enable = lib.mkForce false;
+  };
 
   home.stateVersion = "24.11";
 
