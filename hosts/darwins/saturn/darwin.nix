@@ -1,7 +1,6 @@
 {
   config,
   soxincfg,
-  lib,
   ...
 }:
 
@@ -61,13 +60,6 @@
   # https://github.com/nix-community/home-manager/commit/216690777e47aa0fb1475e4dbe2510554ce0bc4b
   home-manager.users."${config.soxincfg.settings.users.userName}" = import ./home.nix {
     inherit soxincfg;
-  };
-
-  # TODO: removet this override if the experiment of living without it fails.
-  soxincfg.services = {
-    borders.enable = lib.mkForce false;
-    skhd.enable = lib.mkForce false;
-    yabai.enable = lib.mkForce false;
   };
 
   # Inform nix-darwin of the primaryUser
