@@ -17,6 +17,7 @@
   neovim = ./programs/neovim;
   pet = ./programs/pet;
   rofi = ./programs/rofi;
+  secretive = ./programs/secretive;
   ssh = ./programs/ssh;
   starship = ./programs/starship.nix;
   termite = ./programs/termite.nix;
@@ -35,6 +36,7 @@
   sketchybar = ./services/sketchybar;
   skhd = ./services/skhd;
   sleep-on-lan = ./services/sleep-on-lan;
+  ssh-agent-mux = ./services/ssh-agent-mux;
   yabai = ./services/yabai;
 
   # settings
