@@ -15,6 +15,12 @@ in
     soxincfg.nixosModules.profiles.workstation.darwin.local
   ];
 
+  soxincfg = {
+    # TODO: Move to the darwin workstation profile
+    programs.secretive.enable = true;
+    services.ssh-agent-mux.enable = true;
+  };
+
   home.stateVersion = "24.11";
 
   sops = {

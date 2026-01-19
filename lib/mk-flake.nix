@@ -46,12 +46,13 @@ let
             fluxcd
             hubble
             protonvpn-gui
+            secretive
             talosctl
             ;
         })
       ];
 
-      patches = [ ];
+      patches = [ ../patches/ssh-agent-mux.patch ];
     };
 
     nixpkgs-unstable = {
