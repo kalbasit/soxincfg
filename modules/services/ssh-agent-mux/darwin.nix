@@ -20,14 +20,16 @@ let
     fi
 
     # Initialize OnlyKey agent via keychain if available
-    eval "$(${pkgs.keychain}/bin/keychain --eval id_ed25519_sk_rk -q)"
+    mkdir -p "$HOME/.ssh/agent"
+    eval "$(${pkgs.keychain}/bin/keychain --ssh-agent-socket "$HOME/.ssh/agent/keychain.socket" --eval id_ed25519_sk_rk -q)"
     ONLYKEY_AUTH_SOCK="$SSH_AUTH_SOCK"
 
     # Secretive agent socket location
     SECRETIVE_AUTH_SOCK="$HOME/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh"
 
     ARGS=(
-      "-l" "$XDG_RUNTIME_DIR/ssh-agent-mux.sock"
+      "-l"
+      "$XDG_RUNTIME_DIR/ssh-agent-mux.sock"
       "$SECRETIVE_AUTH_SOCK"
       "$ONLYKEY_AUTH_SOCK"
     )

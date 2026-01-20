@@ -81,7 +81,8 @@ in
           else
              # Fallback: Initialize OnlyKey agent via keychain in the shell if service is not running
              # This also ensures we have a fallback if the user disables the service but keeps this module
-             eval "$(${pkgs.keychain}/bin/keychain --eval id_ed25519_sk_rk -q)"
+             mkdir -p "$HOME/.ssh/agent"
+             eval "$(${pkgs.keychain}/bin/keychain --ssh-agent-socket "$HOME/.ssh/agent/keychain.socket" --eval id_ed25519_sk_rk -q)"
           fi
 
           # Link the current SSH_AUTH_SOCK to the standard location via .ssh/rc
