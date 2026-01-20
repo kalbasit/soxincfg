@@ -275,16 +275,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1767280655,
-        "narHash": "sha256-YmaYMduV5ko8zURUT1VLGDbVC1L/bxHS0NsiPoZ6bBM=",
-        "owner": "nix-community",
+        "lastModified": 1768888551,
+        "narHash": "sha256-r8QeZFIQKO9SY0F1qpl/0WNuRbUEa0sk8t2P8e+f9l0=",
+        "owner": "kalbasit",
         "repo": "home-manager",
-        "rev": "d49d2543f02dbd789ed032188c84570d929223cb",
+        "rev": "1438880fb187d5c20b8e031f4a07836f3085d466",
         "type": "github"
       },
       "original": {
-        "owner": "nix-community",
-        "ref": "release-25.11",
+        "owner": "kalbasit",
+        "ref": "attempt-fixing-7198-release-25.11",
         "repo": "home-manager",
         "type": "github"
       }
