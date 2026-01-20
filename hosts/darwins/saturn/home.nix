@@ -1,7 +1,6 @@
 { soxincfg }:
 {
   config,
-  lib,
   ...
 }:
 
@@ -27,42 +26,4 @@ in
   sops = {
     age.keyFile = "${homePath}/Library/Application Support/sops/age/keys.txt";
   };
-
-  ## TODO: https://gemini.google.com/share/bd0793bd1ba3
-
-  launchd.agents = {
-    # 1. Fix sops-nix: Force retry on crash/failure
-    sops-nix = {
-      config = {
-        # This is the magic sauce
-        KeepAlive = lib.mkForce {
-          Crashed = true;
-          SuccessfulExit = false;
-        };
-        # Give it a breather between attempts so it doesn't spin-loop
-        ThrottleInterval = 5;
-      };
-    };
-
-    # 2. Fix yabai: Wait for GUI
-    yabai = {
-      config = {
-        KeepAlive = lib.mkForce {
-          Crashed = true;
-          SuccessfulExit = false;
-        };
-      };
-    };
-
-    # 3. Fix skhd: Wait for GUI
-    skhd = {
-      config = {
-        KeepAlive = lib.mkForce {
-          Crashed = true;
-          SuccessfulExit = false;
-        };
-      };
-    };
-  };
-  ## END TODO
 }
