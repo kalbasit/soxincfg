@@ -69,14 +69,25 @@ in
 
     (mkIf (cfg.ssh-support.enable && pkgs.stdenv.hostPlatform.isDarwin) {
       programs.zsh.initContent = ''
-        if [[ -e "$HOME/.ssh/rc" ]]; then
-          (
-            eval "$(${pkgs.keychain}/bin/keychain --eval --agents ssh id_ed25519_sk_rk -q)"
+        if [[ "$(uname -s)" == "Darwin" ]]; then
+          # Ensure XDG_RUNTIME_DIR is set on Darwin
+          if [[ -z "$XDG_RUNTIME_DIR" ]]; then
+            export XDG_RUNTIME_DIR="$(getconf DARWIN_USER_TEMP_DIR)"
+            export XDG_RUNTIME_DIR="''${XDG_RUNTIME_DIR%/}"
+          fi
 
+          if [[ -S "$XDG_RUNTIME_DIR/ssh-agent-mux.sock" ]]; then
+             export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent-mux.sock"
+          else
+             # Fallback: Initialize OnlyKey agent via keychain in the shell if service is not running
+             # This also ensures we have a fallback if the user disables the service but keeps this module
+             eval "$(${pkgs.keychain}/bin/keychain --eval id_ed25519_sk_rk -q)"
+          fi
+
+          # Link the current SSH_AUTH_SOCK to the standard location via .ssh/rc
+          if [[ -e "$HOME/.ssh/rc" ]]; then
             /bin/sh "$HOME/.ssh/rc"
-          )
-        else
-          eval "$(${pkgs.keychain}/bin/keychain --eval --agents ssh id_ed25519_sk_rk -q)"
+          fi
         fi
       '';
     })
