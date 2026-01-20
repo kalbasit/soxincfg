@@ -368,7 +368,10 @@ in
           "!.gitignore"
         ];
 
-        includes = [ { path = "~/.gitconfig.secrets"; } ];
+        includes = [
+          { path = "~/.gitconfig.secrets"; }
+          { path = "~/.gitconfig.secretive"; }
+        ];
       };
     })
   ]);
