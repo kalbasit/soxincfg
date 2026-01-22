@@ -95,12 +95,14 @@ in
       starship.enable = true;
       tmux.enable = true;
       zsh.enable = true;
+      secretive.enable = true;
     };
 
     services = {
       borders.enable = true;
       skhd.enable = true;
       yabai.enable = true;
+      ssh-agent-mux.enable = true;
     };
 
     settings = {

@@ -53,14 +53,8 @@
   # Determinate systems uses its own daemon and we shouldn't let nix-darwin manage Nix
   nix.enable = false;
 
-  soxincfg = {
-    # Enable Nix Distributed builds
-    settings.nix.distributed-builds.enable = true;
-
-    # TODO: Move to the darwin workstation profile
-    programs.secretive.enable = true;
-    services.ssh-agent-mux.enable = true;
-  };
+  # Enable Nix Distributed builds
+  soxincfg.settings.nix.distributed-builds.enable = true;
 
   # load home-manager configuration
   # TODO: Use users.user.name once the following commit is used

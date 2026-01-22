@@ -18,10 +18,7 @@ in
 
   soxincfg = {
     # TODO: Move to the darwin workstation profile
-    programs.secretive.enable = true;
     services = {
-      ssh-agent-mux.enable = true;
-
       borders.enable = lib.mkForce false;
       skhd.enable = lib.mkForce false;
       yabai.enable = lib.mkForce false;
