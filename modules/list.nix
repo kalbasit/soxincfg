@@ -28,6 +28,7 @@
   zsh = ./programs/zsh;
 
   # services
+  aerospace = ./services/aerospace;
   borders = ./services/borders;
   dnsmasq = ./services/dnsmasq;
   i3 = ./services/x11/window-managers/i3.nix;
