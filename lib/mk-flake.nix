@@ -40,6 +40,7 @@ let
         (_: super: {
           inherit (channels.nixpkgs-unstable)
             # inherit packages from unstable.
+            aerospace
             cilium-cli
             debootstrap
             devbox
