@@ -16,15 +16,6 @@ in
     soxincfg.nixosModules.profiles.workstation.darwin.local
   ];
 
-  soxincfg = {
-    # TODO: Move to the darwin workstation profile
-    services = {
-      borders.enable = lib.mkForce false;
-      skhd.enable = lib.mkForce false;
-      yabai.enable = lib.mkForce false;
-    };
-  };
-
   home.stateVersion = "24.11";
 
   sops = {

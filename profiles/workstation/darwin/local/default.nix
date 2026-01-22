@@ -99,10 +99,8 @@ in
     };
 
     services = {
-      borders.enable = true;
-      skhd.enable = true;
-      yabai.enable = true;
       ssh-agent-mux.enable = true;
+      aerospace.enable = true;
     };
 
     settings = {
