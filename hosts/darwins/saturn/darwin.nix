@@ -22,6 +22,7 @@
     ];
 
     casks = [
+      "antigravity" # Google's AI Editor
       "audacity"
       "autodesk-fusion"
       "obsidian"

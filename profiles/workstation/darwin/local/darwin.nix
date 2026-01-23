@@ -19,7 +19,6 @@
 
       casks = [
         "alfred" # spotlight replacement
-        "antigravity" # Google's AI Editor
         "arc" # Arc Browser
         "charles"
         "claude"
