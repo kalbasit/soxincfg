@@ -13,6 +13,9 @@ userName:
       # Onlykey
       "sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAILJKaAMg2OSpXi7+B1oIqzKz1lQiEZPo0Xv6ty35uwzzAAAABHNzaDo= wael.nasreddine+onlykey_0@gmail.com"
 
+      # Saturn Secure Enclave
+      "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBCo/WSL65g/BHkJ1riZQ7C/dEnv563MPzfaLDCIyPU2vCZHItYgGBV6z3vx8LsNiE3wUp+WuxCMsTfooYlCQtbg= saturn-secure-enclave@secretive.Saturn.local"
+
       # Terminus Phone
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIuEPwgfiRDZ1+Ahc43NKSfScT97iS9ueK9lbrcDYJyh Aris-Termius"
 
