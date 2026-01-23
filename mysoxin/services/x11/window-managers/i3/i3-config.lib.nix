@@ -19,36 +19,6 @@ let
 
   nosid = "--no-startup-id";
   locker = "xset s activate";
-
-  jrnlEntry = pkgs.writeScript "jrnl-entry.sh" ''
-    #!/usr/bin/env bash
-
-    set -euo pipefail
-
-    readonly current_workspace="$( ${getBin pkgs.i3}/bin/i3-msg -t get_workspaces | ${getBin pkgs.jq}/bin/jq -r '.[] | if .focused == true then .name else empty end'  )"
-    readonly current_profile="$( echo "$current_workspace" | cut -d\@ -f1  )"
-    readonly current_story="$( echo "$current_workspace" | cut -d\@ -f2  )"
-
-    # create a temporary file for the jrnl entry
-    jrnl_entry="$(mktemp)"
-    trap "rm $jrnl_entry" EXIT
-
-    cat <<EOF > "$jrnl_entry"
-    # All lines starting with a hash sign are treated as comments and not added to the journal entry.
-    # You are adding a journal entry for profile=$current_profile and story=$current_story
-    # computed from the workspace $current_workspace
-
-    @$current_story
-
-    EOF
-
-    # open a new terminal window with vim session inside of it to edit the jrnl entry
-    readonly line_count="$(wc -l "$jrnl_entry" | awk '{print $1}')"
-    ${getBin pkgs.termite}/bin/termite --title jrnl_entry --exec="nvim +$line_count +star -c 'set wrap' -c 'set textwidth=80' -c 'set fo+=t' $jrnl_entry"
-    readonly content="$( grep -v '^#' "$jrnl_entry" )"
-
-    ${getBin pkgs.jrnl}/bin/jrnl "$current_profile" "$content"
-  '';
 in
 {
   enable = true;
@@ -104,12 +74,6 @@ in
           command = "floating enable";
           criteria = {
             class = "^net-filebot-Main$";
-          };
-        }
-        {
-          command = "floating enable";
-          criteria = {
-            title = "^jrnl_entry$";
           };
         }
 
@@ -193,9 +157,6 @@ in
 
       # toggle tiling / floating
       "${alt}+${shift}+f" = "floating toggle";
-
-      # jrnl entry
-      "${alt}+j" = "exec ${jrnlEntry}";
 
       # enter fullscreen mode for the focused container
       "${meta}+f" = "fullscreen toggle";

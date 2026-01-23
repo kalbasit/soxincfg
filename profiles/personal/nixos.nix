@@ -31,10 +31,6 @@ in
         inherit owner sopsFile;
         path = "${homePath}/.gitconfig.secrets";
       };
-      _jrnl_config = {
-        inherit owner sopsFile;
-        path = "${homePath}/.jrnl_config";
-      };
       _local_share_remmina_my_network_vnc_athena_tailscale_nasreddine_com_remmina = {
         inherit owner sopsFile;
         path = "${homePath}/.local/share/remmina/my_network_vnc_athena_tailscale_nasreddine_com.remmina";

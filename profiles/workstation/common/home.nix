@@ -51,7 +51,6 @@ in
       imagemagick # for convert
       inetutils # for telnet
       jq
-      jrnl
       killall
       lazygit
       lf # curses-based file manager
