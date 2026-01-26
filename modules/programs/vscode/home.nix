@@ -17,7 +17,6 @@ let
 
       ln -s ${zprofile} $out/.zprofile
       ln -s ${zshenv} $out/.zshenv
-      ln -s ${zshrc} $out/.zshrc
     '';
   };
 
@@ -29,9 +28,7 @@ let
 
   zshenv = pkgs.writeText "zshenv" ''
     source "${config.home.sessionVariablesPackage}/etc/profile.d/hm-session-vars.sh"
-  '';
 
-  zshrc = pkgs.writeText "zshrc" ''
     typeset -U path cdpath fpath manpath
     for profile in ''${(z)NIX_PROFILES}; do
       fpath+=($profile/share/zsh/site-functions $profile/share/zsh/$ZSH_VERSION/functions $profile/share/zsh/vendor-completions)
@@ -66,25 +63,34 @@ let
     [[ -n "''${LC_CTYPE}" ]] && unset LC_CTYPE
 
     # Anything got installed into MYFS?
-    pathprepend PATH "''${MYFS}/bin"
+    export MYFS="$HOME/.local"
     if [[ -d "''${MYFS}" ]]; then
+      if [[ -d "''${MYFS}/bin" ]]; then
+        export PATH="''${MYFS}/bin:$PATH"
+      fi
     	if [[ -d "''${MYFS}/opt" ]]; then
     		for dir in ''${MYFS}/opt/*/bin; do
-    			pathappend PATH "''${dir}"
+          export PATH="$PATH:''${dir}"
     		done
 
-    		pathappend PATH "''${MYFS}/opt/go_appengine"
-    	fi
+        if [[ -d "''${MYFS}/opt/go_appengine" ]]; then
+          export PATH="$PATH:''${MYFS}/opt/go_appengine"
+        fi
+      fi
 
-    	# Make LD can find our files.
-    	pathappend LD_LIBRARY_PATH "''${MYFS}/lib"
+      if [[ -d "''${MYFS}/lib" ]]; then
+        export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:''${MYFS}/lib"
+      fi
     fi
 
     # add cargo
-    pathprepend PATH "$HOME/.cargo/bin"
+    if [[ -d "$HOME/.cargo/bin" ]]; then
+      export PATH="$HOME/.cargo/bin:$PATH"
+    fi
 
-    # enable direnv
+    # enable and load direnv
     eval "$(${lib.getExe config.programs.direnv.package} hook zsh)"
+    eval "$(${lib.getExe config.programs.direnv.package} export zsh 2>/dev/null)"
   '';
 
   vscodeTerminal = pkgs.writeShellScript "vscode-terminal.sh" ''
@@ -98,6 +104,8 @@ let
     if [[ -n "''${ANTIGRAVITY_AGENT:-}" || -n "''${ANTIGRAVITY_EDITOR_APP_ROOT:-}" ]]; then
         exec env -i \
             CODE_PATH="$CODE_PATH" \
+            HOME="$HOME" \
+            PWD="$PWD" \
             USER="$USER" \
             ZDOTDIR="${zshDotDir}" \
             zsh -l "$@"
