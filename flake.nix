@@ -5,7 +5,8 @@
     deploy-rs.url = "github:serokell/deploy-rs";
     flake-utils-plus.url = "github:gytis-ivaskevicius/flake-utils-plus/v1.5.1";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
-    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    # nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs";
     nixpkgs.url = "github:NixOS/nixpkgs/release-25.11";
     nur.url = "github:nix-community/NUR";
 
