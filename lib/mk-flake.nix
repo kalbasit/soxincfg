@@ -41,6 +41,7 @@ let
           inherit (channels.nixpkgs-unstable)
             # inherit packages from unstable.
             aerospace
+            antigravity
             cilium-cli
             debootstrap
             devbox
