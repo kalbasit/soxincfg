@@ -22,6 +22,7 @@
   starship = ./programs/starship.nix;
   termite = ./programs/termite.nix;
   tmux = ./programs/tmux;
+  vscode = ./programs/vscode;
   weechat = ./programs/weechat;
   wezterm = ./programs/wezterm;
   zellij = ./programs/zellij;
