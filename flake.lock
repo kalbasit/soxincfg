@@ -275,11 +275,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1768888551,
-        "narHash": "sha256-r8QeZFIQKO9SY0F1qpl/0WNuRbUEa0sk8t2P8e+f9l0=",
+        "lastModified": 1769493700,
+        "narHash": "sha256-lRx/q5Qm6MWT51mXNo8ISyjZRC1YF0vB5pfRhmep5bQ=",
         "owner": "kalbasit",
         "repo": "home-manager",
-        "rev": "1438880fb187d5c20b8e031f4a07836f3085d466",
+        "rev": "b3a296907f741f9d875310b98b284256a17caa86",
         "type": "github"
       },
       "original": {
