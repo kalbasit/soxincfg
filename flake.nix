@@ -11,8 +11,7 @@
     nur.url = "github:nix-community/NUR";
 
     home-manager = {
-      # url = "github:nix-community/home-manager/release-25.11";
-      url = "github:kalbasit/home-manager/attempt-fixing-7198-release-25.11";
+      url = "github:nix-community/home-manager/release-25.11";
       inputs = {
         nixpkgs.follows = "nixpkgs";
       };
