@@ -120,7 +120,7 @@ in
             alt-shift-o = "move right";
 
             # See: https://nikitabobko.github.io/AeroSpace/commands#fullscreen
-            alt-f = "fullscreen";
+            alt-s = "fullscreen";
 
             # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
             alt-z = "workspace 1";
@@ -133,6 +133,16 @@ in
             alt-comma = "workspace 8";
             alt-period = "workspace 9";
             alt-slash = "workspace 10";
+            alt-q = "workspace 11";
+            alt-w = "workspace 12";
+            alt-f = "workspace 13";
+            alt-p = "workspace 14";
+            alt-g = "workspace 15";
+            alt-j = "workspace 16";
+            alt-l = "workspace 17";
+            alt-u = "workspace 18";
+            alt-y = "workspace 19";
+            alt-semicolon = "workspace 20";
 
             # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
             alt-shift-z = "move-node-to-workspace 1";
@@ -145,6 +155,16 @@ in
             alt-shift-comma = "move-node-to-workspace 8";
             alt-shift-period = "move-node-to-workspace 9";
             alt-shift-slash = "move-node-to-workspace 10";
+            alt-shift-q = "move-node-to-workspace 11";
+            alt-shift-w = "move-node-to-workspace 12";
+            alt-shift-f = "move-node-to-workspace 13";
+            alt-shift-p = "move-node-to-workspace 14";
+            alt-shift-g = "move-node-to-workspace 15";
+            alt-shift-j = "move-node-to-workspace 16";
+            alt-shift-l = "move-node-to-workspace 17";
+            alt-shift-u = "move-node-to-workspace 18";
+            alt-shift-y = "move-node-to-workspace 19";
+            alt-shift-semicolon = "move-node-to-workspace 20";
 
             # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
             alt-tab = "workspace-back-and-forth";
@@ -156,7 +176,7 @@ in
             alt-r = "mode resize";
 
             # See: https://nikitabobko.github.io/AeroSpace/commands#mode
-            alt-shift-semicolon = "mode service";
+            cmd-alt-semicolon = "mode service";
           };
 
           # 'resize' binding mode declaration.
