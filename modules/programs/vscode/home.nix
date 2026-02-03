@@ -307,7 +307,7 @@ in
         userSettings = {
           "agCockpit.telemetryDebug" = false;
           "go.toolsManagement.autoUpdate" = true;
-          "python.languageServer" = "Default";
+          "python.languageServer" = "None";
           "nix.formatterPath" = "nixfmt";
           "redhat.telemetry.enabled" = true;
           "terminal.integrated.copyOnSelection" = true;
