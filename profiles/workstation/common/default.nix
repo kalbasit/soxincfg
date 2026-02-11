@@ -14,5 +14,6 @@ in
   soxincfg.programs = {
     vscode.enable = true;
     zellij.enable = true;
+    zed.enable = true;
   };
 }
