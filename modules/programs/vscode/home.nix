@@ -150,10 +150,6 @@ let
   };
 in
 {
-  options = {
-    enable = lib.mkEnableOption "vscode";
-  };
-
   config = lib.mkIf cfg.enable {
     home.file.".gemini/antigravity/global_workflows/address-pr-comments.md".text =
       let

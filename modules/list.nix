@@ -25,6 +25,7 @@
   vscode = ./programs/vscode;
   weechat = ./programs/weechat;
   wezterm = ./programs/wezterm;
+  zed = ./programs/zed;
   zellij = ./programs/zellij;
   zsh = ./programs/zsh;
 
