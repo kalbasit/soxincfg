@@ -4,8 +4,8 @@
 {
   imports = [
     soxincfg.nixosModules.profiles.myself
-    soxincfg.nixosModules.profiles.personal
-    soxincfg.nixosModules.profiles.workstation.nixos.vm-guest
+    soxincfg.nixosModules.profiles.miniserver.qemu-vm-guest
+    soxincfg.nixosModules.profiles.server
   ];
 
   home.stateVersion = "24.11";
