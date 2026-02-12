@@ -1,4 +1,5 @@
 {
+  hostType,
   lib,
   mode,
   ...
@@ -12,8 +13,9 @@ in
     optionals (mode == "NixOS") [ ./nixos.nix ] ++ optionals (mode == "home-manager") [ ./home.nix ];
 
   soxincfg.programs = {
-    vscode.enable = true;
-    zellij.enable = true;
-    zed.enable = true;
+    # TODO: I don't want to build these on Linux yet.
+    vscode.enable = hostType == "nix-darwin";
+    zellij.enable = hostType == "nix-darwin";
+    zed.enable = hostType == "nix-darwin";
   };
 }
