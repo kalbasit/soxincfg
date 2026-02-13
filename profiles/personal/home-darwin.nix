@@ -59,6 +59,10 @@ in
       inherit sopsFile;
       path = "${homePath}/.ssh/per-host/embedded-i386-0.bigeye-bushi.net_ed25519";
     };
+    _ssh_per-host_saturn_nixos_vm_internal_ed25519 = {
+      inherit sopsFile;
+      path = "${homePath}/.ssh/per-host/saturn-nixos-vm-internal_ed25519";
+    };
     _ssh_per-host_unifi_nasreddine_com_rsa = {
       inherit sopsFile;
       path = "${homePath}/.ssh/per-host/unifi.nasreddine.com_rsa";
