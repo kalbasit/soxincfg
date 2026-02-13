@@ -38,6 +38,12 @@ in
   #     wait 3 seconds between U2F presence check and accepting password tap.
   security.pam.u2f.enable = mkForce false;
 
+  services.ollama = {
+    enable = true;
+    acceleration = "cuda";
+    openFirewall = true;
+  };
+
   sops.secrets = {
     _etc_NetworkManager_system-connections_Nasreddine-VPN_nmconnection = {
       inherit sopsFile;
