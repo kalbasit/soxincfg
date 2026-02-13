@@ -42,6 +42,11 @@ in
     enable = true;
     acceleration = "cuda";
     openFirewall = true;
+
+    loadModels = [
+      "gpt-oss:20b"
+      "qwen2.5-coder:14b"
+    ];
   };
 
   sops.secrets = {
