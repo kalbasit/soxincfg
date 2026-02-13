@@ -40,9 +40,7 @@ in
     };
 
     programs.ssh = {
-      extraConfig = ''
-        Include ~/.ssh/config_include_personal
-      '';
+      includes = [ "~/.ssh/config_include_personal" ];
     };
   };
 }
