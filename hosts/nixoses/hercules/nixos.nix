@@ -51,6 +51,7 @@ in
       loadModels = [
         "gpt-oss:20b"
         "qwen2.5-coder:14b"
+        "qwen2.5-coder:7b-base"
       ];
     };
 
