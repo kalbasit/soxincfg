@@ -57,11 +57,6 @@ in
     })
 
     (mkIf cfg.ssh-support.enable {
-      soxincfg.programs.ssh = {
-        addKeysToAgent = mkDefault false;
-        identityFiles = singleton "~/.ssh/id_ed25519_sk_rk";
-      };
-
       home.file.".ssh/id_ed25519_sk_rk.pub".text = ''
         sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAILJKaAMg2OSpXi7+B1oIqzKz1lQiEZPo0Xv6ty35uwzzAAAABHNzaDo= wael.nasreddine+onlykey_0@gmail.com
       '';
