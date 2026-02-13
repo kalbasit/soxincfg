@@ -8,5 +8,7 @@
     soxincfg.nixosModules.profiles.server
   ];
 
+  programs.claude-code.enable = true;
+
   home.stateVersion = "24.11";
 }
