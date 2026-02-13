@@ -224,7 +224,6 @@ in
           controlMaster = "auto";
           controlPersist = "yes";
           forwardAgent = false;
-          addKeysToAgent = "no";
           serverAliveCountMax = 3;
           hashKnownHosts = false;
           userKnownHostsFile = "~/.ssh/known_hosts";
