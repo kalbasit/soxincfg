@@ -1,5 +1,3 @@
-# copied from https://github.com/eureka-cpu/dotfiles/blob/tensorbook/nixos/configuration.nix
-
 {
   lib,
   ...
@@ -8,94 +6,67 @@
 let
   intel_bus = "PCI:0:2:0";
   nvidia_bus = "PCI:1:0:0";
-
 in
 {
   boot = {
     initrd.kernelModules = [ "nvidia" ];
     blacklistedKernelModules = [ "nouveau" ];
+    extraModprobeConfig = ''
+      options nvidia "NVreg_DynamicPowerManagement=0x02"
+    '';
   };
+
   hardware.graphics = {
-    enable = true; # Must be enabled
+    enable = true;
     enable32Bit = true;
   };
+
   services.xserver = {
     videoDrivers = [ "nvidia" ];
     screenSection = ''
-      Option         "metamodes" "nvidia-auto-select +0+0 {ForceCompositionPipeline=On}"
-      Option         "AllowIndirectGLXProtocol" "off"
-      Option         "TripleBuffer" "on"
+      Option "metamodes" "nvidia-auto-select +0+0 {ForceCompositionPipeline=On}"
+      Option "AllowIndirectGLXProtocol" "off"
+      Option "TripleBuffer" "on"
     '';
   };
+
   hardware.nvidia = {
-    # Modesetting is needed for most Wayland compositors
     modesetting.enable = true;
-    # Use the open source version of the kernel module
-    # Only available on driver 515.43.04+
     open = false;
-    # Enable the nvidia settings menu
     nvidiaSettings = true;
-    # Optimus PRIME: Bus ID Values (Mandatory for laptop dGPUs)
+
+    dynamicBoost.enable = true;
+    nvidiaPersistenced = true;
+
+    powerManagement.enable = true;
+    powerManagement.finegrained = false;
+
     prime = {
       sync.enable = true;
       intelBusId = intel_bus;
       nvidiaBusId = nvidia_bus;
     };
   };
+
   specialisation = {
     prime-offload.configuration = {
       system.nixos.tags = [ "prime-offload" ];
-      hardware.nvidia = {
-        prime = {
-          offload = {
-            enable = lib.mkForce true;
-            enableOffloadCmd = lib.mkForce true;
-          };
-          sync.enable = lib.mkForce false;
-          intelBusId = intel_bus;
-          nvidiaBusId = nvidia_bus;
-        };
+      hardware.nvidia.prime = {
+        offload.enable = lib.mkForce true;
+        offload.enableOffloadCmd = lib.mkForce true;
+        sync.enable = lib.mkForce false;
       };
     };
     prime-reverse-sync.configuration = {
       system.nixos.tags = [ "prime-reverse-sync" ];
-      hardware.nvidia = {
-        prime = {
-          reverseSync.enable = lib.mkForce true;
-          sync.enable = lib.mkForce false;
-          intelBusId = intel_bus;
-          nvidiaBusId = nvidia_bus;
-        };
+      hardware.nvidia.prime = {
+        reverseSync.enable = lib.mkForce true;
+        sync.enable = lib.mkForce false;
       };
     };
     blacklist-intel.configuration = {
       system.nixos.tags = [ "blacklist-intel" ];
       boot.kernelParams = [ "module_blacklist=i915" ];
-    };
-    blacklist-nvidia.configuration = {
-      system.nixos.tags = [ "blacklist-nvidia" ];
-      boot = {
-        extraModprobeConfig = ''
-          blacklist nouveau
-          options nouveau modeset=0
-        '';
-        blacklistedKernelModules = [
-          "nouveau"
-          "nvidia"
-          "nvidia_drm"
-          "nvidia_modeset"
-        ];
-      };
-      services.udev.extraRules = ''
-        # Remove NVIDIA USB xHCI Host Controller devices, if present
-        ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x0c0330", ATTR{power/control}="auto", ATTR{remove}="1"
-        # Remove NVIDIA USB Type-C UCSI devices, if present
-        ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x0c8000", ATTR{power/control}="auto", ATTR{remove}="1"
-        # Remove NVIDIA Audio devices, if present
-        ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x040300", ATTR{power/control}="auto", ATTR{remove}="1"
-        # Remove NVIDIA VGA/3D controller devices
-        ACTION=="add", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x03[0-9]*", ATTR{power/control}="auto", ATTR{remove}="1"
-      '';
     };
   };
 }
