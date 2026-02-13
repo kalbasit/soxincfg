@@ -29,6 +29,9 @@ in
     ./nix-builder.nix
   ];
 
+  # XXX: Disable X for now, I will re-install as a server later
+  systemd.services.display-manager.enable = mkForce false;
+
   # XXX: This host was created prior to changing my username to wnasreddine.
   soxincfg.settings.users.userName = "yl";
 
