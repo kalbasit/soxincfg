@@ -41,15 +41,25 @@ in
   #     wait 3 seconds between U2F presence check and accepting password tap.
   security.pam.u2f.enable = mkForce false;
 
-  services.ollama = {
-    enable = true;
-    acceleration = "cuda";
-    host = "0.0.0.0";
+  services = {
+    # enable local LLM
+    ollama = {
+      enable = true;
+      acceleration = "cuda";
+      host = "0.0.0.0";
 
-    loadModels = [
-      "gpt-oss:20b"
-      "qwen2.5-coder:14b"
-    ];
+      loadModels = [
+        "gpt-oss:20b"
+        "qwen2.5-coder:14b"
+      ];
+    };
+
+    # enable nix-serve to be used by ncps for testing
+    nix-serve = {
+      enable = true;
+      package = pkgs.nix-serve-ng;
+      secretKeyFile = "/root/secret-key-file";
+    };
   };
 
   sops.secrets = {
