@@ -225,7 +225,6 @@ in
           controlPersist = "yes";
           forwardAgent = false;
           serverAliveCountMax = 3;
-          hashKnownHosts = false;
           userKnownHostsFile = "~/.ssh/known_hosts";
           controlPath = "~/.ssh/master-%r@%n:%p";
         };
