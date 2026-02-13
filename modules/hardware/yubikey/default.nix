@@ -96,7 +96,7 @@ in
 
   config = mkIf cfg.enable {
     soxincfg.programs.ssh = mkIf cfg.gnupg-support.ssh-support.enable {
-      addKeysToAgent = mkDefault true;
+      addKeysToAgent = mkDefault false;
       identityFiles = mkIf (cfg.gnupg-support.ssh-support.public-certificate-pem != null) (
         singleton cfg.gnupg-support.ssh-support.public-certificate-pem
       );
