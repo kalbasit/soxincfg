@@ -41,7 +41,7 @@ in
   services.ollama = {
     enable = true;
     acceleration = "cuda";
-    openFirewall = true;
+    host = "0.0.0.0";
 
     loadModels = [
       "gpt-oss:20b"
