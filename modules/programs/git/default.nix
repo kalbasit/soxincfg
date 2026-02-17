@@ -10,7 +10,7 @@ with lib;
 let
   cfg = config.soxincfg.programs.git;
 
-  package = pkgs.gitFull.override { openssh = config.programs.ssh.package; };
+  package = pkgs.git.override { openssh = config.programs.ssh.package; };
 in
 {
   options.soxincfg.programs.git = {
