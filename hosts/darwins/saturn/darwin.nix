@@ -57,7 +57,7 @@
       let
         keyStore = "${config.users.users.wnasreddine.home}/.config/nix/distributed-builds";
       in
-      [
+      lib.mkForce [
         {
           hostName = "hercules.bigeye-bushi.ts.net";
           maxJobs = 15;
