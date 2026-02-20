@@ -51,8 +51,35 @@
     ];
   };
 
-  # Determinate systems uses its own daemon and we shouldn't let nix-darwin manage Nix
-  nix.enable = false;
+  nix = {
+    distributedBuilds = true;
+    buildMachines =
+      let
+        keyStore = "${config.users.users.wnasreddine.home}/.config/nix/distributed-builds";
+      in
+      [
+        {
+          hostName = "hercules.bigeye-bushi.ts.net";
+          maxJobs = 15;
+          sshKey = "${keyStore}/hercules.key";
+          sshUser = "builder";
+          system = "x86_64-linux";
+          supportedFeatures = [
+            "big-parallel"
+            "kvm"
+            "nixos-test"
+          ];
+        }
+        {
+          hostName = "192.168.64.7";
+          maxJobs = 4;
+          sshKey = "${keyStore}/saturn-nixos-vm.key";
+          sshUser = "builder";
+          system = "aarch64-linux";
+          supportedFeatures = [ "big-parallel" ];
+        }
+      ];
+  };
 
   # Enable Nix Distributed builds
   soxincfg.settings.nix.distributed-builds.enable = true;
