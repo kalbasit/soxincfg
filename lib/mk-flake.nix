@@ -43,6 +43,7 @@ let
             aerospace
             antigravity
             cilium-cli
+            claude-code
             debootstrap
             devbox
             fluxcd
