@@ -17,7 +17,7 @@
 
       substituters = [
         # add my home cache to the list of substituters
-        "https://ncps.bigeye-bushi.ts.net"
+        # "https://ncps.bigeye-bushi.ts.net"
 
         # add nix-community maintained cache
         "https://nix-community.cachix.org"
