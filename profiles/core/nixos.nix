@@ -17,7 +17,7 @@
 
       substituters = [
         # add my home cache to the list of substituters
-        "https://host.tailnet.invalid"
+        # "https://host.tailnet.invalid"
 
         # add nix-community maintained cache
         "https://nix-community.cachix.org"
