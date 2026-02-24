@@ -9,6 +9,7 @@
   autorandr = ./programs/autorandr.nix;
   brave = ./programs/brave.nix;
   chromium = ./programs/chromium;
+  claude-code = ./programs/claude-code;
   dbeaver = ./programs/dbeaver;
   fzf = ./programs/fzf;
   git = ./programs/git;
