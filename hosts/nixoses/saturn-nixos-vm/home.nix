@@ -11,7 +11,10 @@
 
   soxincfg.programs.claude-code.enable = true;
 
-  home.packages = [ pkgs.graphite-cli ];
+  home.packages = [
+    pkgs.git-spice
+    pkgs.graphite-cli
+  ];
 
   home.stateVersion = "24.11";
 }
