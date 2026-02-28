@@ -47,6 +47,7 @@ let
             debootstrap
             devbox
             fluxcd
+            git-spice
             hubble
             protonvpn-gui
             secretive

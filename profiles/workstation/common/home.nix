@@ -43,6 +43,7 @@ in
       gh # GitHub command line client
       gist
       git-quick-stats
+      git-spice
       gnugrep
       gnupg
       go
