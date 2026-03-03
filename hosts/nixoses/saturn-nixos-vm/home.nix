@@ -14,6 +14,7 @@
   home.packages = [
     pkgs.git-spice
     pkgs.graphite-cli
+    pkgs.inotify-tools
   ];
 
   home.stateVersion = "24.11";
