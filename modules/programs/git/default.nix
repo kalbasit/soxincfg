@@ -32,6 +32,7 @@ in
     (optionalAttrs (mode == "home-manager") {
       home.packages = with pkgs; [
         git-appraise
+        git-filter-repo
         tig
       ];
 
