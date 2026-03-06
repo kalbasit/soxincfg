@@ -2,6 +2,7 @@
 
 {
   imports = [
+    soxincfg.nixosModules.profiles.tailscale.exit-node
     soxincfg.nixosModules.profiles.tailscale.subnet-router
 
     ../nixos-25.05/nixos.nix
