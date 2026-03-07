@@ -238,6 +238,9 @@ fi
 # add cargo
 pathprepend PATH "@home_path@/.cargo/bin"
 
+# Ask git-spice to stop complaining
+export GIT_SPICE_NO_GS_WARNING=1
+
 #####################################################################
 # colors
 #####################################################################
