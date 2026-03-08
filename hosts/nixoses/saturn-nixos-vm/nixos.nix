@@ -46,6 +46,8 @@ in
     8000
   ];
 
+  networking.firewall.enable = false;
+
   services.tailscale.enable = true;
 
   system.stateVersion = "24.11";
