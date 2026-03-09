@@ -1,4 +1,10 @@
 {
+  baseDir,
+  enable,
+  ...
+}:
+
+{
   config,
   lib,
   pkgs,
@@ -6,8 +12,6 @@
 }:
 
 let
-  cfg = config.soxincfg.programs.claude-code;
-
   get-code-scanning-alert = pkgs.writeShellScript "get-code-scanning-alert.sh" ''
     set -euo pipefail
 
@@ -130,7 +134,7 @@ let
   '';
 in
 {
-  config = lib.mkIf cfg.enable {
-    home.file.".claude/skills/address-code-scanning-alert/SKILL.md".text = skillFile;
+  config = lib.mkIf enable {
+    home.file."${baseDir}/address-code-scanning-alert/SKILL.md".text = skillFile;
   };
 }

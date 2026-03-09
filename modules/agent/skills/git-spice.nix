@@ -1,4 +1,10 @@
 {
+  baseDir,
+  enable,
+  ...
+}:
+
+{
   config,
   lib,
   pkgs,
@@ -6,8 +12,6 @@
 }:
 
 let
-  cfg = config.soxincfg.programs.claude-code;
-
   createSkillFile = ''
     ---
     description: Create a new Git Spice stack (semantic commit)
@@ -95,11 +99,11 @@ let
   '';
 in
 {
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf enable {
     home.file = {
-      ".claude/skills/gs-create/SKILL.md".text = createSkillFile;
-      ".claude/skills/gs-amend/SKILL.md".text = createSkillFile;
-      ".claude/skills/gs-restack/SKILL.md".text = restackSkillFile;
+      "${baseDir}/gs-create/SKILL.md".text = createSkillFile;
+      "${baseDir}/gs-amend/SKILL.md".text = createSkillFile;
+      "${baseDir}/gs-restack/SKILL.md".text = restackSkillFile;
     };
   };
 }

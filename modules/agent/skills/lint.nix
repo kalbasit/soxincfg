@@ -1,4 +1,10 @@
 {
+  baseDir,
+  enable,
+  ...
+}:
+
+{
   config,
   lib,
   pkgs,
@@ -6,8 +12,6 @@
 }:
 
 let
-  cfg = config.soxincfg.programs.claude-code;
-
   skillFile = ''
     ---
     description: Lint and format code
@@ -35,7 +39,7 @@ let
   '';
 in
 {
-  config = lib.mkIf cfg.enable {
-    home.file.".claude/skills/lint/SKILL.md".text = skillFile;
+  config = lib.mkIf enable {
+    home.file."${baseDir}/lint/SKILL.md".text = skillFile;
   };
 }

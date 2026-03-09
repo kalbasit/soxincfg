@@ -1,4 +1,10 @@
 {
+  baseDir,
+  enable,
+  ...
+}:
+
+{
   config,
   lib,
   pkgs,
@@ -6,8 +12,6 @@
 }:
 
 let
-  cfg = config.soxincfg.programs.claude-code;
-
   get-unresolved-comments = pkgs.writeShellScript "get-unresolved-comments.sh" ''
     set -euo pipefail
 
@@ -140,7 +144,7 @@ let
   '';
 in
 {
-  config = lib.mkIf cfg.enable {
-    home.file.".claude/skills/address-pr-comments/SKILL.md".text = skillFile;
+  config = lib.mkIf enable {
+    home.file."${baseDir}/address-pr-comments/SKILL.md".text = skillFile;
   };
 }
