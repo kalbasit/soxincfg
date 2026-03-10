@@ -22,7 +22,6 @@
         "arc" # Arc Browser
         "charles"
         "claude"
-        "claude-code"
         "dbeaver-community" # Database GUI
         "displaylink" # software to drive the USB-C hub
         "font-0xproto-nerd-font" # Nerd font
