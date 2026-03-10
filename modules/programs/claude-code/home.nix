@@ -11,7 +11,10 @@ in
   imports = [
     (import ../../agent/skills {
       inherit (cfg) enable;
-      baseDir = ".claude/skills";
+
+      addSkill = name: body: {
+        home.file.".claude/skills/${name}/SKILL.md".text = body;
+      };
     })
   ];
 

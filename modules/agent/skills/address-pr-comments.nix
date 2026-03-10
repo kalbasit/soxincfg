@@ -1,5 +1,5 @@
 {
-  baseDir,
+  addSkill,
   enable,
   ...
 }:
@@ -144,7 +144,5 @@ let
   '';
 in
 {
-  config = lib.mkIf enable {
-    home.file."${baseDir}/address-pr-comments/SKILL.md".text = skillFile;
-  };
+  config = lib.mkIf enable (addSkill "address-pr-comments" skillFile);
 }

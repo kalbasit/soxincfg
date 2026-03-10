@@ -1,5 +1,5 @@
 {
-  baseDir,
+  addSkill,
   enable,
   ...
 }:
@@ -134,7 +134,5 @@ let
   '';
 in
 {
-  config = lib.mkIf enable {
-    home.file."${baseDir}/address-code-scanning-alert/SKILL.md".text = skillFile;
-  };
+  config = lib.mkIf enable (addSkill "address-code-scanning-alert" skillFile);
 }

@@ -1,5 +1,5 @@
 {
-  baseDir,
+  addSkill,
   enable,
   ...
 }:
@@ -99,11 +99,11 @@ let
   '';
 in
 {
-  config = lib.mkIf enable {
-    home.file = {
-      "${baseDir}/gs-create/SKILL.md".text = createSkillFile;
-      "${baseDir}/gs-amend/SKILL.md".text = createSkillFile;
-      "${baseDir}/gs-restack/SKILL.md".text = restackSkillFile;
-    };
-  };
+  config = lib.mkIf enable (
+    lib.mkMerge [
+      (addSkill "gs-create" createSkillFile)
+      (addSkill "gs-amend" createSkillFile)
+      (addSkill "gs-restack" restackSkillFile)
+    ]
+  );
 }

@@ -1,5 +1,5 @@
 {
-  baseDir,
+  addSkill,
   enable,
   ...
 }:
@@ -39,7 +39,5 @@ let
   '';
 in
 {
-  config = lib.mkIf enable {
-    home.file."${baseDir}/lint/SKILL.md".text = skillFile;
-  };
+  config = lib.mkIf enable (addSkill "lint" skillFile);
 }
