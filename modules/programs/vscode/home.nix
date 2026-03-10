@@ -153,7 +153,10 @@ in
   imports = [
     (import ../../agent/skills {
       inherit (cfg) enable;
-      baseDir = ".gemini/antigravity/global_workflows";
+
+      addSkill = name: body: {
+        home.file.".gemini/antigravity/global_workflows/${name}.md".text = body;
+      };
     })
   ];
 
