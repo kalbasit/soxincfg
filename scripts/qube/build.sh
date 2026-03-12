@@ -14,4 +14,4 @@ fi
 host="$1"
 readonly host
 
-nom build ".#homeConfigurations.${host}.activationPackage"
+nix build ".#homeConfigurations.${host}.activationPackage"

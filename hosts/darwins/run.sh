@@ -9,20 +9,11 @@ function usage() {
   >&2 echo "USAGE: $0 <action> [hostname]"
 }
 
-if type nom &> /dev/null
-then
-  BUILDER=nom
-else
-  BUILDER=nix
-fi
-
-readonly BUILDER
-
 case "${action}" in
   build)
     >&2 echo "Building $host"
 
-    $BUILDER build ".#darwinConfigurations.${host}.system" --show-trace
+    nix build ".#darwinConfigurations.${host}.system" --show-trace
     ;;
   switch)
     >&2 echo "Switching $host"

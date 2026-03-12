@@ -9,15 +9,6 @@ function usage() {
   >&2 echo "USAGE: $0 <action> [hostname]"
 }
 
-if type nom &> /dev/null
-then
-  BUILDER=nom
-else
-  BUILDER=nix
-fi
-
-readonly BUILDER
-
 case "${action}" in
   boot)
     >&2 echo "Booting $host"
@@ -27,7 +18,7 @@ case "${action}" in
   build)
     >&2 echo "Building $host"
 
-    $BUILDER build ".#nixosConfigurations.${host}.config.system.build.toplevel" --show-trace
+    nix build ".#nixosConfigurations.${host}.config.system.build.toplevel" --show-trace
     ;;
   switch)
     >&2 echo "Switching $host"
