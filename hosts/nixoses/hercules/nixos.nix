@@ -25,7 +25,6 @@ in
 
     ./hardware-configuration.nix
     ./nvidia.nix
-    ./spectrum.nix
     ./nix-builder.nix
   ];
 
