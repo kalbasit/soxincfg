@@ -18,14 +18,10 @@
       substituters = [
         # add my home cache to the list of substituters
         "https://host.invalid"
-
-        # add nix-community maintained cache
-        "https://nix-community.cachix.org"
       ];
 
       trusted-public-keys = [
         "host.tailnet.invalid:EYvKWn44YJquaYg2qPevn53ckpSvQmEPSrFoTj5KVdk="
-        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       ];
     };
 
