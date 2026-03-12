@@ -51,12 +51,11 @@ let
             hubble
             protonvpn-gui
             secretive
+            ssh-agent-mux
             talosctl
             ;
         })
       ];
-
-      patches = [ ../patches/ssh-agent-mux.patch ];
     };
 
     nixpkgs-unstable = {
