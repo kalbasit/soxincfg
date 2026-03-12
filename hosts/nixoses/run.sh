@@ -13,7 +13,7 @@ case "${action}" in
   boot)
     >&2 echo "Booting $host"
 
-    nixos-rebuild --use-remote-sudo --flake ".#${host}" boot --show-trace
+    nixos-rebuild --sudo --flake ".#${host}" boot --show-trace
     ;;
   build)
     >&2 echo "Building $host"
@@ -23,12 +23,12 @@ case "${action}" in
   switch)
     >&2 echo "Switching $host"
 
-    nixos-rebuild --use-remote-sudo --flake ".#${host}" switch --show-trace
+    nixos-rebuild --sudo --flake ".#${host}" switch --show-trace
     ;;
   test)
     >&2 echo "Testing $host"
 
-    nixos-rebuild --use-remote-sudo --flake ".#${host}" test --show-trace
+    nixos-rebuild --sudo --flake ".#${host}" test --show-trace
     ;;
   *)
     usage
