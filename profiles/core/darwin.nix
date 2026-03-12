@@ -7,6 +7,8 @@
 }:
 {
   nix = {
+    package = pkgs.lixPackageSets.stable.lix;
+
     settings = {
       # enable the Nix sandbox
       # TODO: Re-enable the sandbox once https://github.com/NixOS/nix/issues/4119 is resolved.

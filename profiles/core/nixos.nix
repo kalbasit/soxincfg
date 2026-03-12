@@ -11,6 +11,8 @@
 
 {
   nix = {
+    package = pkgs.lixPackageSets.stable.lix;
+
     settings = {
       # enable the Nix sandbox
       sandbox = true;
