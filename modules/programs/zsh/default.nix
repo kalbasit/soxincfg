@@ -90,9 +90,6 @@ let
     with pkgs;
     builtins.concatStringsSep "\n\n" [
       ''
-        # source in the LS_COLORS
-        source "${nur.repos.kalbasit.ls-colors}/ls-colors/bourne-shell.sh"
-
         # Enable Nix!
         # This is idempotent so no need to check if Nix is already loaded.
         if [[ -r /etc/profile.d/nix.sh ]]; then
