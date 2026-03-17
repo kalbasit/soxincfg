@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 
@@ -20,5 +21,9 @@ in
 
   config = lib.mkIf cfg.enable {
     programs.claude-code.enable = true;
+    home.packages = [
+      pkgs.claude-code-router
+      pkgs.nodejs
+    ];
   };
 }
