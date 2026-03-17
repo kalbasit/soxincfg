@@ -44,7 +44,6 @@ let
             antigravity
             cilium-cli
             claude-code
-            claude-code-router
             debootstrap
             devbox
             fluxcd
