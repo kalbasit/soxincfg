@@ -57,6 +57,7 @@ in
       libnotify
       mercurial
       minio-client
+      nil # Nix language server
       nix-index
       nix-zsh-completions
       nixfmt
