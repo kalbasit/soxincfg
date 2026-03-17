@@ -102,7 +102,7 @@ in
   config = lib.mkIf enable (
     lib.mkMerge [
       (addSkill "gs-create" createSkillFile)
-      (addSkill "gs-amend" createSkillFile)
+      (addSkill "gs-amend" amendSkillFile)
       (addSkill "gs-restack" restackSkillFile)
     ]
   );
