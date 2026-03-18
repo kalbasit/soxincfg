@@ -107,7 +107,6 @@ in
       "discord" = [ { class = "^discord$"; } ];
       "element" = [ { class = "^Element$"; } ];
       "keybase" = [ { class = "^Keybase$"; } ];
-      "obsidian" = [ { class = "^obsidian$"; } ];
       "signal" = [ { class = "^Signal$"; } ];
       "slack" = [ { class = "^Slack$"; } ];
       "studio" = [ { class = "^obs$"; } ];
@@ -345,11 +344,10 @@ in
     }
     bindsym ${meta}+${alt}+l mode "$launcher"
 
-      set $app_mode Applications: (a)stroid, (b)itwarden (o)bsidian, (s)ocial
+      set $app_mode Applications: (a)stroid, (b)itwarden, (s)ocial
       mode "$app_mode" {
         bindsym a exec astroid, mode default
         bindsym b exec ${getBin pkgs.bitwarden-desktop}/bin/bitwarden, mode default
-        bindsym o exec ${getBin pkgs.obsidian}/bin/obsidian, mode default
         bindsym s mode "$social_mode"
 
         bindsym Escape mode "$launcher"
