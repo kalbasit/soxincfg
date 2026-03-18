@@ -54,6 +54,8 @@ let
             ssh-agent-mux
             talosctl
             ;
+
+          openspec = inputs.openspec.packages.${super.system}.default;
         })
       ];
     };

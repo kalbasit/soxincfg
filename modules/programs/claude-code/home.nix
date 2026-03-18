@@ -23,6 +23,10 @@ in
     programs.claude-code.enable = true;
     home.packages = [
       pkgs.nodejs
+      pkgs.openspec
     ];
+    home.sessionVariables = {
+      OPENSPEC_TELEMETRY = "0";
+    };
   };
 }
