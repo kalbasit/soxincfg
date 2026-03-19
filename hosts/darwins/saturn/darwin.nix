@@ -29,6 +29,7 @@
       "element"
       "google-drive"
       "gimp"
+      "keybase"
       "nextcloud"
       "orcaslicer"
       "proton-mail"

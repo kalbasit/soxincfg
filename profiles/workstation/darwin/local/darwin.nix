@@ -26,7 +26,6 @@
         "font-0xproto-nerd-font" # Nerd font
         "istat-menus"
         "keepingyouawake"
-        "keybase"
         "postman" # API
       ];
     };
