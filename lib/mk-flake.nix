@@ -55,6 +55,7 @@ let
             secretive
             ssh-agent-mux
             talosctl
+            worktrunk
             ;
 
           openspec = inputs.openspec.packages.${super.system}.default;
