@@ -46,9 +46,6 @@ let
             claude-code
             claude-mergetool
             claude-monitor
-            debootstrap
-            devbox
-            fluxcd
             git-spice
             hubble
             protonvpn-gui
