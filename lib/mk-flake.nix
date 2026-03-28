@@ -44,6 +44,8 @@ let
             antigravity
             cilium-cli
             claude-code
+            claude-mergetool
+            claude-monitor
             debootstrap
             devbox
             fluxcd

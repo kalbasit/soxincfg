@@ -22,6 +22,8 @@ in
   config = lib.mkIf cfg.enable {
     programs.claude-code.enable = true;
     home.packages = [
+      pkgs.claude-mergetool
+      pkgs.claude-monitor
       pkgs.nodejs
       pkgs.openspec
     ];
