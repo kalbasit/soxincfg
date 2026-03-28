@@ -5,7 +5,8 @@
 }:
 
 {
-  imports = lib.optional (mode == "home-manager") ./home.nix;
+  imports =
+    lib.optional (mode == "NixOS") ./nixos.nix ++ lib.optional (mode == "home-manager") ./home.nix;
 
   options = {
     soxincfg.programs.claude-code.enable = lib.mkEnableOption "claude-code";

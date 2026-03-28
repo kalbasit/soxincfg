@@ -106,6 +106,16 @@ creation_rules:
           - *host_age_saturn
           - *host_age_saturn_nixos_vm
 
+  - path_regex: modules/programs/claude-code/[^/]+\.sops[^/]*
+    key_groups:
+      - pgp:
+          - *user_yl_0x8EBD95DC147755A2
+          - *host_pgp_kore
+        age:
+          - *host_age_hercules
+          - *host_age_saturn
+          - *host_age_saturn_nixos_vm
+
   - path_regex: modules/programs/weechat/[^/]+\.sops[^/]*
     key_groups:
       - pgp:

@@ -1,0 +1,66 @@
+_claude_minimax_auth_token: ENC[AES256_GCM,data:KQKHXJRxC5sidsDJt2rQcjKU2gsfcK9i5U6oGCClznSDiRLzTezG6G4IhtuTnt3FRhAq5i0wD7gcUyv69Qe6RuOnPfZIceiQS3Gxxx6dDi794jk065wTwluUW+Bp0Wsgi/OFeu4kJ4Yt/Ljr7AxpE0XL+MxLumV4tF9p6aNv,iv:K9mrTx/PgPxy9DFfE/D0xb6ggl7OIXAd0wqO7ZApIcE=,tag:bzjQnbc66W6QfW5wtobpQg==,type:str]
+sops:
+    age:
+        - recipient: age1g3f7pkzwth395ydm4yzf7qh7tgkj22spdlz68qjt5kszw078l4js3tyq2d
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBtOUxmTDRFZlN4bGowTG81
+            S2FCaGNsSlJQL1dqY3lEVFFDaS9vTk5STGdVCm1Cb0RrQXZPcTlqc3JFR2hPK2xC
+            U0ZQODIxTk5YVmtzRDVyOFAyMmM5ZEkKLS0tIHpwZ2lJMXJQcnN3Y2E3ejRxei9r
+            M2h4Q01ncmNGUCtuZHUyM0QveVhmbFkKE74BxGL+ZjwgNBZRLQCFtFRTmY2cN//O
+            ajw6c/zclUOdvMQDwbWm+Y2xMHAzDHIlp2SsWoxuu8GdeyekvM2lOA==
+            -----END AGE ENCRYPTED FILE-----
+        - recipient: age1cdyuywjxswv3t0yhk8ch7tkh6s5ncwexdgsyzgav8804nu775a6qm0l4y2
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB3bHNPRGRsd09uSDVWMzA0
+            OXdTZzZQVStNVnRsaUp0aXM5amZxNE9CM21zCkQxT0s5RlNQOHFLa0I0U1BVYmZO
+            RWE5Z2swVGVWTm1wYk12aC9uT05pS28KLS0tIDRLNWRzYmxvU28rMUlyUHVQa3pB
+            bndUek95WDkyaUgrVHo0T1dyZVdtSGMKPPxS3hIHyy1TtiVtXlS+XwRt04WszyEa
+            lbkVqpeBQfucwVjXlPWl39v2aEjMxnufM82IrSNTP1+goP+uflJprQ==
+            -----END AGE ENCRYPTED FILE-----
+        - recipient: age1mmx0lc49e8wfev6suf5jsf743ddafqngwk4swel37pyrfx82vc0svx6yyp
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBuRlV4MnNXeXIxbTZKR2dx
+            N0d1VnhtRGR5YjZRd3NINUFSaGorYXp3MFRNCnRZbFVlL3g4N01lSXRUU2tHcE9J
+            SDFqTU93cEgwODN1WU9zL1F6dDNmZDgKLS0tIHd1SGNBYkUrZWxoRFE3VExGMDVG
+            S2tjczFaVGxCbkk3M3VsbDZ3aTJiRzAKGzi2ZYg/i3+LgdRe+gy/9mFGvnmfjUze
+            yFElmdowuw3xaJ3l9Uahop+2njvGPzvwr44LaFajZAb0Z+LDaJaauQ==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2026-03-28T20:28:07Z"
+    mac: ENC[AES256_GCM,data:o9TuXjccc0Bkj757jhpOc/D2Hy8e8RFW2HFau3eHTXpgglnp6LsL07/1bF4rigH0x7iQhWfpdk0e9lgx3SW9OKnXVqCYxcKEzh3+sjxrSivmC1fNCx0v8U3OJRv82ks1tG1jZ+4kCnN2/pI3oM9aUQdRBQrcgVjH8NouVB9aS6M=,iv:1TFM1zQ4X/1yB57tSbpN+YcDBvbeRo+u2eRv2+yDXnc=,tag:5/ERYZMUXGtnMTkLRhEgYA==,type:str]
+    pgp:
+        - created_at: "2026-03-28T20:27:12Z"
+          enc: |-
+            -----BEGIN PGP MESSAGE-----
+
+            hF4DYhsrxvOWh68SAQdAlZ2A5zYdg7kPTMpHhFcyHkMyL8Md02U/Fm/uVBFRXSEw
+            HGMQ/NoS7/hBT0ImN57fZEbxSt5c8nHTyNVk9P2w9ERUkT7rA8L+ZHbl8WiUGMQt
+            0l4BlIfVbc6bvaZxUslYr9qxErbQHfknMOP/Jt7cXLkHlp+HgZ0NKxsL1NFv2+e/
+            bvZnXwbxcwA+TIpKsPAB/l5TMkYfu5bse/CAQpN7Hy0+pT3MosPvIxJT2GGgCwH4
+            =pquv
+            -----END PGP MESSAGE-----
+          fp: 8C67A027B7CAC398C88820578EBD95DC147755A2
+        - created_at: "2026-03-28T20:27:12Z"
+          enc: |-
+            -----BEGIN PGP MESSAGE-----
+
+            hQIMA/XcOfsNGpkdAQ//cklUfy3dMuS1dq8tJQGmxTK0uedIP9fAxDsAeiDImH74
+            +5p+6VCGLbJyOHhtZrZLN4aL8nlfqjhowIWsP/3Qlpl4DTKN11T6y4K2dlSM3QaT
+            PHwAjO0mJ1PhTTKmwuu01MZRXSSapjqEGzRuFTlOVh9PDVvF2bk5t7vl3do9Qe5k
+            hYGkacuQZwv3oItxpLwO3dx1oM0uKNz8bA72RRg7lFgdkGGD+9IOQB8K7cjOQOd2
+            e5+hCCELDhJNmMMQjFvaaOv+kZuNcMnpCQbGHGqRAvIsK/27pV575VTt1A2zI1O/
+            XkQF5wSSQUYp2F1ZDRZ3aVEsBcMIpeMRyoKPa52Ms5GcRASvOgNgZrzHyW7CooSM
+            B1AiDyTzytNyND51BJDRejUxVwNA2YTnpDWNa2ei3Heyp7hqlpPWPiDghB8dzkHu
+            gQJo05fhBI1PLdnlNeB57zxfZ5oZxW80AGEbkN7O9e6GTCsbEnmBqk4UMx6n7ZCx
+            2EW2GPqcvJtpFgDX7Ewu5SAleMjaKpznc+wIPxNjbswWWYqnOShamzG4/r2gTxP6
+            lRK6b2s0CcMUaUdGOFA9m/ZOAeGWOIvFjSbLM0kE36+HQg3KCLdOudATKCKNYHvO
+            kHjWSYb3RgpNRRz82crNSgHaqMQRFYFNEL3xpYaft+uDmg4HOC17EferlQ8KebTS
+            WAGp7Il7d7bkXdssIRqDhH/ERBDYIj/Rd/Qn11X9RuUirV3t9sGM7XsKvmfktTIu
+            cCD+acTMxKMfow+l1Ew11QNftfzB0ZRyTuHSrSlKmSdr7HctT2/Va30=
+            =NIuS
+            -----END PGP MESSAGE-----
+          fp: 882BE5435E81479DDBFFEF70F5DC39FB0D1A991D
+    unencrypted_suffix: _unencrypted
+    version: 3.12.1
