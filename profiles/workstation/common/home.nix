@@ -59,6 +59,7 @@ in
       minio-client
       nil # Nix language server
       nix-index
+      nixd
       nix-zsh-completions
       nixfmt
       nixos-generators
