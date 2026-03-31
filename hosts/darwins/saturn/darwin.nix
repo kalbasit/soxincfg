@@ -2,9 +2,26 @@
   config,
   soxincfg,
   lib,
+  pkgs,
   ...
 }:
 
+let
+  prometheusConfig = pkgs.writeText "prometheus-agent.yml" ''
+    global:
+      scrape_interval: 15s
+
+    scrape_configs:
+      - job_name: "macos-laptop"
+        static_configs:
+          - targets: ["127.0.0.1:9100"]
+            labels:
+              instance: "${config.networking.hostName}"
+
+    remote_write:
+      - url: "https://mimir.mon.nasreddine.com/api/v1/push"
+  '';
+in
 {
   imports = [
     soxincfg.nixosModules.profiles.myself
@@ -83,6 +100,35 @@
 
   # Enable Nix Distributed builds
   soxincfg.settings.nix.distributed-builds.enable = true;
+
+  # Enable Prometheus node exporter
+  services.prometheus.exporters.node = {
+    enable = true;
+    listenAddress = "127.0.0.1";
+  };
+
+  # Start the launchd daemon for the Prometheus agent
+  launchd.daemons."prometheus-agent" = {
+    script = ''
+      # Agent mode requires a Write-Ahead Log (WAL) directory.
+      # /tmp is fine since Agent mode is stateless and pushes immediately,
+      # but creating it ensures the daemon doesn't crash on startup.
+      mkdir -p /tmp/prometheus-agent-wal
+
+      exec ${pkgs.prometheus}/bin/prometheus \
+        --config.file=${prometheusConfig} \
+        --enable-feature=agent \
+        --storage.agent.path=/tmp/prometheus-agent-wal
+    '';
+
+    serviceConfig = {
+      KeepAlive = true;
+      RunAtLoad = true;
+      # Optional: Send logs to a file so you can debug if Mimir isn't receiving data
+      StandardOutPath = "/var/log/prometheus-agent.log";
+      StandardErrorPath = "/var/log/prometheus-agent.log";
+    };
+  };
 
   # load home-manager configuration
   # TODO: Use users.user.name once the following commit is used
