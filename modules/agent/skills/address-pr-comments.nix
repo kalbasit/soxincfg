@@ -123,7 +123,8 @@ let
     Iterate through the unresolved comments and perform the following for each:
 
     1. **Locate the issue**: Use `view_file` to examine the file and specific line mentioned in the comment.
-    2. **Analyze and fix**: Understand the feedback and implement the necessary changes.
+    2. **Analyze and verify**: Understand the feedback and verify it's accurate before proceeding to address it.
+    2. **Fix**: Implement the necessary changes to address the feedback. If the project rules says you must TDD then write failing tests for the comment first before fixing it.
     3. **Verify**: Run relevant tests or linters (e.g., using `/test` or `/lint` workflows) to ensure the fix is correct and doesn't introduce regressions.
     4. **Commit**: Once the fix is verified, commit the change using a descriptive message.
     5. **Resolve on GitHub**: Use the `threadId` provided in the fetch step to resolve the thread on GitHub.
