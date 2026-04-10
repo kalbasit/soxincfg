@@ -14,5 +14,7 @@
         inherit (config.soxincfg.settings.users) userName;
       };
     };
+
+    nix.settings.trusted-users = [ config.soxincfg.settings.users.userName ];
   };
 }
