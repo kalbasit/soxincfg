@@ -41,7 +41,7 @@ let
           inherit (channels.nixpkgs-unstable)
             # inherit packages from unstable.
             aerospace
-            antigravity
+            # antigravity
             cilium-cli
             claude-code
             claude-mergetool
