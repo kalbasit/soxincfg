@@ -67,10 +67,7 @@ let
 
       overlaysBuilder = channels: [ ];
 
-      patches = [
-        # https://github.com/NixOS/nixpkgs/pull/509033
-        ../patches/509033.patch
-      ];
+      patches = [ ];
     };
   };
 
