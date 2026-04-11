@@ -163,7 +163,7 @@ in
   config = lib.mkIf cfg.enable {
     programs.vscode = {
       enable = true;
-      package = pkgs.antigravity;
+      # package = pkgs.antigravity;
 
       # TODO: Get rid of this in favor of setting up a profile with all my extensions.
       mutableExtensionsDir = true;
