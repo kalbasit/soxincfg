@@ -56,6 +56,11 @@ let
             worktrunk
             ;
 
+          # direnv tests are failing on aarch64-darwin
+          # https://github.com/NixOS/nixpkgs/issues/507531
+          direnv = super.direnv.overrideAttrs (_: {
+            doCheck = !super.stdenv.hostPlatform.isDarwin;
+          });
         })
       ];
     };
