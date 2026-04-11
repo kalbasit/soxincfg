@@ -48,6 +48,7 @@ let
             claude-monitor
             git-spice
             hubble
+            openspec
             protonvpn-gui
             secretive
             ssh-agent-mux
@@ -55,7 +56,6 @@ let
             worktrunk
             ;
 
-          openspec = inputs.openspec.packages.${super.system}.default;
         })
       ];
     };

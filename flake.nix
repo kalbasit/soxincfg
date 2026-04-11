@@ -30,11 +30,6 @@
       # inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    openspec = {
-      url = "github:Fission-AI/OpenSpec/v1.2.0";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     pre-commit-hooks = {
       inputs.nixpkgs.follows = "nixpkgs";
       url = "github:cachix/pre-commit-hooks.nix";
