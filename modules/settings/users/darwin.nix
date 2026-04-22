@@ -14,6 +14,9 @@ let
     userName: user:
     {
       shell = pkgs.zsh;
+      openssh.authorizedKeys = {
+        keys = user.sshKeys;
+      };
     }
     // (builtins.removeAttrs user [
       "isAdmin"
