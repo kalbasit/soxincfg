@@ -27,6 +27,9 @@ userName:
 
       # Saturn - Nixos VM
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILYQAoPIUZm5gDc4jhkebnTN1Db9BBAQtDI8O9c82Wrq Saturn - Nixos VM"
+
+      # Atlas
+      "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBHB3rMKVEy9iGiVBMCRXlRY4isOmX7WMIFFcV5hEs3k1QpdDMdbmL2DogHBFNYpu+l7LNoXfMWv+7QrrA3Znmao="
     ];
 
     uid = 2000;
