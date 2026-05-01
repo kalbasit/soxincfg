@@ -45,7 +45,7 @@ in
 
             # Same as above, but with a diff stat instead of just names
             # (better for interactive use)
-            stat = ''!git diff --stat ''$(git merge-base HEAD ''${REVIEW_BASE:-master})'';
+            stat = "!git diff --stat \$(git merge-base HEAD \${REVIEW_BASE:-master})";
 
             # Open all files changed since REVIEW_BASE in Vim tabs
             # Then, run fugitive's :Gdiff in each tab, and finally
@@ -321,7 +321,6 @@ in
           "._*"
           ".directory"
           "Desktop.ini"
-          "Icon?"
           "Thumbs.db"
           "ehthumbs.db"
 
