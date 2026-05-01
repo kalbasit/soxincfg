@@ -166,6 +166,17 @@ in
           core = {
             pager = with pkgs; "${diff-so-fancy}/bin/diff-so-fancy | ${less}/bin/less --tabs=4 -RFX";
             whitespace = "trailing-space,space-before-tab,-indent-with-non-tab,cr-at-eol";
+            editor = builtins.toString (
+              pkgs.writeShellScript "git-editor" ''
+                set -euo pipefail
+
+                if [[ "''${ZED_TERM:-}" == "true" ]]; then
+                    exec zed --existing --wait -- "$@"
+                else
+                    exec nvim "$@"
+                fi
+              ''
+            );
           };
 
           diff = {
