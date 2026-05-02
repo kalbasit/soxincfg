@@ -4,7 +4,6 @@
   yubikey = ./hardware/yubikey;
 
   # programs
-  aidente = ./programs/aidente;
   android = ./programs/android.nix;
   autorandr = ./programs/autorandr.nix;
   brave = ./programs/brave.nix;
