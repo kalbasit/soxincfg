@@ -94,62 +94,89 @@ let
 
   skillFile = ''
     ---
-    name: address-pr-comments
-    description: Address unresolved comments in a PR
+    name: address-gs-comments
+    description: Address all unresolved PR review comments across an entire git-spice stack in a single consolidation branch.
     ---
 
-    # Address Unresolved PR Comments
+    # Address Unresolved Git Spice Comments
 
-    This workflow guides you through fetching unresolved comments from a GitHub Pull Request and addressing them systematically.
+    This workflow guides you through fetching unresolved comments from all GitHub Pull Requests for a given git-spice stack and addressing them systematically in a single branch at the top of the stack.
 
     ## Workflow Steps
 
-    ### 1. Fetch Unresolved Comments
+    ### 1. Parse the stack and collect PR numbers
 
-    Use the helper script to fetch the unresolved comments. If no PR number is provided, it will attempt to find the PR for the current branch.
+    ```sh
+    gs ls
+    ```
+
+    Extract every PR number visible in the output (lines like `#290`, `#294`, etc.).
+    If `gs ls` shows no PR numbers, also run `gh pr list --state open` to double-check.
+    If truly no open PRs exist, tell the user and stop.
+
+    ### 2. Create the consolidation branch
+
+    **Branch naming rule** (pick the first that applies):
+
+    1. If PR numbers are contiguous (e.g. 290–295): `gs-comments-290-295`
+    2. If non-contiguous (e.g. 290, 293, 295): `gs-comments-290-293-295`
+    3. Fallback (parse failure): `gs-comments-<YYYYMMDDHHmm>`
+
+    **Create the branch** (from the top of the stack, no initial commit):
+
+    ```sh
+    gs top && gs branch create --no-commit <branch-name>
+    ```
+
+    > **Never** run `git push`, `gs ss`, or `gs stack submit`. The user decides when to push.
+
+    ### 3. Fetch Unresolved Comments from every PR.
+
+    For each PR number in ascending order: Use the helper script to fetch the unresolved comments.
 
     ```bash
-    # Fetch comments for the current PR
-    ${get-unresolved-comments}
-
-    # Or specify a PR number
+    # Fetch comments for a given PR number.
     ${get-unresolved-comments} <PR_NUMBER>
     ```
 
     The script outputs a JSON array of comments. Each comment includes the `body` (feedback), `path` (file), `line`, and `threadId` (required for resolution).
 
-    > **If the script exits with an error** (no PR found for the current branch), either push the branch and open a PR first, or pass the PR number explicitly as an argument.
+    Tag each returned comment object with its source `prNumber`. Collect all results
+    into a single ordered list.
 
-    ### 2. Check current branch
+    ### 4. Assess relevance
 
-    ```bash
-    git branch --show-current
-    ```
+    For each comment:
 
-    If you are on `main` or any other base branch, **stop**. You must not commit directly to it. Ask the user to check out or create a feature branch first.
+    1. Does `path` still exist in the working tree? (`git ls-files <path>`)
+    2. Is the concern already addressed by a later commit on the stack?
+       (`git log --all -p -- <path>` — look for the fix the reviewer requested)
 
-    ### 3. Address Each Comment
+    Skip comments that no longer apply; document each skip briefly.
+
+    ### 5. Address relevant comments (ascending PR order)
 
     Iterate through the unresolved comments and perform the following for each:
 
     1. **Locate the issue**: Use `view_file` to examine the file and specific line mentioned in the comment.
     2. **Analyze and verify**: Understand the feedback and verify it's accurate before proceeding to address it.
-    3. **Fix**: Implement the necessary changes to address the feedback. If the project rules say you must TDD then write failing tests for the comment first before fixing it.
-    4. **Verify**: Run the `/lint` workflow. Fix any issues before proceeding.
-    5. **Commit**: Stage only the files you changed, then run `/git-commit`.
+    3. **Check for prior fixes**: Before implementing, check whether an earlier fix in this same session already addresses this concern — a change for one comment may have incidentally resolved another.
+    4. **Fix**: Implement the necessary changes to address the feedback. If the project rules say you must TDD then write failing tests for the comment first before fixing it.
+    5. **Verify**: Run the `/lint` workflow. Fix any issues before proceeding.
+    6. **Commit**: Stage only the files you changed, then run `/git-commit`. The commit message must reference the PR number and comment `threadId`.
 
     ```bash
     git add <changed-files>
     # then invoke the /git-commit skill
     ```
 
-    6. **Resolve on GitHub**: Use the `threadId` provided in the fetch step to resolve the thread on GitHub.
+    7. **Resolve on GitHub**: Use the `threadId` provided in the fetch step to resolve the thread on GitHub.
 
     ```bash
     ${resolve-pr-comment} <THREAD_ID>
     ```
 
-    ### 4. Final Review
+    ### 6. Final Verification
 
     After addressing and resolving all comments, perform a final check of the changes and ensure the project still builds and tests pass.
 
@@ -160,5 +187,5 @@ let
   '';
 in
 {
-  config = lib.mkIf enable (addSkill "address-pr-comments" skillFile);
+  config = lib.mkIf enable (addSkill "address-gs-comments" skillFile);
 }
