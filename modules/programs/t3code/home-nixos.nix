@@ -1,6 +1,5 @@
 {
   config,
-  hostType,
   lib,
   pkgs,
   ...
