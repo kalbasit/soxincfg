@@ -143,6 +143,9 @@ let
     # then invoke the /git-commit skill
     ```
 
+    > [!CAUTION]
+    > Use `/git-commit` for this step. Do NOT use `/gs-create` — that creates a new stacked branch and is wrong here since you are already on the correct feature branch.
+
     6. **Resolve on GitHub**: Use the `threadId` provided in the fetch step to resolve the thread on GitHub.
 
     ```bash
