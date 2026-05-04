@@ -52,6 +52,7 @@ let
             protonvpn-gui
             secretive
             ssh-agent-mux
+            t3code
             talosctl
             worktrunk
             ;
