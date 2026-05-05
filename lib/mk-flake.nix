@@ -46,6 +46,7 @@ let
             claude-code
             claude-mergetool
             claude-monitor
+            codex
             git-spice
             hubble
             openspec
