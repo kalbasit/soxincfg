@@ -9,6 +9,7 @@
   brave = ./programs/brave.nix;
   chromium = ./programs/chromium;
   claude-code = ./programs/claude-code;
+  codex = ./programs/codex;
   dbeaver = ./programs/dbeaver;
   fzf = ./programs/fzf;
   git = ./programs/git;
