@@ -86,6 +86,7 @@ in
       # brave.enable = true;
       # chromium = { enable = true; surfingkeys.enable = true; };
       claude-code.enable = true;
+      codex.enable = true;
       fzf.enable = true;
       git.enable = true;
       iterm2.enable = true;

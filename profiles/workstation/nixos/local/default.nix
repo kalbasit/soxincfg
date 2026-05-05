@@ -147,6 +147,7 @@ in
           surfingkeys.enable = true;
         };
         claude-code.enable = true;
+        codex.enable = true;
         dbeaver.enable = true;
         fzf.enable = true;
         git.enable = true;
