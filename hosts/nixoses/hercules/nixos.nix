@@ -86,6 +86,9 @@ in
     8000
   ];
 
+  # Enable t3code
+  soxincfg.programs.t3code.enable = true;
+
   # https://nixos.wiki/wiki/Visual_Studio_Code#Remote_SSH
   programs.nix-ld.enable = true;
 
