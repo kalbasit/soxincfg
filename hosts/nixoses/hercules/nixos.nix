@@ -100,6 +100,9 @@ in
   # Default is overlay, and the docker image kartoza/postgis fails to boot.
   virtualisation.docker.storageDriver = "zfs";
 
+  # Disable virtualbox I don't use it right now
+  soxin.virtualisation.virtualbox.enable = mkForce false;
+
   # System-wide packages
   environment.systemPackages = [
     # Arch Linux install and support
