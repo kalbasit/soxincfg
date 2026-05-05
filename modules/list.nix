@@ -20,6 +20,7 @@
   secretive = ./programs/secretive;
   ssh = ./programs/ssh;
   starship = ./programs/starship.nix;
+  t3code = ./programs/t3code;
   termite = ./programs/termite.nix;
   tmux = ./programs/tmux;
   vscode = ./programs/vscode;
