@@ -42,6 +42,7 @@ let
             # inherit packages from unstable.
             aerospace
             antigravity
+            bitwarden-cli
             cilium-cli
             claude-code
             claude-mergetool
