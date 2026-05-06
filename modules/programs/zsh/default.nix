@@ -136,6 +136,11 @@ let
           bindkey '^p' pet_select
         fi
       '')
+
+      # enable worktree
+      ''
+        eval "$(${pkgs.worktrunk}/bin/wt config shell init zsh)"
+      ''
     ];
 in
 {
@@ -219,6 +224,10 @@ in
     })
 
     (optionalAttrs (mode == "home-manager") {
+      home.packages = [
+        pkgs.worktrunk
+      ];
+
       programs = {
         eza = {
           enable = true;
