@@ -10,6 +10,7 @@ keys:
   - &host_age_saturn_nixos_vm age1mmx0lc49e8wfev6suf5jsf743ddafqngwk4swel37pyrfx82vc0svx6yyp
   - &host_age_hercules age1g3f7pkzwth395ydm4yzf7qh7tgkj22spdlz68qjt5kszw078l4js3tyq2d
   - &host_age_work0_laptop age1ecard9k3qfwyg64vu4xleldqxsyd0e70uk4rvzr7mc09aptsafcslhaacv
+  - &host_age_pve_wnasreddine_code_01 age1aew03chcku2zl6k9j7y58uhq0ljcq54wwf5c4wygnxvmrdy3m94ql6eqp6
 creation_rules:
   - path_regex: hosts/darwins/saturn/[^/]+\.sops[^/]*
     key_groups:
@@ -85,6 +86,7 @@ creation_rules:
           - *host_age_hercules
           - *host_age_saturn
           - *host_age_saturn_nixos_vm
+          - *host_age_pve_wnasreddine_code_01
 
   - path_regex: modules/hardware/onlykey/[^/]+\.sops[^/]*
     key_groups:
