@@ -23,11 +23,6 @@ in
   config = lib.mkIf cfg.enable {
     programs = {
       claude-code.enable = true;
-      zsh = {
-        initContent = ''
-          eval "$(${pkgs.worktrunk}/bin/wt config shell init zsh)"
-        '';
-      };
     };
 
     home.packages = [
@@ -35,7 +30,6 @@ in
       pkgs.claude-monitor
       pkgs.nodejs
       pkgs.openspec
-      pkgs.worktrunk
     ];
     home.sessionVariables = {
       OPENSPEC_TELEMETRY = "0";
