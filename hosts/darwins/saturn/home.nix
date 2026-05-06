@@ -56,6 +56,6 @@ in
   };
 
   sops = {
-    age.keyFile = "${homePath}/Library/Application Support/sops/age/keys.txt";
+    age.keyFile = "${homePath}/.config/sops/age/soxincfg.txt";
   };
 }
