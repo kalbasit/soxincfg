@@ -33,6 +33,7 @@ in
       audacity
       awscli2
       binutils # for strings
+      bitwarden-cli
       colordiff
       devbox
       docker-credential-gcr
@@ -96,7 +97,6 @@ in
       _2048-in-terminal
       android-tools
       arduino
-      bitwarden-cli
       blender # 3d modeling software
       # TODO: Re-enable once it builds again. It depends on libarcus and it has been marked as broken.
       # cura # slicing software for 3d printers
