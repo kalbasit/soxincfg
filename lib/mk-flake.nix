@@ -41,12 +41,13 @@ let
           inherit (channels.nixpkgs-unstable)
             # inherit packages from unstable.
             aerospace
-            # antigravity
+            antigravity
             cilium-cli
             claude-code
             claude-mergetool
             claude-monitor
             codex
+            flyctl
             git-spice
             hubble
             openspec
@@ -55,6 +56,7 @@ let
             ssh-agent-mux
             t3code
             talosctl
+            turso-cli
             worktrunk
             ;
 
