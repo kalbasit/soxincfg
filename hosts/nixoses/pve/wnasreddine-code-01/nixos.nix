@@ -7,7 +7,6 @@
 
 let
   homePath = config.users.users.wnasreddine.home;
-  owner = config.users.users.wnasreddine.name;
 in
 {
   imports = [
@@ -22,6 +21,10 @@ in
 
   sops = {
     age.keyFile = "${homePath}/.config/sops/age/keys.txt";
+  };
+
+  home-manager.users."${config.soxincfg.settings.users.userName}" = import ./home.nix {
+    inherit soxincfg;
   };
 
   # TODO: switch this to its own vlan
