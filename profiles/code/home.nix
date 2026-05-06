@@ -12,6 +12,10 @@
   # files
   home.file = {
     ".npmrc".text = "prefix=${config.home.homeDirectory}/.filesystem";
+
+    ".ssh/id_ed25519.pub".text = ''
+      ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJOPr+wfQrKk7xhPzaWRkaJQ7b7n1w4ivBeqDbkCTtR5 wnasreddine@pve-wnasreddine-code-01
+    '';
   };
 
   home.packages = [
