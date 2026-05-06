@@ -131,4 +131,22 @@
         };
       };
     };
+
+  pve-wnasreddine-code-01 =
+    let
+      system = "x86_64-linux";
+    in
+    {
+      inherit channelName system;
+      modules = [ ./wnasreddine-code-01/nixos.nix ];
+
+      deploy = {
+        hostname = "pve-wnasreddine-code-01.bigeye-bushi.ts.net";
+        profiles.system = {
+          sshUser = "root";
+          user = "root";
+          path = deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.pve-wnasreddine-code-01;
+        };
+      };
+    };
 }
