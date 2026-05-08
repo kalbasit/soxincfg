@@ -13,18 +13,19 @@ in
     nix = {
       distributedBuilds = true;
       buildMachines = [
-        {
-          hostName = "hercules.bigeye-bushi.ts.net";
-          maxJobs = 15;
-          sshKey = "${keyStore}/hercules.key";
-          sshUser = "builder";
-          system = "x86_64-linux";
-          supportedFeatures = [
-            "big-parallel"
-            "kvm"
-            "nixos-test"
-          ];
-        }
+        # TODO: Bring back an x86_64-linux builder
+        # {
+        #   hostName = "hercules.bigeye-bushi.ts.net";
+        #   maxJobs = 15;
+        #   sshKey = "${keyStore}/hercules.key";
+        #   sshUser = "builder";
+        #   system = "x86_64-linux";
+        #   supportedFeatures = [
+        #     "big-parallel"
+        #     "kvm"
+        #     "nixos-test"
+        #   ];
+        # }
         {
           hostName = "saturn-nixos-vm.bigeye-bushi.ts.net";
           maxJobs = 4;
