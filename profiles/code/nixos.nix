@@ -1,5 +1,6 @@
 {
   config,
+  pkgs,
   ...
 }:
 
@@ -10,6 +11,7 @@ let
 in
 {
   config = {
+    environment.systemPackages = [ pkgs.python3 ];
     services = {
       tailscale.enable = true;
     };
