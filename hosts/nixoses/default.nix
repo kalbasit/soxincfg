@@ -45,6 +45,25 @@ let
     # aarch64-linux
     ###
 
+    demeter =
+      let
+        system = "aarch64-linux";
+      in
+      {
+        inherit channelName system;
+        modules = [ ./demeter/nixos.nix ];
+
+        deploy = {
+          hostname = "demeter.bigeye-bushi.ts.net";
+          profiles.system = {
+            sshUser = "root";
+            user = "root";
+            path = deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.demeter;
+            confirmTimeout = 5 * 60;
+          };
+        };
+      };
+
     kore =
       let
         system = "aarch64-linux";
