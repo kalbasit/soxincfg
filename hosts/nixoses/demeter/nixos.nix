@@ -7,6 +7,7 @@
 {
   imports = [
     soxincfg.nixosModules.profiles.miniserver.metal
+    soxincfg.nixosModules.profiles.tailscale.subnet-router
 
     ./hardware-configuration.nix
   ];
