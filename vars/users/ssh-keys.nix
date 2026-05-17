@@ -22,4 +22,7 @@
 
   # Atlas
   "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBHB3rMKVEy9iGiVBMCRXlRY4isOmX7WMIFFcV5hEs3k1QpdDMdbmL2DogHBFNYpu+l7LNoXfMWv+7QrrA3Znmao="
+
+  # pve-wnasreddine-code-01
+  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJOPr+wfQrKk7xhPzaWRkaJQ7b7n1w4ivBeqDbkCTtR5 wnasreddine@pve-wnasreddine-code-01"
 ]
