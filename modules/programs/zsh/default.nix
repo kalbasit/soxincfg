@@ -169,9 +169,6 @@ in
         serve_this = "${python3}/bin/python -m http.server"; # Use port 8000 by default, open in firewall
         utf8test = "${curl}/bin/curl -L https://github.com/tmux/tmux/raw/master/tools/UTF-8-demo.txt";
 
-        # TODO: move this to the swm package
-        vim_ready = "sleep 1";
-
         # TODO: move to docker-config, how to tell ZSH to import them?
         remove_created_containers = "docker rm -v \$(docker ps -a -q -f status=created)";
         remove_dangling_images = "docker rmi \$(docker images -f dangling=true -q)";
@@ -203,11 +200,6 @@ in
 
     (optionalAttrs (mode == "nix-darwin") (
       mkIf pkgs.stdenv.hostPlatform.isDarwin {
-        # TODO: swm should parse a configuration file in order to ignore these
-        # environment.shellAliases.swm = ''
-        #   swm --ignore-pattern '.Spotlight-V100|.Trashes|.fseventsd'
-        # '';
-
         programs.zsh.shellInit = ''
           if [[ -d /opt/homebrew ]]; then
             eval "$(/opt/homebrew/bin/brew shellenv)"

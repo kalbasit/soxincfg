@@ -24,10 +24,6 @@ in
           description = "ssh-exit-git-github.com";
           command = "ssh -O exit git@github.com";
         }
-        {
-          description = "swm-tmux-kill-server";
-          command = "swm tmux kill-server --vim-exit";
-        }
 
         #
         # Kubernetes

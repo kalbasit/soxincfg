@@ -164,9 +164,6 @@ in
             # bind C-n next-window
             bind C-n switch-client -p
             bind C-o switch-client -n
-
-            # fuzzy client selection
-            bind s split-window -p 20 -v ${pkgs.nur.repos.kalbasit.swm}/bin/swm tmux switch-client --kill-pane
           ''
           + copyPaste
           + optionalString (keyboardLayout == "colemak") colemakBindings;

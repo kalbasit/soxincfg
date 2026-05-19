@@ -55,6 +55,10 @@
         sops-nix.follows = "sops-nix";
       };
     };
+
+    swm = {
+      url = "github:kalbasit/swm";
+    };
   };
 
   outputs =
