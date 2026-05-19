@@ -66,7 +66,6 @@ in
       nixos-generators
       nixpkgs-review
       nur.repos.kalbasit.nixify
-      nur.repos.kalbasit.swm
       pv # generic progress of data through a pipeline
       scrcpy # mirror Android device via USB
       screen # needed to open up terminal devices

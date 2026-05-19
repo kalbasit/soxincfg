@@ -61,6 +61,10 @@ let
             worktrunk
             ;
 
+          inherit (inputs.swm.packages.${super.stdenv.hostPlatform.system})
+            swm-full
+            ;
+
           # direnv tests are failing on aarch64-darwin
           # https://github.com/NixOS/nixpkgs/issues/507531
           direnv = super.direnv.overrideAttrs (_: {

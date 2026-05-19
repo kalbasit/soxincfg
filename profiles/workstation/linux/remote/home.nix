@@ -46,7 +46,6 @@
       nix-index
       nixpkgs-review
       nix-zsh-completions
-      nur.repos.kalbasit.swm
       pv # generic progress of data through a pipeline
       scrcpy # mirror Android device via USB
       screen # needed to open up terminal devices

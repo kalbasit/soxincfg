@@ -17,5 +17,7 @@ in
     vscode.enable = hostType == "nix-darwin";
     zellij.enable = hostType == "nix-darwin";
     zed.enable = hostType == "nix-darwin";
+
+    swm.enable = true;
   };
 }

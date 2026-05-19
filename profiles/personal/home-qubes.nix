@@ -15,10 +15,6 @@ in
       inherit sopsFile;
       mode = "0500";
     };
-    _config_swm_config_yaml_qubes = {
-      inherit sopsFile;
-      path = "${homePath}/.config/swm/config.yaml";
-    };
     _gitconfig_secrets = {
       inherit sopsFile;
       path = "${homePath}/.gitconfig.secrets";

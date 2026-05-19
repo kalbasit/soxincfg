@@ -46,7 +46,6 @@
     nix-zsh-completions
     nixos-generators
     nur.repos.kalbasit.nixify
-    nur.repos.kalbasit.swm
     pv # generic progress of data through a pipeline
     signal-cli
     unzip

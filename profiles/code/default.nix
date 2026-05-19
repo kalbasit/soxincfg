@@ -40,6 +40,7 @@ in
         pet.enable = true;
         ssh.enable = true;
         starship.enable = true;
+        swm.enable = true;
         t3code.enable = true;
         tmux.enable = true;
         zsh.enable = true;

@@ -620,17 +620,17 @@ fi
 # TODO: create a Derivation for the profile support. Make it optional and have
 # ZSH work with or without it.
 
-if [[ -z "${ZSH_PROFILE}" || -z "${SWM_STORY_NAME}" ]]; then
+if [[ -z "${ZSH_PROFILE}" || -z "${SWM_STORY}" ]]; then
 	if [[ -n "${DISPLAY}" ]] && have i3-msg; then
 		active_workspace="$(i3-msg -t get_workspaces 2>/dev/null | @jq_bin@ -r '.[] | if .focused == true then .name else empty end')"
 
 		if [[ "${active_workspace}" =~ '.*@.*' ]]; then
 			[[ -z "${ZSH_PROFILE}" ]] && export ZSH_PROFILE="$(echo "${active_workspace}" | cut -d@ -f1)"
-			[[ -z "${SWM_STORY_NAME}" ]] && export SWM_STORY_NAME="$(echo "${active_workspace}" | tr @ /)"
+			[[ -z "${SWM_STORY}" ]] && export SWM_STORY="$(echo "${active_workspace}" | tr @ /)"
 		fi
 
 		if [[ "$active_workspace" == "slack" ]]; then
-			[[ -z "${SWM_STORY_NAME}" ]] && export SWM_STORY_NAME="global/$active_workspace"
+			[[ -z "${SWM_STORY}" ]] && export SWM_STORY="global/$active_workspace"
 		fi
 
 		if [[ -z "${ZSH_PROFILE}" ]] && [[ -r "@home_path@/.zsh/profiles/${active_workspace}.zsh" ]]; then

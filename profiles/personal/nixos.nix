@@ -19,10 +19,6 @@ in
         inherit owner sopsFile;
         path = "${homePath}/.config/remmina/remmina.pref";
       };
-      _config_swm_config_yaml = {
-        inherit owner sopsFile;
-        path = "${homePath}/.config/swm/config.yaml";
-      };
       _config_tiny_config_yml = {
         inherit owner sopsFile;
         path = "${homePath}/.config/tiny/config.yml";
