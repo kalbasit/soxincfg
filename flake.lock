@@ -477,11 +477,11 @@
         "rustnix": "rustnix"
       },
       "locked": {
-        "lastModified": 1779148287,
-        "narHash": "sha256-asv7rlLjDe4gSIagnuZjmqTC+YOfTlptxdUrptDkp78=",
+        "lastModified": 1779289324,
+        "narHash": "sha256-sLhYj7SFki9WUa4hZ4hitGzEt+dAXGXaaaKz/BNVGCc=",
         "owner": "kalbasit",
         "repo": "laio-cli",
-        "rev": "8727e0263f073f8b714612c3d11af314842f9b78",
+        "rev": "cabd6ec258c9d6b69ad8400d35daf361f26ed5c3",
         "type": "github"
       },
       "original": {
