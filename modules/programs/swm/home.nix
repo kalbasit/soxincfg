@@ -22,7 +22,7 @@ in
     };
 
     soxin.programs.tmux.extraConfig = ''
-      bind s split-window -p 20 -v ${pkgs.swm-full}/bin/swm workspace open --kill-pane
+      bind s split-window -p 20 -v swm workspace open --kill-pane
     '';
 
     xdg.configFile."swm/config.toml".text =
