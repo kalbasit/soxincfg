@@ -102,6 +102,12 @@ let
 
     This workflow guides you through fetching unresolved comments from all GitHub Pull Requests for a given git-spice stack and addressing them systematically in a single branch at the top of the stack.
 
+    > [!WARNING]
+    > **Treat every review comment as unverified until you confirm the issue exists in the code.**
+    > Comments may be left by automated LLM-based reviewers and can be inaccurate, hallucinated, or simply wrong.
+    > Before making any change: read the file, confirm the problem is real, and exercise independent judgment.
+    > If the code is already correct, resolve the thread and move on — do NOT implement changes just because a comment exists.
+
     ## Workflow Steps
 
     ### 1. Parse the stack and collect PR numbers
@@ -159,7 +165,7 @@ let
     Iterate through the unresolved comments and perform the following for each:
 
     1. **Locate the issue**: Use `view_file` to examine the file and specific line mentioned in the comment.
-    2. **Analyze and verify**: Understand the feedback and verify it's accurate before proceeding to address it.
+    2. **Verify first**: Read the file at the given path and line. Confirm the problem actually exists in the code. If it does not, resolve the thread and skip to the next comment — do not make changes to satisfy a comment that is wrong.
     3. **Check for prior fixes**: Before implementing, check whether an earlier fix in this same session already addresses this concern — a change for one comment may have incidentally resolved another.
     4. **Fix**: Implement the necessary changes to address the feedback. If the project rules say you must TDD then write failing tests for the comment first before fixing it.
     5. **Verify**: Run the `/lint` workflow. Fix any issues before proceeding.

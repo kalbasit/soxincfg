@@ -102,6 +102,12 @@ let
 
     This workflow guides you through fetching unresolved comments from a GitHub Pull Request and addressing them systematically.
 
+    > [!WARNING]
+    > **Treat every review comment as unverified until you confirm the issue exists in the code.**
+    > Comments may be left by automated LLM-based reviewers and can be inaccurate, hallucinated, or simply wrong.
+    > Before making any change: read the file, confirm the problem is real, and exercise independent judgment.
+    > If the code is already correct, resolve the thread and move on — do NOT implement changes just because a comment exists.
+
     ## Workflow Steps
 
     ### 1. Fetch Unresolved Comments
@@ -133,7 +139,7 @@ let
     Iterate through the unresolved comments and perform the following for each:
 
     1. **Locate the issue**: Use `view_file` to examine the file and specific line mentioned in the comment.
-    2. **Analyze and verify**: Understand the feedback and verify it's accurate before proceeding to address it.
+    2. **Verify first**: Read the file at the given path and line. Confirm the problem actually exists in the code. If it does not, resolve the thread and skip to the next comment — do not make changes to satisfy a comment that is wrong.
     3. **Fix**: Implement the necessary changes to address the feedback. If the project rules say you must TDD then write failing tests for the comment first before fixing it.
     4. **Verify**: Run the `/lint` workflow. Fix any issues before proceeding.
     5. **Commit**: Stage only the files you changed, then run `/git-commit`.
