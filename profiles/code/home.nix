@@ -34,6 +34,7 @@
     pkgs.gnugrep
     pkgs.gnupg
     pkgs.hexyl # hex viewer with nice colors
+    pkgs.htop
     pkgs.imagemagick # for convert
     pkgs.inetutils # for telnet
     pkgs.jq
@@ -44,7 +45,9 @@
     pkgs.nix-zsh-completions
     pkgs.nixd
     pkgs.nixfmt
+    pkgs.psmisc
     pkgs.skopeo # inspect docker images
+    pkgs.tree
     pkgs.turso-cli
     pkgs.unzip
     pkgs.watch
