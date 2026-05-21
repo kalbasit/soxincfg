@@ -12,6 +12,8 @@ in
   imports = [
     soxincfg.nixosModules.profiles.code
 
+    ./hardware-configuration.nix
+
     ../nixos-25.05/nixos.nix
   ];
 
