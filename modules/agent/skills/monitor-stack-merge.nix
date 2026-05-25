@@ -14,7 +14,9 @@ let
   skillFile = ''
     ---
     name: monitor-stack-merge
-    description: Monitor a git-spice stack until all PRs are merged, handling failures automatically.
+    description: 'Monitor a git-spice stack until all PRs are merged, handling
+      failures automatically. Examples: "monitor the stack", "watch PRs until
+      merged", "keep an eye on the merge queue"'
     ---
 
     # monitor-stack-merge

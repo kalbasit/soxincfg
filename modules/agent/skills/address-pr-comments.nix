@@ -95,7 +95,8 @@ let
   skillFile = ''
     ---
     name: address-pr-comments
-    description: Address unresolved comments in a PR
+    description: 'Address unresolved comments in a PR. Examples: "address PR
+      comments", "resolve the review feedback", "fix the comments on this PR"'
     ---
 
     # Address Unresolved PR Comments

@@ -14,24 +14,46 @@
 let
   skillFile = ''
     ---
-    description: Lint and format code
+    name: lint
+    description: 'Lint and format code. Examples: "lint this", "format the code",
+      "fix linting errors", "run the formatter"'
     ---
 
-    **CRITICAL**: If the project has its own lint skill, refer to it instead. If not, here's generic guidelines for linting:
+    # Lint and Format Code
 
-    1. If the project has a flake.nix then run the Nix formatter:
+    ## When to Use
+
+    - Before every commit (required by `/git-commit` and `/gs-create`)
+    - After making code changes to catch style or correctness issues early
+    - When the CI reports formatting or lint failures
+
+    > [!WARNING]
+    > **CRITICAL**: If the project has its own `/lint` skill defined in a project-level
+    > `CLAUDE.md` or `.claude/` config, use that instead. The steps below are generic fallbacks.
+
+    ## Workflow
+
+    Run the applicable steps for this project's tech stack:
+
+    | Condition | Command |
+    | --------- | ------- |
+    | Project has `flake.nix` | `nix fmt` |
+    | Go project | `golangci-lint run --fix` |
+    | SQL files modified | `sqlfluff lint db/query.*.sql db/migrations/` |
+
+    ### Step 1 — Nix formatter (if `flake.nix` present)
 
     ```bash
     nix fmt
     ```
 
-    2. If this is a Go project, then run golangci-lint as well:
+    ### Step 2 — Go linter (if Go project)
 
     ```bash
     golangci-lint run --fix
     ```
 
-    3. (If SQL files modified) Lint SQL files:
+    ### Step 3 — SQL linter (if SQL files modified)
 
     ```bash
     sqlfluff lint db/query.*.sql db/migrations/

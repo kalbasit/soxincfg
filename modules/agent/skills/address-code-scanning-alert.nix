@@ -79,7 +79,9 @@ let
   skillFile = ''
     ---
     name: address-code-scanning-alert
-    description: Fetch details for a specific code scanning alert and resolve it
+    description: 'Fetch details for a specific code scanning alert and resolve it.
+      Examples: "fix alert 42", "address code scanning alert", "dismiss false
+      positive alert 7"'
     ---
 
     # Address Code Scanning Alert

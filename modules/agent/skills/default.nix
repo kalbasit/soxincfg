@@ -7,6 +7,7 @@ cfg:
     (import ./address-pr-comments.nix cfg)
     (import ./git.nix cfg)
     (import ./git-spice.nix cfg)
+    (import ./gs-submit.nix cfg)
     (import ./lint.nix cfg)
     (import ./monitor-stack-merge.nix cfg)
   ];

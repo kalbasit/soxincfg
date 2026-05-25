@@ -95,7 +95,9 @@ let
   skillFile = ''
     ---
     name: address-gs-comments
-    description: Address all unresolved PR review comments across a git-spice stack, working branch-by-branch from bottom to top.
+    description: 'Address all unresolved PR review comments across a git-spice
+      stack, working branch-by-branch from bottom to top. Examples: "address gs
+      comments", "fix the stack review comments", "resolve all PR feedback"'
     ---
 
     # Address Unresolved Git Spice Comments

@@ -15,12 +15,20 @@ let
   referenceSkillFile = ''
     ---
     name: git-spice
-    description: git-spice (gs) command reference for stacked branches and PRs. Use whenever you need to understand or execute any gs command.
+    description: 'git-spice (gs) command reference for stacked branches and PRs.
+      Use whenever you need to understand or execute any gs command. Examples:
+      "what does gs ls do?", "how do I restack?", "show me the gs command for X"'
     ---
 
     # Git Spice (gs) Reference
 
     git-spice is a CLI tool for creating, navigating, and submitting stacked Git branches as pull requests.
+
+    ## When to Use
+
+    - Looking up a `gs` command you don't know
+    - Understanding the stacked-branch model before running a workflow
+    - Checking available shorthands before typing a long command
 
     ## Core Concepts
 
@@ -135,8 +143,6 @@ let
     gs rba
     ```
 
-    ## Constraints
-
     > [!CAUTION]
     > The agent must **NEVER** run `git push`, `gs ss`, or `gs stack submit`.
     > Only the user decides when to push branches or submit the stack for review.
@@ -144,17 +150,34 @@ let
 
   createSkillFile = ''
     ---
-    description: Create a new Git Spice stack (semantic commit)
+    name: gs-create
+    description: 'Create a new Git Spice stack (semantic commit). Examples:
+      "create a new branch", "start a new stack", "branch off for this feature"'
     ---
 
-    1. You MUST first run the `/lint` workflow.
-       - If there are any linting issues, you must fix them before proceeding.
-       - Only when all issues are fixed, proceed to the next step.
+    # Create a New Git Spice Branch
 
-    2. Create a new stack using `gs branch create`.
-      - You must provide a semantic commit message (feat, fix, docs, style, refactor, test, chore) following the format `type: title`.
-      - The commit message MUST include a description that explains the **why** and **how** of the change.
-      - The commit message MUST follow the 50/72 rule. The subject line MUST be 50 characters or less, and the body MUST be wrapped at 72 characters.
+    ## When to Use
+
+    - Starting work on a new feature, fix, or refactor that should live on its own branch
+    - Adding a new branch on top of the current stack
+    - When you have staged changes ready to go onto a new branch
+
+    ## Workflow
+
+    ### 1. Lint first
+
+    You MUST first run the `/lint` workflow.
+    - If there are any linting issues, fix them before proceeding.
+    - Only when all issues are fixed, proceed to the next step.
+
+    ### 2. Create the branch
+
+    Provide a semantic commit message (`feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`) in the format `type(scope): title`.
+
+    - The subject line MUST be 50 characters or less.
+    - The body MUST be wrapped at 72 characters.
+    - The body MUST explain the **why** and **how** of the change.
 
     ```bash
     gs branch create -am "<type>: <title>
@@ -163,34 +186,58 @@ let
     ```
 
     > [!CAUTION]
-    > The AGENT MUST NEVER run `git push`, `gs ss`, or its long version `gs stack submit`. Only the USER should ever decide to run `gs ss`.
+    > The AGENT MUST NEVER run `git push`, `gs ss`, or its long version `gs stack submit`.
+    > Only the USER should ever decide to run `gs ss`.
   '';
 
   restackSkillFile = ''
     ---
-    description: Restack the current Git Spice stack and resolve conflicts
+    name: gs-restack
+    description: 'Restack the current Git Spice stack and resolve conflicts.
+      Examples: "restack the stack", "rebase the branches", "fix the stack after rebasing main"'
     ---
 
-    1. Start the restacking process:
+    # Restack the Git Spice Stack
+
+    ## When to Use
+
+    - After `main` has been updated and branches need to be rebased onto it
+    - After fixing commits on a lower branch that need to propagate upstack
+    - When `gs ls` shows branches are out of date with their base
+
+    ## Workflow
+
+    ### 1. Start restacking
 
     ```bash
     gs stack restack
     ```
 
-    2. If conflicts are found:
-        - Review the output to identify which commit is being rebased and the files involved.
-        - Examine the conflict markers in the affected files.
-        - **Generated files**: If the file is generated, then do not resolve it manually. Instead, restore it from `HEAD` and regenerate it correctly.
-        - **Other files**: Resolve the conflicts by choosing the correct changes based on the context of the PR stack.
-        - Stage the resolved files:
+    ### 2. Resolve conflicts (if any)
 
-        ```bash
-        git add <resolved-files>
-        ```
+    If conflicts are found, review the output to identify which commit is being rebased and which files are involved.
 
-    3. **CRITICAL**: Once all files are resolved, use `gs rebase continue` to continue the restacking process.
+    | File type | Resolution strategy |
+    | --------- | ------------------- |
+    | **Generated file** | Restore from `HEAD`, then regenerate — do not resolve manually |
+    | **Regular file** | Resolve conflict markers based on the context of the PR stack |
 
-    4. Repeat step 2-3 as necessary until the restack is complete.
+    Stage the resolved files:
+
+    ```bash
+    git add <resolved-files>
+    ```
+
+    ### 3. Continue the rebase
+
+    > [!CAUTION]
+    > **CRITICAL**: Always use `gs rebase continue` — never `git rebase --continue`.
+
+    ```bash
+    gs rebase continue
+    ```
+
+    Repeat steps 2–3 as needed until the restack completes.
   '';
 in
 {
