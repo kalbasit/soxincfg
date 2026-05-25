@@ -95,12 +95,12 @@ let
   skillFile = ''
     ---
     name: address-gs-comments
-    description: Address all unresolved PR review comments across an entire git-spice stack in a single consolidation branch.
+    description: Address all unresolved PR review comments across a git-spice stack, working branch-by-branch from bottom to top.
     ---
 
     # Address Unresolved Git Spice Comments
 
-    This workflow guides you through fetching unresolved comments from all GitHub Pull Requests for a given git-spice stack and addressing them systematically in a single branch at the top of the stack.
+    This workflow fetches unresolved comments from every PR in a git-spice stack, classifies them with full-stack context, then addresses them directly on the branches where they belong — restacking after each branch to minimize the conflict surface.
 
     > [!WARNING]
     > **Treat every review comment as unverified until you confirm the issue exists in the code.**
@@ -108,83 +108,100 @@ let
     > Before making any change: read the file, confirm the problem is real, and exercise independent judgment.
     > If the code is already correct, resolve the thread and move on — do NOT implement changes just because a comment exists.
 
-    ## Workflow Steps
+    > [!CAUTION]
+    > **Never** run `git push`, `gs ss`, or `gs stack submit`. The user decides when to push.
 
-    ### 1. Parse the stack and collect PR numbers
+    ## Phase A — Collect and Classify (read-only, full-stack context)
 
-    ```sh
+    ### 1. Parse the stack
+
+    ```bash
     gs ls
     ```
 
-    Extract every PR number visible in the output (lines like `#290`, `#294`, etc.).
+    Record every branch name and its PR number (lines like `feat/foo (#290)`).
+    Note the order: bottom of stack is closest to `main`, top is furthest.
     If `gs ls` shows no PR numbers, also run `gh pr list --state open` to double-check.
     If truly no open PRs exist, tell the user and stop.
 
-    ### 2. Create the consolidation branch
+    ### 2. Fetch all unresolved comments
 
-    **Branch naming rule** (pick the first that applies):
-
-    1. If PR numbers are contiguous (e.g. 290–295): `gs-comments-290-295`
-    2. If non-contiguous (e.g. 290, 293, 295): `gs-comments-290-293-295`
-    3. Fallback (parse failure): `gs-comments-<YYYYMMDDHHmm>`
-
-    **Create the branch** (from the top of the stack, no initial commit):
-
-    ```sh
-    gs top && gs branch create --no-commit <branch-name>
-    ```
-
-    > **Never** run `git push`, `gs ss`, or `gs stack submit`. The user decides when to push.
-
-    ### 3. Fetch Unresolved Comments from every PR.
-
-    For each PR number in ascending order: Use the helper script to fetch the unresolved comments.
+    For each PR in the stack, fetch its unresolved comments:
 
     ```bash
-    # Fetch comments for a given PR number.
     ${get-unresolved-comments} <PR_NUMBER>
     ```
 
-    The script outputs a JSON array of comments. Each comment includes the `body` (feedback), `path` (file), `line`, and `threadId` (required for resolution).
+    Each comment includes `body` (feedback), `path` (file), `line`, and `threadId` (required for resolution).
+    Tag each comment with its source `prNumber` and `branchName`. Collect all results into a single list.
 
-    Tag each returned comment object with its source `prNumber`. Collect all results
-    into a single ordered list.
+    ### 3. Classify every comment
 
-    ### 4. Assess relevance
-
-    For each comment:
+    For each comment, determine its action using the full stack's history:
 
     1. Does `path` still exist in the working tree? (`git ls-files <path>`)
-    2. Is the concern already addressed by a later commit on the stack?
-       (`git log --all -p -- <path>` — look for the fix the reviewer requested)
+       If not → **skip**: resolve the thread and document the skip.
+    2. Read the file at `path:line`. Does the problem actually exist in the code?
+       If not → **skip**: resolve the thread and document the skip.
+    3. Is the fix already present in **the same branch** (`git log -p -- <path>`)?
+       If yes → **skip**: resolve the thread and document the skip.
+    4. Is the fix already present in **an upper branch** of the stack?
+       If yes → **fix-here-remove-above**: the fix belongs on the lower (owning) branch.
+       Implement it there; the duplicate in the upper branch will surface as a conflict
+       during restack and must be dropped at that point.
+    5. Otherwise → **fix-here**: standard fix on the owning branch.
 
-    Skip comments that no longer apply; document each skip briefly.
+    Document each classification decision before proceeding to Phase B.
 
-    ### 5. Address relevant comments (ascending PR order)
+    ## Phase B — Address branch by branch (bottom to top)
 
-    Iterate through the unresolved comments and perform the following for each:
+    For each branch from **bottom to top**:
 
-    1. **Locate the issue**: Use `view_file` to examine the file and specific line mentioned in the comment.
-    2. **Verify first**: Read the file at the given path and line. Confirm the problem actually exists in the code. If it does not, resolve the thread and skip to the next comment — do not make changes to satisfy a comment that is wrong.
-    3. **Check for prior fixes**: Before implementing, check whether an earlier fix in this same session already addresses this concern — a change for one comment may have incidentally resolved another.
-    4. **Fix**: Implement the necessary changes to address the feedback. If the project rules say you must TDD then write failing tests for the comment first before fixing it.
-    5. **Verify**: Run the `/lint` workflow. Fix any issues before proceeding.
-    6. **Commit**: Stage only the files you changed, then run `/git-commit`. The commit message must reference the PR number and comment `threadId`.
+    ### 1. Checkout the branch
+
+    ```bash
+    gs branch checkout <branch-name>
+    ```
+
+    ### 2. Address this branch's comments
+
+    For each **fix-here** or **fix-here-remove-above** comment belonging to this branch:
+
+    a. **Verify**: Re-read the file at `path:line` to confirm the issue still exists as classified.
+    b. **Check for prior fixes**: Has an earlier fix in this session incidentally resolved this concern?
+       If so, resolve the thread and skip.
+    c. **Fix**: Implement the necessary change.
+    d. **Lint**: Run `/lint`. Fix any issues before continuing.
+    e. **Commit**: Stage only the changed files and run `/git-commit`.
+       The commit message must reference the PR number and comment `threadId`.
 
     ```bash
     git add <changed-files>
-    # then invoke the /git-commit skill
+    # then invoke /git-commit
     ```
 
-    7. **Resolve on GitHub**: Use the `threadId` provided in the fetch step to resolve the thread on GitHub.
+    f. **Resolve on GitHub**:
 
     ```bash
     ${resolve-pr-comment} <THREAD_ID>
     ```
 
-    ### 6. Final Verification
+    ### 3. Restack immediately after all commits on this branch
 
-    After addressing and resolving all comments, perform a final check of the changes and ensure the project still builds and tests pass.
+    After committing all fixes for this branch, run `/gs-restack`:
+
+    - This propagates the changes upstack and minimizes the conflict surface for the next branch.
+    - For **fix-here-remove-above** cases: the duplicate fix in the upper branch will surface as
+      a conflict here. Resolve it by **dropping the duplicate** — keep only the lower branch's version.
+
+    Then proceed to the next branch up the stack.
+
+    ## Phase C — Final Verification
+
+    After the top branch is processed and the final `/gs-restack` completes:
+
+    - Confirm the full stack builds and tests pass.
+    - Confirm all threads have been resolved on GitHub.
 
     ## Internal details
 

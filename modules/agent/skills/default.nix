@@ -8,5 +8,6 @@ cfg:
     (import ./git.nix cfg)
     (import ./git-spice.nix cfg)
     (import ./lint.nix cfg)
+    (import ./monitor-stack-merge.nix cfg)
   ];
 }
