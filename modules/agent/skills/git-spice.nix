@@ -67,7 +67,7 @@ let
     | `gs stack delete` | `gs sd` | Delete all branches in the stack |
     | `gs upstack submit` | `gs uss` | Submit current branch and all above |
     | `gs upstack restack` | `gs usr` | Restack current branch and all above |
-    | `gs upstack onto` | `gs uon` | Move branch and upstack onto another |
+    | `gs upstack onto` | `gs uso` | Move branch and upstack onto another |
     | `gs upstack delete` | `gs usd` | Delete current branch and all above |
     | `gs downstack submit` | `gs dss` | Submit current branch and all below |
     | `gs downstack edit` | `gs dse` | Edit order of branches below |
@@ -89,6 +89,11 @@ let
     | `gs top` | `gs U` | Jump to top of stack |
     | `gs bottom` | `gs D` | Jump to bottom of stack |
     | `gs trunk` | — | Return to trunk (main/master) |
+    | `gs auth login` | — | Authenticate with a forge (GitHub) |
+    | `gs auth status` | — | Show current authentication status |
+    | `gs auth logout` | — | Log out from a forge |
+    | `gs shell completion` | — | Generate shell completion scripts |
+    | `gs version` | — | Print version information |
 
     ## Key Workflows
 
@@ -131,6 +136,21 @@ let
     gs uss         # submit current + all above
     gs dss         # submit current + all below
     ```
+
+    ### `gs branch submit` flags
+
+    | Flag | Purpose |
+    |------|---------|
+    | `--title TITLE` | Set PR title (new PRs only) |
+    | `--body BODY` | Set PR body (new PRs only) |
+    | `--branch NAME` | Target a specific branch instead of current |
+    | `--draft` / `--no-draft` | Open as draft (or not) |
+    | `--fill` | Auto-fill title/body from commit messages |
+    | `--no-publish` | Push branch without creating a PR |
+    | `--update-only` | Only update branches that already have a PR |
+    | `--dry-run` | Show what would be submitted without submitting |
+    | `--nav-comment` | Control navigation comment (`true`/`false`/`multiple`) |
+    | `--web` / `--no-web` | Open PR in browser after submit |
 
     ### Handle rebase conflicts
 
