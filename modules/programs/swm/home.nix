@@ -28,49 +28,42 @@ in
       bind s split-window -p 20 -v swm workspace open --kill-pane
     '';
 
-    xdg.configFile."swm/config.toml".text =
-      let
-        laio-template = pkgs.writeText "laio.yaml" ''
-          ---
-          name: swm-pane-group
+    xdg.configFile."swm/config.toml".text = ''
+      code_root     = "~/code"
+      default_story = "_default"
 
-          # Resolved relative to the worktree path swm passes as cwd
-          path: "{{ path }}"
+      [plugins]
+      session = "tmux"
+      vcs     = "git"
+      picker  = "fzf"
+      forges  = ["github"]
 
-          windows:
-            - name: code
-              panes:
-                - commands:
-                    - command: nvim
 
-            - name: claude
-              panes:
-                - focus: true
-                  commands:
-                    - command: claude
-                      args:
-                        - --dangerously-skip-permissions
+      [story]
+      branch_name_template = "user/wnasreddine/{{.Name}}"
+    '';
 
-            - name: shell
-              panes:
-                - flex: 1
-        '';
-      in
-      ''
-        code_root     = "~/code"
-        default_story = "_default"
+    xdg.configFile."swm/session-tmux.toml".text = ''
+      path = "{{.WorktreePath}}"
 
-        [plugins]
-        session = "tmux"
-        vcs     = "git"
-        picker  = "fzf"
-        forges  = ["github"]
+      [[windows]]
+      name = "code"
 
-        [plugins.config.session-tmux]
-        pane_group_command = "laio start --file ${laio-template} --tmux-socket '{{tmux_socket}}' --replace-current-session --skip-attach --var path='{{worktree_path}}'"
+        [[windows.panes]]
+        commands = ["nvim"]
 
-        [story]
-        branch_name_template = "user/wnasreddine/{{.Name}}"
-      '';
+      [[windows]]
+      name = "claude"
+
+        [[windows.panes]]
+        focus = true
+        commands = ["claude --dangerously-skip-permissions"]
+
+      [[windows]]
+      name = "shell"
+
+        [[windows.panes]]
+        flex = 1
+    '';
   };
 }
