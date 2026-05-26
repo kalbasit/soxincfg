@@ -34,16 +34,12 @@
 
   # services
   aerospace = ./services/aerospace;
-  borders = ./services/borders;
   dnsmasq = ./services/dnsmasq;
   i3 = ./services/x11/window-managers/i3.nix;
   iscsid = ./services/iscsid.nix;
   nextcloud = ./services/nextcloud;
-  sketchybar = ./services/sketchybar;
-  skhd = ./services/skhd;
   sleep-on-lan = ./services/sleep-on-lan;
   ssh-agent-mux = ./services/ssh-agent-mux;
-  yabai = ./services/yabai;
 
   # settings
   fonts = ./settings/fonts;
