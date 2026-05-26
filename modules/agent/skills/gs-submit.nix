@@ -101,13 +101,18 @@ let
 
     ## Optional Flags
 
-    | Flag                | Purpose                                                           |
-    | ------------------- | ----------------------------------------------------------------- |
-    | `--draft`           | Open as draft PR                                                  |
-    | `--label foo`       | Add label (repeatable)                                            |
-    | `--reviewer handle` | Request a reviewer (repeatable)                                   |
-    | `--assign handle`   | Assign to a user (repeatable)                                     |
-    | `--fill`            | Auto-fill title/body from commit messages (skips manual drafting) |
+    | Flag                      | Purpose                                                           |
+    | ------------------------- | ----------------------------------------------------------------- |
+    | `--draft` / `--no-draft`  | Open as draft PR (or not)                                         |
+    | `--label foo`             | Add label (repeatable)                                            |
+    | `--reviewer handle`       | Request a reviewer (repeatable)                                   |
+    | `--assign handle`         | Assign to a user (repeatable)                                     |
+    | `--fill`                  | Auto-fill title/body from commit messages (skips manual drafting) |
+    | `--no-publish`            | Push branch without creating a PR                                 |
+    | `--update-only`           | Only update branches that already have a PR                       |
+    | `--dry-run`               | Show what would be submitted without submitting                   |
+    | `--nav-comment`           | Control navigation comment (`true`/`false`/`multiple`)            |
+    | `--web` / `--no-web`      | Open PR in browser after submit                                   |
 
     > [!CAUTION]
     > **NEVER** run `gs ss` or `gs stack submit`. Only the USER decides to submit a
