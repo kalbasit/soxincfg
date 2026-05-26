@@ -30,6 +30,7 @@
     pkgs.flyctl
     pkgs.gdb
     pkgs.gh # GitHub command line client
+    pkgs.ghostty.terminfo # Ghostty terminal info
     pkgs.git-spice
     pkgs.gnugrep
     pkgs.gnupg
