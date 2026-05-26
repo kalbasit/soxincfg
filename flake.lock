@@ -973,11 +973,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1779387116,
-        "narHash": "sha256-197v3uIE0b+syVTvAxSvvQNehYsFfd6TQOEUr1dIlJg=",
+        "lastModified": 1779775781,
+        "narHash": "sha256-hhCsoyR4stQZjsLB8c2y7WvUx3nqdVmWCnqji2Q6wAk=",
         "owner": "kalbasit",
         "repo": "swm",
-        "rev": "cf61774421ae33413be4f95c38c7f766ee58fe90",
+        "rev": "576796a44e16a3b58c442638b076ea1b0817c14c",
         "type": "github"
       },
       "original": {
