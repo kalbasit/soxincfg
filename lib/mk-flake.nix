@@ -75,7 +75,12 @@ let
     };
 
     nixpkgs-unstable = {
-      config = { };
+      config = {
+        permittedInsecurePackages = [
+          # TODO: This is needed to make onlykey-agent installable. It's currently failing due to a know CVE.
+          "python3.13-ecdsa-0.19.2"
+        ];
+      };
 
       input = nixpkgs-unstable;
 
