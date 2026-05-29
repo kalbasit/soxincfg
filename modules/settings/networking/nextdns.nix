@@ -33,9 +33,8 @@ in
 
       services.resolved = {
         enable = true;
-        extraConfig = ''
-          DNSOverTLS=yes
-        '';
+
+        settings.Resolve.DNSOverTLS = true;
       };
     })
   ]);
