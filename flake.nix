@@ -24,10 +24,6 @@
       };
     };
 
-    # TODO: Change to the main repository once my prs are merged
-    # laio.url="github:ck3mp3r/laio-cli";
-    laio.url = "github:kalbasit/laio-cli/feat/in-session";
-
     nixvim = {
       url = "github:kalbasit/nixvim";
       # XXX: Leave nixvim with its own tested nixpkgs.

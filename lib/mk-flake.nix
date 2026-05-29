@@ -61,10 +61,6 @@ let
             worktrunk
             ;
 
-          inherit (inputs.laio.packages.${super.stdenv.hostPlatform.system})
-            laio
-            ;
-
           inherit (inputs.swm.packages.${super.stdenv.hostPlatform.system})
             swm-full
             ;
