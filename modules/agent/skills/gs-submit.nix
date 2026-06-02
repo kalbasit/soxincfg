@@ -52,6 +52,14 @@ let
     )"
     ```
 
+    3. After submitting, run `gs ss --update-only` so git-spice posts/updates its
+       navigation comment on the PR (git-spice only posts the nav comment via the
+       stack command, not via `gs branch submit`):
+
+    ```bash
+    gs ss --update-only
+    ```
+
     ## Workflow — Stack (Multiple Branches)
 
     1. Run `gs ls` to see the full stack and identify which branches already have PRs.
@@ -99,6 +107,13 @@ let
        gs branch submit --branch user/you/top-branch
        ```
 
+    3. After all branches are submitted, run `gs ss --update-only` so git-spice
+       posts/updates its navigation comment on every PR in the stack:
+
+    ```bash
+    gs ss --update-only
+    ```
+
     ## Optional Flags
 
     | Flag                      | Purpose                                                           |
@@ -115,8 +130,14 @@ let
     | `--web` / `--no-web`      | Open PR in browser after submit                                   |
 
     > [!CAUTION]
-    > **NEVER** run `gs ss` or `gs stack submit`. Only the USER decides to submit a
-    > full stack at once. Always use `gs branch submit --branch <name>` per branch.
+    > **NEVER** run `gs ss` or `gs stack submit` to submit PRs. Only the USER decides
+    > to submit a full stack at once. Always use `gs branch submit --branch <name>`
+    > per branch.
+    >
+    > **Exception:** `gs ss --update-only` is explicitly allowed as the final step
+    > after all branches have been submitted — it only pushes already-open PRs and
+    > triggers git-spice to post/refresh its navigation comment. It will never open
+    > a new PR.
     >
     > `--title`/`--body` are silently ignored for branches that already have a PR.
     > git-spice provides no mechanism to update a PR's title or body after creation.
