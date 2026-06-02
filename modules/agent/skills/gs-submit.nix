@@ -52,12 +52,12 @@ let
     )"
     ```
 
-    3. After submitting, run `gs ss --update-only` so git-spice posts/updates its
+    3. After submitting, run `gs stack submit --update-only` so git-spice posts/updates its
        navigation comment on the PR (git-spice only posts the nav comment via the
        stack command, not via `gs branch submit`):
 
     ```bash
-    gs ss --update-only
+    gs stack submit --update-only
     ```
 
     ## Workflow — Stack (Multiple Branches)
@@ -107,11 +107,11 @@ let
        gs branch submit --branch user/you/top-branch
        ```
 
-    3. After all branches are submitted, run `gs ss --update-only` so git-spice
+    3. After all branches are submitted, run `gs stack submit --update-only` so git-spice
        posts/updates its navigation comment on every PR in the stack:
 
     ```bash
-    gs ss --update-only
+    gs stack submit --update-only
     ```
 
     ## Optional Flags
@@ -134,7 +134,7 @@ let
     > to submit a full stack at once. Always use `gs branch submit --branch <name>`
     > per branch.
     >
-    > **Exception:** `gs ss --update-only` is explicitly allowed as the final step
+    > **Exception:** `gs stack submit --update-only` is explicitly allowed as the final step
     > after all branches have been submitted — it only pushes already-open PRs and
     > triggers git-spice to post/refresh its navigation comment. It will never open
     > a new PR.
