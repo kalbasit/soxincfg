@@ -4,3 +4,10 @@
 
 # soxin is used as a symlink to allow me to work on both projects in one editor
 /soxin
+
+# Agents
+/.claude/scheduled_tasks.lock
+/.claude/plans/
+/.claude/settings.local.json
+/.claude/worktrees/
+/.container-use/environment.json
