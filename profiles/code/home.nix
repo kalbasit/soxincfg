@@ -5,6 +5,10 @@
 }:
 
 {
+  imports = [
+    ../workstation/common/home-kubernetes-client.nix
+  ];
+
   # programs
   programs.bat.enable = true;
   programs.direnv.enable = true;
