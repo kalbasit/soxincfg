@@ -22,7 +22,6 @@
   ssh = ./programs/ssh;
   starship = ./programs/starship.nix;
   swm = ./programs/swm;
-  t3code = ./programs/t3code;
   termite = ./programs/termite.nix;
   tmux = ./programs/tmux;
   vscode = ./programs/vscode;
