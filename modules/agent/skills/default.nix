@@ -10,5 +10,6 @@ cfg:
     (import ./gs-submit.nix cfg)
     (import ./lint.nix cfg)
     (import ./monitor-stack-merge.nix cfg)
+    (import ./wait-for-coderabbit-review.nix cfg)
   ];
 }
