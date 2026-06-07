@@ -36,7 +36,7 @@ let
     TMP_DIR=$(mktemp -d)
     trap 'rm -rf "$TMP_DIR"' EXIT
 
-    # GraphQL query to fetch unresolved threads
+    # GraphQL query to fetch unresolved threads and top-level review bodies
     QUERY='
     query($owner: String!, $name: String!, $pr: Int!) {
       repository(owner: $owner, name: $name) {
@@ -57,6 +57,16 @@ let
               }
             }
           }
+          reviews(first: 100) {
+            nodes {
+              id
+              body
+              state
+              author {
+                login
+              }
+            }
+          }
         }
       }
     }'
@@ -66,8 +76,16 @@ let
 
     ${pkgs.gh}/bin/gh api graphql -F owner="$OWNER" -F name="$NAME" -F pr="$PR_NUMBER" -f query="$QUERY" > "$RESULT_FILE"
 
-    # Filter and output only unresolved comments, including the thread ID
-    ${pkgs.jq}/bin/jq '.data.repository.pullRequest.reviewThreads.nodes[] | select(.isResolved == false) as $thread | $thread.comments.nodes[] | . + {threadId: $thread.id}' "$RESULT_FILE"
+    # Output unresolved inline thread comments, then non-empty top-level review bodies
+    ${pkgs.jq}/bin/jq '[
+      (.data.repository.pullRequest.reviewThreads.nodes[]
+        | select(.isResolved == false) as $thread
+        | $thread.comments.nodes[]
+        | . + {threadId: $thread.id, reviewId: null, type: "inline"}),
+      (.data.repository.pullRequest.reviews.nodes[]
+        | select(.body != null and .body != "")
+        | {body: .body, path: null, line: null, author: .author, reviewId: .id, threadId: null, type: "review"})
+    ]' "$RESULT_FILE"
   '';
 
   resolve-pr-comment = pkgs.writeShellScript "resolve-pr-comment.sh" ''
@@ -123,7 +141,10 @@ let
     ${get-unresolved-comments} <PR_NUMBER>
     ```
 
-    The script outputs a JSON array of comments. Each comment includes the `body` (feedback), `path` (file), `line`, and `threadId` (required for resolution).
+    The script outputs a JSON array of comments. Each object has a `type` field indicating its kind:
+
+    - **`"inline"`** — a comment on a specific file and line. Has `path`, `line`, and `threadId` (required for resolution via API). These come from `reviewThreads` where `isResolved` is `false`.
+    - **`"review"`** — a top-level review body comment not tied to any file or line. Has `reviewId` and `null` for `path`/`line`/`threadId`. These are comments the reviewer left as general feedback (e.g., when the diff was out of scope or the tool could not post inline). They cannot be formally resolved via the API.
 
     > **If the script exits with an error** (no PR found for the current branch), either push the branch and open a PR first, or pass the PR number explicitly as an argument.
 
@@ -137,11 +158,13 @@ let
 
     ### 3. Address Each Comment
 
-    Iterate through the unresolved comments and perform the following for each:
+    Iterate through all comments. The handling differs by `type`:
 
-    1. **Locate the issue**: Use `view_file` to examine the file and specific line mentioned in the comment.
-    2. **Verify first**: Read the file at the given path and line. Confirm the problem actually exists in the code. If it does not, resolve the thread and skip to the next comment — do not make changes to satisfy a comment that is wrong.
-    3. **Fix**: Implement the necessary changes to address the feedback. If the project rules say you must TDD then write failing tests for the comment first before fixing it.
+    #### Inline comments (`type: "inline"`)
+
+    1. **Locate the issue**: Read the file at `path` near `line`.
+    2. **Verify first**: Confirm the problem actually exists. If it does not, resolve the thread and skip — do not make changes to satisfy a wrong comment.
+    3. **Fix**: Implement the necessary changes. If the project rules say you must TDD then write failing tests first.
     4. **Verify**: Run the `/lint` workflow. Fix any issues before proceeding.
     5. **Commit**: Stage only the files you changed, then run `/git-commit`.
 
@@ -153,11 +176,22 @@ let
     > [!CAUTION]
     > Use `/git-commit` for this step. Do NOT use `/gs-create` — that creates a new stacked branch and is wrong here since you are already on the correct feature branch.
 
-    6. **Resolve on GitHub**: Use the `threadId` provided in the fetch step to resolve the thread on GitHub.
+    6. **Resolve on GitHub**: Use the `threadId` to mark the thread resolved.
 
     ```bash
     ${resolve-pr-comment} <THREAD_ID>
     ```
+
+    #### Top-level review comments (`type: "review"`)
+
+    These are general review bodies — the reviewer could not (or chose not to) attach them to a specific line. They have a `reviewId` but **no `threadId`** and cannot be resolved via the `resolveReviewThread` API.
+
+    1. **Read the body carefully**: Understand what the reviewer is asking for.
+    2. **Verify first**: Determine whether the concern is real. Exercise independent judgment — do not implement changes just because a comment exists.
+    3. **Fix**: Implement the necessary changes if the concern is valid.
+    4. **Verify**: Run the `/lint` workflow.
+    5. **Commit**: Run `/git-commit` as above.
+    6. **No API resolution**: There is no API call to resolve these. Addressing the concern in code (and pushing) is sufficient — the reviewer can see the updated diff.
 
     ### 4. Final Review
 
@@ -165,8 +199,11 @@ let
 
     ## Internal details
 
-    The script `${get-unresolved-comments}` uses `gh api graphql` to fetch `reviewThreads` where `isResolved` is false.
-    The script `${resolve-pr-comment}` uses the `resolveReviewThread` GraphQL mutation to mark a thread as resolved.
+    The script `${get-unresolved-comments}` fetches two data sources via GraphQL:
+    - `reviewThreads` — inline file/line comments; filtered to `isResolved == false`; emitted with `type: "inline"` and a `threadId`
+    - `reviews` — top-level review submissions; filtered to non-empty `body`; emitted with `type: "review"` and a `reviewId`
+
+    The script `${resolve-pr-comment}` uses the `resolveReviewThread` GraphQL mutation to mark an inline thread as resolved. It only works for `"inline"` comments (those with a `threadId`).
   '';
 in
 {
