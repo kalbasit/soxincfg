@@ -1,4 +1,5 @@
 {
+  lib,
   pkgs,
   ...
 }:
@@ -44,13 +45,15 @@
     # Feed the kernel some entropy
     haveged.enable = true;
 
-    # Explicitly disable the X server, sound, and related services.
+    # Explicitly disable the X server, sound, dbus, and related services.
     xserver.enable = false;
     pulseaudio.enable = false;
+    dbus.enable = lib.mkForce false;
   };
 
-  # Explicitly disable rtkit
+  # Explicitly disable rtkit and polkit (headless — no GUI auth needed)
   security.rtkit.enable = false;
+  security.polkit.enable = lib.mkForce false;
 
   # Disable documentation to save space.
   documentation.enable = false;
