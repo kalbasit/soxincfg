@@ -52,12 +52,34 @@ let
     newest_updated=0
     newest_deadline=0
     newest_pr="-"
+    any_inprog=0
 
     for pr in "''${prs[@]}"; do
       gemini=$(${pkgs.gh}/bin/gh pr view "$pr" -R "$repo" --json comments,reviews --jq \
         '((.comments + (.reviews // [])) | map(select(.author.login=="gemini-code-assist")) | length) > 0 | if . then 1 else 0 end' 2>/dev/null || echo 0)
+      # A COMPLETED CodeRabbit review. Includes the clean case: when nothing is
+      # flagged the summary says "No actionable comments were generated" (there
+      # is no "Walkthrough"/"Actionable comments posted" line), so match that and
+      # the "Recent review info" footer too — otherwise a clean review reads as
+      # coderabbit=0 forever and the loop never terminates.
       cr=$(${pkgs.gh}/bin/gh pr view "$pr" -R "$repo" --json comments --jq \
-        '[.comments[] | select(.author.login=="coderabbitai") | select(.body|test("Walkthrough|Actionable comments posted"))] | length > 0 | if . then 1 else 0 end' 2>/dev/null || echo 0)
+        '[.comments[] | select(.author.login=="coderabbitai") | select(.body|test("Walkthrough|Actionable comments posted|No actionable comments were generated|Recent review info"))] | length > 0 | if . then 1 else 0 end' 2>/dev/null || echo 0)
+
+      # IN-PROGRESS. CodeRabbit auto-reviews on PR open/push and, while working,
+      # its summary comment carries the marker
+      #   <!-- This is an auto-generated comment: review in progress by coderabbit.ai -->
+      # and the visible note "Currently processing new changes in this PR". That
+      # marker is EDITED OUT when the review completes, so it is an unambiguous
+      # in-progress signal (unlike the "summarize by coderabbit.ai" marker, which
+      # is present in both the in-progress and the finished comment). If a review
+      # is in progress (cr=0, not rate-limited), WAIT — do NOT post a manual
+      # @coderabbitai review; it is pure noise.
+      inprog=0
+      if [ "$cr" = "0" ]; then
+        inprog=$(${pkgs.gh}/bin/gh pr view "$pr" -R "$repo" --json comments --jq \
+          '[.comments[] | select(.author.login=="coderabbitai") | select(.body|test("review in progress by coderabbit\\.ai|Currently processing new changes"))] | length > 0 | if . then 1 else 0 end' 2>/dev/null || echo 0)
+        if [ "$inprog" = "1" ]; then any_inprog=1; fi
+      fi
 
       window="-"
       if [ "$cr" = "0" ]; then
@@ -76,14 +98,17 @@ let
           if [ "$d" -le "$now" ]; then window="own window elapsed @ $(${pkgs.coreutils}/bin/date -u -d "@$d" +%H:%M:%SZ)"; else window="own wait $((d-now))s @ $(${pkgs.coreutils}/bin/date -u -d "@$d" +%H:%M:%SZ)"; fi
           if [ "$u" -gt "$newest_updated" ]; then newest_updated="$u"; newest_deadline="$d"; newest_pr="$pr"; fi
         fi
+        if [ "$window" = "-" ] && [ "$inprog" = "1" ]; then window="review in progress — WAIT, do not trigger"; fi
       fi
 
       printf "PR %s | gemini=%s coderabbit=%s | %s\n" "$pr" "$gemini" "$cr" "$window"
     done
 
     echo "----"
-    if [ "$newest_updated" = "0" ]; then
-      echo "SHARED LIMIT: no fresh rate-limit comment found — trigger ONE PR and re-run to learn the authoritative deadline."
+    if [ "$newest_updated" = "0" ] && [ "$any_inprog" = "1" ]; then
+      echo "SHARED LIMIT: no rate-limit, but a CodeRabbit review is IN PROGRESS on one or more PRs. WAIT and re-run — do NOT trigger (manual @coderabbitai review while it is already reviewing is noise)."
+    elif [ "$newest_updated" = "0" ]; then
+      echo "SHARED LIMIT: no rate-limit and no review in progress. CodeRabbit auto-reviews on open/push, so first just WAIT ~1-2 min and re-run; only trigger ONE PR if it stays idle (no review, no in-progress marker) past that."
     elif [ "$newest_deadline" -le "$now" ]; then
       echo "SHARED LIMIT: OPEN (newest rate-limit was PR $newest_pr, refreshed $(${pkgs.coreutils}/bin/date -u -d "@$newest_updated" +%H:%M:%SZ)). Trigger ONE PR now, then re-run."
     else
@@ -120,15 +145,28 @@ let
     This skill pairs with `/loop` dynamic mode: each iteration triggers the next PR
     and schedules the next wake to the time CodeRabbit states.
 
+    **Before triggering anything, check whether a review is already running.**
+    CodeRabbit **auto-reviews on every PR open and push** — you almost never need a
+    manual trigger. While it works it posts a summary comment marked
+    `review in progress by coderabbit.ai` ("Currently processing new changes…") and
+    👀-reacts to the PR. Posting `@coderabbitai review` then is **pure noise** and
+    does not speed anything up. Only trigger when a PR is **rate-limited** (a "Review
+    limit reached" comment — the skill's main purpose) or **genuinely idle** (no
+    review, no in-progress marker, and CodeRabbit has had a couple minutes). The
+    `${cr-review-status}` helper reports `review in progress — WAIT, do not trigger`
+    for the in-progress case.
+
     ## When To Use
 
     - A PR (or stack of PRs) shows a CodeRabbit "Review limit reached" comment.
     - You need every open PR reviewed by both `coderabbitai` and `gemini-code-assist`
-      before a follow-up step (e.g. `/address-gs-comments`).
+      before a follow-up step (e.g. `/address-gs-comments`), and you must wait for
+      in-flight reviews to land.
     - The user asks to "wait for / keep retrying coderabbit until reviewed".
 
     Not for: a single PR you can just push a commit to (a push re-triggers review
-    without consuming a manual trigger).
+    without consuming a manual trigger). Not for nudging a review that is already in
+    progress — just wait for it.
 
     ## Key Facts
 
@@ -140,8 +178,19 @@ let
       trigger/review has since consumed the budget.
     - **Bot logins:** `coderabbitai` and `gemini-code-assist` (via `gh pr view --json`;
       via `gh api .../comments` the login is `coderabbitai[bot]`).
-    - **Real review present** = a `coderabbitai` comment matching `Walkthrough` or
-      `Actionable comments posted`. The rate-limit comment matches `Review limit reached`.
+    - **Real (completed) review present** = a `coderabbitai` comment matching
+      `Walkthrough`, `Actionable comments posted`, **`No actionable comments were
+      generated`** (the clean case — a passing review has NO "Walkthrough"/"Actionable
+      comments posted" line, only this), or the `Recent review info` footer. Matching
+      only `Walkthrough|Actionable comments posted` makes a clean review read as
+      `coderabbit=0` forever and the loop never ends. The rate-limit comment matches
+      `Review limit reached`.
+    - **Review in progress** = a `coderabbitai` comment marked
+      `review in progress by coderabbit.ai` / `Currently processing new changes`. This
+      marker is **edited out when the review finishes**, so it is an unambiguous
+      "already working" signal — distinct from the `summarize by coderabbit.ai` marker,
+      which is present in BOTH the in-progress and finished comment. When in progress,
+      WAIT; do not trigger.
     - **Retry deadline** = the rate-limit comment's `updated_at` + the stated
       "More reviews will be available in **X minutes and Y seconds**". CodeRabbit
       **edits the comment in place** on each re-trigger, so use `updated_at`, NOT
@@ -157,15 +206,20 @@ let
     1. **Survey state.** Run `${cr-review-status} <owner/repo> <pr...>` (or `--open`).
        Read the **SHARED LIMIT** line at the bottom — it is the authoritative pacing
        signal. Ignore per-PR "own window elapsed" when SHARED LIMIT says throttled.
-    2. **When SHARED LIMIT is OPEN, trigger exactly ONE not-yet-reviewed PR**, then
-       re-check — do not fan out:
-       ```bash
-       gh pr comment <pr> -R <owner/repo> --body "@coderabbitai review"
-       ```
-       Triggering several at once just piles up pending requests and inflates the
-       backoff while still clearing ~one per window. After triggering, re-run the
-       survey: either the PR's review lands (`coderabbit=1`) or a fresh rate-limit
-       appears that becomes the new SHARED LIMIT.
+    2. **Decide whether a trigger is even needed.** Look at each not-yet-done PR's
+       per-PR line:
+       - `review in progress — WAIT, do not trigger` → a review is already running
+         (auto-review on open/push). Do nothing; just wait and re-survey.
+       - a rate-limit `own wait …` / SHARED LIMIT throttled → wait for the deadline.
+       - `-` (no review, no in-progress marker, not rate-limited) AND the PR has been
+         idle a couple minutes → only then trigger **exactly ONE** PR, never fan out:
+         ```bash
+         gh pr comment <pr> -R <owner/repo> --body "@coderabbitai review"
+         ```
+       Triggering several at once (or nudging an in-progress review) just piles up
+       pending requests and inflates the backoff while still clearing ~one per window.
+       After any trigger, re-run the survey: either the review lands (`coderabbit=1`)
+       or a fresh rate-limit appears that becomes the new SHARED LIMIT.
     3. **Pace to the SHARED LIMIT deadline (dynamic `/loop`).** As the last action of
        the turn, `ScheduleWakeup` for that deadline plus a small buffer (~30–60 s).
        Slightly **over-wait** rather than under-wait: an early trigger gets re-limited
@@ -179,6 +233,8 @@ let
 
     | Mistake | Fix |
     | --- | --- |
+    | Triggering a review that is already in progress | CodeRabbit auto-reviews on open/push; a `review in progress by coderabbit.ai` marker means WAIT, not trigger |
+    | Looping forever on a clean PR | A passing review says "No actionable comments were generated" (no Walkthrough); count that as `coderabbit=1` |
     | Trusting a PR's stale "window elapsed" | The limit is shared; pace off the SHARED LIMIT line, not per-PR windows |
     | Bursting `@coderabbitai review` on all PRs each round | One per open window; bursts inflate the backoff |
     | Taking the trigger ack as proof of review | "Review triggered/finished" can come *with* a fresh rate-limit; confirm `coderabbit=1` |
