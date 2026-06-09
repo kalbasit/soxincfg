@@ -176,7 +176,13 @@ let
     > [!CAUTION]
     > Use `/git-commit` for this step. Do NOT use `/gs-create` — that creates a new stacked branch and is wrong here since you are already on the correct feature branch.
 
-    6. **Resolve on GitHub**: Use the `threadId` to mark the thread resolved.
+    6. **Push**: Push the commit to the branch where the comment was addressed so the reviewer sees the updated diff.
+
+    ```bash
+    git push
+    ```
+
+    7. **Resolve on GitHub**: Use the `threadId` to mark the thread resolved.
 
     ```bash
     ${resolve-pr-comment} <THREAD_ID>
@@ -191,11 +197,12 @@ let
     3. **Fix**: Implement the necessary changes if the concern is valid.
     4. **Verify**: Run the `/lint` workflow.
     5. **Commit**: Run `/git-commit` as above.
-    6. **No API resolution**: There is no API call to resolve these. Addressing the concern in code (and pushing) is sufficient — the reviewer can see the updated diff.
+    6. **Push**: Push the commit to the branch (`git push`) so the reviewer can see the updated diff.
+    7. **No API resolution**: There is no API call to resolve these. Addressing the concern in code (and pushing) is sufficient — the reviewer can see the updated diff.
 
     ### 4. Final Review
 
-    After addressing and resolving all comments, perform a final check of the changes and ensure the project still builds and tests pass.
+    After addressing and resolving all comments, perform a final check of the changes and ensure the project still builds and tests pass. Then make sure every commit has been pushed to the branch (`git push`) so the PR reflects all the addressed feedback.
 
     ## Internal details
 

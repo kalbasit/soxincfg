@@ -111,7 +111,10 @@ let
     > If the code is already correct, resolve the thread and move on — do NOT implement changes just because a comment exists.
 
     > [!CAUTION]
-    > **Never** run `git push`, `gs ss`, or `gs stack submit`. The user decides when to push.
+    > Do not run `git push` directly. Pushing is handled at the very end by
+    > `gs stack submit --update-only` (Phase C), which updates the existing PRs for
+    > the whole stack. Do not create new PRs — `--update-only` only updates branches
+    > that already have one.
 
     ## Phase A — Collect and Classify (read-only, full-stack context)
 
@@ -198,12 +201,21 @@ let
 
     Then proceed to the next branch up the stack.
 
-    ## Phase C — Final Verification
+    ## Phase C — Final Verification and Submit
 
     After the top branch is processed and the final `/gs-restack` completes:
 
     - Confirm the full stack builds and tests pass.
     - Confirm all threads have been resolved on GitHub.
+    - Submit the updated stack so every PR reflects the addressed feedback:
+
+      ```bash
+      gs stack submit --update-only
+      ```
+
+      `--update-only` updates the existing PRs for branches that already have one
+      and never creates new PRs. Run this once, from any branch in the stack, after
+      all fixes are committed and the stack is fully restacked.
 
     ## Internal details
 
