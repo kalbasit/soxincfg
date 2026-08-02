@@ -19,6 +19,10 @@ in
   config = {
     soxin = {
       programs = {
+        keybase = {
+          enable = true;
+          enableFs = true;
+        };
         less.enable = true;
       };
 
