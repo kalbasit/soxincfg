@@ -31,6 +31,8 @@ in
         pkgs.claude-monitor
         pkgs.nodejs
         pkgs.openspec
+
+        pkgs.mcp-grafana
       ];
 
       sessionVariables = {
