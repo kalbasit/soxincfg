@@ -52,6 +52,7 @@
     pkgs.nixfmt
     pkgs.psmisc
     pkgs.skopeo # inspect docker images
+    pkgs.talosctl
     pkgs.tree
     pkgs.turso-cli
     pkgs.unzip
