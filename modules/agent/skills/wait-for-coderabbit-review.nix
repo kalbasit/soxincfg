@@ -13,11 +13,11 @@
 
 let
   cr-review-status = pkgs.writeShellScript "cr-review-status.sh" ''
-    # Survey CodeRabbit + Gemini review state for a set of PRs and report the single
+    # Survey CodeRabbit review state for a set of PRs and report the single
     # authoritative CodeRabbit retry deadline.
     #
     # Per PR it prints:
-    #   PR <n> | gemini=<0|1> coderabbit=<0|1> | <that PR's own rate-limit window>
+    #   PR <n> | coderabbit=<0|1> | <that PR's own rate-limit window>
     #
     # Then a SHARED LIMIT summary. CodeRabbit's review limit is per-developer/org and
     # therefore SHARED across all your PRs: once ANY PR's rate-limit comment is
@@ -55,8 +55,6 @@ let
     any_inprog=0
 
     for pr in "''${prs[@]}"; do
-      gemini=$(${pkgs.gh}/bin/gh pr view "$pr" -R "$repo" --json comments,reviews --jq \
-        '((.comments + (.reviews // [])) | map(select(.author.login=="gemini-code-assist")) | length) > 0 | if . then 1 else 0 end' 2>/dev/null || echo 0)
       # A COMPLETED CodeRabbit review. Includes the clean case: when nothing is
       # flagged the summary says "No actionable comments were generated" (there
       # is no "Walkthrough"/"Actionable comments posted" line), so match that and
@@ -101,7 +99,7 @@ let
         if [ "$window" = "-" ] && [ "$inprog" = "1" ]; then window="review in progress — WAIT, do not trigger"; fi
       fi
 
-      printf "PR %s | gemini=%s coderabbit=%s | %s\n" "$pr" "$gemini" "$cr" "$window"
+      printf "PR %s | coderabbit=%s | %s\n" "$pr" "$cr" "$window"
     done
 
     echo "----"
@@ -122,9 +120,9 @@ let
     description: 'Use when CodeRabbit PR reviews are rate-limited ("Review limit
       reached" / "out of usage credits") and you must re-trigger @coderabbitai review
       across one or more open PRs, pacing to the wait CodeRabbit states, until every
-      PR has both CodeRabbit and Gemini reviews. Examples: "wait for coderabbit to
+      PR has a CodeRabbit review. Examples: "wait for coderabbit to
       review the stack", "coderabbit hit the review limit, keep retrying", "loop until
-      all PRs are reviewed by gemini and coderabbit".'
+      all PRs are reviewed by coderabbit".'
     ---
 
     # Wait For CodeRabbit Review
@@ -159,9 +157,8 @@ let
     ## When To Use
 
     - A PR (or stack of PRs) shows a CodeRabbit "Review limit reached" comment.
-    - You need every open PR reviewed by both `coderabbitai` and `gemini-code-assist`
-      before a follow-up step (e.g. `/address-gs-comments`), and you must wait for
-      in-flight reviews to land.
+    - You need every open PR reviewed by `coderabbitai` before a follow-up step
+      (e.g. `/address-gs-comments`), and you must wait for in-flight reviews to land.
     - The user asks to "wait for / keep retrying coderabbit until reviewed".
 
     Not for: a single PR you can just push a commit to (a push re-triggers review
@@ -176,8 +173,8 @@ let
       rate-limit comment across the stack — the `${cr-review-status}` **SHARED LIMIT**
       line. A PR whose own older rate-limit "elapsed" is NOT actually open if a newer
       trigger/review has since consumed the budget.
-    - **Bot logins:** `coderabbitai` and `gemini-code-assist` (via `gh pr view --json`;
-      via `gh api .../comments` the login is `coderabbitai[bot]`).
+    - **Bot login:** `coderabbitai` (via `gh pr view --json`; via
+      `gh api .../comments` the login is `coderabbitai[bot]`).
     - **Real (completed) review present** = a `coderabbitai` comment matching
       `Walkthrough`, `Actionable comments posted`, **`No actionable comments were
       generated`** (the clean case — a passing review has NO "Walkthrough"/"Actionable
@@ -225,7 +222,7 @@ let
        Slightly **over-wait** rather than under-wait: an early trigger gets re-limited
        and pushes the deadline out. There is no Monitor for GitHub comments, so polling
        on the deadline is the wake signal.
-    4. **Stop condition:** every target PR has `coderabbit=1` AND `gemini=1`. Then run
+    4. **Stop condition:** every target PR has `coderabbit=1`. Then run
        the follow-up the user asked for (commonly `/address-gs-comments`) and end the
        loop (omit `ScheduleWakeup`; `PushNotification` the outcome if unattended).
 
@@ -250,7 +247,7 @@ let
       stack of N throttled PRs can take N windows (often >1 h). Confirm with the user
       before committing to a long unattended loop, and surface the
       "out of usage credits" flag so they can top up if they prefer.
-    - The helper script `${cr-review-status}` surveys CodeRabbit and Gemini review
+    - The helper script `${cr-review-status}` surveys CodeRabbit review
       state across one or more PRs.
   '';
 in

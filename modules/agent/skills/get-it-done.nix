@@ -111,7 +111,7 @@ let
     ### 7. `/wait-for-coderabbit-review` — get the review
 
     Invoke the `wait-for-coderabbit-review` skill to ensure the PR receives its
-    CodeRabbit (and Gemini) review, pacing through any rate limits until reviews land.
+    CodeRabbit review, pacing through any rate limits until the review lands.
 
     ### 8. `/address-gs-comments` — address the feedback
 
