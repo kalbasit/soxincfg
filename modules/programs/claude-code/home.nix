@@ -46,7 +46,7 @@ let
     else if unit == "h" then
       value * 3600
     else
-      lib.throw "soxincfg.programs.claude-code.agent-mesh.archive.interval: cannot parse ${d}";
+      throw "soxincfg.programs.claude-code.agent-mesh.archive.interval: cannot parse ${d}";
 
   sweepCommand = "${lib.getExe am.package} archive";
 in
