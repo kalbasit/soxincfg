@@ -57,6 +57,14 @@
     };
 
     swm.url = "github:kalbasit/swm";
+
+    # Claude Code plugins. Pointed at the local checkout while the branch is
+    # unpushed; change to "github:kalbasit/marketplace" once it lands on the
+    # remote, or every other machine will fail to evaluate this flake.
+    marketplace = {
+      url = "git+file:///home/wnasreddine/code/repositories/github.com/kalbasit/marketplace?ref=add-agent-mesh-plugin";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
   };
 
   outputs =
