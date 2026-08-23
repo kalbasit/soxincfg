@@ -350,6 +350,27 @@
         "type": "github"
       }
     },
+    "marketplace": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1787511155,
+        "narHash": "sha256-8094TbL3Mb2hGJ/FY3gHxNvTagrHWYCWKGGsZ5TlOCs=",
+        "ref": "add-agent-mesh-plugin",
+        "rev": "51b5a817a0235227574c0f942112bed6e824e152",
+        "revCount": 9,
+        "type": "git",
+        "url": "file:///home/wnasreddine/code/repositories/github.com/kalbasit/marketplace"
+      },
+      "original": {
+        "ref": "add-agent-mesh-plugin",
+        "type": "git",
+        "url": "file:///home/wnasreddine/code/repositories/github.com/kalbasit/marketplace"
+      }
+    },
     "nixos-hardware": {
       "inputs": {
         "nixpkgs": "nixpkgs_2"
@@ -641,6 +662,7 @@
         "deploy-rs": "deploy-rs",
         "flake-utils-plus": "flake-utils-plus",
         "home-manager": "home-manager",
+        "marketplace": "marketplace",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_3",
         "nixpkgs-unstable": "nixpkgs-unstable",
