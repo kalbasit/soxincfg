@@ -9,6 +9,46 @@
 
 let
   cfg = config.soxincfg.programs.claude-code;
+
+  isDarwin = hostType == "nix-darwin";
+
+  am = cfg.agent-mesh;
+
+  # What this module intends Claude Code to know about. Claude Code owns
+  # settings.json, so this is merged in on activation rather than written as a
+  # file we control; see the activation script below for why that matters.
+  desired = {
+    marketplaces = lib.mapAttrs (_name: m: {
+      source = {
+        source = "github";
+        inherit (m) repo;
+      };
+      inherit (m) autoUpdate;
+    }) cfg.marketplaces;
+
+    plugins = cfg.plugins;
+  };
+
+  desiredFile = pkgs.writeText "claude-code-desired.json" (builtins.toJSON desired);
+
+  # "5m" / "90s" / "1h" -> seconds, for launchd's StartInterval. systemd takes the
+  # original string, so this is only needed on Darwin.
+  toSeconds =
+    d:
+    let
+      unit = lib.substring (lib.stringLength d - 1) 1 d;
+      value = lib.toInt (lib.substring 0 (lib.stringLength d - 1) d);
+    in
+    if unit == "s" then
+      value
+    else if unit == "m" then
+      value * 60
+    else if unit == "h" then
+      value * 3600
+    else
+      lib.throw "soxincfg.programs.claude-code.agent-mesh.archive.interval: cannot parse ${d}";
+
+  sweepCommand = "${lib.getExe am.package} archive";
 in
 {
   imports = [
@@ -22,6 +62,115 @@ in
   ];
 
   config = lib.mkMerge [
+    # Marketplaces and plugin enablement.
+    #
+    # Claude Code owns settings.json and its own plugin cache, so this module does
+    # not write either. It states an intent and merges it in, additively. What was
+    # enabled by hand on a machine stays enabled; what this module added is recorded
+    # in a managed-set file so that dropping an entry here disables it again without
+    # touching anything a human turned on.
+    (lib.mkIf (cfg.enable && (cfg.marketplaces != { } || cfg.plugins != [ ])) {
+      home.activation.claudeCodeMarketplaces = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        settings="$HOME/.claude/settings.json"
+        managed="$HOME/.claude/.soxincfg-managed.json"
+
+        mkdir -p "$HOME/.claude"
+        [[ -f "$settings" ]] || echo '{}' > "$settings"
+        [[ -f "$managed" ]] || echo '{"marketplaces":[],"plugins":[]}' > "$managed"
+
+        # A settings.json we cannot parse is a settings.json we must not rewrite.
+        if ! ${pkgs.jq}/bin/jq -e . "$settings" > /dev/null 2>&1; then
+          echo "claude-code: $settings is not valid JSON; leaving it alone" >&2
+        else
+          tmp=$(mktemp)
+          ${pkgs.jq}/bin/jq \
+            --slurpfile desired ${desiredFile} \
+            --slurpfile managed "$managed" '
+              ($desired[0]) as $d
+              | ($managed[0]) as $m
+              # Drop only what we added last time and no longer want.
+              | .extraKnownMarketplaces = (
+                  (.extraKnownMarketplaces // {})
+                  | with_entries(
+                      select(
+                        ((.key | IN($m.marketplaces[])) | not)
+                        or (.key | IN($d.marketplaces | keys[]))
+                      )
+                    )
+                )
+              | .enabledPlugins = (
+                  (.enabledPlugins // {})
+                  | with_entries(
+                      select(
+                        ((.key | IN($m.plugins[])) | not)
+                        or (.key | IN($d.plugins[]))
+                      )
+                    )
+                )
+              # Then assert what we do want, without disturbing the rest.
+              | .extraKnownMarketplaces += $d.marketplaces
+              | .enabledPlugins += ($d.plugins | map({ (.): true }) | add // {})
+            ' "$settings" > "$tmp" && mv "$tmp" "$settings"
+
+          ${pkgs.jq}/bin/jq -n \
+            --slurpfile desired ${desiredFile} \
+            '{ marketplaces: ($desired[0].marketplaces | keys), plugins: $desired[0].plugins }' \
+            > "$managed"
+        fi
+      '';
+    })
+
+    # The agent-mesh command itself. The plugin runs inside Claude Code without it;
+    # this is for the sweep timer and for driving the mesh from a shell.
+    (lib.mkIf (am.enable && am.package != null) {
+      home.packages = [ am.package ];
+    })
+
+    # The session-archive sweep. Catches what the session-end hook cannot: a killed
+    # process, a lost network, a machine that slept.
+    (lib.mkIf (am.enable && am.archive.enable && am.package != null && !isDarwin) {
+      systemd.user = {
+        services.agent-mesh-archive = {
+          Unit.Description = "Upload session transcripts that the session-end hook did not catch";
+          Service = {
+            Type = "oneshot";
+            ExecStart = sweepCommand;
+          }
+          // lib.optionalAttrs (am.credentialsFile != null) {
+            EnvironmentFile = toString am.credentialsFile;
+          };
+        };
+
+        timers.agent-mesh-archive = {
+          Unit.Description = "Periodic agent-mesh session archive sweep";
+          Timer = {
+            OnBootSec = am.archive.interval;
+            OnUnitActiveSec = am.archive.interval;
+            # A machine that was asleep should still catch up once it wakes.
+            Persistent = true;
+          };
+          Install.WantedBy = [ "timers.target" ];
+        };
+      };
+    })
+
+    (lib.mkIf (am.enable && am.archive.enable && am.package != null && isDarwin) {
+      launchd.agents.agent-mesh-archive = {
+        enable = true;
+        config = {
+          ProgramArguments = [
+            "/bin/sh"
+            "-c"
+            (
+              lib.optionalString (am.credentialsFile != null) ". ${toString am.credentialsFile}; " + sweepCommand
+            )
+          ];
+          StartInterval = toSeconds am.archive.interval;
+          RunAtLoad = false;
+        };
+      };
+    })
+
     # Claude Code itself: the CLI and its companion tooling.
     (lib.mkIf cfg.enable {
       programs = {
