@@ -41,6 +41,15 @@ let
         };
       };
 
+    proteus =
+      let
+        system = "x86_64-linux";
+      in
+      {
+        inherit channelName system;
+        modules = [ ./proteus/nixos.nix ];
+      };
+
     ###
     # aarch64-linux
     ###

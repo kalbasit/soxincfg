@@ -1,6 +1,7 @@
 inputs@{
   flake-utils-plus,
   nixos-hardware,
+  nixos-wsl,
   nixpkgs,
   nixpkgs-unstable,
   pre-commit-hooks,
@@ -180,7 +181,7 @@ soxin.lib.mkFlake {
 
   # set the nixos specialArgs
   nixosSpecialArgs = {
-    inherit nixos-hardware;
+    inherit nixos-hardware nixos-wsl;
   };
 
   extraHomeManagerModules = [ "${sops-nix.sourceInfo.outPath}/modules/home-manager/sops.nix" ];

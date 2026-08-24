@@ -24,6 +24,13 @@
       };
     };
 
+    nixos-wsl = {
+      url = "github:nix-community/NixOS-WSL/release-26.05";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
+
     nixvim = {
       url = "github:kalbasit/nixvim";
       # XXX: Leave nixvim with its own tested nixpkgs.

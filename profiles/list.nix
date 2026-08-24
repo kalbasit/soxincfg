@@ -8,4 +8,5 @@
   server = ./server;
   tailscale = ./tailscale;
   workstation = ./workstation;
+  wsl-gaming = ./wsl-gaming;
 }
