@@ -357,18 +357,18 @@
         ]
       },
       "locked": {
-        "lastModified": 1787511155,
-        "narHash": "sha256-8094TbL3Mb2hGJ/FY3gHxNvTagrHWYCWKGGsZ5TlOCs=",
+        "lastModified": 1787537878,
+        "narHash": "sha256-zlM0G/j+g09HiiYU7/UqsHtQ0DpVQIxVsNHYflakXgQ=",
         "ref": "add-agent-mesh-plugin",
-        "rev": "51b5a817a0235227574c0f942112bed6e824e152",
-        "revCount": 9,
+        "rev": "c545ea4118715e8789f4e54dec4d0be5c22a6afe",
+        "revCount": 18,
         "type": "git",
-        "url": "file:///home/wnasreddine/code/repositories/github.com/kalbasit/marketplace"
+        "url": "ssh://git@github.com/kalbasit/marketplace"
       },
       "original": {
         "ref": "add-agent-mesh-plugin",
         "type": "git",
-        "url": "file:///home/wnasreddine/code/repositories/github.com/kalbasit/marketplace"
+        "url": "ssh://git@github.com/kalbasit/marketplace"
       }
     },
     "nixos-hardware": {
