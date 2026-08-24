@@ -68,7 +68,10 @@ in
         home.file.".claude/skills/${name}/SKILL.md".text = body;
       };
     })
-  ];
+  ]
+  # nix-darwin declares its secrets inside home-manager rather than at system
+  # level, so the broker credential is declared there instead of in ./nixos.nix.
+  ++ lib.optional isDarwin ./home-darwin.nix;
 
   config = lib.mkMerge [
     # Default the package from the marketplace flake input, the same way the
