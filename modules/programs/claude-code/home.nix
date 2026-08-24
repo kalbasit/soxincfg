@@ -49,6 +49,15 @@ let
       throw "soxincfg.programs.claude-code.agent-mesh.archive.interval: cannot parse ${d}";
 
   sweepCommand = "${lib.getExe am.package} archive";
+
+  # Where the broker password is read from. Defaults to what this module's own
+  # sops secret decrypts to; computed here because the home directory is reachable
+  # from a different place in each evaluation mode.
+  brokerPasswordFile =
+    if am.broker.passwordFile != null then
+      am.broker.passwordFile
+    else
+      "${config.home.homeDirectory}/.config/agent-mesh/mqtt-password";
 in
 {
   imports = [
@@ -152,8 +161,8 @@ in
           port = ${toString am.broker.port}
           username = "${am.broker.username}"
         ''
-        + lib.optionalString (am.broker.host != null && am.broker.passwordFile != null) ''
-          password_file = "${toString am.broker.passwordFile}"
+        + lib.optionalString (am.broker.host != null) ''
+          password_file = "${brokerPasswordFile}"
         '';
     })
 

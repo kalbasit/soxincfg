@@ -18,7 +18,12 @@ let
     };
 in
 {
-  imports = lib.optional (mode == "home-manager") ./home.nix;
+  imports =
+    lib.optional (mode == "home-manager") ./home.nix
+    # The broker credential is declared per platform, because sops is wired per
+    # platform: soxin adds sops-nix's NixOS module to NixOS hosts and nothing to
+    # nix-darwin, so there is no single declaration that serves both.
+    ++ lib.optional (mode == "NixOS") ./nixos.nix;
 
   options = {
     soxincfg.programs.claude-code = {
@@ -134,8 +139,13 @@ in
           };
 
           passwordFile = lib.mkOption {
-            type = lib.types.nullOr lib.types.path;
+            type = lib.types.nullOr lib.types.str;
+            # Null means "the path this module's own sops secret decrypts to",
+            # which each mode computes for itself -- the home directory is not
+            # reachable from the same place in a NixOS and a home-manager
+            # evaluation, and this option is declared once for both.
             default = null;
+            defaultText = lib.literalExpression ''"''${home}/.config/agent-mesh/mqtt-password"'';
             example = lib.literalExpression ''config.sops.secrets._agent_mesh_mqtt_password.path'';
             description = ''
               A file containing the broker password, and nothing else.

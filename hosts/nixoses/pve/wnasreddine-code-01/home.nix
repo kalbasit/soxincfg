@@ -28,10 +28,7 @@
 
       # The broker on prod0. Agents authenticate as their own scoped account, so
       # they cannot touch the topics the house runs on.
-      broker = {
-        host = "192.168.54.3";
-        passwordFile = "/home/wnasreddine/.config/agent-mesh/mqtt-password";
-      };
+      broker.host = "192.168.54.3";
     };
   };
 }

@@ -95,6 +95,20 @@ creation_rules:
           - *host_age_saturn_nixos_vm
           - *host_age_pve_wnasreddine_code_01
 
+  # agent-mesh's broker credential. Module-scoped rather than profile-scoped:
+  # three separate profiles enable claude-code (code, workstation/nixos/local,
+  # workstation/darwin/local), so a secret parked in any one of them is
+  # undecryptable on hosts enabled by the other two.
+  - path_regex: modules/programs/claude-code/[^/]+\.sops[^/]*
+    key_groups:
+      - pgp:
+          - *user_yl_0x8EBD95DC147755A2
+        age:
+          - *host_age_pve_wnasreddine_code_01
+          - *host_age_hercules
+          - *host_age_saturn
+          - *host_age_saturn_nixos_vm
+
   - path_regex: modules/hardware/onlykey/[^/]+\.sops[^/]*
     key_groups:
       - pgp:
