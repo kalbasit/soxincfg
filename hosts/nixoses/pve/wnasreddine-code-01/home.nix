@@ -17,6 +17,21 @@
   soxincfg.programs.claude-code = {
     marketplaces.kalbasit.repo = "kalbasit/marketplace";
     plugins = [ "agent-mesh@kalbasit" ];
-    agent-mesh.enable = true;
+
+    agent-mesh = {
+      enable = true;
+
+      # Session transcripts upload to a store that cannot delete. Switched on
+      # knowingly: redaction runs before any byte leaves the machine, and the
+      # backlog was reviewed before this was turned on.
+      archive.enable = true;
+
+      # The broker on prod0. Agents authenticate as their own scoped account, so
+      # they cannot touch the topics the house runs on.
+      broker = {
+        host = "192.168.54.3";
+        passwordFile = "/home/wnasreddine/.config/agent-mesh/mqtt-password";
+      };
+    };
   };
 }

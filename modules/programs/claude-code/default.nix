@@ -103,6 +103,51 @@ in
           };
         };
 
+        broker = {
+          host = lib.mkOption {
+            type = lib.types.nullOr lib.types.str;
+            default = null;
+            example = "192.168.54.3";
+            description = ''
+              The MQTT broker agents use for push delivery and live presence.
+
+              Null leaves messaging on the shared store, which is slower but
+              always available -- the mesh is designed to work either way, so
+              this is a performance choice rather than a required one.
+            '';
+          };
+
+          port = lib.mkOption {
+            type = lib.types.port;
+            default = 1883;
+            description = "Broker port.";
+          };
+
+          username = lib.mkOption {
+            type = lib.types.str;
+            default = "agent-mesh";
+            description = ''
+              The broker account agents authenticate as. Scoped by the broker's
+              ACL to the agent topic tree, so it cannot read or write what the
+              rest of the house uses.
+            '';
+          };
+
+          passwordFile = lib.mkOption {
+            type = lib.types.nullOr lib.types.path;
+            default = null;
+            example = lib.literalExpression ''config.sops.secrets._agent_mesh_mqtt_password.path'';
+            description = ''
+              A file containing the broker password, and nothing else.
+
+              Named rather than inlined: the generated config.toml is an ordinary
+              world-readable file, so a password written into it would undo what
+              sops-nix is for. agent-mesh reads the file at the moment it needs
+              the credential.
+            '';
+          };
+        };
+
         credentialsFile = lib.mkOption {
           type = lib.types.nullOr lib.types.path;
           default = null;

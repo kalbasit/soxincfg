@@ -130,6 +130,33 @@ in
       '';
     })
 
+    # agent-mesh's own configuration. Written declaratively because none of it is
+    # secret: the broker password is *named* here, not contained -- see
+    # passwordFile. Archiving is stated explicitly either way, so the file says
+    # what the machine does rather than leaving it to a default that might change.
+    (lib.mkIf am.enable {
+      home.file.".config/agent-mesh/config.toml".text =
+        ''
+          # Managed by soxincfg (programs.claude-code.agent-mesh). Edits are lost
+          # on the next home-manager activation.
+
+          [archive]
+          # Session transcripts upload to a store that cannot delete, so this is
+          # switched on deliberately rather than inherited from enabling the plugin.
+          enabled = ${if am.archive.enable then "true" else "false"}
+        ''
+        + lib.optionalString (am.broker.host != null) ''
+
+          [mqtt]
+          host = "${am.broker.host}"
+          port = ${toString am.broker.port}
+          username = "${am.broker.username}"
+        ''
+        + lib.optionalString (am.broker.host != null && am.broker.passwordFile != null) ''
+          password_file = "${toString am.broker.passwordFile}"
+        '';
+    })
+
     # The agent-mesh command itself. The plugin runs inside Claude Code without it;
     # this is for the sweep timer and for driving the mesh from a shell.
     (lib.mkIf (am.enable && am.package != null) {
