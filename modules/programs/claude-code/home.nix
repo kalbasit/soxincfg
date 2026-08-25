@@ -26,7 +26,9 @@ let
       inherit (m) autoUpdate;
     }) cfg.marketplaces;
 
-    inherit (cfg) plugins;
+    # Deduplicated: the module defines agent-mesh@kalbasit itself, and a host
+    # naming it too would otherwise enable it twice.
+    plugins = lib.unique cfg.plugins;
   };
 
   desiredFile = pkgs.writeText "claude-code-desired.json" (builtins.toJSON desired);

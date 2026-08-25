@@ -15,9 +15,6 @@
   # to a store with no delete, so it is turned on once, knowingly, and not as a
   # side effect of enabling the plugin.
   soxincfg.programs.claude-code = {
-    marketplaces.kalbasit.repo = "kalbasit/marketplace";
-    plugins = [ "agent-mesh@kalbasit" ];
-
     agent-mesh = {
       enable = true;
 

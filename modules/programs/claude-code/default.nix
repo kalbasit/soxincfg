@@ -146,7 +146,7 @@ in
             # evaluation, and this option is declared once for both.
             default = null;
             defaultText = lib.literalExpression ''"''${home}/.config/agent-mesh/mqtt-password"'';
-            example = lib.literalExpression ''config.sops.secrets._agent_mesh_mqtt_password.path'';
+            example = lib.literalExpression "config.sops.secrets._agent_mesh_mqtt_password.path";
             description = ''
               A file containing the broker password, and nothing else.
 
@@ -171,6 +171,21 @@ in
           '';
         };
       };
+    };
+  };
+
+  # The marketplace that carries agent-mesh, and the plugin itself. Declared here
+  # rather than left to each host because agent-mesh.enable already follows
+  # claude-code.enable: a host that has the command installed but not the plugin
+  # has the mesh's tooling without the instructions for using it, which is the
+  # gap this closes.
+  #
+  # These are definitions, not option defaults, so a host that registers its own
+  # marketplace or enables another plugin adds to this rather than replacing it.
+  config = lib.mkIf (cfg.enable && cfg.agent-mesh.enable) {
+    soxincfg.programs.claude-code = {
+      marketplaces.kalbasit.repo = lib.mkDefault "kalbasit/marketplace";
+      plugins = [ "agent-mesh@kalbasit" ];
     };
   };
 }

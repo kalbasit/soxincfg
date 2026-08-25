@@ -104,9 +104,11 @@ creation_rules:
           - *host_age_pve_wnasreddine_code_01
 
   # agent-mesh's broker credential. Module-scoped rather than profile-scoped:
-  # three separate profiles enable claude-code (code, workstation/nixos/local,
-  # workstation/darwin/local), so a secret parked in any one of them is
-  # undecryptable on hosts enabled by the other two.
+  # four separate profiles enable claude-code (code, workstation/nixos/local,
+  # workstation/darwin/local, wsl-gaming), so a secret parked in any one of them
+  # is undecryptable on hosts enabled by the others. Every host that can enable
+  # claude-code belongs here, whether or not it points at a broker today --
+  # otherwise setting broker.host on it fails to decrypt at activation.
   - path_regex: modules/programs/claude-code/[^/]+\.sops[^/]*
     key_groups:
       - pgp:
@@ -116,6 +118,7 @@ creation_rules:
           - *host_age_hercules
           - *host_age_saturn
           - *host_age_saturn_nixos_vm
+          - *host_age_proteus
 
   - path_regex: modules/hardware/onlykey/[^/]+\.sops[^/]*
     key_groups:

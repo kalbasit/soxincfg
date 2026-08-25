@@ -63,9 +63,6 @@ in
   # unreachable, so the mesh works either way and the broker is a latency
   # choice rather than a dependency.
   soxincfg.programs.claude-code = {
-    marketplaces.kalbasit.repo = "kalbasit/marketplace";
-    plugins = [ "agent-mesh@kalbasit" ];
-
     agent-mesh = {
       enable = true;
 
