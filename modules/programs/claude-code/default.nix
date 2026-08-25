@@ -45,7 +45,14 @@ in
               autoUpdate = lib.mkOption {
                 type = lib.types.bool;
                 default = false;
-                description = "Whether Claude Code should refresh this marketplace on its own.";
+                description = ''
+                  Whether Claude Code should refresh this marketplace on its own.
+
+                  Maps to `extraKnownMarketplaces.<name>.autoUpdate` in
+                  settings.json -- the same flag `/plugin` sets. Note that the
+                  activation replaces a managed marketplace's entry wholesale, so
+                  this value wins over one set by hand in the UI.
+                '';
               };
             };
           }
@@ -191,7 +198,15 @@ in
   # marketplace or enables another plugin adds to this rather than replacing it.
   config = lib.mkIf (cfg.enable && cfg.agent-mesh.enable) {
     soxincfg.programs.claude-code = {
-      marketplaces.kalbasit.repo = lib.mkDefault "kalbasit/marketplace";
+      marketplaces.kalbasit = {
+        repo = lib.mkDefault "kalbasit/marketplace";
+
+        # Tracked rather than pinned, unlike the option's own default. The plugin
+        # is how an agent learns the mesh protocol, so a host frozen at whatever
+        # the marketplace happened to be when it first cloned would be running an
+        # older protocol than the agents it talks to.
+        autoUpdate = lib.mkDefault true;
+      };
       plugins = [ "agent-mesh@kalbasit" ];
     };
   };
