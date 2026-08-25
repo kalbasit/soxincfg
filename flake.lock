@@ -373,11 +373,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1787640775,
-        "narHash": "sha256-uGEjYVN61rmHliYJcWOBbLKZOfqJ8yuQRrbnNQSf+IU=",
+        "lastModified": 1787641697,
+        "narHash": "sha256-Lz2KPWBZ2oL9U+/1QS7nmyn0hejEbrnjTeVCoCvFRtc=",
         "ref": "refs/heads/main",
-        "rev": "4e0ba4f3b877746341e1e501029d5e1439ce1ef9",
-        "revCount": 37,
+        "rev": "5d608682d1ee2ba9f4c036e2452acecf68395d10",
+        "revCount": 38,
         "type": "git",
         "url": "ssh://git@github.com/kalbasit/marketplace"
       },
