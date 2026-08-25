@@ -7,16 +7,10 @@
 
   home.stateVersion = "25.05";
 
-  # agent-mesh itself comes from the claude-code module, which enables it
-  # wherever Claude Code is enabled. What is host-specific is below.
-  soxincfg.programs.claude-code.agent-mesh = {
-    # Session transcripts upload to a store that cannot delete, so this is
-    # switched on knowingly rather than inherited: redaction runs before any
-    # byte leaves the machine, and the backlog was reviewed before this went on.
-    archive.enable = true;
-
-    # The broker on prod0. Agents authenticate as their own scoped account, so
-    # they cannot touch the topics the house runs on.
-    broker.host = "192.168.54.3";
-  };
+  # agent-mesh and its broker come from the claude-code module. The archive
+  # sweep does not: session transcripts upload to a store that cannot delete,
+  # so it is switched on knowingly rather than inherited. Redaction runs before
+  # any byte leaves the machine, and the backlog was reviewed before this went
+  # on. This host is the one that runs it first.
+  soxincfg.programs.claude-code.agent-mesh.archive.enable = true;
 }

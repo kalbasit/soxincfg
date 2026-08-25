@@ -55,20 +55,14 @@ in
     };
   };
 
-  # agent-mesh itself comes from the claude-code module, which enables it
-  # wherever Claude Code is enabled. The archive sweep stays at its default of
-  # off here, unlike wnasreddine-code-01: uploading session transcripts to a
-  # store that cannot delete is a decision to make on its own.
-  #
-  # Messaging falls back to the shared store whenever the broker is
-  # unreachable, so the broker below is a latency choice, not a dependency.
-  soxincfg.programs.claude-code.agent-mesh = {
-    # The broker on prod0. The password comes from this module's own sops
-    # secret, decrypted with the user's age key -- see sops.age.keyFile below.
-    broker.host = "192.168.54.3";
-  };
+  # agent-mesh, its plugin, and the broker on prod0 all come from the
+  # claude-code module now, so nothing about the mesh is stated here. The
+  # archive sweep stays at its default of off, unlike wnasreddine-code-01:
+  # uploading session transcripts to a store that cannot delete is a decision
+  # to make on its own.
 
   sops = {
+    # Also decrypts the broker credential the module declares for agent-mesh.
     age.keyFile = "${homePath}/.config/sops/age/soxincfg.txt";
   };
 }

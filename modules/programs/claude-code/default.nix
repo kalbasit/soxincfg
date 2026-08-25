@@ -111,14 +111,21 @@ in
         broker = {
           host = lib.mkOption {
             type = lib.types.nullOr lib.types.str;
-            default = null;
+            default = "192.168.54.3";
             example = "192.168.54.3";
             description = ''
               The MQTT broker agents use for push delivery and live presence.
 
-              Null leaves messaging on the shared store, which is slower but
-              always available -- the mesh is designed to work either way, so
-              this is a performance choice rather than a required one.
+              Defaults to the broker on prod0, so a host joins the mesh the same
+              way it gets the plugin. Unreachable is not a failure: messaging
+              falls back to the shared store, which is slower but always
+              available, so this is a latency choice rather than a dependency.
+
+              Null opts out of the broker entirely and leaves messaging on the
+              store. Note that a non-null value declares this module's sops
+              secret on the host, so every host that enables claude-code must be
+              a recipient in the `modules/programs/claude-code/` creation rule --
+              a missing key fails at activation, not at eval.
             '';
           };
 
