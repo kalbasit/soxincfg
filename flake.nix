@@ -58,11 +58,10 @@
 
     swm.url = "github:kalbasit/swm";
 
-    # Claude Code plugins. Pinned to the branch until it merges; drop the ref
-    # then. Not a local path -- that only resolves on the machine it names, and
-    # every other host would fail to evaluate this flake.
+    # Claude Code plugins. Over ssh rather than the github: shorthand, which
+    # goes through the anonymous GitHub API and 404s on a private repository.
     marketplace = {
-      url = "git+ssh://git@github.com/kalbasit/marketplace?ref=add-agent-mesh-plugin";
+      url = "git+ssh://git@github.com/kalbasit/marketplace";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
   };
