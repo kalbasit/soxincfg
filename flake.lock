@@ -357,16 +357,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1787624995,
-        "narHash": "sha256-UdgAuMC4Gbu7dTzfAoeHjlEXNREBbXs7bteuDbPCIlo=",
-        "ref": "add-agent-mesh-plugin",
-        "rev": "40f6766ba2195a929c6b197adfc8763c178e8220",
-        "revCount": 19,
+        "lastModified": 1787628284,
+        "narHash": "sha256-haDS1F/fxy6wgLP/xASFheKxcIBi0oxqA+Dtc971MTQ=",
+        "ref": "refs/heads/main",
+        "rev": "8ed8f050293d118da233edd9ff41dc1a28f8cd5d",
+        "revCount": 27,
         "type": "git",
         "url": "ssh://git@github.com/kalbasit/marketplace"
       },
       "original": {
-        "ref": "add-agent-mesh-plugin",
         "type": "git",
         "url": "ssh://git@github.com/kalbasit/marketplace"
       }
