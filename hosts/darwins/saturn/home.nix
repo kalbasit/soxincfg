@@ -55,26 +55,17 @@ in
     };
   };
 
-  # agent-mesh: durable agent identity, shared memory across machines, and a
-  # federated work queue. Enabled per-host rather than in a profile, so each
-  # machine joins the mesh deliberately.
+  # agent-mesh itself comes from the claude-code module, which enables it
+  # wherever Claude Code is enabled. The archive sweep stays at its default of
+  # off here, unlike wnasreddine-code-01: uploading session transcripts to a
+  # store that cannot delete is a decision to make on its own.
   #
   # Messaging falls back to the shared store whenever the broker is
-  # unreachable, so the mesh works either way and the broker is a latency
-  # choice rather than a dependency.
-  soxincfg.programs.claude-code = {
-    agent-mesh = {
-      enable = true;
-
-      # Left off here, unlike wnasreddine-code-01: archiving uploads session
-      # transcripts to a store that cannot delete, so it is a decision to make
-      # on its own rather than a side effect of joining the mesh.
-      archive.enable = false;
-
-      # The broker on prod0. The password comes from this module's own sops
-      # secret, decrypted with the user's age key -- see sops.age.keyFile below.
-      broker.host = "192.168.54.3";
-    };
+  # unreachable, so the broker below is a latency choice, not a dependency.
+  soxincfg.programs.claude-code.agent-mesh = {
+    # The broker on prod0. The password comes from this module's own sops
+    # secret, decrypted with the user's age key -- see sops.age.keyFile below.
+    broker.host = "192.168.54.3";
   };
 
   sops = {
