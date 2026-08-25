@@ -26,7 +26,7 @@ let
       inherit (m) autoUpdate;
     }) cfg.marketplaces;
 
-    plugins = cfg.plugins;
+    inherit (cfg) plugins;
   };
 
   desiredFile = pkgs.writeText "claude-code-desired.json" (builtins.toJSON desired);
@@ -79,9 +79,9 @@ in
     # substitute its own build, and left outside any mkIf so setting the default
     # never depends on the option it is defaulting.
     {
-      soxincfg.programs.claude-code.agent-mesh.package = lib.mkDefault (
-        inputs.marketplace.packages.${pkgs.stdenv.hostPlatform.system}.agent-mesh
-      );
+      soxincfg.programs.claude-code.agent-mesh.package =
+        lib.mkDefault
+          inputs.marketplace.packages.${pkgs.stdenv.hostPlatform.system}.agent-mesh;
     }
 
     # Marketplaces and plugin enablement.
@@ -147,26 +147,25 @@ in
     # passwordFile. Archiving is stated explicitly either way, so the file says
     # what the machine does rather than leaving it to a default that might change.
     (lib.mkIf am.enable {
-      home.file.".config/agent-mesh/config.toml".text =
-        ''
-          # Managed by soxincfg (programs.claude-code.agent-mesh). Edits are lost
-          # on the next home-manager activation.
+      home.file.".config/agent-mesh/config.toml".text = ''
+        # Managed by soxincfg (programs.claude-code.agent-mesh). Edits are lost
+        # on the next home-manager activation.
 
-          [archive]
-          # Session transcripts upload to a store that cannot delete, so this is
-          # switched on deliberately rather than inherited from enabling the plugin.
-          enabled = ${if am.archive.enable then "true" else "false"}
-        ''
-        + lib.optionalString (am.broker.host != null) ''
+        [archive]
+        # Session transcripts upload to a store that cannot delete, so this is
+        # switched on deliberately rather than inherited from enabling the plugin.
+        enabled = ${if am.archive.enable then "true" else "false"}
+      ''
+      + lib.optionalString (am.broker.host != null) ''
 
-          [mqtt]
-          host = "${am.broker.host}"
-          port = ${toString am.broker.port}
-          username = "${am.broker.username}"
-        ''
-        + lib.optionalString (am.broker.host != null) ''
-          password_file = "${brokerPasswordFile}"
-        '';
+        [mqtt]
+        host = "${am.broker.host}"
+        port = ${toString am.broker.port}
+        username = "${am.broker.username}"
+      ''
+      + lib.optionalString (am.broker.host != null) ''
+        password_file = "${brokerPasswordFile}"
+      '';
     })
 
     # The agent-mesh command itself. The plugin runs inside Claude Code without it;
