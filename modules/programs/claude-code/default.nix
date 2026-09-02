@@ -94,6 +94,21 @@ in
             The agent-mesh package, providing the `agent-mesh` command used by the
             sweep timer and available for interactive use. Null installs no command,
             leaving the plugin to run entirely inside Claude Code.
+
+            The default is a wrapper rather than the built package directly: it
+            hands off to whichever copy Claude Code currently has installed under
+            ~/.claude/plugins/cache, and falls back to the Nix build only when
+            there is none. Nix installs; Claude Code updates.
+
+            Without that, a host carries two copies of the same library — the one
+            the hooks import from the plugin cache, and the one this package puts
+            on PATH — and only the second is pinned. The cache auto-updates while
+            the flake input does not, so `agent-mesh ...` in a shell answers for a
+            version the hooks stopped running, with nothing to say they disagree.
+
+            Substituting a plain derivation here restores the two-copy behaviour,
+            which is a reasonable thing to want on a host that must be fully
+            reproducible and does not care what Claude Code has cached.
           '';
         };
 

@@ -14,6 +14,81 @@ let
 
   am = cfg.agent-mesh;
 
+  # The `agent-mesh` on PATH, preferring the copy Claude Code actually runs.
+  #
+  # Every host carries two copies of this library: Nix builds one from the
+  # marketplace flake input, and Claude Code caches another under
+  # ~/.claude/plugins/cache/kalbasit/agent-mesh/<version>/. The hooks and skills
+  # import the cache's own lib/ via sys.path and never consult PATH, so a Nix
+  # rebuild cannot change what a hook does -- and, symmetrically, updating the
+  # plugin cannot change what `agent-mesh ...` does in a shell.
+  #
+  # Pinning only one of the two halves is the worst arrangement available: the
+  # cache auto-updates while the flake input stays where it was pinned, so the
+  # two drift apart silently and the CLI answers for a version the hooks stopped
+  # running weeks ago. Observed on 2026-09-02 with the cache on 0.2.21 and PATH
+  # on 0.2.15 -- `agent-mesh identity` printed pre-0.2.19 output while the
+  # session banner reported 0.2.21.
+  #
+  # So Nix installs, and Claude Code updates. The wrapper hands off to the
+  # cached copy whenever there is one, and falls back to the built package
+  # otherwise -- which keeps a binary on PATH for a host that has never run
+  # Claude Code, and keeps the sweep timer working, since it resolves this same
+  # package through lib.getExe.
+  #
+  # The version is read from Claude Code's own installed_plugins.json rather
+  # than from whatever sorts highest on disk: old version directories are never
+  # cleaned up, so "newest present" and "currently installed" disagree after any
+  # downgrade or failed update.
+  agentMeshWrapper =
+    base:
+    pkgs.writeShellApplication {
+      name = "agent-mesh";
+      runtimeInputs = [ pkgs.python3 ];
+      text = ''
+        cache="$HOME/.claude/plugins/cache/kalbasit/agent-mesh"
+        installed="$HOME/.claude/plugins/installed_plugins.json"
+
+        resolved=""
+        if [ -r "$installed" ]; then
+          resolved=$(python3 - "$installed" <<'PY' || true
+        import json, sys
+        try:
+            with open(sys.argv[1], encoding="utf-8") as handle:
+                data = json.load(handle)
+        except Exception:
+            raise SystemExit(0)
+        for name, entries in (data.get("plugins") or {}).items():
+            if not name.startswith("agent-mesh@"):
+                continue
+            for entry in entries or []:
+                path = entry.get("installPath")
+                if path:
+                    print(path)
+                    raise SystemExit(0)
+        PY
+          )
+        fi
+
+        if [ -n "$resolved" ] && [ -x "$resolved/bin/agent-mesh" ]; then
+          exec "$resolved/bin/agent-mesh" "$@"
+        fi
+
+        # installed_plugins.json was unreadable, absent, or named a path that is
+        # gone. Fall back to the highest version present, version-sorted so that
+        # 0.2.15 ranks above 0.2.9 rather than below it.
+        if [ -d "$cache" ]; then
+          newest=$(find "$cache" -mindepth 1 -maxdepth 1 -type d -printf '%f\n' \
+            | sort -V | tail -n 1)
+          if [ -n "$newest" ] && [ -x "$cache/$newest/bin/agent-mesh" ]; then
+            exec "$cache/$newest/bin/agent-mesh" "$@"
+          fi
+        fi
+
+        exec ${lib.getExe base} "$@"
+      '';
+    };
+
   # What this module intends Claude Code to know about. Claude Code owns
   # settings.json, so this is merged in on activation rather than written as a
   # file we control; see the activation script below for why that matters.
@@ -81,9 +156,9 @@ in
     # substitute its own build, and left outside any mkIf so setting the default
     # never depends on the option it is defaulting.
     {
-      soxincfg.programs.claude-code.agent-mesh.package =
-        lib.mkDefault
-          inputs.marketplace.packages.${pkgs.stdenv.hostPlatform.system}.agent-mesh;
+      soxincfg.programs.claude-code.agent-mesh.package = lib.mkDefault (
+        agentMeshWrapper inputs.marketplace.packages.${pkgs.stdenv.hostPlatform.system}.agent-mesh
+      );
     }
 
     # Marketplaces and plugin enablement.
