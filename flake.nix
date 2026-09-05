@@ -65,6 +65,15 @@
 
     swm.url = "github:kalbasit/swm";
 
+    # The steward host agent. Over ssh for the same reason as marketplace
+    # below: the repository is private, and the github: shorthand goes through
+    # the anonymous GitHub API and 404s on one.
+    #
+    # No `follows` on nixpkgs, matching swm above rather than marketplace: this
+    # is a Go binary consumed as a package, and its build is pinned against the
+    # nixpkgs its own flake locks.
+    steward.url = "git+ssh://git@github.com/kalbasit/steward";
+
     # Claude Code plugins. Over ssh rather than the github: shorthand, which
     # goes through the anonymous GitHub API and 404s on a private repository.
     marketplace = {

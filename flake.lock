@@ -201,6 +201,27 @@
     "flake-parts_4": {
       "inputs": {
         "nixpkgs-lib": [
+          "steward",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1788450739,
+        "narHash": "sha256-glZLQlzIn1fXH6PazR2iUmTo7kzzyYSshrWhLS9TqCU=",
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "rev": "31729ca8cbdb4fa927b34e5f4353e6a83f39e993",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "type": "github"
+      }
+    },
+    "flake-parts_5": {
+      "inputs": {
+        "nixpkgs-lib": [
           "swm",
           "nixpkgs"
         ]
@@ -512,6 +533,22 @@
     },
     "nixpkgs_6": {
       "locked": {
+        "lastModified": 1788297115,
+        "narHash": "sha256-Z+vUNbfd2FIKkWOTkcT7RYlh3oFCnig/d2eXD1SWf2E=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "a3116115851d68b8952a2a4221cc25a84e56b532",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-26.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_7": {
+      "locked": {
         "lastModified": 1787698179,
         "narHash": "sha256-eakAr4YZKsQA0Pkd31Ef75dKgBMPCo4h9EVD3RjkWxg=",
         "owner": "NixOS",
@@ -686,6 +723,7 @@
         "pre-commit-hooks": "pre-commit-hooks_2",
         "sops-nix": "sops-nix",
         "soxin": "soxin",
+        "steward": "steward",
         "swm": "swm"
       }
     },
@@ -751,13 +789,33 @@
         "type": "github"
       }
     },
-    "swm": {
+    "steward": {
       "inputs": {
         "flake-parts": "flake-parts_4",
-        "git-hooks-nix": "git-hooks-nix",
         "nixpkgs": "nixpkgs_6",
-        "process-compose-flake": "process-compose-flake",
         "treefmt-nix": "treefmt-nix"
+      },
+      "locked": {
+        "lastModified": 1788583101,
+        "narHash": "sha256-DVWcjdd0Ng64YoOo/3Jc/FYnS5LnYYLJbKTHdhezJdk=",
+        "ref": "refs/heads/main",
+        "rev": "7bc2e4ecc1343b3daba76f4cf7ea0024b8d8911e",
+        "revCount": 41,
+        "type": "git",
+        "url": "ssh://git@github.com/kalbasit/steward"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@github.com/kalbasit/steward"
+      }
+    },
+    "swm": {
+      "inputs": {
+        "flake-parts": "flake-parts_5",
+        "git-hooks-nix": "git-hooks-nix",
+        "nixpkgs": "nixpkgs_7",
+        "process-compose-flake": "process-compose-flake",
+        "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
         "lastModified": 1787710847,
@@ -819,6 +877,27 @@
       }
     },
     "treefmt-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "steward",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1786901030,
+        "narHash": "sha256-WSFCsDSE5ffgD2MqzkM2CYjeFiKhRF/dJUN8uedb6YE=",
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "rev": "27b3b12a8e6375f28ebe122f07d230ca5459bbfa",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "treefmt-nix_2": {
       "inputs": {
         "nixpkgs": [
           "swm",
