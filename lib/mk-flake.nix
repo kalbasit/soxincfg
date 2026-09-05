@@ -66,6 +66,12 @@ let
             swm-full
             ;
 
+          # The host agent only. redacted-host's flake also builds the server and its
+          # image, and neither belongs on a machine that merely runs work.
+          inherit (inputs.redacted-host.packages.${super.stdenv.hostPlatform.system})
+            redacted-host-agent
+            ;
+
           # direnv tests are failing on aarch64-darwin
           # https://github.com/NixOS/nixpkgs/issues/507531
           direnv = super.direnv.overrideAttrs (_: {

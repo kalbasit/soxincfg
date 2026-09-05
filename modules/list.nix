@@ -21,6 +21,7 @@
   secretive = ./programs/secretive;
   ssh = ./programs/ssh;
   starship = ./programs/starship.nix;
+  redacted-host = ./programs/redacted-host;
   swm = ./programs/swm;
   termite = ./programs/termite.nix;
   tmux = ./programs/tmux;
