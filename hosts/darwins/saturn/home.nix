@@ -61,6 +61,25 @@ in
   # uploading session transcripts to a store that cannot delete is a decision
   # to make on its own.
 
+  # This machine joins the steward fleet. It is a laptop that closes, so it is
+  # `sleeps` rather than `intermittent`: the suspension is predictable, and the
+  # scheduler treats "will be away and come back" differently from "may not be
+  # reachable at all".
+  soxincfg.programs.steward = {
+    enable = true;
+    url = "https://steward.prod.nasreddine.com";
+
+    # Not in the nix store and not in this repository. See the module's
+    # credentialsFile description for why the token has no option of its own.
+    credentialsFile = "${homePath}/.config/steward/env";
+
+    reliability = "sleeps";
+    labels = {
+      os = "darwin";
+      platform = "nix-darwin";
+    };
+  };
+
   sops = {
     # Also decrypts the broker credential the module declares for agent-mesh.
     age.keyFile = "${homePath}/.config/sops/age/soxincfg.txt";
