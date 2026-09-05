@@ -94,7 +94,8 @@
     reliability = lib.mkOption {
       type = lib.types.nullOr (
         lib.types.enum [
-          "always-on"
+          "always_on"
+          "sleeps"
           "intermittent"
         ]
       );
@@ -102,8 +103,16 @@
       description = ''
         Whether this machine can be relied on to stay awake.
 
-        A laptop that sleeps is `intermittent`, and saying so is what stops
-        long work being placed on it. Null leaves the agent's own default.
+        `always_on` never suspends. `sleeps` suspends predictably, which is a
+        laptop that closes. `intermittent` is reachable unpredictably, which is
+        a different thing from sleeping and is why the two are not one value.
+
+        Saying so is what stops long work being placed where it will vanish
+        mid-flight. Null leaves the agent's own default.
+
+        Underscores, not hyphens: these are the control plane's own values and
+        it refuses anything else, so a hyphen here is a host that fails to
+        register rather than a host with a cosmetic typo.
       '';
     };
 
