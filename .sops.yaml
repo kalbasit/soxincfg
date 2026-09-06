@@ -38,6 +38,11 @@ creation_rules:
         age:
           - *host_age_proteus
 
+  - path_regex: hosts/nixoses/pve/wnasreddine-code-01/[^/]+\.sops[^/]*
+    key_groups:
+      - age:
+          - *host_age_pve_wnasreddine_code_01
+
   - path_regex: hosts/nixoses/saturn-nixos-vm/[^/]+\.sops[^/]*
     key_groups:
       - pgp:

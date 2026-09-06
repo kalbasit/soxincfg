@@ -71,7 +71,7 @@ in
 
     # Not in the nix store and not in this repository. See the module's
     # credentialsFile description for why the token has no option of its own.
-    credentialsFile = "${homePath}/.config/steward/env";
+    credentialsFile = config.sops.secrets.steward_env.path;
 
     reliability = "sleeps";
     labels = {
@@ -83,5 +83,13 @@ in
   sops = {
     # Also decrypts the broker credential the module declares for agent-mesh.
     age.keyFile = "${homePath}/.config/sops/age/soxincfg.txt";
+
+    # This host's steward credential. Host-scoped rather than module-scoped so
+    # it is encrypted to saturn alone: a credential issued per host is not
+    # worth much if every host can decrypt every other's.
+    #
+    # The file holds `STEWARD_TOKEN=...` and is sourced at launch, so the token
+    # never enters the job definition or the nix store.
+    secrets.steward_env.sopsFile = ./secrets.sops.yaml;
   };
 }
