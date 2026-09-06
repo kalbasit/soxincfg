@@ -23,7 +23,10 @@
 
     # Not in the nix store and not in this repository. See the module's
     # credentialsFile description for why the token has no option of its own.
-    credentialsFile = "/run/secrets/steward-env";
+    # sops-nix on NixOS decrypts to /run/secrets/<name>. Written out rather
+    # than read from config.sops, because this is the home-manager tree and the
+    # secret is declared in the NixOS one.
+    credentialsFile = "/run/secrets/steward_env";
 
     reliability = "always_on";
     labels = {
