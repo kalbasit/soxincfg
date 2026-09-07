@@ -94,16 +94,40 @@ in
             # launchd has no EnvironmentFile, so the credentials are sourced by
             # a shell instead. The token reaches the process through the
             # environment either way and is never written to the store.
+            #
+            # `set -a` is load-bearing and its absence is not visible by
+            # reading. `. file` sets SHELL variables; without allexport they do
+            # not survive into the environment of the process exec'd on the
+            # next line, so the token is read and immediately discarded. The
+            # agent then exits for a configuration it cannot use -- correctly,
+            # and in about 39ms -- and launchd restarts it forever.
+            #
+            # systemd's EnvironmentFile= parses KEY=value into the environment
+            # directly, which is why the Linux path never had this bug and why
+            # emulating it here needs the export to be explicit.
             ProgramArguments = [
               "/bin/sh"
               "-c"
-              ". ${toString cfg.credentialsFile}; exec ${exe}"
+              "set -a; . ${toString cfg.credentialsFile}; set +a; exec ${exe}"
             ];
             EnvironmentVariables = env;
             RunAtLoad = true;
             KeepAlive = true;
+
+            # Without these launchd discards stdout and stderr, and the agent's
+            # one-line explanation of its own failure goes to /dev/null. That
+            # is what turned this bug from "says exactly what is wrong" into
+            # "appears never to have started", and it is why it survived a day
+            # of restarts unnoticed.
+            StandardOutPath = "${config.home.homeDirectory}/Library/Logs/steward-agent/stdout";
+            StandardErrorPath = "${config.home.homeDirectory}/Library/Logs/steward-agent/stderr";
           };
         };
+
+        # launchd will not create the log directory, and a job whose
+        # StandardErrorPath cannot be opened loses the diagnostics this was
+        # added for.
+        home.file."Library/Logs/steward-agent/.keep".text = "";
       })
     ]
   );
