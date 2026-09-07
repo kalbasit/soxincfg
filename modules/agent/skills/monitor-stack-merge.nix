@@ -14,14 +14,19 @@ let
   skillFile = ''
     ---
     name: monitor-stack-merge
-    description: 'Monitor a git-spice stack until all PRs are merged, handling
-      failures automatically. Examples: "monitor the stack", "watch PRs until
-      merged", "keep an eye on the merge queue"'
+    description: 'Monitor a stack of PRs until all are merged, handling
+      failures automatically. Uses GitHub native stacks for merging.
+      Examples: "monitor the stack", "watch PRs until merged", "keep an eye
+      on the merge queue"'
     ---
 
     # monitor-stack-merge
 
-    Monitor a git-spice stack until all PRs are merged, handling failures automatically.
+    Monitor a stack of pull requests until all are merged, handling failures automatically.
+
+    Branches are managed locally with git-spice (`gs`). Merging is done with
+    **GitHub native stacks** (`gh stack`), which replaced the old `merge-stack`
+    label and its `merge-stack-start` / `merge-stack-continue` workflows.
 
     ## Invocation
 
@@ -37,18 +42,44 @@ let
     /monitor-stack-merge
     ```
 
-    ## Each Iteration
+    ## Prerequisites
 
-    ### 1. Navigate to the top and list the stack
+    The stack must exist **on GitHub**, not just locally. git-spice does not yet
+    create native stacks (abhinav/git-spice#1388; the `submit`-side PR #1400 is
+    still an open draft), so after `gs ss` you must adopt the PRs into a native
+    stack once:
 
     ```bash
-    gs top
-    gs ls
+    gh stack link <bottom-PR> <next-PR> ... <top-PR>
     ```
 
-    Identify all branches and their PR numbers (shown at the end of each line).
+    `gh stack link` adopts existing PRs — including renovate/dependabot branches —
+    and rewrites their bases into a linear chain. Auto-merge must be **off** on
+    those PRs first, or `link` refuses:
 
-    ### 2. Check merge status of the bottom-most PR (closest to main)
+    ```bash
+    gh pr merge --disable-auto <PR>
+    ```
+
+    Confirm the stack exists before monitoring:
+
+    ```bash
+    gh stack view --short
+    gh api repos/{owner}/{repo}/stacks --jq '.[] | "stack \(.number) open=\(.open) prs=\([.pull_requests[].number])"'
+    ```
+
+    ## Each Iteration
+
+    ### 1. List the stack
+
+    ```bash
+    gs ls
+    gh stack view --short
+    ```
+
+    `gh stack view` status icons: `✓` merged, `◎` queued, `○` open, `⚠` needs rebase.
+
+    ### 2. Check the lowest unmerged PR
 
     ```bash
     gh pr view <PR> --json state,mergedAt,statusCheckRollup \
@@ -57,51 +88,51 @@ let
         inProgress:[.statusCheckRollup[]|select(.status=="IN_PROGRESS")|.name]}'
     ```
 
+    The lowest unmerged PR is the one whose `stack.base.ref` equals its own
+    `base.ref` — it targets the stack base directly.
+
     ### 3. Decide what to do
 
-    #### PR merged?
+    #### Whole stack green and approved?
 
-    Run `yes | gs rs` to sync (this cleans up merged branches and moves the stack up).
-
-    **Do NOT run `gs stack restack` after a clean merge.** The merge-stack-continue workflow force-pushes each PR's branch with a rebased base as it works down the stack. If you restack locally without pushing, the local SHAs diverge from what GitHub has — upper branches accumulate stale commits, causing conflicts on future restacks.
-
-    **After `yes | gs rs`, wait for the merge-stack-continue workflow to finish** before doing anything with local branches. Check that it has completed:
+    Merge it atomically:
 
     ```bash
-    gh run list --workflow=merge-stack-continue.yml --limit=1 --json status,conclusion \
-      --jq '.[0] | {status:.status, conclusion:.conclusion}'
+    gh stack merge --yes
     ```
 
-    Only once it shows `completed` / `success` should you align local branches to remote. The continue workflow force-pushes **all** submitted branches in the stack (not just the next one), so fetch and reset every submitted PR branch:
+    This is **all-or-nothing**: every PR up to and including your selection lands
+    on the base branch in one operation, bottom-up. If any one PR cannot merge,
+    none do. Pass a PR number to merge only up to that point:
 
     ```bash
-    git fetch origin <branch1> <branch2> <branch3> ...
-    git checkout <branch> && git reset --hard origin/<branch>
-    # repeat for every submitted branch
+    gh stack merge <PR> --yes
     ```
 
-    Then restack only the **unsubmitted** branches at the top with `gs stack restack`.
+    Before it will merge, GitHub requires that every PR below is approved with
+    passing checks, that the stack is linear, and that branch protection for the
+    stack base is satisfied. Bypassing merge requirements is not supported for
+    stacks. If the base branch uses a merge queue, the stack is added to the queue.
 
-    **SHA mismatch warning:** If `gs rs` prints `local SHA (...) does not match remote SHA (...). Skipping...`, the merged branch wasn't cleaned up. Fix:
+    #### Bottom PR merged, stack partially landed?
+
+    GitHub rebases the next unmerged PR to target the stack base directly —
+    server-side, with no local action. Sync local branches to match:
+
+    ```bash
+    yes | gs rs
+    ```
+
+    **Do not force-push branches to "fix" the stack after a merge.** GitHub has
+    already rewritten the bases; force-pushing invalidates every branch above.
+
+    **SHA mismatch:** if `gs rs` prints `local SHA (...) does not match remote SHA
+    (...). Skipping...`, the merged branch was not cleaned up:
 
     ```bash
     git branch -D <merged-branch-name>
     yes | gs rs
     ```
-
-    **If you already ran `gs stack restack` and local branches diverged from remote**, reset every submitted PR branch to its remote state (after confirming merge-stack-continue has finished):
-
-    ```bash
-    git fetch origin <branch1> <branch2> ...
-    git checkout <branch> && git reset --hard origin/<branch>
-    # repeat for each submitted branch
-    ```
-
-    Then restack only the unsubmitted branches at the top with `gs stack restack`.
-
-    **Do NOT run `gs ss`** — the merge-stack-continue workflow handles submitting the next PR automatically.
-
-    Restart the loop iteration.
 
     #### PR open, CI all green or in-progress?
 
@@ -110,6 +141,16 @@ let
     #### PR open, CI has failures?
 
     Diagnose the failure (see below), then act.
+
+    ---
+
+    ## CI runs on every PR in the stack
+
+    Workflows trigger **as if each PR targets the stack base**, so a workflow
+    pinned to `branches: [main]` runs for every PR in the stack, not just the
+    bottom one. A stacked PR showing no CI at all is almost always the
+    stack-formation timing hole: the PR joined the stack *after* its last push, so
+    no `pull_request` event has fired since. Push any commit to trigger one.
 
     ---
 
@@ -128,7 +169,7 @@ let
     | Symptom | Classification |
     |---------|---------------|
     | "Bad credentials", transient network error, runner setup error | **Intermittent** |
-    | Rebase conflict / merge conflict in the merge-stack-continue workflow | **Rebase issue** |
+    | `⚠ Needs rebase`, or a "Rebase stack" button in the merge box | **Non-linear stack** |
     | Test failure, lint error, build error in application code | **Legitimate** |
 
     ---
@@ -162,19 +203,35 @@ let
     gh run rerun <run-id>
     ```
 
-    ### Rebase issue (merge-stack-continue stopped)
+    ### Non-linear stack
 
-    The merge-stack-continue workflow hit a rebase conflict when trying to update a PR's base.
+    GitHub only merges a linear stack (A -> B -> C). A divergence (A -> B and
+    A -> D) blocks the merge and surfaces a "Rebase stack" button.
 
-    1. Go to the top of the stack: `gs top`
-    2. Sync: `yes | gs rs`
-    3. Restack: `/gs-restack`
-    4. Submit all PRs: `gs ss --update-only --force`
-    5. Add the `merge-stack` label to the **top-most PR** in the stack:
-       ```bash
-       gh pr edit <PR> --add-label merge-stack
-       ```
-       The `merge-stack-start` workflow traverses the stack and starts merging from the bottom up automatically.
+    ```bash
+    gh stack rebase
+    ```
+
+    This does a cascading rebase across the stack. Then re-submit through
+    git-spice so local tracking stays consistent:
+
+    ```bash
+    gs ss --update-only --force
+    ```
+
+    If the local and remote stacks have diverged in *composition* (not just
+    commits), reconcile with GitHub as the source of truth:
+
+    ```bash
+    gh stack sync
+    ```
+
+    > [!CAUTION]
+    > `gh stack sync` does its own cascade-rebase and atomic force-push
+    > (`--force-with-lease --atomic`), which can fight git-spice's tracking.
+    > Prefer `gs rs` / `/gs-restack` for routine local work and reach for
+    > `gh stack sync` only to repair a genuine local/remote composition
+    > divergence. Never run both back to back without re-reading the stack.
 
     ### Legitimate failure
 
@@ -194,7 +251,10 @@ let
     ## Notes
 
     - Branches without PR numbers (unsubmitted) are ignored — only branches with `(#NNN)` need monitoring.
-    - The `merge-stack` label drives the auto-merge workflow. If it disappears from the bottom PR for any reason, re-add it manually.
+    - Merging is driven by `gh stack merge`, not by a label. There is no
+      `merge-stack` label and no `merge-stack-start` / `merge-stack-continue`
+      workflow — those were removed once native stacks landed.
+    - Stacks must be linear. GitHub rejects `A -> B` and `A -> D` coexisting.
     - When all PRs are merged and the stack is empty (only `main` remains), the loop is done — stop it with CronDelete.
 
     ## Warning: Unexpected Conflicts During Restack
@@ -205,9 +265,12 @@ let
     gs rba   # abort the restack
     ```
 
-    Then diagnose: the most common cause is that local branches were restacked without waiting for the merge-stack-continue workflow to finish force-pushing all submitted branches. The local SHAs diverge from what GitHub has, causing phantom conflicts. Fix:
+    Then diagnose. The most common cause is that GitHub rewrote branch bases
+    server-side — during an atomic stack merge, or a cascading rebase triggered
+    from the pull request — and the local branches still hold the pre-rewrite
+    SHAs. Fix:
 
-    1. Confirm merge-stack-continue has completed (see above).
+    1. Confirm no stack merge or rebase is still in flight: `gh stack view --short`.
     2. Fetch and reset every submitted PR branch to its remote state.
     3. Only then restack the unsubmitted branches at the top.
 
