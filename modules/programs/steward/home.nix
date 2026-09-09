@@ -46,6 +46,25 @@ in
       {
         assertions = [
           {
+            # The agent starts work by asking swm to open a pane, so a host
+            # running it needs swm *configured*, not merely present. The
+            # binary alone is not enough: soxincfg.programs.swm writes
+            # config.toml and session-tmux.toml, and without them swm does not
+            # know which session plugin to drive.
+            #
+            # An assertion rather than enabling swm from here. Turning on
+            # another module as a side effect would also bring its shell
+            # aliases, pet snippets and tmux binding, which is a lot to inherit
+            # from switching on a work agent -- and it would hide the
+            # dependency from whoever reads the host's configuration. Failing
+            # the build says it once, at the moment someone can act on it.
+            assertion = config.soxincfg.programs.swm.enable;
+            message =
+              "soxincfg.programs.steward.enable requires soxincfg.programs.swm.enable: "
+              + "the agent starts work through swm, and a host with the agent but no swm "
+              + "registers, heartbeats, accepts assignments and then fails every one of them.";
+          }
+          {
             assertion = offending == [ ];
             message =
               "soxincfg.programs.steward.labels sets ${lib.concatStringsSep ", " offending}, "
