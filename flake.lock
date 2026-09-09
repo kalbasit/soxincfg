@@ -818,11 +818,11 @@
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1788566504,
-        "narHash": "sha256-JViVqfJFNhrfvxZT9dpiuhQdqFB0Tqakq6ZB7iW2qzE=",
+        "lastModified": 1788933388,
+        "narHash": "sha256-CpvewUM2lgdxlun2KNz7KfdqtT2KhfXoDJhlJ0nK//g=",
         "owner": "kalbasit",
         "repo": "swm",
-        "rev": "eaa8fb2762d0dcd184c346e2bcf9e4ea21cc1f35",
+        "rev": "0a2447e1e821b9424209125ab93fe03964bc42b9",
         "type": "github"
       },
       "original": {
