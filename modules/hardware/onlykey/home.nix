@@ -44,6 +44,35 @@ let
 
   homePath = config.home.homeDirectory;
   sopsFile = ./secrets.sops.yaml;
+
+  # How a Darwin shell finds its agent. When ssh-agent-mux runs it is the only
+  # agent worth talking to, since it fronts both Secretive and the OnlyKey;
+  # without it, drive the OnlyKey agent directly.
+  darwinAuthSock =
+    if config.soxincfg.services.ssh-agent-mux.enable then
+      ''
+        # ssh-agent-mux owns this socket and launchd keeps it alive, so bind to it
+        # unconditionally. Probing for the socket first would race launchd at
+        # login: a shell that starts before the agent is up would take the
+        # fallback and stay pinned to an OnlyKey-only agent for its whole life,
+        # never seeing the Secretive keys.
+        export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent-mux.sock"
+
+        # Say so loudly rather than degrading quietly. A missing socket here means
+        # the launchd agent is not running -- most often because it is disabled in
+        # launchd's override database, which "launchctl bootstrap" reports only as
+        # a bare "Input/output error".
+        if [[ ! -S "$SSH_AUTH_SOCK" ]]; then
+          echo "warning: ssh-agent-mux socket $SSH_AUTH_SOCK is missing; ssh will have no keys" >&2
+          echo "  check: launchctl print-disabled gui/$(id -u) | grep ssh-agent-mux" >&2
+          echo "  check: tail ~/Library/Logs/ssh-agent-mux.log" >&2
+        fi
+      ''
+    else
+      ''
+        mkdir -p "$HOME/.ssh/agent"
+        eval "$(${pkgs.keychain}/bin/keychain --ssh-agent-socket "$HOME/.ssh/agent/keychain.socket" --eval id_ed25519_sk_rk -q)"
+      '';
 in
 {
   config = mkIf cfg.enable (mkMerge [
@@ -71,14 +100,7 @@ in
             export XDG_RUNTIME_DIR="''${XDG_RUNTIME_DIR%/}"
           fi
 
-          if [[ -S "$XDG_RUNTIME_DIR/ssh-agent-mux.sock" ]]; then
-             export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent-mux.sock"
-          else
-             # Fallback: Initialize OnlyKey agent via keychain in the shell if service is not running
-             # This also ensures we have a fallback if the user disables the service but keeps this module
-             mkdir -p "$HOME/.ssh/agent"
-             eval "$(${pkgs.keychain}/bin/keychain --ssh-agent-socket "$HOME/.ssh/agent/keychain.socket" --eval id_ed25519_sk_rk -q)"
-          fi
+          ${darwinAuthSock}
 
           # Link the current SSH_AUTH_SOCK to the standard location via .ssh/rc
           if [[ -e "$HOME/.ssh/rc" ]]; then
