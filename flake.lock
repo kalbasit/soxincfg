@@ -796,11 +796,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1788985799,
-        "narHash": "sha256-Y4nswx13KaamSCh4UKwOQFnBJuPMSPq62QF+ZTVyRko=",
+        "lastModified": 1788996237,
+        "narHash": "sha256-arWi8UPac3H+YZao2K1Gnz0JT6mDN88XtMpQ7T/zWDU=",
         "ref": "refs/heads/main",
-        "rev": "54e9584d9d10a2429ddb7a4af6c7e59bf5cc843e",
-        "revCount": 61,
+        "rev": "c260aacdee75601c884e0c3d6c79685ad5310b7d",
+        "revCount": 63,
         "type": "git",
         "url": "ssh://git@github.com/kalbasit/steward"
       },
@@ -818,11 +818,11 @@
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1788988139,
-        "narHash": "sha256-o3B5OUSiTJzHp9p6cY4AoV2mggQ7mfybgKwWmVIbMro=",
+        "lastModified": 1788999497,
+        "narHash": "sha256-j4JOAMGDy3KIANjZBOeyDBssNtDA+d0aZWW8XgQDZjw=",
         "owner": "kalbasit",
         "repo": "swm",
-        "rev": "5f53e9b424f16d03b08f782b0a40a71acd7e8496",
+        "rev": "9dc4002167e384be532f78a69a097c28c2e0179e",
         "type": "github"
       },
       "original": {
