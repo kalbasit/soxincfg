@@ -129,7 +129,34 @@ in
               "-c"
               "set -a; . ${toString cfg.credentialsFile}; set +a; exec ${exe}"
             ];
-            EnvironmentVariables = env;
+            # launchd hands a job a minimal PATH -- /usr/bin:/bin and the two
+            # sbin directories -- and nothing else. The nix profile is absent,
+            # so `swm` is unreachable to the agent while being immediately
+            # findable in a terminal, which is what made this look like swm
+            # not being installed at all.
+            #
+            # systemd's user manager inherits the profile PATH, which is why
+            # the Linux branch above never needed this. It is the same
+            # asymmetry as the EnvironmentFile note above: something systemd
+            # provides silently that launchd does not.
+            #
+            # Broad rather than just swm's own bin, because this PATH also
+            # reaches the workers. The agent starts the workspace, so the
+            # multiplexer server it spawns inherits this environment, and every
+            # pane opened in it inherits that in turn -- a PATH narrow enough
+            # for swm alone would leave the worker unfindable in the pane it
+            # was started in.
+            EnvironmentVariables = env // {
+              PATH = lib.concatStringsSep ":" [
+                "${config.home.profileDirectory}/bin"
+                "/run/current-system/sw/bin"
+                "/nix/var/nix/profiles/default/bin"
+                "/usr/bin"
+                "/bin"
+                "/usr/sbin"
+                "/sbin"
+              ];
+            };
             RunAtLoad = true;
             KeepAlive = true;
 
