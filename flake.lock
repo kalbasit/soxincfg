@@ -364,26 +364,6 @@
         "type": "github"
       }
     },
-    "marketplace": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs-unstable"
-        ]
-      },
-      "locked": {
-        "lastModified": 1788311849,
-        "narHash": "sha256-WmJSBDmFsWUh6MzAEPlL7FIJ+hWFI11iEwQxvgDqQSQ=",
-        "ref": "refs/heads/main",
-        "rev": "51a69cb51e57d84f9412537225331587c9331f4a",
-        "revCount": 67,
-        "type": "git",
-        "url": "ssh://git@github.com/kalbasit/marketplace"
-      },
-      "original": {
-        "type": "git",
-        "url": "ssh://git@github.com/kalbasit/marketplace"
-      }
-    },
     "nixos-hardware": {
       "inputs": {
         "nixpkgs": "nixpkgs_2"
@@ -713,7 +693,6 @@
         "deploy-rs": "deploy-rs",
         "flake-utils-plus": "flake-utils-plus",
         "home-manager": "home-manager",
-        "marketplace": "marketplace",
         "nixos-hardware": "nixos-hardware",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs_3",
