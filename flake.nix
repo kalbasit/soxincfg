@@ -65,21 +65,19 @@
 
     swm.url = "github:kalbasit/swm";
 
-    # The steward host agent. Over ssh for the same reason as marketplace
-    # below: the repository is private, and the github: shorthand goes through
-    # the anonymous GitHub API and 404s on one.
+    # The steward host agent *and* the agent-mesh Claude Code plugin, which
+    # moved into that repository -- so this input now serves both, and the
+    # separate `marketplace` input it replaced is gone.
     #
-    # No `follows` on nixpkgs, matching swm above rather than marketplace: this
-    # is a Go binary consumed as a package, and its build is pinned against the
-    # nixpkgs its own flake locks.
+    # Over ssh rather than the github: shorthand, which goes through the
+    # anonymous GitHub API and 404s on a private repository.
+    #
+    # No `follows` on nixpkgs, matching swm above: both artifacts build against
+    # the nixpkgs steward's own flake locks. That is a change for the plugin,
+    # which used to follow nixpkgs-unstable through the old input, and a safe
+    # one -- it depends on nothing outside the Python standard library by
+    # design, so the interpreter it is built against is not load-bearing.
     steward.url = "git+ssh://git@github.com/kalbasit/steward";
-
-    # Claude Code plugins. Over ssh rather than the github: shorthand, which
-    # goes through the anonymous GitHub API and 404s on a private repository.
-    marketplace = {
-      url = "git+ssh://git@github.com/kalbasit/marketplace";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
   };
 
   outputs =

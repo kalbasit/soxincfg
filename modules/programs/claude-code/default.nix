@@ -59,7 +59,7 @@ in
         );
         default = { };
         example = lib.literalExpression ''
-          { kalbasit.repo = "kalbasit/marketplace"; }
+          { kalbasit.repo = "kalbasit/steward"; }
         '';
         description = ''
           Plugin marketplaces to register with Claude Code.
@@ -214,11 +214,11 @@ in
   config = lib.mkIf (cfg.enable && cfg.agent-mesh.enable) {
     soxincfg.programs.claude-code = {
       marketplaces.kalbasit = {
-        repo = lib.mkDefault "kalbasit/marketplace";
+        repo = lib.mkDefault "kalbasit/steward";
 
         # Tracked rather than pinned, unlike the option's own default. The plugin
         # is how an agent learns the mesh protocol, so a host frozen at whatever
-        # the marketplace happened to be when it first cloned would be running an
+        # the repository happened to be when it first cloned would be running an
         # older protocol than the agents it talks to.
         autoUpdate = lib.mkDefault true;
       };
