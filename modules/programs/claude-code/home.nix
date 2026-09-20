@@ -151,13 +151,13 @@ in
   ++ lib.optional isDarwin ./home-darwin.nix;
 
   config = lib.mkMerge [
-    # Default the package from the marketplace flake input, the same way the
-    # rules block sources a file from inputs.swm. Left as mkDefault so a host can
+    # Default the package from the steward flake input, the same way the rules
+    # block sources a file from inputs.swm. Left as mkDefault so a host can
     # substitute its own build, and left outside any mkIf so setting the default
     # never depends on the option it is defaulting.
     {
       soxincfg.programs.claude-code.agent-mesh.package = lib.mkDefault (
-        agentMeshWrapper inputs.marketplace.packages.${pkgs.stdenv.hostPlatform.system}.agent-mesh
+        agentMeshWrapper inputs.steward.packages.${pkgs.stdenv.hostPlatform.system}.agent-mesh
       );
     }
 
