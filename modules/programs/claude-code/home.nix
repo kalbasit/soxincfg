@@ -241,8 +241,9 @@ in
           #
           # Only a real mismatch triggers this, so an ordinary rebuild does
           # nothing and says nothing. A failure is reported and never fatal: a
-          # machine rebuilding with no network, or without claude on PATH, must
-          # still finish activating.
+          # machine rebuilding without network, or without credentials for a
+          # private marketplace, must still finish activating and be told what
+          # to run by hand.
           registry="$HOME/.claude/plugins/known_marketplaces.json"
           if [[ -f "$registry" ]] && ${pkgs.jq}/bin/jq -e . "$registry" > /dev/null 2>&1; then
             ${pkgs.jq}/bin/jq -r \
@@ -254,12 +255,15 @@ in
                 | "\(.key) \(.value.source.repo) \($d[.key].source.repo)"
               ' "$registry" |
             while read -r name was repo; do
-              if ! command -v claude > /dev/null 2>&1; then
-                echo "claude-code: marketplace '$name' still points at $was, not $repo, and claude is not on PATH; run 'claude plugin marketplace add $repo'" >&2
-                continue
-              fi
+              # The store path rather than a PATH lookup. Activation runs with a
+              # PATH that does not include the user's profile, so `command -v
+              # claude` finds nothing even on a machine where claude-code is
+              # installed and on an interactive PATH -- measured on code-01
+              # 2026-09-20, where this printed the "not on PATH" warning and
+              # left the marketplace stale on a host that had the binary the
+              # whole time.
               echo "claude-code: repointing marketplace '$name' from $was to $repo"
-              claude plugin marketplace add "$repo" ||
+              ${config.programs.claude-code.package}/bin/claude plugin marketplace add "$repo" ||
                 echo "claude-code: could not repoint '$name'; run 'claude plugin marketplace add $repo' by hand" >&2
             done
           fi
