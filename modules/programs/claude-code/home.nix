@@ -106,6 +106,93 @@ let
     plugins = lib.unique cfg.plugins;
   };
 
+  # A script rather than inline activation text. Inline it worked, but it had
+  # grown to a hundred lines of shell embedded in a Nix string, where nothing
+  # checks it and a typo is found by the next host to activate. As a derivation
+  # it is shellcheck'd on every build, and it can be run directly against a
+  # throwaway HOME -- which is how the three bugs before this one were finally
+  # pinned down, each after a rebuild that could have checked it first.
+  reconcileMarketplaces = pkgs.writeShellApplication {
+    name = "claude-code-reconcile-marketplaces";
+    runtimeInputs = [
+      pkgs.jq
+      pkgs.git
+      pkgs.openssh
+      config.programs.claude-code.package
+    ];
+    text = ''
+      desired="$1"
+      registry="$HOME/.claude/plugins/known_marketplaces.json"
+      installed="$HOME/.claude/plugins/installed_plugins.json"
+
+      # Claude Code keys its marketplace registry by *name*, and never revisits
+      # the repository behind a name it already knows. So when a plugin moves
+      # house, settings.json follows it and nothing else does: the registry
+      # keeps cloning the old repository and the host runs code from somewhere
+      # nobody maintains, while every declarative file on it says otherwise.
+      #
+      # Measured on code-01 2026-09-20, when agent-mesh moved to
+      # kalbasit/steward. `marketplace update` is no help: it pulls the clone it
+      # already has, which is still the old repository. Re-adding is Claude
+      # Code's own way of moving a name -- it re-clones, keeps the name so
+      # plugin ids never change, and is a no-op when already correct.
+      if [[ -f "$registry" ]] && jq -e . "$registry" > /dev/null 2>&1; then
+        while read -r name was repo; do
+          [[ -n "$name" ]] || continue
+          echo "claude-code: repointing marketplace '$name' from $was to $repo"
+          claude plugin marketplace add "$repo" ||
+            echo "claude-code: could not repoint '$name'; run 'claude plugin marketplace add $repo' by hand" >&2
+        done < <(jq -r --slurpfile d "$desired" '
+            ($d[0].marketplaces) as $m
+            | to_entries[]
+            | select($m[.key] != null)
+            | select(.value.source.repo != $m[.key].source.repo)
+            | "\(.key) \(.value.source.repo) \($m[.key].source.repo)"
+          ' "$registry")
+      fi
+
+      # Refreshing a marketplace is not the same as updating the plugin that
+      # came from it, and Claude Code tracks the two separately. The clone
+      # moves; installed_plugins.json goes on naming the version it installed
+      # before -- and that record is what the hooks import and what the
+      # agent-mesh wrapper execs. Measured on the same host: registry and
+      # plugin cache both reached 0.2.23 while installed_plugins.json stayed on
+      # 0.2.22, so the machine had the new plugin on disk and ran the old one.
+      #
+      # Deliberately not nested inside the repoint above. By then the repoint
+      # has usually already happened -- that host had a correct marketplace and
+      # a stale plugin -- so a version left behind has to be its own check or it
+      # is never reached.
+      #
+      # Which version is wanted is read from the clone on disk, so an ordinary
+      # rebuild reaches the network only when there is something to install.
+      if [[ -f "$installed" ]] && jq -e . "$installed" > /dev/null 2>&1; then
+        while read -r spec; do
+          [[ -n "$spec" ]] || continue
+          plugin="''${spec%@*}"
+          marketplace="''${spec#*@}"
+          clone="$HOME/.claude/plugins/marketplaces/$marketplace"
+          [[ -f "$clone/.claude-plugin/marketplace.json" ]] || continue
+
+          entry=$(jq -r --arg n "$plugin" '.plugins[] | select(.name == $n) | .source // empty' \
+            "$clone/.claude-plugin/marketplace.json")
+          [[ -n "$entry" ]] || continue
+
+          advertised=$(jq -r '.version // empty' \
+            "$clone/$entry/.claude-plugin/plugin.json" 2> /dev/null || true)
+          [[ -n "$advertised" ]] || continue
+
+          current=$(jq -r --arg s "$spec" '.plugins[$s][0].version // empty' "$installed")
+          [[ "$advertised" != "$current" ]] || continue
+
+          echo "claude-code: updating $spec from ''${current:-nothing} to $advertised"
+          claude plugin update "$spec" ||
+            echo "claude-code: could not update $spec; run 'claude plugin update $spec' by hand" >&2
+        done < <(jq -r '.plugins[]' "$desired")
+      fi
+    '';
+  };
+
   desiredFile = pkgs.writeText "claude-code-desired.json" (builtins.toJSON desired);
 
   # "5m" / "90s" / "1h" -> seconds, for launchd's StartInterval. systemd takes the
@@ -216,72 +303,7 @@ in
             '{ marketplaces: ($desired[0].marketplaces | keys), plugins: $desired[0].plugins }' \
             > "$managed"
 
-          # Claude Code keys its marketplace registry by *name*, and never
-          # revisits the repository behind a name it already knows. So when a
-          # plugin moves house, settings.json follows it and nothing else does:
-          # the registry keeps cloning the old repository, the plugin cache
-          # keeps the old version, and the host goes on running code from a
-          # repository nobody maintains any more -- while every declarative
-          # file on the machine says otherwise.
-          #
-          # Measured on 2026-09-20, when agent-mesh moved to kalbasit/steward.
-          # Activation rewrote settings.json on code-01 exactly as intended,
-          # and the plugin stayed on 0.2.22 from kalbasit/marketplace, because
-          # the registry had a 'kalbasit' and never looked again. `marketplace
-          # update` does not help: it pulls the clone it already has, which is
-          # still the old repository.
-          #
-          # Repointing is asked of Claude Code rather than done to it. Re-adding
-          # is its own supported way of moving a name: it re-clones, keeps the
-          # name so plugin ids never change, and extracts the new version into
-          # its cache. Editing known_marketplaces.json directly would mean
-          # inventing install locations and cache bookkeeping this module has no
-          # business owning -- the same reason it does not write settings.json
-          # wholesale either.
-          #
-          # Only a real mismatch triggers this, so an ordinary rebuild does
-          # nothing and says nothing. A failure is reported and never fatal: a
-          # machine rebuilding without network, or without credentials for a
-          # private marketplace, must still finish activating and be told what
-          # to run by hand.
-          registry="$HOME/.claude/plugins/known_marketplaces.json"
-          if [[ -f "$registry" ]] && ${pkgs.jq}/bin/jq -e . "$registry" > /dev/null 2>&1; then
-            ${pkgs.jq}/bin/jq -r \
-              --slurpfile desired ${desiredFile} '
-                ($desired[0].marketplaces) as $d
-                | to_entries[]
-                | select($d[.key] != null)
-                | select(.value.source.repo != $d[.key].source.repo)
-                | "\(.key) \(.value.source.repo) \($d[.key].source.repo)"
-              ' "$registry" |
-            while read -r name was repo; do
-              # The store path rather than a PATH lookup. Activation runs with a
-              # PATH that does not include the user's profile, so `command -v
-              # claude` finds nothing even on a machine where claude-code is
-              # installed and on an interactive PATH -- measured on code-01
-              # 2026-09-20, where this printed the "not on PATH" warning and
-              # left the marketplace stale on a host that had the binary the
-              # whole time.
-              #
-              # git and ssh come with it for the same reason. Claude Code does
-              # not clone in-process, it shells out to `git`, and git in turn
-              # runs `ssh` for a private marketplace. Neither is on activation's
-              # PATH either, and their absence does not surface as "git: not
-              # found" -- the clone dies instantly with a Node stream error,
-              # ERR_STREAM_PREMATURE_CLOSE, which says nothing about what was
-              # missing. Measured on code-01 2026-09-20, and reproduced exactly
-              # by stripping git from PATH in an isolated CLAUDE_CONFIG_DIR.
-              echo "claude-code: repointing marketplace '$name' from $was to $repo"
-              PATH="${
-                lib.makeBinPath [
-                  pkgs.git
-                  pkgs.openssh
-                ]
-              }:$PATH" \
-                ${config.programs.claude-code.package}/bin/claude plugin marketplace add "$repo" ||
-                echo "claude-code: could not repoint '$name'; run 'claude plugin marketplace add $repo' by hand" >&2
-            done
-          fi
+          ${lib.getExe reconcileMarketplaces} ${desiredFile}
         fi
       '';
     })
