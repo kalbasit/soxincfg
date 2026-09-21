@@ -215,6 +215,54 @@ in
             --slurpfile desired ${desiredFile} \
             '{ marketplaces: ($desired[0].marketplaces | keys), plugins: $desired[0].plugins }' \
             > "$managed"
+
+          # Claude Code keys its marketplace registry by *name*, and never
+          # revisits the repository behind a name it already knows. So when a
+          # plugin moves house, settings.json follows it and nothing else does:
+          # the registry keeps cloning the old repository, the plugin cache
+          # keeps the old version, and the host goes on running code from a
+          # repository nobody maintains any more -- while every declarative
+          # file on the machine says otherwise.
+          #
+          # Measured on 2026-09-20, when agent-mesh moved to kalbasit/steward.
+          # Activation rewrote settings.json on code-01 exactly as intended,
+          # and the plugin stayed on 0.2.22 from kalbasit/marketplace, because
+          # the registry had a 'kalbasit' and never looked again. `marketplace
+          # update` does not help: it pulls the clone it already has, which is
+          # still the old repository.
+          #
+          # Repointing is asked of Claude Code rather than done to it. Re-adding
+          # is its own supported way of moving a name: it re-clones, keeps the
+          # name so plugin ids never change, and extracts the new version into
+          # its cache. Editing known_marketplaces.json directly would mean
+          # inventing install locations and cache bookkeeping this module has no
+          # business owning -- the same reason it does not write settings.json
+          # wholesale either.
+          #
+          # Only a real mismatch triggers this, so an ordinary rebuild does
+          # nothing and says nothing. A failure is reported and never fatal: a
+          # machine rebuilding with no network, or without claude on PATH, must
+          # still finish activating.
+          registry="$HOME/.claude/plugins/known_marketplaces.json"
+          if [[ -f "$registry" ]] && ${pkgs.jq}/bin/jq -e . "$registry" > /dev/null 2>&1; then
+            ${pkgs.jq}/bin/jq -r \
+              --slurpfile desired ${desiredFile} '
+                ($desired[0].marketplaces) as $d
+                | to_entries[]
+                | select($d[.key] != null)
+                | select(.value.source.repo != $d[.key].source.repo)
+                | "\(.key) \(.value.source.repo) \($d[.key].source.repo)"
+              ' "$registry" |
+            while read -r name was repo; do
+              if ! command -v claude > /dev/null 2>&1; then
+                echo "claude-code: marketplace '$name' still points at $was, not $repo, and claude is not on PATH; run 'claude plugin marketplace add $repo'" >&2
+                continue
+              fi
+              echo "claude-code: repointing marketplace '$name' from $was to $repo"
+              claude plugin marketplace add "$repo" ||
+                echo "claude-code: could not repoint '$name'; run 'claude plugin marketplace add $repo' by hand" >&2
+            done
+          fi
         fi
       '';
     })
