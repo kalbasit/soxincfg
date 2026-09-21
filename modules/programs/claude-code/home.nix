@@ -262,8 +262,23 @@ in
               # 2026-09-20, where this printed the "not on PATH" warning and
               # left the marketplace stale on a host that had the binary the
               # whole time.
+              #
+              # git and ssh come with it for the same reason. Claude Code does
+              # not clone in-process, it shells out to `git`, and git in turn
+              # runs `ssh` for a private marketplace. Neither is on activation's
+              # PATH either, and their absence does not surface as "git: not
+              # found" -- the clone dies instantly with a Node stream error,
+              # ERR_STREAM_PREMATURE_CLOSE, which says nothing about what was
+              # missing. Measured on code-01 2026-09-20, and reproduced exactly
+              # by stripping git from PATH in an isolated CLAUDE_CONFIG_DIR.
               echo "claude-code: repointing marketplace '$name' from $was to $repo"
-              ${config.programs.claude-code.package}/bin/claude plugin marketplace add "$repo" ||
+              PATH="${
+                lib.makeBinPath [
+                  pkgs.git
+                  pkgs.openssh
+                ]
+              }:$PATH" \
+                ${config.programs.claude-code.package}/bin/claude plugin marketplace add "$repo" ||
                 echo "claude-code: could not repoint '$name'; run 'claude plugin marketplace add $repo' by hand" >&2
             done
           fi
