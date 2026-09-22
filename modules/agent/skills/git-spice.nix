@@ -162,10 +162,6 @@ let
     # Or abort entirely:
     gs rba
     ```
-
-    > [!CAUTION]
-    > The agent must **NEVER** run `git push`, `gs ss`, or `gs stack submit`.
-    > Only the user decides when to push branches or submit the stack for review.
   '';
 
   createSkillFile = ''
@@ -204,10 +200,6 @@ let
 
     <detailed description of why and how>"
     ```
-
-    > [!CAUTION]
-    > The AGENT MUST NEVER run `git push`, `gs ss`, or its long version `gs stack submit`.
-    > Only the USER should ever decide to run `gs ss`.
   '';
 
   restackSkillFile = ''

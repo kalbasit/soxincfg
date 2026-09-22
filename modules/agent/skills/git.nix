@@ -48,9 +48,6 @@ let
 
     <detailed description of why and how>"
     ```
-
-    > [!CAUTION]
-    > The AGENT MUST NEVER run `git push`. Only the USER should ever decide to run `git push`.
   '';
 
   amendSkillFile = ''
@@ -92,9 +89,6 @@ let
 
     <detailed description of why and how>"
     ```
-
-    > [!CAUTION]
-    > The AGENT MUST NEVER run `git push`. Only the USER should ever decide to run `git push`.
   '';
 in
 {
