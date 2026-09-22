@@ -775,11 +775,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1790036501,
-        "narHash": "sha256-DFb81Npz6NSE0OdyZCl5ZOqvg4TtTP6lhSsj3xf8vvQ=",
+        "lastModified": 1790100690,
+        "narHash": "sha256-6XYxP1mhBO+0nu7GdaZQrYx0fQw40t5spDKKkydIec4=",
         "ref": "refs/heads/main",
-        "rev": "fe6aed6378c476a47ab24b8bec793beb791f35b4",
-        "revCount": 150,
+        "rev": "ffa5bbe4e0138bd7fb754e19c23afa5636d2e0bc",
+        "revCount": 151,
         "type": "git",
         "url": "ssh://git@github.com/kalbasit/steward"
       },
