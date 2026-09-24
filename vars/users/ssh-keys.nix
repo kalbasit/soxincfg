@@ -25,4 +25,7 @@
 
   # pve-wnasreddine-code-01
   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJOPr+wfQrKk7xhPzaWRkaJQ7b7n1w4ivBeqDbkCTtR5 wnasreddine@pve-wnasreddine-code-01"
+
+  # Proteus WSL2
+  "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAv38ZfWKyHaAnNdoTZCa+lagHFmp3sadh2M68WxNNka waeln@Proteus"
 ]
