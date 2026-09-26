@@ -16,6 +16,26 @@ in
 
   networking.hostName = "proteus";
 
+  # Reachable over the tailnet. The Windows half of this machine is already the
+  # node `proteus`, and a tailscaled in here cannot share that login -- it is a
+  # separate node -- so it joins under its own name, the way hercules-arch and
+  # hercules-win11 split one box.
+  services.tailscale = {
+    enable = true;
+
+    # MagicDNS is left on. WSL points /etc/resolv.conf at the shared
+    # /mnt/wsl/resolv.conf; with no systemd-resolved here, tailscaled takes the
+    # direct path and replaces that symlink with its own file naming
+    # 100.100.100.100, and WSL puts the symlink back on the next boot. So tailnet
+    # names resolve whenever tailscaled is up and DNS still works when it is not.
+    extraSetFlags = [ "--hostname=proteus-wsl" ];
+  };
+
+  # sshd, key-only, from mysoxin/services/networking/ssh/sshd.nix. Keys come
+  # from vars/users/ssh-keys.nix via profiles/core/nixos.nix. NixOS-WSL masks
+  # firewall.service, so there is no port to open.
+  soxin.services.openssh.enable = true;
+
   sops = {
     age.keyFile = "${homePath}/.config/sops/age/keys.txt";
 
