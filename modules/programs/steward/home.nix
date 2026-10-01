@@ -147,6 +147,22 @@ in
             # for swm alone would leave the worker unfindable in the pane it
             # was started in.
             EnvironmentVariables = env // {
+              # launchd hands a job no locale either, so the agent and
+              # everything it spawns run in the C charset. `swm pane list`
+              # comes back empty there -- tmux reports the panes, swm drops
+              # them -- and steward reads an empty list as "the pane I just
+              # opened is gone". The only guess it makes for that is the
+              # supervisor having failed to exec, so every darwin assignment
+              # died naming a binary that was on PATH the whole time.
+              #
+              # Set here for the same reason PATH is, and it has to reach the
+              # same distance: the agent spawns the multiplexer server, and
+              # every pane opened in it inherits this in turn. systemd's user
+              # manager inherits the user's locale, which is why the Linux
+              # branch above never needed it -- the third instance of that same
+              # asymmetry, after EnvironmentFile and PATH.
+              LANG = "en_US.UTF-8";
+
               PATH = lib.concatStringsSep ":" [
                 "${config.home.profileDirectory}/bin"
                 "/run/current-system/sw/bin"
