@@ -38,6 +38,22 @@ let
     NAZIR_HEARTBEAT_INTERVAL = cfg.heartbeatInterval;
   };
 
+  # The agent drives the workspace manager by running `maktab` -- swm's name
+  # inside the diwan monorepo -- with exactly the arguments steward-agent gave
+  # `swm`. The hosts run swm, and installing maktab beside it would not help:
+  # maktab keeps its stories, config, plugins and tmux sockets under its own
+  # paths, so the agent's work would land in a world the swm sessions on the
+  # host cannot see.
+  #
+  # So, until the hosts move to maktab, a `maktab` that is swm: placed on the
+  # agent's PATH only, never in home.packages, so nothing interactive sees
+  # it. swm is looked up on PATH rather than pinned, so the agent drives the
+  # same configured swm a terminal does (soxincfg.programs.swm, asserted
+  # below). Delete this when the hosts install maktab itself.
+  maktabShim = pkgs.writeShellScriptBin "maktab" ''
+    exec swm "$@"
+  '';
+
   # What both units start instead of the agent itself: a compatibility shim
   # for credentials files written before the steward -> nazir rename.
   #
@@ -50,11 +66,15 @@ let
   #
   # Given a file, it sources it first (launchd has no EnvironmentFile, see
   # below); given none, it works on what systemd's EnvironmentFile= already
-  # put in the environment. Delete this once no credentials file holds a
-  # STEWARD_ key.
+  # put in the environment. Delete the mapping once no credentials file holds
+  # a STEWARD_ key.
+  #
+  # It also puts maktabShim (below) first on the agent's PATH.
   launcher = pkgs.writeShellApplication {
     name = "nazir-agent-launch";
     text = ''
+      export PATH="${maktabShim}/bin:$PATH"
+
       if [[ $# -gt 0 ]]; then
         # `set -a` is load-bearing: without allexport, `. file` sets shell
         # variables that do not survive into the exec'd agent's environment.
@@ -99,7 +119,7 @@ in
             assertion = config.soxincfg.programs.swm.enable;
             message =
               "soxincfg.programs.nazir.enable requires soxincfg.programs.swm.enable: "
-              + "the agent starts work through swm, and a host with the agent but no swm "
+              + "the agent starts work through swm (as `maktab`, see maktabShim), and a host with the agent but no swm "
               + "registers, heartbeats, accepts assignments and then fails every one of them.";
           }
           {
