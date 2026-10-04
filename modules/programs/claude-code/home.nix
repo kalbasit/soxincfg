@@ -1,6 +1,5 @@
 {
   config,
-  hostType,
   inputs,
   lib,
   pkgs,
@@ -9,85 +8,6 @@
 
 let
   cfg = config.soxincfg.programs.claude-code;
-
-  isDarwin = hostType == "nix-darwin";
-
-  am = cfg.agent-mesh;
-
-  # The `agent-mesh` on PATH, preferring the copy Claude Code actually runs.
-  #
-  # Every host carries two copies of this library: Nix builds one from the
-  # marketplace flake input, and Claude Code caches another under
-  # ~/.claude/plugins/cache/kalbasit/agent-mesh/<version>/. The hooks and skills
-  # import the cache's own lib/ via sys.path and never consult PATH, so a Nix
-  # rebuild cannot change what a hook does -- and, symmetrically, updating the
-  # plugin cannot change what `agent-mesh ...` does in a shell.
-  #
-  # Pinning only one of the two halves is the worst arrangement available: the
-  # cache auto-updates while the flake input stays where it was pinned, so the
-  # two drift apart silently and the CLI answers for a version the hooks stopped
-  # running weeks ago. Observed on 2026-09-02 with the cache on 0.2.21 and PATH
-  # on 0.2.15 -- `agent-mesh identity` printed pre-0.2.19 output while the
-  # session banner reported 0.2.21.
-  #
-  # So Nix installs, and Claude Code updates. The wrapper hands off to the
-  # cached copy whenever there is one, and falls back to the built package
-  # otherwise -- which keeps a binary on PATH for a host that has never run
-  # Claude Code, and keeps the sweep timer working, since it resolves this same
-  # package through lib.getExe.
-  #
-  # The version is read from Claude Code's own installed_plugins.json rather
-  # than from whatever sorts highest on disk: old version directories are never
-  # cleaned up, so "newest present" and "currently installed" disagree after any
-  # downgrade or failed update.
-  agentMeshWrapper =
-    base:
-    pkgs.writeShellApplication {
-      name = "agent-mesh";
-      runtimeInputs = [ pkgs.python3 ];
-      text = ''
-        cache="$HOME/.claude/plugins/cache/kalbasit/agent-mesh"
-        installed="$HOME/.claude/plugins/installed_plugins.json"
-
-        resolved=""
-        if [ -r "$installed" ]; then
-          resolved=$(python3 - "$installed" <<'PY' || true
-        import json, sys
-        try:
-            with open(sys.argv[1], encoding="utf-8") as handle:
-                data = json.load(handle)
-        except Exception:
-            raise SystemExit(0)
-        for name, entries in (data.get("plugins") or {}).items():
-            if not name.startswith("agent-mesh@"):
-                continue
-            for entry in entries or []:
-                path = entry.get("installPath")
-                if path:
-                    print(path)
-                    raise SystemExit(0)
-        PY
-          )
-        fi
-
-        if [ -n "$resolved" ] && [ -x "$resolved/bin/agent-mesh" ]; then
-          exec "$resolved/bin/agent-mesh" "$@"
-        fi
-
-        # installed_plugins.json was unreadable, absent, or named a path that is
-        # gone. Fall back to the highest version present, version-sorted so that
-        # 0.2.15 ranks above 0.2.9 rather than below it.
-        if [ -d "$cache" ]; then
-          newest=$(find "$cache" -mindepth 1 -maxdepth 1 -type d -printf '%f\n' \
-            | sort -V | tail -n 1)
-          if [ -n "$newest" ] && [ -x "$cache/$newest/bin/agent-mesh" ]; then
-            exec "$cache/$newest/bin/agent-mesh" "$@"
-          fi
-        fi
-
-        exec ${lib.getExe base} "$@"
-      '';
-    };
 
   # What this module intends Claude Code to know about. Claude Code owns
   # settings.json, so this is merged in on activation rather than written as a
@@ -101,8 +21,7 @@ let
       inherit (m) autoUpdate;
     }) cfg.marketplaces;
 
-    # Deduplicated: the module defines agent-mesh@kalbasit itself, and a host
-    # naming it too would otherwise enable it twice.
+    # Deduplicated, so a plugin named twice is enabled once.
     plugins = lib.unique cfg.plugins;
   };
 
@@ -161,8 +80,8 @@ let
       # keeps cloning the old repository and the host runs code from somewhere
       # nobody maintains, while every declarative file on it says otherwise.
       #
-      # Measured on code-01 2026-09-20, when agent-mesh moved to
-      # kalbasit/steward. `marketplace update` is no help: it pulls the clone it
+      # Measured on code-01 2026-09-20, when a plugin moved to another
+      # repository. `marketplace update` is no help: it pulls the clone it
       # already has, which is still the old repository. Re-adding is Claude
       # Code's own way of moving a name -- it re-clones, keeps the name so
       # plugin ids never change, and is a no-op when already correct.
@@ -184,8 +103,8 @@ let
       # Refreshing a marketplace is not the same as updating the plugin that
       # came from it, and Claude Code tracks the two separately. The clone
       # moves; installed_plugins.json goes on naming the version it installed
-      # before -- and that record is what the hooks import and what the
-      # agent-mesh wrapper execs. Measured on the same host: registry and
+      # before -- and that record is what the hooks import and what a
+      # wrapper around the plugin execs. Measured on the same host: registry and
       # plugin cache both reached 0.2.23 while installed_plugins.json stayed on
       # 0.2.22, so the machine had the new plugin on disk and ran the old one.
       #
@@ -224,34 +143,6 @@ let
   };
 
   desiredFile = pkgs.writeText "claude-code-desired.json" (builtins.toJSON desired);
-
-  # "5m" / "90s" / "1h" -> seconds, for launchd's StartInterval. systemd takes the
-  # original string, so this is only needed on Darwin.
-  toSeconds =
-    d:
-    let
-      unit = lib.substring (lib.stringLength d - 1) 1 d;
-      value = lib.toInt (lib.substring 0 (lib.stringLength d - 1) d);
-    in
-    if unit == "s" then
-      value
-    else if unit == "m" then
-      value * 60
-    else if unit == "h" then
-      value * 3600
-    else
-      throw "soxincfg.programs.claude-code.agent-mesh.archive.interval: cannot parse ${d}";
-
-  sweepCommand = "${lib.getExe am.package} archive";
-
-  # Where the broker password is read from. Defaults to what this module's own
-  # sops secret decrypts to; computed here because the home directory is reachable
-  # from a different place in each evaluation mode.
-  brokerPasswordFile =
-    if am.broker.passwordFile != null then
-      am.broker.passwordFile
-    else
-      "${config.home.homeDirectory}/.config/agent-mesh/mqtt-password";
 in
 {
   imports = [
@@ -262,22 +153,9 @@ in
         home.file.".claude/skills/${name}/SKILL.md".text = body;
       };
     })
-  ]
-  # nix-darwin declares its secrets inside home-manager rather than at system
-  # level, so the broker credential is declared there instead of in ./nixos.nix.
-  ++ lib.optional isDarwin ./home-darwin.nix;
+  ];
 
   config = lib.mkMerge [
-    # Default the package from the steward flake input, the same way the rules
-    # block sources a file from inputs.swm. Left as mkDefault so a host can
-    # substitute its own build, and left outside any mkIf so setting the default
-    # never depends on the option it is defaulting.
-    {
-      soxincfg.programs.claude-code.agent-mesh.package = lib.mkDefault (
-        agentMeshWrapper inputs.steward.packages.${pkgs.stdenv.hostPlatform.system}.agent-mesh
-      );
-    }
-
     # Marketplaces and plugin enablement.
     #
     # Claude Code owns settings.json and its own plugin cache, so this module does
@@ -355,83 +233,6 @@ in
           rm -f "$dropped"
         fi
       '';
-    })
-
-    # agent-mesh's own configuration. Written declaratively because none of it is
-    # secret: the broker password is *named* here, not contained -- see
-    # passwordFile. Archiving is stated explicitly either way, so the file says
-    # what the machine does rather than leaving it to a default that might change.
-    (lib.mkIf am.enable {
-      home.file.".config/agent-mesh/config.toml".text = ''
-        # Managed by soxincfg (programs.claude-code.agent-mesh). Edits are lost
-        # on the next home-manager activation.
-
-        [archive]
-        # Session transcripts upload to a store that cannot delete, so this is
-        # switched on deliberately rather than inherited from enabling the plugin.
-        enabled = ${if am.archive.enable then "true" else "false"}
-      ''
-      + lib.optionalString (am.broker.host != null) ''
-
-        [mqtt]
-        host = "${am.broker.host}"
-        port = ${toString am.broker.port}
-        username = "${am.broker.username}"
-      ''
-      + lib.optionalString (am.broker.host != null) ''
-        password_file = "${brokerPasswordFile}"
-      '';
-    })
-
-    # The agent-mesh command itself. The plugin runs inside Claude Code without it;
-    # this is for the sweep timer and for driving the mesh from a shell.
-    (lib.mkIf (am.enable && am.package != null) {
-      home.packages = [ am.package ];
-    })
-
-    # The session-archive sweep. Catches what the session-end hook cannot: a killed
-    # process, a lost network, a machine that slept.
-    (lib.mkIf (am.enable && am.archive.enable && am.package != null && !isDarwin) {
-      systemd.user = {
-        services.agent-mesh-archive = {
-          Unit.Description = "Upload session transcripts that the session-end hook did not catch";
-          Service = {
-            Type = "oneshot";
-            ExecStart = sweepCommand;
-          }
-          // lib.optionalAttrs (am.credentialsFile != null) {
-            EnvironmentFile = toString am.credentialsFile;
-          };
-        };
-
-        timers.agent-mesh-archive = {
-          Unit.Description = "Periodic agent-mesh session archive sweep";
-          Timer = {
-            OnBootSec = am.archive.interval;
-            OnUnitActiveSec = am.archive.interval;
-            # A machine that was asleep should still catch up once it wakes.
-            Persistent = true;
-          };
-          Install.WantedBy = [ "timers.target" ];
-        };
-      };
-    })
-
-    (lib.mkIf (am.enable && am.archive.enable && am.package != null && isDarwin) {
-      launchd.agents.agent-mesh-archive = {
-        enable = true;
-        config = {
-          ProgramArguments = [
-            "/bin/sh"
-            "-c"
-            (
-              lib.optionalString (am.credentialsFile != null) ". ${toString am.credentialsFile}; " + sweepCommand
-            )
-          ];
-          StartInterval = toSeconds am.archive.interval;
-          RunAtLoad = false;
-        };
-      };
     })
 
     # Claude Code itself: the CLI and its companion tooling.

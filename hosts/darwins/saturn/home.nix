@@ -55,12 +55,6 @@ in
     };
   };
 
-  # agent-mesh, its plugin, and the broker on prod0 all come from the
-  # claude-code module now, so nothing about the mesh is stated here. The
-  # archive sweep stays at its default of off, unlike wnasreddine-code-01:
-  # uploading session transcripts to a store that cannot delete is a decision
-  # to make on its own.
-
   # This machine joins the steward fleet. It is a laptop that closes, so it is
   # `sleeps` rather than `intermittent`: the suspension is predictable, and the
   # scheduler treats "will be away and come back" differently from "may not be
@@ -81,7 +75,6 @@ in
   };
 
   sops = {
-    # Also decrypts the broker credential the module declares for agent-mesh.
     age.keyFile = "${homePath}/.config/sops/age/soxincfg.txt";
 
     # This host's steward credential. Host-scoped rather than module-scoped so
