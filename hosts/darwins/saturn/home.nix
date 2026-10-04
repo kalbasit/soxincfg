@@ -55,12 +55,13 @@ in
     };
   };
 
-  # This machine joins the steward fleet. It is a laptop that closes, so it is
+  # This machine joins the Nazir fleet. It is a laptop that closes, so it is
   # `sleeps` rather than `intermittent`: the suspension is predictable, and the
   # scheduler treats "will be away and come back" differently from "may not be
   # reachable at all".
-  soxincfg.programs.steward = {
+  soxincfg.programs.nazir = {
     enable = true;
+    # The control plane keeps its old hostname: only the clients moved.
     url = "https://steward.prod.nasreddine.com";
 
     # Not in the nix store and not in this repository. See the module's
@@ -77,11 +78,12 @@ in
   sops = {
     age.keyFile = "${homePath}/.config/sops/age/soxincfg.txt";
 
-    # This host's steward credential. Host-scoped rather than module-scoped so
+    # This host's Nazir credential. Host-scoped rather than module-scoped so
     # it is encrypted to saturn alone: a credential issued per host is not
     # worth much if every host can decrypt every other's.
     #
-    # The file holds `STEWARD_TOKEN=...` and is sourced at launch, so the token
+    # The file still holds `STEWARD_TOKEN=...`, which the module maps to
+    # NAZIR_TOKEN. It is sourced at launch, so the token
     # never enters the job definition or the nix store.
     secrets.steward_env.sopsFile = ./secrets.sops.yaml;
   };

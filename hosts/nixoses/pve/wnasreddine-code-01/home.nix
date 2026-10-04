@@ -7,11 +7,12 @@
 
   home.stateVersion = "25.05";
 
-  # This machine joins the steward fleet. It is a VM that does not suspend, so
+  # This machine joins the Nazir fleet. It is a VM that does not suspend, so
   # it is the one host long work can be placed on without expecting it to
   # vanish mid-flight.
-  soxincfg.programs.steward = {
+  soxincfg.programs.nazir = {
     enable = true;
+    # The control plane keeps its old hostname: only the clients moved.
     url = "https://steward.prod.nasreddine.com";
 
     # Not in the nix store and not in this repository. See the module's

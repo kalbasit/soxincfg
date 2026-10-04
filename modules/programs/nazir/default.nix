@@ -8,15 +8,15 @@
 {
   imports = lib.optional (mode == "home-manager") ./home.nix;
 
-  options.soxincfg.programs.steward = {
-    enable = lib.mkEnableOption "the steward host agent";
+  options.soxincfg.programs.nazir = {
+    enable = lib.mkEnableOption "the Nazir host agent";
 
     package = lib.mkOption {
       type = lib.types.package;
-      default = pkgs.steward-agent;
-      defaultText = lib.literalExpression "pkgs.steward-agent";
+      default = pkgs.nazir-agent;
+      defaultText = lib.literalExpression "pkgs.nazir-agent";
       description = ''
-        The package providing `steward-agent`.
+        The package providing `nazir-agent` and `nazir-supervisor`.
 
         Only the agent, never the server: a machine that runs work has no use
         for the control plane it talks to.
@@ -25,7 +25,7 @@
 
     url = lib.mkOption {
       type = lib.types.str;
-      example = "https://steward.nasreddine.com";
+      example = "https://nazir.nasreddine.com";
       description = ''
         The control plane's base URL.
 
@@ -37,13 +37,19 @@
 
     credentialsFile = lib.mkOption {
       type = lib.types.path;
-      example = lib.literalExpression ''config.sops.secrets."steward/env".path'';
+      example = lib.literalExpression ''config.sops.secrets."nazir/env".path'';
       description = ''
-        A file of `KEY=value` lines holding at least `STEWARD_TOKEN`, the
+        A file of `KEY=value` lines holding at least `NAZIR_TOKEN`, the
         credential this host authenticates with.
 
         Point this at a sops-nix secret. It is read at runtime and never copied
         into the nix store.
+
+        Files written before the rename hold `STEWARD_TOKEN` (and possibly
+        other `STEWARD_*` keys) instead, and are still accepted: the unit
+        exports each `STEWARD_<x>` as `NAZIR_<x>` when `NAZIR_<x>` is unset.
+        That is a bridge until the secrets are re-keyed, not a second spelling
+        to keep.
 
         Required, and deliberately not an option that can hold the token
         directly. The agent itself refuses to read its token from a flag,

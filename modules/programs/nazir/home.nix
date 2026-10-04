@@ -7,7 +7,7 @@
 }:
 
 let
-  cfg = config.soxincfg.programs.steward;
+  cfg = config.soxincfg.programs.nazir;
 
   isDarwin = hostType == "nix-darwin";
 
@@ -19,26 +19,64 @@ let
   offending = lib.intersectLists reserved (lib.attrNames cfg.labels);
 
   # The agent takes every setting from the environment, so the unit needs no
-  # arguments. STEWARD_TOKEN is deliberately absent: it comes from
+  # arguments. NAZIR_TOKEN is deliberately absent: it comes from
   # credentialsFile at runtime, never from here, because everything below lands
   # in the world-readable nix store.
   env = {
-    STEWARD_URL = cfg.url;
+    NAZIR_URL = cfg.url;
   }
-  // lib.optionalAttrs (cfg.hostName != null) { STEWARD_HOST_NAME = cfg.hostName; }
+  // lib.optionalAttrs (cfg.hostName != null) { NAZIR_HOST_NAME = cfg.hostName; }
   // lib.optionalAttrs (cfg.labels != { }) {
-    STEWARD_LABELS = lib.concatStringsSep "," (lib.mapAttrsToList (k: v: "${k}=${v}") cfg.labels);
+    NAZIR_LABELS = lib.concatStringsSep "," (lib.mapAttrsToList (k: v: "${k}=${v}") cfg.labels);
   }
   // lib.optionalAttrs (cfg.devices != [ ]) {
-    STEWARD_DEVICES = lib.concatStringsSep "," cfg.devices;
+    NAZIR_DEVICES = lib.concatStringsSep "," cfg.devices;
   }
-  // lib.optionalAttrs (cfg.reliability != null) { STEWARD_RELIABILITY = cfg.reliability; }
-  // lib.optionalAttrs (cfg.capacity != null) { STEWARD_CAPACITY = toString cfg.capacity; }
+  // lib.optionalAttrs (cfg.reliability != null) { NAZIR_RELIABILITY = cfg.reliability; }
+  // lib.optionalAttrs (cfg.capacity != null) { NAZIR_CAPACITY = toString cfg.capacity; }
   // lib.optionalAttrs (cfg.heartbeatInterval != null) {
-    STEWARD_HEARTBEAT_INTERVAL = cfg.heartbeatInterval;
+    NAZIR_HEARTBEAT_INTERVAL = cfg.heartbeatInterval;
   };
 
-  exe = lib.getExe cfg.package;
+  # What both units start instead of the agent itself: a compatibility shim
+  # for credentials files written before the steward -> nazir rename.
+  #
+  # The per-host secrets hold `STEWARD_TOKEN=...` (and possibly other
+  # STEWARD_* keys), and the agent now reads only NAZIR_*. Rather than re-key
+  # every secret in the same change, each STEWARD_<x> found in the environment
+  # is exported as NAZIR_<x> when NAZIR_<x> is unset, then dropped, so the
+  # agent and the workers it starts see one spelling. A NAZIR_<x> already set
+  # -- by the unit or by a re-keyed file -- always wins.
+  #
+  # Given a file, it sources it first (launchd has no EnvironmentFile, see
+  # below); given none, it works on what systemd's EnvironmentFile= already
+  # put in the environment. Delete this once no credentials file holds a
+  # STEWARD_ key.
+  launcher = pkgs.writeShellApplication {
+    name = "nazir-agent-launch";
+    text = ''
+      if [[ $# -gt 0 ]]; then
+        # `set -a` is load-bearing: without allexport, `. file` sets shell
+        # variables that do not survive into the exec'd agent's environment.
+        set -a
+        # shellcheck disable=SC1090
+        . "$1"
+        set +a
+      fi
+
+      while read -r old; do
+        new="NAZIR_''${old#STEWARD_}"
+        if [[ -z "''${!new+x}" ]]; then
+          export "$new=''${!old}"
+        fi
+        unset "$old"
+      done < <(compgen -A export -- STEWARD_ || true)
+
+      exec ${lib.getExe cfg.package}
+    '';
+  };
+
+  exe = lib.getExe launcher;
 in
 {
   config = lib.mkIf cfg.enable (
@@ -60,14 +98,14 @@ in
             # the build says it once, at the moment someone can act on it.
             assertion = config.soxincfg.programs.swm.enable;
             message =
-              "soxincfg.programs.steward.enable requires soxincfg.programs.swm.enable: "
+              "soxincfg.programs.nazir.enable requires soxincfg.programs.swm.enable: "
               + "the agent starts work through swm, and a host with the agent but no swm "
               + "registers, heartbeats, accepts assignments and then fails every one of them.";
           }
           {
             assertion = offending == [ ];
             message =
-              "soxincfg.programs.steward.labels sets ${lib.concatStringsSep ", " offending}, "
+              "soxincfg.programs.nazir.labels sets ${lib.concatStringsSep ", " offending}, "
               + "which the control plane reserves. Each already has its own option, and a label "
               + "shadowing one is a second source for a value that has one answer.";
           }
@@ -82,9 +120,9 @@ in
       # being part of the fleet. So it restarts always, and the agent itself
       # exits only for a configuration it cannot use.
       (lib.mkIf (!isDarwin) {
-        systemd.user.services.steward-agent = {
+        systemd.user.services.nazir-agent = {
           Unit = {
-            Description = "steward host agent: register this machine, report liveness, receive its work";
+            Description = "Nazir host agent: register this machine, report liveness, receive its work";
             # Registering before the network is up fails, and the agent would
             # rather reconnect than a unit flap at boot.
             After = [ "network-online.target" ];
@@ -107,27 +145,25 @@ in
       })
 
       (lib.mkIf isDarwin {
-        launchd.agents.steward-agent = {
+        launchd.agents.nazir-agent = {
           enable = true;
           config = {
-            # launchd has no EnvironmentFile, so the credentials are sourced by
-            # a shell instead. The token reaches the process through the
+            # launchd has no EnvironmentFile, so the launcher sources the
+            # credentials itself. The token reaches the process through the
             # environment either way and is never written to the store.
             #
-            # `set -a` is load-bearing and its absence is not visible by
-            # reading. `. file` sets SHELL variables; without allexport they do
-            # not survive into the environment of the process exec'd on the
-            # next line, so the token is read and immediately discarded. The
-            # agent then exits for a configuration it cannot use -- correctly,
-            # and in about 39ms -- and launchd restarts it forever.
+            # The sourcing needs `set -a`, which the launcher carries: without
+            # it `. file` sets shell variables that do not survive the exec, so
+            # the token is read and immediately discarded. The agent then exits
+            # for a configuration it cannot use -- correctly, and in about 39ms
+            # -- and launchd restarts it forever.
             #
             # systemd's EnvironmentFile= parses KEY=value into the environment
             # directly, which is why the Linux path never had this bug and why
             # emulating it here needs the export to be explicit.
             ProgramArguments = [
-              "/bin/sh"
-              "-c"
-              "set -a; . ${toString cfg.credentialsFile}; set +a; exec ${exe}"
+              exe
+              (toString cfg.credentialsFile)
             ];
             # launchd hands a job a minimal PATH -- /usr/bin:/bin and the two
             # sbin directories -- and nothing else. The nix profile is absent,
@@ -150,7 +186,7 @@ in
               # launchd hands a job no locale either, so the agent and
               # everything it spawns run in the C charset. `swm pane list`
               # comes back empty there -- tmux reports the panes, swm drops
-              # them -- and steward reads an empty list as "the pane I just
+              # them -- and nazir reads an empty list as "the pane I just
               # opened is gone". The only guess it makes for that is the
               # supervisor having failed to exec, so every darwin assignment
               # died naming a binary that was on PATH the whole time.
@@ -181,15 +217,15 @@ in
             # is what turned this bug from "says exactly what is wrong" into
             # "appears never to have started", and it is why it survived a day
             # of restarts unnoticed.
-            StandardOutPath = "${config.home.homeDirectory}/Library/Logs/steward-agent/stdout";
-            StandardErrorPath = "${config.home.homeDirectory}/Library/Logs/steward-agent/stderr";
+            StandardOutPath = "${config.home.homeDirectory}/Library/Logs/nazir-agent/stdout";
+            StandardErrorPath = "${config.home.homeDirectory}/Library/Logs/nazir-agent/stderr";
           };
         };
 
         # launchd will not create the log directory, and a job whose
         # StandardErrorPath cannot be opened loses the diagnostics this was
         # added for.
-        home.file."Library/Logs/steward-agent/.keep".text = "";
+        home.file."Library/Logs/nazir-agent/.keep".text = "";
       })
     ]
   );

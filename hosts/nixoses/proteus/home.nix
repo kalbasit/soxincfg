@@ -6,12 +6,13 @@
     soxincfg.nixosModules.profiles.wsl-gaming
   ];
 
-  # This machine joins the steward fleet. It is a WSL instance on a desktop
+  # This machine joins the Nazir fleet. It is a WSL instance on a desktop
   # that reboots for Windows, so it is `intermittent` rather than `sleeps`:
   # it does not suspend and come back on a schedule anyone can predict, it is
   # simply there or it is not, and the scheduler should treat it that way.
-  soxincfg.programs.steward = {
+  soxincfg.programs.nazir = {
     enable = true;
+    # The control plane keeps its old hostname: only the clients moved.
     url = "https://steward.prod.nasreddine.com";
 
     # Not in the nix store and not in this repository. See the module's

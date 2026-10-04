@@ -66,10 +66,11 @@ let
             swm-full
             ;
 
-          # The host agent only. steward's flake also builds the server and its
-          # image, and neither belongs on a machine that merely runs work.
-          inherit (inputs.steward.packages.${super.stdenv.hostPlatform.system})
-            steward-agent
+          # The host agent only. diwan's flake also builds the control plane
+          # and its image, and neither belongs on a machine that merely runs
+          # work.
+          inherit (inputs.diwan.packages.${super.stdenv.hostPlatform.system})
+            nazir-agent
             ;
 
           # direnv tests are failing on aarch64-darwin

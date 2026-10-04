@@ -65,19 +65,17 @@
 
     swm.url = "github:kalbasit/swm";
 
-    # The steward host agent *and* the agent-mesh Claude Code plugin, which
-    # moved into that repository -- so this input now serves both, and the
-    # separate `marketplace` input it replaced is gone.
+    # The diwan monorepo, for the Nazir host agent (nazir-agent, with
+    # nazir-supervisor) that machines running fleet work install. Only the
+    # agent is taken from it: the control plane runs elsewhere, and its MCP
+    # server is wired by whichever configuration runs the assistant.
     #
-    # Over ssh rather than the github: shorthand, which goes through the
-    # anonymous GitHub API and 404s on a private repository.
+    # Over ssh: the repository is private and lives on the forge's own host,
+    # so there is no anonymous shorthand that could fetch it.
     #
-    # No `follows` on nixpkgs, matching swm above: both artifacts build against
-    # the nixpkgs steward's own flake locks. That is a change for the plugin,
-    # which used to follow nixpkgs-unstable through the old input, and a safe
-    # one -- it depends on nothing outside the Python standard library by
-    # design, so the interpreter it is built against is not load-bearing.
-    steward.url = "git+ssh://git@github.com/kalbasit/steward";
+    # No `follows` on nixpkgs, matching swm above: the agent builds against the
+    # nixpkgs diwan's own flake locks, which is the build diwan tests.
+    diwan.url = "git+ssh://git@git.nasreddine.com/diwan/diwan.git";
   };
 
   outputs =
