@@ -15,13 +15,13 @@
   git = ./programs/git;
   iterm2 = ./programs/iterm2;
   mosh = ./programs/mosh;
+  private-tool = ./programs/private-tool;
   neovim = ./programs/neovim;
   pet = ./programs/pet;
   rofi = ./programs/rofi;
   secretive = ./programs/secretive;
   ssh = ./programs/ssh;
   starship = ./programs/starship.nix;
-  redacted-host = ./programs/redacted-host;
   swm = ./programs/swm;
   termite = ./programs/termite.nix;
   tmux = ./programs/tmux;
