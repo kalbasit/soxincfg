@@ -122,8 +122,38 @@ let
     ];
     text = ''
       desired="$1"
+      dropped="$2"
       registry="$HOME/.claude/plugins/known_marketplaces.json"
       installed="$HOME/.claude/plugins/installed_plugins.json"
+
+      # Taking an entry out of settings.json is not the same as removing it.
+      # Claude Code keeps an installed plugin in installed_plugins.json and its
+      # cache, and a marketplace in known_marketplaces.json, after both have
+      # left settings.json -- so a plugin this module stops wanting would stay
+      # on disk, hooks and all, with nothing declarative left to say why.
+      #
+      # Only what this module added and no longer wants is passed here, never
+      # anything enabled by hand. Plugins go before marketplaces: removing a
+      # marketplace first leaves its plugins with no source to uninstall from.
+      if [[ -f "$installed" ]] && jq -e . "$installed" > /dev/null 2>&1; then
+        while read -r spec; do
+          [[ -n "$spec" ]] || continue
+          jq -e --arg s "$spec" '.plugins[$s] != null' "$installed" > /dev/null || continue
+          echo "claude-code: uninstalling $spec, which this configuration no longer wants"
+          claude plugin uninstall "$spec" ||
+            echo "claude-code: could not uninstall $spec; run 'claude plugin uninstall $spec' by hand" >&2
+        done < <(jq -r '.plugins[]' "$dropped")
+      fi
+
+      if [[ -f "$registry" ]] && jq -e . "$registry" > /dev/null 2>&1; then
+        while read -r name; do
+          [[ -n "$name" ]] || continue
+          jq -e --arg n "$name" 'has($n)' "$registry" > /dev/null || continue
+          echo "claude-code: removing marketplace '$name', which this configuration no longer wants"
+          claude plugin marketplace remove "$name" ||
+            echo "claude-code: could not remove marketplace '$name'; run 'claude plugin marketplace remove $name' by hand" >&2
+        done < <(jq -r '.marketplaces[]' "$dropped")
+      fi
 
       # Claude Code keys its marketplace registry by *name*, and never revisits
       # the repository behind a name it already knows. So when a plugin moves
@@ -255,7 +285,11 @@ in
     # enabled by hand on a machine stays enabled; what this module added is recorded
     # in a managed-set file so that dropping an entry here disables it again without
     # touching anything a human turned on.
-    (lib.mkIf (cfg.enable && (cfg.marketplaces != { } || cfg.plugins != [ ])) {
+    #
+    # Runs whenever claude-code is enabled, not only while something is wanted:
+    # a host whose last managed plugin was dropped is exactly the host that
+    # has something left to remove.
+    (lib.mkIf cfg.enable {
       home.activation.claudeCodeMarketplaces = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         settings="$HOME/.claude/settings.json"
         managed="$HOME/.claude/.soxincfg-managed.json"
@@ -268,6 +302,20 @@ in
         if ! ${pkgs.jq}/bin/jq -e . "$settings" > /dev/null 2>&1; then
           echo "claude-code: $settings is not valid JSON; leaving it alone" >&2
         else
+          # What we added last time and no longer want, computed before the
+          # managed set below is overwritten with the new one.
+          dropped=$(mktemp)
+          ${pkgs.jq}/bin/jq -n \
+            --slurpfile desired ${desiredFile} \
+            --slurpfile managed "$managed" '
+              ($desired[0]) as $d
+              | ($managed[0]) as $m
+              | {
+                  marketplaces: [ $m.marketplaces[] | select(IN($d.marketplaces | keys[]) | not) ],
+                  plugins: [ $m.plugins[] | select(IN($d.plugins[]) | not) ]
+                }
+            ' > "$dropped"
+
           tmp=$(mktemp)
           ${pkgs.jq}/bin/jq \
             --slurpfile desired ${desiredFile} \
@@ -303,7 +351,8 @@ in
             '{ marketplaces: ($desired[0].marketplaces | keys), plugins: $desired[0].plugins }' \
             > "$managed"
 
-          ${lib.getExe reconcileMarketplaces} ${desiredFile}
+          ${lib.getExe reconcileMarketplaces} ${desiredFile} "$dropped"
+          rm -f "$dropped"
         fi
       '';
     })
