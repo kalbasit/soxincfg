@@ -14,6 +14,7 @@
   fzf = ./programs/fzf;
   git = ./programs/git;
   iterm2 = ./programs/iterm2;
+  maktab = ./programs/maktab;
   mosh = ./programs/mosh;
   nazir = ./programs/nazir;
   neovim = ./programs/neovim;
@@ -22,7 +23,6 @@
   secretive = ./programs/secretive;
   ssh = ./programs/ssh;
   starship = ./programs/starship.nix;
-  swm = ./programs/swm;
   termite = ./programs/termite.nix;
   tmux = ./programs/tmux;
   vscode = ./programs/vscode;

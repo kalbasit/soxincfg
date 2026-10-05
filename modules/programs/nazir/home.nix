@@ -38,22 +38,6 @@ let
     NAZIR_HEARTBEAT_INTERVAL = cfg.heartbeatInterval;
   };
 
-  # The agent drives the workspace manager by running `maktab` -- swm's name
-  # inside the diwan monorepo -- with exactly the arguments steward-agent gave
-  # `swm`. The hosts run swm, and installing maktab beside it would not help:
-  # maktab keeps its stories, config, plugins and tmux sockets under its own
-  # paths, so the agent's work would land in a world the swm sessions on the
-  # host cannot see.
-  #
-  # So, until the hosts move to maktab, a `maktab` that is swm: placed on the
-  # agent's PATH only, never in home.packages, so nothing interactive sees
-  # it. swm is looked up on PATH rather than pinned, so the agent drives the
-  # same configured swm a terminal does (soxincfg.programs.swm, asserted
-  # below). Delete this when the hosts install maktab itself.
-  maktabShim = pkgs.writeShellScriptBin "maktab" ''
-    exec swm "$@"
-  '';
-
   # What both units start instead of the agent itself: a compatibility shim
   # for credentials files written before the steward -> nazir rename.
   #
@@ -68,13 +52,9 @@ let
   # below); given none, it works on what systemd's EnvironmentFile= already
   # put in the environment. Delete the mapping once no credentials file holds
   # a STEWARD_ key.
-  #
-  # It also puts maktabShim (below) first on the agent's PATH.
   launcher = pkgs.writeShellApplication {
     name = "nazir-agent-launch";
     text = ''
-      export PATH="${maktabShim}/bin:$PATH"
-
       if [[ $# -gt 0 ]]; then
         # `set -a` is load-bearing: without allexport, `. file` sets shell
         # variables that do not survive into the exec'd agent's environment.
@@ -110,22 +90,22 @@ in
       {
         assertions = [
           {
-            # The agent starts work by asking swm to open a pane, so a host
-            # running it needs swm *configured*, not merely present. The
-            # binary alone is not enough: soxincfg.programs.swm writes
-            # config.toml and session-tmux.toml, and without them swm does not
-            # know which session plugin to drive.
+            # The agent starts work by asking maktab to open a pane, so a
+            # host running it needs maktab *configured*, not merely present.
+            # The binary alone is not enough: soxincfg.programs.maktab writes
+            # config.toml and session-tmux.toml, and without them maktab does
+            # not know which session plugin to drive.
             #
-            # An assertion rather than enabling swm from here. Turning on
+            # An assertion rather than enabling maktab from here. Turning on
             # another module as a side effect would also bring its shell
             # aliases, pet snippets and tmux binding, which is a lot to inherit
             # from switching on a work agent -- and it would hide the
             # dependency from whoever reads the host's configuration. Failing
             # the build says it once, at the moment someone can act on it.
-            assertion = config.soxincfg.programs.swm.enable;
+            assertion = config.soxincfg.programs.maktab.enable;
             message =
-              "soxincfg.programs.nazir.enable requires soxincfg.programs.swm.enable: "
-              + "the agent starts work through swm (as `maktab`, see maktabShim), and a host with the agent but no swm "
+              "soxincfg.programs.nazir.enable requires soxincfg.programs.maktab.enable: "
+              + "the agent starts work through maktab, and a host with the agent but no maktab "
               + "registers, heartbeats, accepts assignments and then fails every one of them.";
           }
           {
@@ -193,25 +173,25 @@ in
             ];
             # launchd hands a job a minimal PATH -- /usr/bin:/bin and the two
             # sbin directories -- and nothing else. The nix profile is absent,
-            # so `swm` is unreachable to the agent while being immediately
-            # findable in a terminal, which is what made this look like swm
-            # not being installed at all.
+            # so the workspace manager (swm then, maktab now) was unreachable
+            # to the agent while being immediately findable in a terminal,
+            # which is what made this look like it not being installed at all.
             #
             # systemd's user manager inherits the profile PATH, which is why
             # the Linux branch above never needed this. It is the same
             # asymmetry as the EnvironmentFile note above: something systemd
             # provides silently that launchd does not.
             #
-            # Broad rather than just swm's own bin, because this PATH also
+            # Broad rather than just maktab's own bin, because this PATH also
             # reaches the workers. The agent starts the workspace, so the
             # multiplexer server it spawns inherits this environment, and every
             # pane opened in it inherits that in turn -- a PATH narrow enough
-            # for swm alone would leave the worker unfindable in the pane it
+            # for maktab alone would leave the worker unfindable in the pane it
             # was started in.
             EnvironmentVariables = env // {
               # launchd hands a job no locale either, so the agent and
               # everything it spawns run in the C charset. `swm pane list`
-              # comes back empty there -- tmux reports the panes, swm drops
+              # came back empty there -- tmux reported the panes, swm dropped
               # them -- and nazir reads an empty list as "the pane I just
               # opened is gone". The only guess it makes for that is the
               # supervisor having failed to exec, so every darwin assignment

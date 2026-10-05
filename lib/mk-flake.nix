@@ -62,14 +62,14 @@ let
             worktrunk
             ;
 
-          inherit (inputs.swm.packages.${super.stdenv.hostPlatform.system})
-            swm-full
-            ;
-
-          # The host agent only. diwan's flake also builds the control plane
-          # and its image, and neither belongs on a machine that merely runs
-          # work.
+          # From diwan: the host agent only of Nazir (its flake also builds the
+          # control plane and its image, and neither belongs on a machine that
+          # merely runs work); maktab with its plugins; and majlis, the CLI
+          # workers report with. majlis-mcp is taken by whichever configuration
+          # runs the assistant.
           inherit (inputs.diwan.packages.${super.stdenv.hostPlatform.system})
+            majlis
+            maktab-full
             nazir-agent
             ;
 

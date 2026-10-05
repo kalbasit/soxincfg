@@ -26,7 +26,7 @@ in
       git.enable = true;
       ssh.enable = true;
       starship.enable = true;
-      swm.enable = true;
+      maktab.enable = true;
       tmux.enable = true;
       zsh.enable = true;
     };

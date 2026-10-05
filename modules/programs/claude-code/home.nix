@@ -274,8 +274,8 @@ in
           A PreToolUse hook enforces this at the tool level, but the rule applies regardless.
         '';
 
-        ".claude/rules/swm-story-confinement.md".source =
-          "${inputs.swm}/contrib/claude-rules/swm-story-confinement.md";
+        ".claude/rules/maktab-story-confinement.md".source =
+          "${inputs.diwan}/apps/maktab/contrib/claude-rules/maktab-story-confinement.md";
       };
     })
 

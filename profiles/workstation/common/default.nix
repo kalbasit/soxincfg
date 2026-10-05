@@ -18,6 +18,6 @@ in
     zellij.enable = hostType == "nix-darwin";
     zed.enable = hostType == "nix-darwin";
 
-    swm.enable = true;
+    maktab.enable = true;
   };
 }

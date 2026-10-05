@@ -33,7 +33,7 @@ in
         git.enable = true;
         pet.enable = true;
         ssh.enable = true;
-        swm.enable = true;
+        maktab.enable = true;
         starship.enable = true;
         tmux.enable = true;
         zsh.enable = true;
