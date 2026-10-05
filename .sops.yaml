@@ -15,7 +15,9 @@ keys:
 creation_rules:
   - path_regex: hosts/darwins/saturn/[^/]+\.sops[^/]*
     key_groups:
-      - age:
+      - pgp:
+          - *user_yl_0x8EBD95DC147755A2
+        age:
           - *host_age_saturn
 
   - path_regex: hosts/nixoses/hercules/[^/]+\.sops[^/]*
@@ -40,7 +42,9 @@ creation_rules:
 
   - path_regex: hosts/nixoses/pve/wnasreddine-code-01/[^/]+\.sops[^/]*
     key_groups:
-      - age:
+      - pgp:
+          - *user_yl_0x8EBD95DC147755A2
+        age:
           - *host_age_pve_wnasreddine_code_01
 
   - path_regex: hosts/nixoses/saturn-nixos-vm/[^/]+\.sops[^/]*
