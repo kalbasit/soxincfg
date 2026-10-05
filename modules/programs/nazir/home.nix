@@ -22,9 +22,19 @@ let
   # arguments. NAZIR_TOKEN is deliberately absent: it comes from
   # credentialsFile at runtime, never from here, because everything below lands
   # in the world-readable nix store.
+  # Never NAZIR_WORKER_CONFIG_DIR (workers use the account's own ~/.claude)
+  # nor NAZIR_WORKER_HARNESS / NAZIR_WORKER_FAKE_* (the end-to-end check's).
+  # NAZIR_SUPERVISOR, NAZIR_WORKER_SESSION_FLAG and
+  # NAZIR_WORKER_PERMISSION_MODE are gone: the agent refuses to start while
+  # any is set, so none may appear here or in the credentials file.
   env = {
     NAZIR_URL = cfg.url;
+    NAZIR_WORKER = lib.getExe cfg.workerPackage;
   }
+  // lib.optionalAttrs (cfg.workerArgs != [ ]) {
+    NAZIR_WORKER_ARGS = lib.concatStringsSep " " cfg.workerArgs;
+  }
+  // lib.optionalAttrs (cfg.reportNudge != null) { NAZIR_REPORT_NUDGE = cfg.reportNudge; }
   // lib.optionalAttrs (cfg.hostName != null) { NAZIR_HOST_NAME = cfg.hostName; }
   // lib.optionalAttrs (cfg.labels != { }) {
     NAZIR_LABELS = lib.concatStringsSep "," (lib.mapAttrsToList (k: v: "${k}=${v}") cfg.labels);
@@ -53,7 +63,8 @@ let
   # put in the environment. Delete the mapping once no credentials file holds
   # a STEWARD_ key.
   #
-  # It also gives the agent the XDG_RUNTIME_DIR a shell has (below).
+  # It also gives the agent the XDG_RUNTIME_DIR a shell has, and puts majlis
+  # first on its PATH (below).
   launcher = pkgs.writeShellApplication {
     name = "nazir-agent-launch";
     text =
@@ -72,6 +83,12 @@ let
 
       ''
       + ''
+        # Every worker reports with `majlis`, and the agent fails an
+        # assignment it cannot find on PATH. Panes inherit this PATH, so the
+        # worker finds the same majlis, from the same diwan revision as the
+        # agent, whatever the profile holds.
+        export PATH="${pkgs.majlis}/bin:$PATH"
+
         if [[ $# -gt 0 ]]; then
           # `set -a` is load-bearing: without allexport, `. file` sets shell
           # variables that do not survive into the exec'd agent's environment.
@@ -209,10 +226,9 @@ in
               # launchd hands a job no locale either, so the agent and
               # everything it spawns run in the C charset. `swm pane list`
               # came back empty there -- tmux reported the panes, swm dropped
-              # them -- and nazir reads an empty list as "the pane I just
-              # opened is gone". The only guess it makes for that is the
-              # supervisor having failed to exec, so every darwin assignment
-              # died naming a binary that was on PATH the whole time.
+              # them -- and nazir read an empty list as "the pane I just
+              # opened is gone", so every darwin assignment died naming a
+              # binary that was on PATH the whole time.
               #
               # Set here for the same reason PATH is, and it has to reach the
               # same distance: the agent spawns the multiplexer server, and

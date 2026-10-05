@@ -63,8 +63,8 @@
       };
     };
 
-    # The diwan monorepo: the Nazir host agent (nazir-agent, with
-    # nazir-supervisor) that machines running fleet work install, maktab (the
+    # The diwan monorepo: the Nazir host agent (nazir-agent) that machines
+    # running fleet work install, maktab (the
     # workspace manager, with its plugins) and majlis (what workers report
     # with). Not the control plane, which runs elsewhere; the MCP servers are
     # wired by whichever configuration runs the assistant.

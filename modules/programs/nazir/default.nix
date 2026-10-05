@@ -16,10 +16,57 @@
       default = pkgs.nazir-agent;
       defaultText = lib.literalExpression "pkgs.nazir-agent";
       description = ''
-        The package providing `nazir-agent` and `nazir-supervisor`.
+        The package providing `nazir-agent`.
 
         Only the agent, never the server: a machine that runs work has no use
-        for the control plane it talks to.
+        for the control plane it talks to. The agent supervises its workers
+        itself, as majlis harness sessions; there is no separate supervisor.
+      '';
+    };
+
+    workerPackage = lib.mkOption {
+      type = lib.types.package;
+      default = pkgs.claude-code.override {
+        manifest = lib.importJSON ./claude-code-manifest.json;
+      };
+      defaultText = lib.literalExpression "pkgs.claude-code pinned by ./claude-code-manifest.json (2.1.287)";
+      description = ''
+        The Claude Code the agent starts in a pane for each item (NAZIR_WORKER,
+        by store path).
+
+        Pinned, not whatever `claude` is on the agent's PATH: majlis trusts a
+        Claude Code version only after a conformance run, and an unverified one
+        holds every message until the session is idle. 2.1.287 is the verified
+        one. The manifest is Anthropic's release manifest for that version
+        (its darwin-arm64 checksum matched the binary saturn runs). Bump it
+        with the version majlis' capability record cites, not before.
+      '';
+    };
+
+    workerArgs = lib.mkOption {
+      type = lib.types.listOf (lib.types.strMatching "[^[:space:]]+");
+      default = [ ];
+      example = [
+        "--permission-mode"
+        "acceptEdits"
+      ];
+      description = ''
+        Arguments added to every worker's command line (NAZIR_WORKER_ARGS),
+        such as a permission mode. The agent splits the variable on
+        whitespace, so no argument may contain any. Empty adds nothing: the
+        worker runs with the account's own Claude Code settings.
+      '';
+    };
+
+    reportNudge = lib.mkOption {
+      type = lib.types.nullOr lib.types.str;
+      default = null;
+      example = "30m";
+      description = ''
+        How long a running item's worker may sit idle without reporting
+        before the agent reminds it once (NAZIR_REPORT_NUDGE), as a Go
+        duration; "0" disables the reminder. Null leaves the agent's default
+        of 15m.
       '';
     };
 
