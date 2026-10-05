@@ -63,17 +63,16 @@
       };
     };
 
-    swm.url = "github:kalbasit/swm";
-
-    # The diwan monorepo, for the Nazir host agent (nazir-agent, with
-    # nazir-supervisor) that machines running fleet work install. Only the
-    # agent is taken from it: the control plane runs elsewhere, and its MCP
-    # server is wired by whichever configuration runs the assistant.
+    # The diwan monorepo: the Nazir host agent (nazir-agent, with
+    # nazir-supervisor) that machines running fleet work install, maktab (the
+    # workspace manager, with its plugins) and majlis (what workers report
+    # with). Not the control plane, which runs elsewhere; the MCP servers are
+    # wired by whichever configuration runs the assistant.
     #
     # Over ssh: the repository is private and lives on the forge's own host,
     # so there is no anonymous shorthand that could fetch it.
     #
-    # No `follows` on nixpkgs, matching swm above: the agent builds against the
+    # No `follows` on nixpkgs: everything taken from it builds against the
     # nixpkgs diwan's own flake locks, which is the build diwan tests.
     diwan.url = "git+ssh://git@git.nasreddine.com/diwan/diwan.git";
   };
