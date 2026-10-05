@@ -62,14 +62,14 @@ let
             worktrunk
             ;
 
-          inherit (inputs.swm.packages.${super.stdenv.hostPlatform.system})
-            swm-full
-            ;
-
-          # The host agent only. private-tool's flake also builds the control plane
-          # and its image, and neither belongs on a machine that merely runs
-          # work.
+          # From private-tool: the host agent only of private-tool (its flake also builds the
+          # control plane and its image, and neither belongs on a machine that
+          # merely runs work); private-tool with its plugins; and private-tool, the CLI
+          # workers report with. private-tool-mcp is taken by whichever configuration
+          # runs the assistant.
           inherit (inputs.private-tool.packages.${super.stdenv.hostPlatform.system})
+            private-tool
+            private-tool-full
             private-tool-agent
             ;
 
