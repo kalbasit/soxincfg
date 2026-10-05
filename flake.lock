@@ -48,11 +48,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1791087209,
-        "narHash": "sha256-hzgEWV1ppjFTC8Jn7Fr1nJ4mojlvtHK3FduLa7wiDKE=",
+        "lastModified": 1791231810,
+        "narHash": "sha256-pW+ZGCbrvNy3fvPPij6I1rdEr1vXzW3otzFtmj//EQM=",
         "ref": "main",
-        "rev": "5ffd446352c93cd8b5dbbc43976b82946e87ef57",
-        "revCount": 352,
+        "rev": "70ee5a1bc6e2c9a43a90a052e2ee7c24b9996947",
+        "revCount": 460,
         "type": "git",
         "url": "ssh://git@git.nasreddine.com/diwan/diwan.git"
       },
