@@ -84,13 +84,19 @@ let
         set +a
       fi
 
-      while read -r old; do
+      # "''${!STEWARD_@}" (the names of every variable with that prefix), not
+      # `compgen -A export`: compgen belongs to programmable completion, which
+      # nixpkgs' non-interactive bash -- the one writeShellApplication runs --
+      # is built without. There it is "command not found", the mapping never
+      # runs, and the agent exits for want of a token. Each name here came from
+      # the environment or the sourced file, so is exported either way.
+      for old in "''${!STEWARD_@}"; do
         new="NAZIR_''${old#STEWARD_}"
         if [[ -z "''${!new+x}" ]]; then
           export "$new=''${!old}"
         fi
         unset "$old"
-      done < <(compgen -A export -- STEWARD_ || true)
+      done
 
       exec ${lib.getExe cfg.package}
     '';
