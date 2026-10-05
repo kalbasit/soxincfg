@@ -52,34 +52,51 @@ let
   # below); given none, it works on what systemd's EnvironmentFile= already
   # put in the environment. Delete the mapping once no credentials file holds
   # a STEWARD_ key.
+  #
+  # It also gives the agent the XDG_RUNTIME_DIR a shell has (below).
   launcher = pkgs.writeShellApplication {
     name = "nazir-agent-launch";
-    text = ''
-      if [[ $# -gt 0 ]]; then
-        # `set -a` is load-bearing: without allexport, `. file` sets shell
-        # variables that do not survive into the exec'd agent's environment.
-        set -a
-        # shellcheck disable=SC1090
-        . "$1"
-        set +a
-      fi
-
-      # "''${!STEWARD_@}" (the names of every variable with that prefix), not
-      # `compgen -A export`: compgen belongs to programmable completion, which
-      # nixpkgs' non-interactive bash -- the one writeShellApplication runs --
-      # is built without. There it is "command not found", the mapping never
-      # runs, and the agent exits for want of a token. Each name here came from
-      # the environment or the sourced file, so is exported either way.
-      for old in "''${!STEWARD_@}"; do
-        new="NAZIR_''${old#STEWARD_}"
-        if [[ -z "''${!new+x}" ]]; then
-          export "$new=''${!old}"
+    text =
+      lib.optionalString isDarwin ''
+        # maktab keeps its tmux sockets under $XDG_RUNTIME_DIR/maktab, so the
+        # agent has to resolve the directory the person's shell does, or the
+        # workspaces it opens are invisible to them (and theirs to it). systemd
+        # sets it for user services and login sessions alike, so Linux needs
+        # nothing. launchd sets nothing, and adrg/xdg then falls back to
+        # ~/Library/Application Support, so on macOS it is the per-user
+        # temporary directory when unset -- exactly what soxincfg's zsh init does.
+        if [[ -z "''${XDG_RUNTIME_DIR:-}" ]]; then
+          XDG_RUNTIME_DIR="$(/usr/bin/getconf DARWIN_USER_TEMP_DIR)"
+          export XDG_RUNTIME_DIR="''${XDG_RUNTIME_DIR%/}"
         fi
-        unset "$old"
-      done
 
-      exec ${lib.getExe cfg.package}
-    '';
+      ''
+      + ''
+        if [[ $# -gt 0 ]]; then
+          # `set -a` is load-bearing: without allexport, `. file` sets shell
+          # variables that do not survive into the exec'd agent's environment.
+          set -a
+          # shellcheck disable=SC1090
+          . "$1"
+          set +a
+        fi
+
+        # "''${!STEWARD_@}" (the names of every variable with that prefix), not
+        # `compgen -A export`: compgen belongs to programmable completion, which
+        # nixpkgs' non-interactive bash -- the one writeShellApplication runs --
+        # is built without. There it is "command not found", the mapping never
+        # runs, and the agent exits for want of a token. Each name here came from
+        # the environment or the sourced file, so is exported either way.
+        for old in "''${!STEWARD_@}"; do
+          new="NAZIR_''${old#STEWARD_}"
+          if [[ -z "''${!new+x}" ]]; then
+            export "$new=''${!old}"
+          fi
+          unset "$old"
+        done
+
+        exec ${lib.getExe cfg.package}
+      '';
   };
 
   exe = lib.getExe launcher;
