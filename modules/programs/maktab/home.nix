@@ -92,6 +92,28 @@ in
       zsh.shellAliases.s = "mk workspace open";
     };
 
+    soxincfg.programs.maktab.hooks.post-worktree-create = {
+      "10-direnv-allow" = ''
+        #!${pkgs.bash}/bin/bash
+        set -euo pipefail
+        # Allow the new worktree's .envrc, if it has one.
+        [ -e .envrc ] || exit 0
+        exec ${pkgs.direnv}/bin/direnv allow .
+      '';
+
+      "20-git-spice-track" = ''
+        #!${pkgs.bash}/bin/bash
+        set -euo pipefail
+        # Track the new branch in git-spice against the repo's trunk; skip repos
+        # where git-spice is not initialized.
+        if ! ${pkgs.git}/bin/git rev-parse --verify refs/spice/data >/dev/null 2>&1; then
+          exit 0
+        fi
+        base_branch=$(${pkgs.git}/bin/git cat-file -p refs/spice/data:repo | ${pkgs.jq}/bin/jq -r '.trunk')
+        exec ${pkgs.git-spice}/bin/gs branch track --base "''${base_branch}"
+      '';
+    };
+
     soxin.programs.tmux.extraConfig = ''
       bind s split-window -p 20 -v mk workspace open --kill-pane
     '';
