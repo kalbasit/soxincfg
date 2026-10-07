@@ -46,7 +46,6 @@ let
             antigravity
             bitwarden-cli
             cilium-cli
-            claude-code
             claude-mergetool
             claude-monitor
             codex
@@ -72,6 +71,14 @@ let
             maktab-full
             nazir-agent
             ;
+
+          # Pinned ahead of nixpkgs-unstable: the API refuses Claude Code
+          # releases it no longer supports, and bumping the whole channel for
+          # it is not always wanted. The manifest is Anthropic's release
+          # manifest for the version; drop the override once unstable catches up.
+          claude-code = channels.nixpkgs-unstable.claude-code.override {
+            manifest = super.lib.importJSON ./claude-code-manifest.json;
+          };
 
           # direnv tests are failing on aarch64-darwin
           # https://github.com/NixOS/nixpkgs/issues/507531
