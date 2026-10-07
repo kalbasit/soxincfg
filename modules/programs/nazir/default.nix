@@ -26,20 +26,17 @@
 
     workerPackage = lib.mkOption {
       type = lib.types.package;
-      default = pkgs.claude-code.override {
-        manifest = lib.importJSON ./claude-code-manifest.json;
-      };
-      defaultText = lib.literalExpression "pkgs.claude-code pinned by ./claude-code-manifest.json (2.1.287)";
+      default = pkgs.claude-code;
+      defaultText = lib.literalExpression "pkgs.claude-code";
       description = ''
         The Claude Code the agent starts in a pane for each item (NAZIR_WORKER,
         by store path).
 
-        Pinned, not whatever `claude` is on the agent's PATH: majlis trusts a
-        Claude Code version only after a conformance run, and an unverified one
-        holds every message until the session is idle. 2.1.287 is the verified
-        one. The manifest is Anthropic's release manifest for that version
-        (its darwin-arm64 checksum matched the binary saturn runs). Bump it
-        with the version majlis' capability record cites, not before.
+        The same build as the interactive `claude`, pinned by the overlay in
+        lib/mk-flake.nix, rather than whatever `claude` is on the agent's PATH.
+        majlis holds every message until the session is idle for a version it
+        has not verified with a conformance run, so check its capability record
+        after a bump.
       '';
     };
 
