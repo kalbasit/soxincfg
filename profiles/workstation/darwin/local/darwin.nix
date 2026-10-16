@@ -15,7 +15,9 @@
     homebrew = {
       enable = true;
 
-      brews = [ ];
+      brews = [
+        "choose-gui" # picker for AeroSpace's story workspaces
+      ];
 
       casks = [
         "alfred" # spotlight replacement
