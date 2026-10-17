@@ -784,9 +784,6 @@
     "soxin": {
       "inputs": {
         "clan-core": "clan-core",
-        "deploy-rs": [
-          "deploy-rs"
-        ],
         "flake-parts": "flake-parts_5",
         "home-manager": [
           "home-manager"
@@ -802,11 +799,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792214639,
-        "narHash": "sha256-gT3s6Y2pL9M4ZSp1zgFSovA/bmqW+vDyau25fjq+REI=",
+        "lastModified": 1792219987,
+        "narHash": "sha256-dPFRlApYNBrEnspriXFjkFX01fBLuCwu+7cZ+wAyg64=",
         "ref": "user/wnasreddine/soxin-v2-clan",
-        "rev": "30bbdb2c61f10af66ea9e2bfa2a51a8af06b8ae2",
-        "revCount": 122,
+        "rev": "6e16e15ac611eb594fb43ab16bb5506341de4681",
+        "revCount": 124,
         "type": "git",
         "url": "file:///Users/wnasreddine/code/stories/soxin-v2/github.com/SoxinOS/soxin-clan"
       },
