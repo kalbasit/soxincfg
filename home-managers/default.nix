@@ -1,3 +1,1 @@
-inputs:
-
-import ./qubes inputs
+_: { }

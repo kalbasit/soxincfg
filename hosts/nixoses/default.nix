@@ -23,24 +23,6 @@ let
     # x86_64-linux
     ###
 
-    hercules =
-      let
-        system = "x86_64-linux";
-      in
-      {
-        inherit channelName system;
-        modules = [ ./hercules/nixos.nix ];
-
-        deploy = {
-          hostname = "hercules.bigeye-bushi.ts.net";
-          profiles.system = {
-            sshUser = "root";
-            user = "root";
-            path = deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.hercules;
-          };
-        };
-      };
-
     proteus =
       let
         system = "x86_64-linux";
