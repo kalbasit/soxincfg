@@ -6,23 +6,6 @@
 
 {
   # TEMPLATE
-  pve-nixos-25-05 =
-    let
-      system = "x86_64-linux";
-    in
-    {
-      inherit channelName system;
-      modules = [ ./nixos-25.05/nixos.nix ];
-
-      deploy = {
-        hostname = "192.168.150.6";
-        profiles.system = {
-          sshUser = "root";
-          user = "root";
-          path = deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.pve-nixos-25-05;
-        };
-      };
-    };
 
   pve-basicdns0 =
     let
@@ -92,24 +75,6 @@
           sshUser = "root";
           user = "root";
           path = deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.pve-dns1;
-        };
-      };
-    };
-
-  pve-dns2 =
-    let
-      system = "x86_64-linux";
-    in
-    {
-      inherit channelName system;
-      modules = [ ./dns2/nixos.nix ];
-
-      deploy = {
-        hostname = "192.168.20.5";
-        profiles.system = {
-          sshUser = "root";
-          user = "root";
-          path = deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.pve-dns2;
         };
       };
     };

@@ -49,13 +49,4 @@ mapAttrs
     # x86_64-darwin
     ###
 
-    poseidon =
-      let
-        system = "x86_64-darwin";
-      in
-      {
-        inherit channelName system;
-
-        modules = [ ./poseidon/darwin.nix ];
-      };
   }
