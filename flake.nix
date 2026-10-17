@@ -49,7 +49,21 @@
       };
     };
 
+    # Soxin v2: Soxin's layer on Clan. Local while v2 is unpublished.
     soxin = {
+      url = "git+file:///Users/wnasreddine/code/stories/soxin-v2/github.com/SoxinOS/soxin-clan?ref=user/wnasreddine/soxin-v2-clan";
+      inputs = {
+        deploy-rs.follows = "deploy-rs";
+        home-manager.follows = "home-manager";
+        nix-darwin.follows = "darwin";
+        nixpkgs.follows = "nixpkgs";
+        sops-nix.follows = "sops-nix";
+      };
+    };
+
+    # Soxin v1, for its module library, package overlay and the `soxin`
+    # argument soxincfg's modules still use until they are ported.
+    soxin-v1 = {
       url = "github:SoxinOS/soxin";
       inputs = {
         darwin.follows = "darwin";
