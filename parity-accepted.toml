@@ -1,0 +1,52 @@
+# Differences between the v1 build (bbb90de / private 4567f38) and the Soxin
+# v2 build of the parity hosts, for `soxin-parity --accepted`.
+#
+# PROPOSAL ONLY: none of these has been accepted by the operator yet. Each
+# entry is a draft to be accepted or rejected one by one.
+
+[[difference]]
+derivation = "nixos-version"
+what = "env"
+key = "buildPhase"
+changed = "configurationRevision"
+reason = "system.configurationRevision is soxincfg's own commit, which moves with the port"
+
+[[difference]]
+derivation = "darwin-version.json"
+what = "env"
+key = "__json"
+changed = "configurationRevision"
+reason = "system.configurationRevision is soxincfg's own commit, which moves with the port"
+
+[[difference]]
+derivation = "etc*-registry.json"
+what = "env"
+key = "text"
+changed = '^\s*"(id|lastModified|narHash|rev|revCount|type|url|ref|owner|repo|path)"'
+reason = "Nix registry from the flake's inputs: self is the new soxincfg commit, soxin is Soxin v2, soxin-v1 is new"
+
+[[difference]]
+derivation = "etc*"
+what = "source"
+reason = "the registry and /etc/nix/inputs refer to the sources of the changed inputs (self, soxin, soxin-v1)"
+
+[[difference]]
+derivation = "etc"
+what = "env"
+key = "buildCommand"
+changed = "nix/inputs/soxin-v1"
+reason = "/etc/nix/inputs links every flake input; soxin-v1 is a new input"
+
+[[difference]]
+derivation = "activate-system-start"
+what = "env"
+key = "text"
+changed = 'nix/inputs/soxin-v1'
+reason = "nix-darwin's static /etc entries include /etc/nix/inputs/soxin-v1"
+
+[[difference]]
+derivation = "darwin-system-*"
+what = "env"
+key = "activationScript"
+changed = 'nix/inputs/soxin-v1'
+reason = "nix-darwin's static /etc entries include /etc/nix/inputs/soxin-v1"
