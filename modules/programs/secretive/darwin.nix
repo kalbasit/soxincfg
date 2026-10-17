@@ -1,23 +1,9 @@
+# The darwin module: the options, and the configuration one level below, where
+# it sat when a `mode` switch imported it, so its list definitions keep their
+# order.
 {
-  config,
-  lib,
-  pkgs,
-  ...
-}:
-
-let
-  inherit (lib) mkIf;
-
-  cfg = config.soxincfg.programs.secretive;
-in
-{
-  imports = [ ./options.nix ];
-
-  config = mkIf cfg.enable {
-    homebrew = {
-      casks = [
-        "secretive"
-      ];
-    };
-  };
+  imports = [
+    ./options.nix
+    ./darwin-config.nix
+  ];
 }
