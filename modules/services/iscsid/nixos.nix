@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  mode,
   pkgs,
   ...
 }:
@@ -14,10 +13,10 @@ let
   cfg = config.soxincfg.services.iscsid;
 in
 {
-  options.soxincfg.services.iscsid.enable = mkEnableOption "Install and iscsi and iscsid";
+  imports = [ ./options.nix ];
 
   config = mkIf cfg.enable (mkMerge [
-    (optionalAttrs (mode == "NixOS") {
+    {
       systemd.services = {
         iscsi-init = {
           description = "One time configuration for iscsi.service";
@@ -113,6 +112,6 @@ in
           };
         };
       };
-    })
+    }
   ]);
 }

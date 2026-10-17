@@ -54,6 +54,8 @@ let
   '';
 in
 {
+  imports = [ ./options.nix ];
+
   config = mkIf cfg.enable {
     # Install the package
     environment.systemPackages = [ pkgs.ssh-agent-mux ];
