@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  hostType,
   ...
 }:
 
@@ -12,6 +11,8 @@ let
   cfg = config.soxincfg.programs.secretive;
 in
 {
+  imports = [ ./options.nix ];
+
   config = mkIf cfg.enable {
     homebrew = {
       casks = [

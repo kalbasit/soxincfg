@@ -140,9 +140,9 @@ let
 
   nixosModule = nixosModules.soxincfg;
 
-  # Modules every NixOS, nix-darwin and home-manager configuration gets.
-  globalModules = [
-    nixosModule
+  # Modules every configuration of a kind ("nixos", "darwin", "home") gets.
+  globalModules = kind: [
+    (import ../modules/kind.nix kind)
     nixosModules.profiles.core
 
     # import mysoxin
@@ -275,10 +275,10 @@ let
         v1SystemModule
         noClanZfsModule
       ]
-      ++ globalModules
+      ++ globalModules "nixos"
       ++ [ soxin-v1.nixosModule ];
-      darwin = [ v1SystemModule ] ++ globalModules ++ [ soxin-v1.nixosModule ];
-      home = globalModules ++ [
+      darwin = [ v1SystemModule ] ++ globalModules "darwin" ++ [ soxin-v1.nixosModule ];
+      home = globalModules "home" ++ [
         "${sops-nix.sourceInfo.outPath}/modules/home-manager/sops.nix"
         soxin-v1.nixosModule
       ];
