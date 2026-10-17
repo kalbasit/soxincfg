@@ -2,8 +2,9 @@
 #
 # The interface is unchanged: `mkFlake { hosts, home-managers,
 # supportedSystems, vars }` takes hosts in v1's shape (mode, system,
-# channelName, modules, specialArgs, deploy), so the private flake keeps
-# calling it as it did. The modules are not touched: they still use Soxin
+# channelName, modules, specialArgs), so the private flake keeps calling it
+# as it did. A host's v1 `deploy` (deploy-rs) is ignored: Soxin v2 machines
+# deploy with Clan, and none of them sets a targetHost yet. The modules are not touched: they still use Soxin
 # v1's modules (`soxin-v1`), its `soxin` argument and the `mode`/`hostType`
 # switches, so a nix-diff against the v1 build measures the framework alone.
 inputs@{
@@ -196,19 +197,7 @@ let
       ];
     };
 
-  # v1's Nix registry, NIX_PATH and /etc/nix/inputs from the flake's inputs.
-  v1RegistryModules = [
-    "${flake-utils-plus}/lib/options.nix"
-    {
-      nix = {
-        generateNixPathFromInputs = true;
-        generateRegistryFromInputs = true;
-        linkInputs = true;
-      };
-    }
-  ];
-
-  # Provisional: Clan's core module sets a ZFS host id (/etc/hostid, also in
+  # Clan's core module sets a ZFS host id (/etc/hostid, also in
   # the initrd) and ZFS defaults on every NixOS machine, outside its
   # recommended defaults. They are left out so the machines stay as v1 built
   # them.
@@ -226,24 +215,6 @@ let
     else
       throw "soxincfg: host `${name}` has mode `${host.mode}`, which is neither NixOS nor nix-darwin";
 
-  # A v1 deploy-rs node as a Soxin host's `deploy`.
-  deployOf =
-    host:
-    let
-      node = host.deploy or { };
-      profile = node.profiles.system or { };
-    in
-    optionalAttrs (node ? hostname) {
-      inherit (node) hostname;
-      sshUser = profile.sshUser or null;
-      user = profile.user or "root";
-      settings = removeAttrs profile [
-        "sshUser"
-        "user"
-        "path"
-      ];
-    };
-
   # A v1 host as a Soxin host.
   hostOf = kind: name: host: {
     inherit kind;
@@ -254,7 +225,6 @@ let
       # v1 added sops-nix to NixOS hosts only, after the host's modules.
       ++ nixpkgs.lib.optional (kind == "nixos") sops-nix.nixosModules.sops;
     specialArgs = host.specialArgs or { };
-    deploy = deployOf host;
   };
 
   # `hostType` switches `imports` in soxincfg's modules, so it has to be a
@@ -306,9 +276,8 @@ let
         noClanZfsModule
       ]
       ++ globalModules
-      ++ [ soxin-v1.nixosModule ]
-      ++ v1RegistryModules;
-      darwin = [ v1SystemModule ] ++ globalModules ++ [ soxin-v1.nixosModule ] ++ v1RegistryModules;
+      ++ [ soxin-v1.nixosModule ];
+      darwin = [ v1SystemModule ] ++ globalModules ++ [ soxin-v1.nixosModule ];
       home = globalModules ++ [
         "${sops-nix.sourceInfo.outPath}/modules/home-manager/sops.nix"
         soxin-v1.nixosModule
@@ -333,6 +302,13 @@ let
     # sops-nix is added by hand, where v1 added it.
     sops.enable = false;
 
+    # v1 (flake-utils-plus) pinned the Nix registry, NIX_PATH and
+    # /etc/nix/inputs to the flake's inputs.
+    pinInputs = {
+      registry = true;
+      nixPath = true;
+    };
+
     imports = [
       (
         { lib, ... }:
@@ -340,7 +316,7 @@ let
           # soxincfg names its nix-darwin input `darwin`.
           fleet.inputs.nix-darwin = inputs.darwin;
 
-          # Provisional: Clan's recommended defaults are off, so Clan adds
+          # Clan's recommended defaults are off, so Clan adds
           # nothing to the machines that v1 did not have.
           flake.clan.machines = lib.mapAttrs (_: _: {
             clan.core.enableRecommendedDefaults = false;
