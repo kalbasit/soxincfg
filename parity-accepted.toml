@@ -1,8 +1,8 @@
 # Differences between the v1 build (bbb90de / private 4567f38) and the Soxin
 # v2 build of the parity hosts, for `soxin-parity --accepted`.
 #
-# PROPOSAL ONLY: none of these has been accepted by the operator yet. Each
-# entry is a draft to be accepted or rejected one by one.
+# All seven entries were accepted by the operator on 2026-10-17. A new
+# difference is added only once the operator accepts it, case by case.
 
 [[difference]]
 derivation = "nixos-version"
