@@ -1,21 +1,13 @@
-{
-  config,
-  lib,
-  mode,
-  ...
-}:
+{ lib, ... }:
 
 let
   inherit (lib)
     mkEnableOption
     mkOption
-    optionals
     types
     ;
 in
 {
-  imports = optionals (mode == "nix-darwin") [ ./darwin.nix ];
-
   options.soxincfg.services.ssh-agent-mux = {
     enable = mkEnableOption "ssh-agent-mux service";
 
