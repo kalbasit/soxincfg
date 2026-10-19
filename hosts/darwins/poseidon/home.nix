@@ -14,6 +14,9 @@
     soxincfg.nixosModules.profiles.workstation.darwin.local
   ];
 
+  # Personal machine: its stories live in maktab.
+  soxincfg.services.aerospace.storyManager = "maktab";
+
   # XXX: This host was created prior to changing my username to wnasreddine.
   soxincfg.settings.users.userName = "yl";
 
