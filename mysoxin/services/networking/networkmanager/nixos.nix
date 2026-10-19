@@ -19,12 +19,12 @@ in
   };
 
   config = mkIf cfg.enable (mkMerge [
-    ({
+    {
       networking.networkmanager.enable = true;
 
       programs.nm-applet.enable = true;
 
       soxincfg.settings.users.groups = [ "networkmanager" ];
-    })
+    }
   ]);
 }

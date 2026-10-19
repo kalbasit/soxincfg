@@ -17,9 +17,9 @@ in
   };
 
   config = mkIf cfg.enable (mkMerge [
-    ({ })
+    { }
 
-    ({
+    {
       gtk = {
         enable = true;
         font = {
@@ -34,6 +34,6 @@ in
           name = "Arc-dark";
         };
       };
-    })
+    }
   ]);
 }

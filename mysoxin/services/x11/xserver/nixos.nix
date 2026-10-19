@@ -17,7 +17,7 @@ in
   };
 
   config = mkIf cfg.enable (mkMerge [
-    ({
+    {
       services = {
         displayManager = {
           autoLogin = {
@@ -55,6 +55,6 @@ in
           ];
         };
       };
-    })
+    }
   ]);
 }

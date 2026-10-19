@@ -19,6 +19,6 @@ in
   config = mkIf cfg.enable (mkMerge [
     { soxin.programs.termite.enable = true; }
 
-    ({ })
+    { }
   ]);
 }

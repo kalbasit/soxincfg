@@ -101,13 +101,13 @@ in
 
   config = mkIf cfg.enable (mkMerge [
     # add all plugins installed by themes
-    (optionalAttrs (false || true) {
+    (optionalAttrs true {
       soxin.programs.tmux.plugins = cfg.theme.plugins;
     })
 
-    ({ })
+    { }
 
-    ({
+    {
       programs.tmux = {
         inherit (cfg)
           enable
@@ -116,6 +116,6 @@ in
           secureSocket
           ;
       };
-    })
+    }
   ]);
 }

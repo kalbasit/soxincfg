@@ -13,9 +13,9 @@ with lib;
 
   config = mkIf config.soxin.hardware.bluetooth.enable (mkMerge [
 
-    ({ })
+    { }
 
-    ({ })
+    { }
 
   ]);
 }

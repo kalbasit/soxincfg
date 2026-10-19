@@ -41,8 +41,8 @@ in
   config = mkIf cfg.enable (mkMerge [
     { soxin.settings.keyboard.layouts = singleton colemakLayout; }
 
-    ({ })
+    { }
 
-    ({ })
+    { }
   ]);
 }

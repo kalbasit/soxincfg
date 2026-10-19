@@ -21,13 +21,13 @@ in
   };
 
   config = mkIf cfg.enable (mkMerge [
-    ({
+    {
       programs.vscode = mkMerge [
         { inherit (cfg) enable; }
 
         { extensions = flatten (map (v: v.extensions) cfg.programmingLanguages); }
 
       ];
-    })
+    }
   ]);
 }

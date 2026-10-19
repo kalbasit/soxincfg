@@ -160,7 +160,7 @@ in
   config = mkIf cfg.enable (mkMerge [
     { soxin.programs.zsh.enable = true; }
 
-    (optionalAttrs (false || true) {
+    (optionalAttrs true {
       programs.zsh.shellAliases = with pkgs; {
         g = "git";
 
@@ -203,11 +203,11 @@ in
       };
     })
 
-    ({ })
+    { }
 
-    ({ })
+    { }
 
-    ({
+    {
       home.packages = [
         pkgs.worktrunk
       ];
@@ -280,6 +280,6 @@ in
 
         zoxide.enable = true;
       };
-    })
+    }
   ]);
 }

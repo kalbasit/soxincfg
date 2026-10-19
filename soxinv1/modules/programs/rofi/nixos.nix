@@ -65,7 +65,7 @@ in
 
   config = mkIf cfg.enable (mkMerge [
     {
-      soxin.programs.rofi.modi = mkIf (cfg.i3.enable) {
+      soxin.programs.rofi.modi = mkIf cfg.i3.enable {
         i3MoveContainer = "${rofi-i3-support}/bin/i3-move-container";
         i3RenameWorkspace = "${rofi-i3-support}/bin/i3-rename-workspace";
         i3SwapWorkspaces = "${rofi-i3-support}/bin/i3-swap-workspaces";
@@ -73,6 +73,6 @@ in
       };
     }
 
-    ({ })
+    { }
   ]);
 }

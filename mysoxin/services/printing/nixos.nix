@@ -48,7 +48,7 @@ in
       };
     }
 
-    ({
+    {
       services.printing = {
         enable = true;
         drivers = flatten (attrValues (filterAttrs (n: _: any (e: e == n) cfg.brands) cfg.brandsPackages));
@@ -58,6 +58,6 @@ in
         enable = true;
         nssmdns4 = true;
       };
-    })
+    }
   ]);
 }

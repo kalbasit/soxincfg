@@ -24,7 +24,7 @@ in
   config = mkIf cfg.enable (mkMerge [
     { soxin.programs.autorandr.enable = true; }
 
-    ({
+    {
       programs.autorandr.hooks.postswitch.move-workspaces-to-main = ''
         set -euo pipefail
 
@@ -60,6 +60,6 @@ in
         # Go to my personal workspace
         ${getBin pkgs.i3}/bin/i3-msg "workspace personal";
       '';
-    })
+    }
   ]);
 }

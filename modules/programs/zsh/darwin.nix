@@ -154,7 +154,7 @@ in
   config = mkIf cfg.enable (mkMerge [
     { soxin.programs.zsh.enable = true; }
 
-    (optionalAttrs (false || false) {
+    (optionalAttrs false {
       programs.zsh.shellAliases = with pkgs; {
         g = "git";
 
@@ -197,18 +197,16 @@ in
       };
     })
 
-    (
-      (mkIf pkgs.stdenv.hostPlatform.isDarwin {
-        programs.zsh.shellInit = ''
-          if [[ -d /opt/homebrew ]]; then
-            eval "$(/opt/homebrew/bin/brew shellenv)"
-          fi
-        '';
-      })
-    )
+    (mkIf pkgs.stdenv.hostPlatform.isDarwin {
+      programs.zsh.shellInit = ''
+        if [[ -d /opt/homebrew ]]; then
+          eval "$(/opt/homebrew/bin/brew shellenv)"
+        fi
+      '';
+    })
 
-    ({ })
+    { }
 
-    ({ })
+    { }
   ]);
 }

@@ -20,11 +20,11 @@ in
   };
 
   config = mkIf cfg.enable (mkMerge [
-    ({
+    {
       virtualisation.virtualbox.host.enable = true;
       virtualisation.virtualbox.host.enableExtensionPack = true;
 
       soxincfg.settings.users.groups = optional cfg.addAdminUsersToGroup "vboxusers";
-    })
+    }
   ]);
 }

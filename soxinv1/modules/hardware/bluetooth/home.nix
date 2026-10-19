@@ -13,9 +13,9 @@ with lib;
 
   config = mkIf config.soxin.hardware.bluetooth.enable (mkMerge [
 
-    ({ })
+    { }
 
-    ({ services.blueman-applet.enable = true; })
+    { services.blueman-applet.enable = true; }
 
   ]);
 }

@@ -11,11 +11,6 @@ in
 {
   environment.homeBinInPath = true;
 
-  services.fwupd.enable = true;
-
-  # Feed the kernel some entropy
-  services.haveged.enable = true;
-
   # mosh, and its UDP ports.
   programs.mosh.enable = true;
   networking.firewall.allowedUDPPortRanges = [
@@ -25,8 +20,15 @@ in
     }
   ];
 
-  # Enable TailScale for zero-config VPN service.
-  services.tailscale.enable = true;
+  services = {
+    fwupd.enable = true;
+
+    # Feed the kernel some entropy
+    haveged.enable = true;
+
+    # Enable TailScale for zero-config VPN service.
+    tailscale.enable = true;
+  };
 
   # Setup my keyboard layout
   soxin.settings.keyboard = {
