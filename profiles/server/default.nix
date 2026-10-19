@@ -24,7 +24,6 @@ in
   config = {
     soxin = {
       hardware = {
-        fwupd.enable = true;
       };
 
       services = {
@@ -40,7 +39,6 @@ in
       programs = {
         fzf.enable = true;
         git.enable = true;
-        mosh.enable = true;
         ssh.enable = true;
         starship.enable = true;
         tmux.enable = true;

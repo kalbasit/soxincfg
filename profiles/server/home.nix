@@ -51,5 +51,6 @@ in
 
       glances
       gotop
-    ]);
+    ])
+    ++ [ mosh ];
 }

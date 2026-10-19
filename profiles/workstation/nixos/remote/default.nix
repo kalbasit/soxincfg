@@ -19,7 +19,6 @@ in
 
   soxin = {
     hardware = {
-      fwupd.enable = true;
     };
 
     programs = {
@@ -42,7 +41,6 @@ in
     programs = {
       fzf.enable = true;
       git.enable = true;
-      mosh.enable = true;
       pet.enable = true;
       ssh.enable = true;
       starship.enable = true;

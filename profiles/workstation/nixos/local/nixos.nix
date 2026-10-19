@@ -6,6 +6,18 @@ in
 {
   environment.homeBinInPath = true;
 
+  # mosh, and its UDP ports.
+  programs.mosh.enable = true;
+  networking.firewall.allowedUDPPortRanges = [
+    {
+      from = 60000;
+      to = 61000;
+    }
+  ];
+
+  # For ZSA keyboards.
+  soxincfg.settings.users.defaultGroups = [ "plugdev" ];
+
   # allow the store to be accessed for store paths via SSH
   nix.sshServe = {
     inherit (config.soxincfg.settings.users.user.openssh.authorizedKeys) keys;
@@ -14,6 +26,8 @@ in
   };
 
   services = {
+    fwupd.enable = true;
+
     gnome.gnome-keyring.enable = true;
 
     # Enable TailScale for zero-config VPN service.

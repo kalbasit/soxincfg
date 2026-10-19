@@ -90,13 +90,11 @@ in
       fzf.enable = true;
       git.enable = true;
       iterm2.enable = true;
-      mosh.enable = true;
       pet.enable = true;
       ssh.enable = true;
       starship.enable = true;
       tmux.enable = true;
       zsh.enable = true;
-      secretive.enable = true;
     };
 
     services = {

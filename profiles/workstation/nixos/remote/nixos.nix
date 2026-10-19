@@ -3,7 +3,18 @@
 {
   environment.homeBinInPath = true;
 
+  # mosh, and its UDP ports.
+  programs.mosh.enable = true;
+  networking.firewall.allowedUDPPortRanges = [
+    {
+      from = 60000;
+      to = 61000;
+    }
+  ];
+
   services = {
+    fwupd.enable = true;
+
     eternal-terminal.enable = true;
 
     # Enable TailScale for zero-config VPN service.

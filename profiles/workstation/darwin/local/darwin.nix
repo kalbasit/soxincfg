@@ -20,6 +20,7 @@
       ];
 
       casks = [
+        "secretive" # SSH keys in the Secure Enclave
         "alfred" # spotlight replacement
         "arc" # Arc Browser
         "charles"
