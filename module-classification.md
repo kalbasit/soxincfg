@@ -1,18 +1,34 @@
 # Module classification for the move to Soxin v2
 
-Every module soxincfg uses, for the module cleanup (design steps 5.1 to 5.4).
-**This is a proposal; nothing moves until the operator approves it.**
+The operator's decision (it replaces the earlier proposal). A public module
+implies support, so the bar is "useful to others and worth supporting", not
+"contains nothing private".
 
-- **PUBLIC**: generic; moves to Soxin as it is (minus `mode`).
-- **PRIVATE**: stays in soxincfg: useful to the operator alone, too opinionated,
-  or touching the diwan input, the agent tooling, private hosts, users, keys,
-  paths or secrets (the Soxin hard rule wins over genericity).
-- **SPLIT**: a generic core goes public; the operator's values (identity,
-  layouts, keybindings, hosts, secrets) stay here as configuration on top.
+## Decision
 
-`mode` is the number of `mode` references in the module (`hostType` noted where
-it is also used); "pilot" marks the modules already split per kind without
-`mode` (commit "pilot batch without `mode`").
+**PUBLIC, in Soxin (supported), and nothing else for now:**
+
+| Soxin module | From | Notes |
+| --- | --- | --- |
+| `soxin.settings.users` | soxincfg `modules/settings/users` (generic core) | users declared once for NixOS, nix-darwin and home-manager; other modules contribute groups. The operator's users stay here as configuration. |
+| `soxin.settings.keyboard` | v1 `settings/keyboard`, soxincfg `modules/settings/keyboard` (mechanism only) | shared keyboard layouts programs read; the colemak values stay here. |
+| `soxin.settings.theme` | v1 `settings/theme` and `themes` (mechanism only) | shared theme programs read; gruvbox may come as the one example theme. |
+| `soxin.hardware.yubikey` | soxincfg `modules/hardware/yubikey` | |
+| `soxin.hardware.serial_console` | mysoxin `hardware/serial_console.nix` | |
+
+**DELETED (pure wrappers):** `soxin.hardware.fwupd`, `soxincfg.programs.brave`,
+`soxincfg.programs.mosh`, `soxincfg.programs.secretive`, `soxin.hardware.zsa`.
+The profiles that enabled them set the upstream options directly.
+
+**Everything else STAYS in soxincfg**, as soxincfg's own modules: every other
+module of `modules/`, `mysoxin/` and `profiles/`, including those the
+proposal below marked PUBLIC or SPLIT. Soxin v1's 17 modules are not ported
+into Soxin: what soxincfg still needs from them is copied into soxincfg, so the
+`soxin-v1` input can go. soxincfg exports its module library per kind for the
+operator's other fleets.
+
+The tables below are the original inventory (paths, `mode` use, reasons),
+kept for reference; their "Class" column is the superseded proposal.
 
 ## soxincfg `modules/` (namespace `soxincfg.*`)
 
