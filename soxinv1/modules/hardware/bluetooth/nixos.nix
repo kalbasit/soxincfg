@@ -13,12 +13,12 @@ with lib;
 
   config = mkIf config.soxin.hardware.bluetooth.enable (mkMerge [
 
-    ({
+    {
       hardware.bluetooth.enable = true;
       services.blueman.enable = true;
-    })
+    }
 
-    ({ })
+    { }
 
   ]);
 }

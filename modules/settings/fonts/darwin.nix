@@ -25,8 +25,8 @@ in
   };
 
   config = mkIf cfg.enable (mkMerge [
-    ({ })
+    { }
 
-    ({ })
+    { }
   ]);
 }

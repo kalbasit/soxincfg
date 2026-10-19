@@ -23,7 +23,7 @@ in
   };
 
   config = mkIf cfg.enable (mkMerge [
-    ({ })
-    ({ programs.autorandr.enable = true; })
+    { }
+    { programs.autorandr.enable = true; }
   ]);
 }

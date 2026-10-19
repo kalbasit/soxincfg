@@ -18,7 +18,7 @@ in
   };
 
   config = mkIf cfg.enable (mkMerge [
-    ({
+    {
       xsession = {
         enable = true;
 
@@ -42,6 +42,6 @@ in
 
         scriptPath = ".hm-xsession";
       };
-    })
+    }
   ]);
 }

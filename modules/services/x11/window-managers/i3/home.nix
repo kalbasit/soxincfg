@@ -21,7 +21,7 @@ in
   config = mkIf cfg.enable (mkMerge [
     { soxin.services.xserver.windowManager.i3.enable = true; }
 
-    ({
+    {
       programs.pet.snippets = [
         {
           description = "i3 get-all-workspaces";
@@ -90,6 +90,6 @@ in
         # why this todo?
         config.soxin.settings.theme.i3.config
       ];
-    })
+    }
   ]);
 }

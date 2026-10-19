@@ -17,7 +17,7 @@ in
   };
 
   config = mkIf cfg.enable (mkMerge [
-    ({
+    {
       services.dunst = {
         enable = true;
         settings = {
@@ -236,6 +236,6 @@ in
           };
         };
       };
-    })
+    }
   ]);
 }

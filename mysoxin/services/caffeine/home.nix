@@ -17,7 +17,7 @@ in
   };
 
   config = mkIf cfg.enable (mkMerge [
-    ({
+    {
       systemd.user.services.caffeine-ng = {
         Unit = {
           Description = "Caffeine-ng, a locker inhibitor";
@@ -33,6 +33,6 @@ in
           ExecStart = "${pkgs.caffeine-ng}/bin/caffeine";
         };
       };
-    })
+    }
   ]);
 }

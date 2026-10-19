@@ -28,7 +28,7 @@ in
       };
     }
 
-    ({
+    {
       home.packages = with pkgs; [
         git-appraise
         git-filter-repo
@@ -383,6 +383,6 @@ in
           { path = "~/.gitconfig.secretive"; }
         ];
       };
-    })
+    }
   ]);
 }

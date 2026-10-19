@@ -7,14 +7,12 @@
 
 with lib;
 {
-  config.soxin.tools.git = (
-    mkMerge [
-      {
-        vscode = {
-          extensions = [ pkgs.vscode-extensions.eamodio.gitlens ];
-        };
-      }
+  config.soxin.tools.git = mkMerge [
+    {
+      vscode = {
+        extensions = [ pkgs.vscode-extensions.eamodio.gitlens ];
+      };
+    }
 
-    ]
-  );
+  ];
 }

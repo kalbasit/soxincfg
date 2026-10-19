@@ -101,21 +101,19 @@ in
 
   config = mkIf cfg.enable (mkMerge [
     # add all plugins installed by themes
-    (optionalAttrs (true || false) {
+    (optionalAttrs true {
       soxin.programs.tmux.plugins = cfg.theme.plugins;
     })
 
-    (
-      (mkMerge [
-        {
-          programs.tmux = {
-            inherit (cfg) enable extraConfig secureSocket;
-          };
-        }
-        (mkIf (cfg.plugins != [ ]) configPlugins)
-      ])
-    )
+    (mkMerge [
+      {
+        programs.tmux = {
+          inherit (cfg) enable extraConfig secureSocket;
+        };
+      }
+      (mkIf (cfg.plugins != [ ]) configPlugins)
+    ])
 
-    ({ })
+    { }
   ]);
 }

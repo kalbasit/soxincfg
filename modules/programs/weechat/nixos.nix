@@ -41,7 +41,7 @@ in
   };
 
   config = mkIf cfg.enable (mkMerge [
-    ({
+    {
       sops.secrets = {
         "_config_weechat_certs_freenode.pem" = {
           inherit owner;
@@ -59,8 +59,8 @@ in
           sopsFile = ./config/sec.conf.sops;
         };
       };
-    })
+    }
 
-    ({ })
+    { }
   ]);
 }

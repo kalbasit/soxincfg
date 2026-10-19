@@ -4,5 +4,5 @@ let
   inherit (lib) optionals;
 in
 {
-  imports = [ ] ++ [ ../common-home.nix ];
+  imports = [ ../common-home.nix ];
 }

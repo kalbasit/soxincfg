@@ -69,7 +69,7 @@ in
   };
 
   config = mkIf cfg.enable (mkMerge [
-    (optionalAttrs (false || true) {
+    (optionalAttrs true {
       programs.zsh = {
         inherit (cfg) enable;
       };
@@ -80,7 +80,7 @@ in
 
     # Copy the plugin management from home-manager to send plugins to NixOS and nix-darwin
     # TODO: Send it upstream to NixOS and nix-darwin.
-    (optionalAttrs (false || false) (
+    (optionalAttrs false (
       mkIf (cfg.plugins != [ ]) {
         # Many plugins require compinit to be called
         # but allow the user to opt out.
@@ -99,19 +99,19 @@ in
       }
     ))
 
-    ({ })
+    { }
 
-    ({ })
+    { }
 
-    ({
+    {
       programs.zsh = {
         inherit (cfg) plugins;
 
         autosuggestion.enable = cfg.enableAutosuggestions;
       };
-    })
+    }
 
     # install all completions libraries for system packages
-    ({ })
+    { }
   ]);
 }

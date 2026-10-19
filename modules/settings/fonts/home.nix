@@ -25,8 +25,8 @@ in
   };
 
   config = mkIf cfg.enable (mkMerge [
-    ({ })
+    { }
 
-    ({ fonts.fontconfig.enable = true; })
+    { fonts.fontconfig.enable = true; }
   ]);
 }

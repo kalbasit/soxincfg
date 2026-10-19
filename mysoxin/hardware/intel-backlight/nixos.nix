@@ -24,12 +24,12 @@ in
   };
 
   config = mkIf cfg.enable (mkMerge [
-    ({
+    {
       # Give people part of the ${cfg.group} group access to adjust the backlight
       services.udev.extraRules = ''
         ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_backlight", RUN+="${pkgs.coreutils}/bin/chgrp ${cfg.group} /sys/class/backlight/%k/brightness"
         ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_backlight", RUN+="${pkgs.coreutils}/bin/chmod g+w /sys/class/backlight/%k/brightness"
       '';
-    })
+    }
   ]);
 }

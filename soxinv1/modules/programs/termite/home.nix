@@ -20,11 +20,11 @@ in
   };
 
   config = mkIf cfg.enable (mkMerge [
-    ({
+    {
       programs.termite = mkMerge [
         { inherit (cfg) enable; }
         cfg.theme.extraConfig
       ];
-    })
+    }
   ]);
 }

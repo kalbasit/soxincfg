@@ -4,10 +4,7 @@ let
   inherit (lib) optionals;
 in
 {
-  imports =
-    [ ]
-    ++ [ ./darwin-config.nix ]
-   ;
+  imports = [ ./darwin-config.nix ];
 
   # configure the keyboard
   soxincfg.settings.keyboard.enable = true;

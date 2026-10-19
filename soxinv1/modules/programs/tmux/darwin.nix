@@ -101,12 +101,12 @@ in
 
   config = mkIf cfg.enable (mkMerge [
     # add all plugins installed by themes
-    (optionalAttrs (false || false) {
+    (optionalAttrs false {
       soxin.programs.tmux.plugins = cfg.theme.plugins;
     })
 
-    ({ })
+    { }
 
-    ({ })
+    { }
   ]);
 }

@@ -41,9 +41,9 @@ in
   };
 
   config = mkIf cfg.enable (mkMerge [
-    ({ })
+    { }
 
-    ({
+    {
       programs.zsh.shellAliases.weechat = "tmux -L weechat attach -t weechat";
 
       home.activation.weechat = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
@@ -122,6 +122,6 @@ in
 
         Install.WantedBy = [ "default.target" ];
       };
-    })
+    }
   ]);
 }

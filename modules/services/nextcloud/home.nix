@@ -13,6 +13,6 @@ in
   options.soxincfg.services.nextcloud.enable = mkEnableOption "Install and configure nextcloud";
 
   config = mkIf cfg.enable (mkMerge [
-    ({ })
+    { }
   ]);
 }

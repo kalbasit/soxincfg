@@ -26,12 +26,12 @@ in
   };
 
   config = mkIf cfg.enable (mkMerge [
-    ({
+    {
       home.packages = singleton pkgs.wezterm;
 
       xdg.configFile."wezterm/wezterm.lua".source = replaceVars ./wezterm.lua {
         terminfo_dirs = "${wezterm.terminfo}/share/terminfo";
       };
-    })
+    }
   ]);
 }

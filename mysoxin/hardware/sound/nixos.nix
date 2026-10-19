@@ -21,7 +21,7 @@ in
   };
 
   config = mkIf cfg.enable (mkMerge [
-    ({
+    {
       # TODO: Possibly replace pulseaudio with pipewire but for now, in order to build on 24.11 and not sure why it's enabled in the first place.
       services.pipewire.enable = false;
 
@@ -36,12 +36,10 @@ in
         pavucontrol
         pa_applet
       ];
-    })
+    }
 
-    (
-      (mkIf cfg.focusRiteGen3Support {
-        boot.extraModprobeConfig = "options snd_usb_audio vid=0x1235 pid=0x8210 device_setup=1";
-      })
-    )
+    (mkIf cfg.focusRiteGen3Support {
+      boot.extraModprobeConfig = "options snd_usb_audio vid=0x1235 pid=0x8210 device_setup=1";
+    })
   ]);
 }

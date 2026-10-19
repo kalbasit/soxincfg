@@ -14,7 +14,7 @@ let
     ;
 in
 {
-  imports = [ ] ++ [ ./nixos-config.nix ];
+  imports = [ ./nixos-config.nix ];
 
   options = {
     soxin.programs.git = {

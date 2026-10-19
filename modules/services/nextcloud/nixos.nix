@@ -13,7 +13,7 @@ in
   options.soxincfg.services.nextcloud.enable = mkEnableOption "Install and configure nextcloud";
 
   config = mkIf cfg.enable (mkMerge [
-    ({
+    {
       networking.firewall = {
         enable = mkForce false; # TODO
         allowedTCPPorts = [
@@ -83,6 +83,6 @@ in
         # allow nginx user access to sops secrets
         nginx.extraGroups = singleton config.users.groups.keys.name;
       };
-    })
+    }
   ]);
 }
