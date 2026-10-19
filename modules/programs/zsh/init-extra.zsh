@@ -641,6 +641,25 @@ if [[ -z "${ZSH_PROFILE}" || -z "${SWM_STORY}" ]]; then
 	fi
 fi
 
+# AeroSpace names a story's workspace profile@story as well, but swm and private-tool
+# stories are flat names now: the story is what follows the @.
+if [[ -z "${ZSH_PROFILE}" || -z "${@story_env@}" ]]; then
+	if [[ "$OSTYPE" = darwin* ]] && have aerospace; then
+		active_workspace="$(aerospace list-workspaces --focused 2>/dev/null)"
+
+		if [[ "${active_workspace}" =~ '.*@.*' ]]; then
+			[[ -z "${ZSH_PROFILE}" ]] && export ZSH_PROFILE="${active_workspace%%@*}"
+			[[ -z "${@story_env@}" ]] && export @story_env@="${active_workspace#*@}"
+		fi
+
+		if [[ -z "${ZSH_PROFILE}" ]] && [[ -r "@home_path@/.zsh/profiles/${active_workspace}.zsh" ]]; then
+			 export ZSH_PROFILE="${active_workspace}"
+		fi
+
+		unset active_workspace
+	fi
+fi
+
 # load the active profile only if one is available
 if [[ -n "${ZSH_PROFILE}" ]] && [[ -r "@home_path@/.zsh/profiles/${ZSH_PROFILE}.zsh" ]]; then
 	sp "${ZSH_PROFILE}"
