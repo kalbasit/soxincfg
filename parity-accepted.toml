@@ -1,7 +1,8 @@
 # Differences between the v1 build (bbb90de / private 4567f38) and the Soxin
 # v2 build of the parity hosts, for `soxin-parity --accepted`.
 #
-# All seven entries were accepted by the operator on 2026-10-17. A new
+# Entries 1 to 3 were accepted by the operator on 2026-10-17, and the two
+# reorderings at the end on 2026-10-18. A new
 # difference is added only once the operator accepts it, case by case.
 
 [[difference]]
@@ -26,27 +27,22 @@ changed = '^\s*"(id|lastModified|narHash|rev|revCount|type|url|ref|owner|repo|pa
 reason = "Nix registry from the flake's inputs: self is the new soxincfg commit, soxin is Soxin v2, soxin-v1 is new"
 
 [[difference]]
-derivation = "etc*"
-what = "source"
-reason = "the registry and /etc/nix/inputs refer to the sources of the changed inputs (self, soxin, soxin-v1)"
-
-[[difference]]
-derivation = "etc"
-what = "env"
-key = "buildCommand"
-changed = "nix/inputs/soxin-v1"
-reason = "/etc/nix/inputs links every flake input; soxin-v1 is a new input"
-
-[[difference]]
-derivation = "activate-system-start"
+hosts = ["saturn"]
+derivation = "Brewfile"
 what = "env"
 key = "text"
-changed = 'nix/inputs/soxin-v1'
-reason = "nix-darwin's static /etc entries include /etc/nix/inputs/soxin-v1"
+reordered = true
+reason = """5.2, secretive wrapper deleted: the darwin/local profile now lists the
+"secretive" cask itself, so it moves from after "docker-desktop" (where the
+wrapper module's definition sat) to the top of the casks. Same casks."""
 
 [[difference]]
-derivation = "darwin-system-*"
+hosts = ["saturn", "saturn-nixos-vm"]
+derivation = "home-manager-*"
 what = "env"
-key = "activationScript"
-changed = 'nix/inputs/soxin-v1'
-reason = "nix-darwin's static /etc entries include /etc/nix/inputs/soxin-v1"
+key = "__json"
+reordered = true
+reason = """5.2, mosh wrapper deleted: the profiles now add pkgs.mosh to
+home.packages themselves, so mosh moves before worktrunk in the
+home-manager path (and fonts/applications, which list the same packages).
+Same packages."""
