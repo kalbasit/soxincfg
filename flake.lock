@@ -215,22 +215,6 @@
         "type": "github"
       }
     },
-    "flake-compat_5": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1761588595,
-        "narHash": "sha256-XKUZz9zewJNUj46b4AJdiRZJAvSZ0Dqj2BNfXvFlJC4=",
-        "owner": "edolstra",
-        "repo": "flake-compat",
-        "rev": "f387cd2afec9419c8ee37694406ca490c3f34ee5",
-        "type": "github"
-      },
-      "original": {
-        "owner": "edolstra",
-        "repo": "flake-compat",
-        "type": "github"
-      }
-    },
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": [
@@ -375,28 +359,6 @@
       "inputs": {
         "nixpkgs": [
           "nixvim",
-          "pre-commit-hooks",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1709087332,
-        "narHash": "sha256-HG2cCnktfHsKV0s4XW83gU3F57gaTljL9KNSuG6bnQs=",
-        "owner": "hercules-ci",
-        "repo": "gitignore.nix",
-        "rev": "637db329424fd7e46cf4185293b9cc8c88c95394",
-        "type": "github"
-      },
-      "original": {
-        "owner": "hercules-ci",
-        "repo": "gitignore.nix",
-        "type": "github"
-      }
-    },
-    "gitignore_2": {
-      "inputs": {
-        "nixpkgs": [
-          "soxin-v1",
           "pre-commit-hooks",
           "nixpkgs"
         ]
@@ -719,29 +681,6 @@
         "type": "github"
       }
     },
-    "pre-commit-hooks_3": {
-      "inputs": {
-        "flake-compat": "flake-compat_5",
-        "gitignore": "gitignore_2",
-        "nixpkgs": [
-          "soxin-v1",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1763988335,
-        "narHash": "sha256-QlcnByMc8KBjpU37rbq5iP7Cp97HvjRP0ucfdh+M4Qc=",
-        "owner": "cachix",
-        "repo": "pre-commit-hooks.nix",
-        "rev": "50b9238891e388c9fdc6a5c49e49c42533a1b5ce",
-        "type": "github"
-      },
-      "original": {
-        "owner": "cachix",
-        "repo": "pre-commit-hooks.nix",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "darwin": "darwin",
@@ -757,8 +696,7 @@
         "nur": "nur",
         "pre-commit-hooks": "pre-commit-hooks_2",
         "sops-nix": "sops-nix",
-        "soxin": "soxin",
-        "soxin-v1": "soxin-v1"
+        "soxin": "soxin"
       }
     },
     "sops-nix": {
@@ -811,48 +749,6 @@
         "ref": "user/wnasreddine/soxin-v2-clan",
         "type": "git",
         "url": "file:///Users/wnasreddine/code/stories/soxin-v2/github.com/SoxinOS/soxin-clan"
-      }
-    },
-    "soxin-v1": {
-      "inputs": {
-        "darwin": [
-          "darwin"
-        ],
-        "deploy-rs": [
-          "deploy-rs"
-        ],
-        "flake-utils-plus": [
-          "flake-utils-plus"
-        ],
-        "home-manager": [
-          "home-manager"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "nixpkgs-unstable": [
-          "nixpkgs-unstable"
-        ],
-        "nur": [
-          "nur"
-        ],
-        "pre-commit-hooks": "pre-commit-hooks_3",
-        "sops-nix": [
-          "sops-nix"
-        ]
-      },
-      "locked": {
-        "lastModified": 1780029604,
-        "narHash": "sha256-setyY0H2qTs7SIkRF5jRCb+NEkBvQdie57oYkq///lM=",
-        "owner": "SoxinOS",
-        "repo": "soxin",
-        "rev": "e25412485e6c3aa6fdea2fe8769f5a6c404cd849",
-        "type": "github"
-      },
-      "original": {
-        "owner": "SoxinOS",
-        "repo": "soxin",
-        "type": "github"
       }
     },
     "systems": {

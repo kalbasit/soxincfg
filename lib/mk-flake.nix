@@ -4,9 +4,11 @@
 # supportedSystems, vars }` takes hosts in v1's shape (mode, system,
 # channelName, modules, specialArgs), so the private flake keeps calling it
 # as it did. A host's v1 `deploy` (deploy-rs) is ignored: Soxin v2 machines
-# deploy with Clan, and none of them sets a targetHost yet. The modules are not touched: they still use Soxin
-# v1's modules (`soxin-v1`), its `soxin` argument and the `mode`/`hostType`
-# switches, so a nix-diff against the v1 build measures the framework alone.
+# deploy with Clan, and none of them sets a targetHost yet.
+#
+# Soxin v1's modules are copied into soxinv1/ (the `soxinLib` argument is
+# their library), and every module is split per kind, without `mode`;
+# `hostType` still names the host's operating system.
 inputs@{
   flake-utils-plus,
   nixos-hardware,
@@ -18,7 +20,6 @@ inputs@{
   self,
   sops-nix,
   soxin,
-  soxin-v1,
   ...
 }:
 let
@@ -120,13 +121,14 @@ let
   };
 
   # The overlays v1 applied to every channel, in v1's order: flake-utils-plus's
-  # `srcs`, Soxin v1's package set, NUR, soxincfg's own and sops-nix's.
+  # `srcs`, Soxin v1's package set (copied into soxinv1/), NUR, soxincfg's own
+  # and sops-nix's.
   sharedOverlays = [
     (_: _: {
       __dontExport = true;
       srcs = filterAttrs (_: value: !value ? outputs) inputs;
     })
-    soxin-v1.overlays.default
+    (_: prev: { soxin = import ../soxinv1/pkgs prev; })
     nur.overlays.default
     (import ../overlays)
     sops-nix.overlays.default
@@ -162,17 +164,11 @@ let
     (import ../mysoxin/kind.nix kind)
   ];
 
-  # Soxin v1's library, without its keyboard and theme settings, which come
-  # from Soxin's library instead (same option names), where v1's were.
+  # Soxin v1's modules, copied into soxinv1/ (without its keyboard and theme
+  # settings, which come from Soxin's library under the same option names),
+  # where v1's nixosModule was.
   v1Modules = kind: [
-    soxin-v1.nixosModule
-    {
-      disabledModules = [
-        "${soxin-v1}/modules/settings/keyboard.nix"
-        "${soxin-v1}/modules/settings/theme.nix"
-        "${soxin-v1}/modules/themes"
-      ];
-    }
+    (import ../soxinv1/modules/kind.nix kind)
     soxin.lib.library.${kind}.settings-keyboard
     soxin.lib.library.${kind}.settings-theme
   ];
@@ -311,13 +307,13 @@ let
         ++ v1Modules "home";
     };
 
-    # v1's arguments: soxincfg's modules take `soxin` to be Soxin v1, whose
-    # module library they still use.
+    # v1's arguments, and `soxinLib`, the library of Soxin v1's modules
+    # (copied into soxinv1/).
     specialArgs = {
       global = {
         inherit (inputs) home-manager;
-        soxin = soxin-v1;
         soxincfg = self;
+        soxinLib = import ../soxinv1/lib inputs;
       };
       nixos = {
         inherit nixos-hardware nixos-wsl;
