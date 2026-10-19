@@ -1,41 +1,52 @@
 {
-  config,
+  soxincfg,
   lib,
-  pkgs,
   ...
 }:
 
 let
-  inherit (lib) singleton;
+  inherit (lib)
+    mkDefault
+    mkEnableOption
+    mkIf
+    optionalAttrs
+    optionals
+    ;
 in
 {
-  environment.homeBinInPath = true;
+  imports = [
+    soxincfg.nixosModules.profiles.neovim.full
+  ]
+  ++ [ ./nixos-config.nix ]
+ ;
 
-  services.fwupd.enable = true;
+  config = {
+    soxin = {
+      hardware = {
+      };
 
-  # Feed the kernel some entropy
-  services.haveged.enable = true;
+      services = {
+        openssh.enable = true;
+      };
 
-  # mosh, and its UDP ports.
-  programs.mosh.enable = true;
-  networking.firewall.allowedUDPPortRanges = [
-    {
-      from = 60000;
-      to = 61000;
-    }
-  ];
+      virtualisation = {
+        docker.enable = true;
+      };
+    };
 
-  # Enable TailScale for zero-config VPN service.
-  services.tailscale.enable = true;
+    soxincfg = {
+      programs = {
+        fzf.enable = true;
+        git.enable = true;
+        ssh.enable = true;
+        starship.enable = true;
+        tmux.enable = true;
+        zsh.enable = true;
+      };
 
-  # Setup my keyboard layout
-  soxin.settings.keyboard = {
-    layouts = [
-      {
-        console = {
-          keyMap = "colemak";
-        };
-      }
-    ];
+      settings = {
+        nix.distributed-builds.enable = true;
+      };
+    };
   };
 }

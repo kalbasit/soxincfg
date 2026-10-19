@@ -1,56 +1,52 @@
 {
-  config,
+  soxincfg,
   lib,
-  pkgs,
   ...
 }:
 
 let
-  inherit (lib) optionals;
+  inherit (lib)
+    mkDefault
+    mkEnableOption
+    mkIf
+    optionalAttrs
+    optionals
+    ;
 in
 {
-  # programs
-  programs.bat.enable = true;
-  programs.direnv.enable = true;
+  imports = [
+    soxincfg.homeModules.profiles.neovim.full
+  ]
+ 
+  ++ [ ./home-config.nix ];
 
-  # files
-  home.file = {
-    ".npmrc".text = "prefix=${config.home.homeDirectory}/.filesystem";
+  config = {
+    soxin = {
+      hardware = {
+      };
+
+      services = {
+        openssh.enable = true;
+      };
+
+      virtualisation = {
+        docker.enable = true;
+      };
+    };
+
+    soxincfg = {
+      programs = {
+        fzf.enable = true;
+        git.enable = true;
+        ssh.enable = true;
+        starship.enable = true;
+        tmux.enable = true;
+        zsh.enable = true;
+      };
+
+      settings = {
+        nix.distributed-builds.enable = true;
+      };
+    };
   };
-
-  home.packages =
-    with pkgs;
-    [
-      amazon-ecr-credential-helper
-      binutils # for strings
-      dnsutils # for dig
-      screen
-      docker-credential-gcr
-      duf # du replacement on steroids
-      ncdu
-      file
-      fx # JSON viewer
-      gdb
-      gh
-      gist
-      git-quick-stats
-      gnupg
-      jq
-      killall
-      lf # curses-based file manager
-      mercurial
-      nix-index
-      nixpkgs-review
-      nix-zsh-completions
-      unzip
-    ]
-    ++ (optionals stdenv.isLinux [
-      #
-      # Linux applications
-      #
-
-      glances
-      gotop
-    ])
-    ++ [ mosh ];
 }

@@ -1,14 +1,23 @@
-{ config, lib, ... }:
+{
+  lib,
+  ...
+}:
 
 let
-  inherit (lib) mkIf optional;
-
-  cfg = config.soxin.virtualisation.docker;
+  inherit (lib) mkEnableOption optionals recursiveUpdate;
 in
 {
-  config = mkIf cfg.enable {
-    virtualisation.docker.enable = true;
+  imports =
+    [ ./nixos-config.nix ];
 
-    soxincfg.settings.users.groups = optional cfg.addAdminUsersToGroup "docker";
+  options = {
+    soxin.virtualisation.docker = {
+      enable = mkEnableOption "Enable docker.";
+
+      addAdminUsersToGroup = recursiveUpdate (mkEnableOption ''
+        Whether to add admin users declared in soxincfg.settings.users to the `docker`
+        group.
+      '') { default = true; };
+    };
   };
 }

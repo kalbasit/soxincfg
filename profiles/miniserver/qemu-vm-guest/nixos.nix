@@ -1,8 +1,13 @@
 {
-  services = {
-    qemuGuest.enable = true;
+  lib,
+  ...
+}:
 
-    # Feed the kernel some entropy
-    haveged.enable = true;
-  };
+let
+  inherit (lib)
+    optionals
+    ;
+in
+{
+  imports = [ ../common/nixos.nix ] ++ [ ./nixos-config.nix ];
 }
