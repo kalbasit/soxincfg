@@ -51,7 +51,7 @@
 
     # Soxin v2: Soxin's layer on Clan. Local while v2 is unpublished.
     soxin = {
-      url = "git+file:///Users/wnasreddine/code/stories/soxin-v2/github.com/SoxinOS/soxin-clan?ref=user/wnasreddine/soxin-v2-clan";
+      url = "github:SoxinOS/soxin/v2";
       inputs = {
         home-manager.follows = "home-manager";
         nix-darwin.follows = "darwin";
