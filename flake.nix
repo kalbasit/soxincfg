@@ -60,22 +60,6 @@
       };
     };
 
-    # Soxin v1, for its module library, package overlay and the `soxin`
-    # argument soxincfg's modules still use until they are ported.
-    soxin-v1 = {
-      url = "github:SoxinOS/soxin";
-      inputs = {
-        darwin.follows = "darwin";
-        deploy-rs.follows = "deploy-rs";
-        flake-utils-plus.follows = "flake-utils-plus";
-        home-manager.follows = "home-manager";
-        nixpkgs-unstable.follows = "nixpkgs-unstable";
-        nixpkgs.follows = "nixpkgs";
-        nur.follows = "nur";
-        sops-nix.follows = "sops-nix";
-      };
-    };
-
     # The diwan monorepo: the Nazir host agent (nazir-agent) that machines
     # running fleet work install, maktab (the
     # workspace manager, with its plugins) and majlis (what workers report
