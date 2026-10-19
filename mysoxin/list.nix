@@ -2,7 +2,11 @@
   # hardware
   intelBacklight = ./hardware/intel-backlight.nix;
   lowbatt = ./hardware/lowbatt.nix;
-  serial_console = ./hardware/serial_console.nix;
+  serial_console = {
+    nixos = ./hardware/serial_console/nixos.nix;
+    darwin = ./hardware/serial_console/darwin.nix;
+    home = ./hardware/serial_console/home.nix;
+  };
   sound = ./hardware/sound.nix;
 
   # services

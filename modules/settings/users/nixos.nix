@@ -1,47 +1,27 @@
+# Soxin's users (soxin.settings.users) with soxincfg's choices. Soxin's module
+# is imported one level down, where soxincfg's own configuration of users used
+# to sit, so list definitions keep their order.
 {
   config,
-  pkgs,
+  inputs,
   lib,
+  pkgs,
   ...
 }:
 
-let
-  cfg = config.soxincfg.settings.users;
-
-  inherit (lib)
-    filter
-    mapAttrs
-    mkIf
-    mkOption
-    optionals
-    recursiveUpdate
-    types
-    ;
-
-  makeUser =
-    userName:
-    { isAdmin, sshKeys, ... }@user:
-    {
-      group = "mine";
-      extraGroups = cfg.defaultGroups ++ cfg.groups ++ (optionals isAdmin [ "wheel" ]);
-
-      shell = pkgs.zsh;
-      isNormalUser = true;
-
-      openssh.authorizedKeys.keys = sshKeys;
-    }
-    // (builtins.removeAttrs user [
-      "isAdmin"
-      "isNixTrustedUser"
-      "sshKeys"
-    ]);
-
-in
 {
-  options.soxincfg.settings.users = {
-    defaultGroups = mkOption {
-      type = with types; listOf str;
-      default = [
+  imports = [
+    inputs.soxin.lib.library.nixos.settings-users
+    ./aliases.nix
+  ];
+
+  config = {
+    soxin.settings.users = {
+      # Defaults, as soxincfg's module had them: any definition elsewhere
+      # wins (setting defaultGroups anywhere replaces this list).
+      enable = lib.mkDefault true;
+      userName = lib.mkDefault "wnasreddine";
+      defaultGroups = lib.mkOptionDefault [
         "builders"
         "dialout"
         "fuse"
@@ -49,49 +29,12 @@ in
         "video"
       ];
 
-      description = ''
-        The list of groups to add Soxin users to by default.
-      '';
+      primaryGroup = "mine";
+      shell = pkgs.zsh;
+      userDefaults.hashedPassword = "";
     };
 
-    user = mkOption {
-      type = types.attrs;
-      default = config.users.users."${cfg.userName}";
-      readOnly = true;
-      description = ''
-        The computed attributes of the main user.
-      '';
-    };
-
-    users = mkOption {
-      type = types.attrs;
-      default = { };
-      description = ''
-        The list of users to create.
-      '';
-
-      # for each user, first use the default, then make sure the name is always
-      # set and finally pass the user. Each step will override attributes from
-      # the previous one, so it's important the passed-in value is evaluated
-      # last.
-      apply =
-        users:
-        let
-          defaults = name: {
-            inherit name;
-            hashedPassword = "";
-            home = "/home/${name}";
-            isAdmin = false;
-            isNixTrustedUser = false;
-            sshKeys = [ ];
-          };
-        in
-        mapAttrs (name: user: recursiveUpdate (defaults name) user) users;
-    };
-  };
-
-  config = mkIf cfg.enable {
-    users = {
+    users = lib.mkIf config.soxin.settings.users.enable {
       mutableUsers = false;
 
       groups = {
@@ -102,15 +45,6 @@ in
           gid = 2000;
         };
       };
-
-      users = mapAttrs makeUser config.soxincfg.settings.users.users;
     };
-
-    nix.settings.trusted-users =
-      let
-        user_list = builtins.attrValues config.soxincfg.settings.users.users;
-        trusted-users = filter (user: user.isNixTrustedUser) user_list;
-      in
-      [ "root" ] ++ map (user: user.name) trusted-users;
   };
 }

@@ -147,7 +147,22 @@ let
 
     # import mysoxin
     # TODO: Get rid of this!
-    nixosModules.soxin
+    (import ../mysoxin/kind.nix kind)
+  ];
+
+  # Soxin v1's library, without its keyboard and theme settings, which come
+  # from Soxin's library instead (same option names), where v1's were.
+  v1Modules = kind: [
+    soxin-v1.nixosModule
+    {
+      disabledModules = [
+        "${soxin-v1}/modules/settings/keyboard.nix"
+        "${soxin-v1}/modules/settings/theme.nix"
+        "${soxin-v1}/modules/themes"
+      ];
+    }
+    soxin.lib.library.${kind}.settings-keyboard
+    soxin.lib.library.${kind}.settings-theme
   ];
 
   # What v1 (Soxin and flake-utils-plus) set on every NixOS and nix-darwin
@@ -276,12 +291,12 @@ let
         noClanZfsModule
       ]
       ++ globalModules "nixos"
-      ++ [ soxin-v1.nixosModule ];
-      darwin = [ v1SystemModule ] ++ globalModules "darwin" ++ [ soxin-v1.nixosModule ];
-      home = globalModules "home" ++ [
-        "${sops-nix.sourceInfo.outPath}/modules/home-manager/sops.nix"
-        soxin-v1.nixosModule
-      ];
+      ++ v1Modules "nixos";
+      darwin = [ v1SystemModule ] ++ globalModules "darwin" ++ v1Modules "darwin";
+      home =
+        globalModules "home"
+        ++ [ "${sops-nix.sourceInfo.outPath}/modules/home-manager/sops.nix" ]
+        ++ v1Modules "home";
     };
 
     # v1's arguments: soxincfg's modules take `soxin` to be Soxin v1, whose
@@ -315,6 +330,10 @@ let
         {
           # soxincfg names its nix-darwin input `darwin`.
           fleet.inputs.nix-darwin = inputs.darwin;
+
+          # soxincfg places the modules of Soxin's library itself, where the
+          # modules they replace were.
+          fleet.library.enable = false;
 
           # Clan's recommended defaults are off, so Clan adds
           # nothing to the machines that v1 did not have.
