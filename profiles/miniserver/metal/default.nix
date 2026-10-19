@@ -2,10 +2,6 @@
   imports = [ ../common ];
 
   config = {
-    soxin = {
-      hardware = {
-        fwupd.enable = true;
-      };
-    };
+    services.fwupd.enable = true;
   };
 }
