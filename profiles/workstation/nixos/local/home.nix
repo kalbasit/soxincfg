@@ -1,4 +1,11 @@
+{ pkgs, ... }:
+
 {
+  home.packages = [
+    pkgs.brave
+    pkgs.mosh
+  ];
+
   services = {
     clipmenu.enable = true;
     flameshot.enable = true;

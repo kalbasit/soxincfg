@@ -1,11 +1,9 @@
 {
   # hardware
-  fwupd = ./hardware/fwupd.nix;
   intelBacklight = ./hardware/intel-backlight.nix;
   lowbatt = ./hardware/lowbatt.nix;
   serial_console = ./hardware/serial_console.nix;
   sound = ./hardware/sound.nix;
-  zsa = ./hardware/zsa;
 
   # services
   caffeine = ./services/caffeine.nix;

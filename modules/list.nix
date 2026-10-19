@@ -12,7 +12,6 @@
     home = ./programs/android/home.nix;
   };
   autorandr = ./programs/autorandr.nix;
-  brave = ./programs/brave.nix;
   chromium = ./programs/chromium;
   claude-code = ./programs/claude-code;
   codex = ./programs/codex;
@@ -25,20 +24,10 @@
   git = ./programs/git;
   iterm2 = ./programs/iterm2;
   maktab = ./programs/maktab;
-  mosh = {
-    nixos = ./programs/mosh/nixos.nix;
-    darwin = ./programs/mosh/options.nix;
-    home = ./programs/mosh/home.nix;
-  };
   nazir = ./programs/nazir;
   neovim = ./programs/neovim;
   pet = ./programs/pet;
   rofi = ./programs/rofi;
-  secretive = {
-    nixos = ./programs/secretive/options.nix;
-    darwin = ./programs/secretive/darwin.nix;
-    home = ./programs/secretive/options.nix;
-  };
   ssh = ./programs/ssh;
   starship = {
     nixos = ./programs/starship/nixos.nix;

@@ -1,0 +1,25 @@
+# Differences found during the module cleanup (design steps 5.2 onwards),
+# for the operator to accept or reject one by one. NOT accepted: they are not
+# in parity-accepted.toml. Each needs a soxin-parity with `reordered`
+# support.
+
+[[difference]]
+hosts = ["saturn"]
+derivation = "Brewfile"
+what = "env"
+key = "text"
+reordered = true
+reason = """5.2, secretive wrapper deleted: the darwin/local profile now lists the
+"secretive" cask itself, so it moves from after "docker-desktop" (where the
+wrapper module's definition sat) to the top of the casks. Same casks."""
+
+[[difference]]
+hosts = ["saturn", "saturn-nixos-vm"]
+derivation = "home-manager-*"
+what = "env"
+key = "__json"
+reordered = true
+reason = """5.2, mosh wrapper deleted: the profiles now add pkgs.mosh to
+home.packages themselves, so mosh moves before worktrunk in the
+home-manager path (and fonts/applications, which list the same packages).
+Same packages."""

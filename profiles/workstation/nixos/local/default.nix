@@ -23,10 +23,8 @@ in
     soxin = {
       hardware = {
         bluetooth.enable = true;
-        fwupd.enable = true;
         lowbatt.enable = true;
         sound.enable = true;
-        zsa.enable = true;
       };
 
       programs = {
@@ -141,7 +139,6 @@ in
       programs = {
         android.enable = true;
         autorandr.enable = true;
-        brave.enable = true;
         chromium = {
           enable = true;
           surfingkeys.enable = true;
@@ -151,7 +148,6 @@ in
         dbeaver.enable = true;
         fzf.enable = true;
         git.enable = true;
-        mosh.enable = true;
         pet.enable = true;
         rofi.enable = true;
         ssh.enable = true;
