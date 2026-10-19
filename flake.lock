@@ -739,16 +739,16 @@
       "locked": {
         "lastModified": 1792374131,
         "narHash": "sha256-hH6t/SlAszNWKjZgmhz3PAbdvHLX9AF6Foo4zDz094E=",
-        "ref": "user/wnasreddine/soxin-v2-clan",
+        "owner": "SoxinOS",
+        "repo": "soxin",
         "rev": "0b5abc89e59347913baf4ec5522521d7f78a03ee",
-        "revCount": 129,
-        "type": "git",
-        "url": "file:///Users/wnasreddine/code/stories/soxin-v2/github.com/SoxinOS/soxin-clan"
+        "type": "github"
       },
       "original": {
-        "ref": "user/wnasreddine/soxin-v2-clan",
-        "type": "git",
-        "url": "file:///Users/wnasreddine/code/stories/soxin-v2/github.com/SoxinOS/soxin-clan"
+        "owner": "SoxinOS",
+        "ref": "v2",
+        "repo": "soxin",
+        "type": "github"
       }
     },
     "systems": {
