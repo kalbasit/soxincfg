@@ -1,41 +1,28 @@
+# soxin.hardware.yubikey from Soxin's library, imported one level down where
+# soxincfg's own module was, and soxincfg's addition: the key's SSH
+# certificate in soxincfg's SSH client configuration.
 {
-  mode,
   config,
-  pkgs,
+  inputs,
   lib,
   ...
 }:
 
 let
-  inherit (lib) mkIf;
-
-  inherit (pkgs)
-    yubico-piv-tool
-    yubikey-manager
-    yubikey-personalization
-    yubikey-personalization-gui
-    yubioath-desktop
-    ;
-
-  cfg = config.soxincfg.hardware.yubikey;
+  cfg = config.soxin.hardware.yubikey;
 in
 {
-  config = mkIf cfg.enable {
-    environment.systemPackages = [
-      yubico-piv-tool
-      yubikey-manager
-      yubikey-personalization
-      yubikey-personalization-gui
-      yubioath-desktop
-    ];
+  imports = [
+    ./aliases.nix
+    inputs.soxin.lib.library.nixos.hardware-yubikey
+  ];
 
-    programs.gnupg.agent = mkIf cfg.gnupg-support.enable {
-      enable = true;
-
-      enableSSHSupport = cfg.gnupg-support.ssh-support.enable;
-      enableExtraSocket = cfg.gnupg-support.extra-socket;
+  config = lib.mkIf cfg.enable {
+    soxincfg.programs.ssh = lib.mkIf cfg.gnupg-support.ssh-support.enable {
+      addKeysToAgent = lib.mkDefault false;
+      identityFiles = lib.mkIf (cfg.gnupg-support.ssh-support.public-certificate-pem != null) (
+        lib.singleton cfg.gnupg-support.ssh-support.public-certificate-pem
+      );
     };
-
-    services.pcscd.enable = true;
   };
 }
