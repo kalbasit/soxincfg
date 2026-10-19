@@ -1,27 +1,28 @@
+# soxin.hardware.yubikey from Soxin's library, imported one level down where
+# soxincfg's own module was, and soxincfg's addition: the key's SSH
+# certificate in soxincfg's SSH client configuration.
 {
   config,
+  inputs,
   lib,
   ...
 }:
 
 let
-  inherit (lib) mkIf;
-
-  cfg = config.soxincfg.hardware.yubikey;
+  cfg = config.soxin.hardware.yubikey;
 in
 {
-  config = mkIf cfg.enable {
-    services.gpg-agent = mkIf cfg.gnupg-support.enable {
-      enable = true;
+  imports = [
+    ./aliases.nix
+    inputs.soxin.lib.library.home.hardware-yubikey
+  ];
 
-      enableSshSupport = cfg.gnupg-support.ssh-support.enable;
-      enableExtraSocket = cfg.gnupg-support.extra-socket;
-
-      defaultCacheTtl = cfg.gnupg-support.default-cache-ttl;
-      maxCacheTtl = cfg.gnupg-support.max-cache-ttl;
-
-      defaultCacheTtlSsh = cfg.gnupg-support.ssh-support.default-cache-ttl;
-      maxCacheTtlSsh = cfg.gnupg-support.ssh-support.max-cache-ttl;
+  config = lib.mkIf cfg.enable {
+    soxincfg.programs.ssh = lib.mkIf cfg.gnupg-support.ssh-support.enable {
+      addKeysToAgent = lib.mkDefault false;
+      identityFiles = lib.mkIf (cfg.gnupg-support.ssh-support.public-certificate-pem != null) (
+        lib.singleton cfg.gnupg-support.ssh-support.public-certificate-pem
+      );
     };
   };
 }

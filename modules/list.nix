@@ -3,7 +3,11 @@
 {
   # hardware
   onlykey = ./hardware/onlykey;
-  yubikey = ./hardware/yubikey;
+  yubikey = {
+    nixos = ./hardware/yubikey/nixos.nix;
+    darwin = ./hardware/yubikey/darwin.nix;
+    home = ./hardware/yubikey/home.nix;
+  };
 
   # programs
   android = {
@@ -70,6 +74,10 @@
   keyboard = ./settings/keyboard;
   networking = ./settings/networking;
   nix = ./settings/nix;
-  users = ./settings/users;
+  users = {
+    nixos = ./settings/users/nixos.nix;
+    darwin = ./settings/users/darwin.nix;
+    home = ./settings/users/home.nix;
+  };
   home-manager-settings = ./settings/home-manager;
 }
