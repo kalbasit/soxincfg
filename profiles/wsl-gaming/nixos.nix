@@ -1,29 +1,33 @@
 {
-  config,
-  nixos-wsl,
-  pkgs,
+  lib,
+  soxincfg,
   ...
 }:
 
+let
+  inherit (lib) optionals;
+in
 {
-  imports = [ nixos-wsl.nixosModules.default ];
+  imports = [
+    soxincfg.nixosModules.profiles.myself
+    soxincfg.nixosModules.profiles.neovim.full
+  ]
+  ++ [ ./nixos-config.nix ]
+ ;
 
-  wsl = {
-    enable = true;
-    defaultUser = config.soxincfg.settings.users.userName;
+  config = {
+    soxincfg.programs = {
+      # the entire reason this host exists
+      claude-code.enable = true;
 
-    # Expose the Windows GPU driver (/dev/dxg and /usr/lib/wsl/lib). This is a
-    # gaming machine, so GPU compute inside the guest is worth having.
-    useWindowsDriver = true;
-
-    # Register the binfmt_misc handler for Windows executables. Without this
-    # `powershell.exe` and friends fail with "Exec format error" -- WSL does not
-    # reliably install the handler on systemd distros. Interop is how the
-    # Windows-side gaming work (Playnite) stays reachable from here.
-    interop.register = true;
+      # shell parity with the other machines
+      fzf.enable = true;
+      git.enable = true;
+      ssh.enable = true;
+      starship.enable = true;
+      maktab.enable = true;
+      tmux.enable = true;
+      zsh.enable = true;
+    };
   };
-
-  # Required by ~/.claude/hooks/block-sops-dirs.py, which the claude-code module
-  # wires into settings.json as `python3 $HOME/.claude/hooks/...`.
-  environment.systemPackages = [ pkgs.python3 ];
 }

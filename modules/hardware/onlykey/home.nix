@@ -1,145 +1,169 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 
 let
   inherit (lib)
     mkDefault
+    mkEnableOption
     mkIf
-    mkMerge
+    mkOption
+    optionalAttrs
     optionals
-    singleton
+    types
     ;
-
-  inherit (pkgs)
-    onlykey
-    onlykey-agent
-    onlykey-cli
-    writeShellScript
-    ;
-
-  inherit (pkgs.stdenv.hostPlatform) isLinux isDarwin;
 
   cfg = config.soxincfg.hardware.onlykey;
-
-  gpg-agent-program = writeShellScript "run-onlykey-agent.sh" ''
-    set -euo pipefail
-
-    readonly stderrFile="$HOME/.gnupg/onlykey-agent.stderr.log"
-    readonly stdoutFile="$HOME/.gnupg/onlykey-agent.stdout.log"
-
-    # redirect stdout and stderr to log files, ignoring old logs (truncate mode).
-    exec 1> "$stdoutFile"
-    exec 2> "$stderrFile"
-
-    exec ${onlykey-agent}/bin/onlykey-gpg-agent \
-      --homedir ~/.gnupg \
-      --skey-slot=${toString cfg.gnupg-support.signing-key-slot} \
-      --dkey-slot=${toString cfg.gnupg-support.decryption-key-slot} \
-      $*
-  '';
-
-  homePath = config.home.homeDirectory;
-  sopsFile = ./secrets.sops.yaml;
-
-  # How a Darwin shell finds its agent. When ssh-agent-mux runs it is the only
-  # agent worth talking to, since it fronts both Secretive and the OnlyKey;
-  # without it, drive the OnlyKey agent directly.
-  darwinAuthSock =
-    if config.soxincfg.services.ssh-agent-mux.enable then
-      ''
-        # ssh-agent-mux owns this socket and launchd keeps it alive, so bind to it
-        # unconditionally. Probing for the socket first would race launchd at
-        # login: a shell that starts before the agent is up would take the
-        # fallback and stay pinned to an OnlyKey-only agent for its whole life,
-        # never seeing the Secretive keys.
-        export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent-mux.sock"
-
-        # Say so loudly rather than degrading quietly. A missing socket here means
-        # the launchd agent is not running -- most often because it is disabled in
-        # launchd's override database, which "launchctl bootstrap" reports only as
-        # a bare "Input/output error".
-        if [[ ! -S "$SSH_AUTH_SOCK" ]]; then
-          echo "warning: ssh-agent-mux socket $SSH_AUTH_SOCK is missing; ssh will have no keys" >&2
-          echo "  check: launchctl print-disabled gui/$(id -u) | grep ssh-agent-mux" >&2
-          echo "  check: tail ~/Library/Logs/ssh-agent-mux.log" >&2
-        fi
-      ''
-    else
-      ''
-        mkdir -p "$HOME/.ssh/agent"
-        eval "$(${pkgs.keychain}/bin/keychain --ssh-agent-socket "$HOME/.ssh/agent/keychain.socket" --eval id_ed25519_sk_rk -q)"
-      '';
 in
 {
-  config = mkIf cfg.enable (mkMerge [
-    { home.packages = [ onlykey-cli ] ++ optionals isLinux [ onlykey ]; }
+  imports =
+    [ ./home-config.nix ];
 
-    (mkIf isDarwin {
-      sops.secrets._ssh_id_ed25519_sk_rk = {
-        inherit sopsFile;
-        path = "${homePath}/.ssh/id_ed25519_sk_rk";
-      };
-    })
+  options.soxincfg.hardware.onlykey = {
+    enable = mkEnableOption "hardware.onlykey";
 
-    (mkIf cfg.ssh-support.enable {
-      home.file.".ssh/id_ed25519_sk_rk.pub".text = ''
-        sk-ssh-ed25519@openssh.com AAAAGnNrLXNzaC1lZDI1NTE5QG9wZW5zc2guY29tAAAAILJKaAMg2OSpXi7+B1oIqzKz1lQiEZPo0Xv6ty35uwzzAAAABHNzaDo= wael.nasreddine+onlykey_0@gmail.com
-      '';
-    })
+    ssh-support = {
+      enable = mkEnableOption "Whether to enable SSH support with Onlykey.";
+    };
 
-    (mkIf (cfg.ssh-support.enable && pkgs.stdenv.hostPlatform.isDarwin) {
-      programs.zsh.initContent = ''
-        if [[ "$(uname -s)" == "Darwin" ]]; then
-          # Ensure XDG_RUNTIME_DIR is set on Darwin
-          if [[ -z "$XDG_RUNTIME_DIR" ]]; then
-            export XDG_RUNTIME_DIR="$(getconf DARWIN_USER_TEMP_DIR)"
-            export XDG_RUNTIME_DIR="''${XDG_RUNTIME_DIR%/}"
-          fi
+    gnupg-support = {
+      enable = mkEnableOption "Whether to enable GnuPG support with Onlykey.";
 
-          ${darwinAuthSock}
-
-          # Link the current SSH_AUTH_SOCK to the standard location via .ssh/rc
-          if [[ -e "$HOME/.ssh/rc" ]]; then
-            /bin/sh "$HOME/.ssh/rc"
-          fi
-        fi
-      '';
-    })
-
-    (mkIf cfg.gnupg-support.enable {
-      home.file.".gnupg/run-agent.sh" = {
-        source = gpg-agent-program;
-        executable = true;
+      default-key = mkOption {
+        type = types.nullOr types.str;
+        default = null;
+        description = ''
+          The default key to use with your Onlykey.
+        '';
       };
 
-      home.packages = singleton onlykey-agent;
+      decryption-key-slot = mkOption {
+        type = types.either (types.ints.between 1 4) (types.ints.between 101 132);
+        description = ''
+          The slot to use for decryption requests.
+        '';
+      };
 
-      programs.gpg = {
-        enable = true;
+      decryption-key-public = mkOption {
+        type = types.nullOr types.str;
+        default = null;
+        description = ''
+          The public key for decryption.
+        '';
+      };
 
-        settings = {
-          inherit (cfg.gnupg-support) default-key;
-
-          agent-program = toString gpg-agent-program;
-          personal-digest-preferences = "SHA512";
-        };
-
-        publicKeys = [
-          (mkIf (cfg.gnupg-support.decryption-key-public != null) {
-            text = cfg.gnupg-support.decryption-key-public;
-            trust = cfg.gnupg-support.decryption-key-trust;
-          })
-
-          (mkIf (cfg.gnupg-support.signing-key-public != null) {
-            text = cfg.gnupg-support.signing-key-public;
-            trust = cfg.gnupg-support.signing-key-trust;
-          })
+      decryption-key-trust = mkOption {
+        type = types.enum [
+          "unknown"
+          1
+          "never"
+          2
+          "marginal"
+          3
+          "full"
+          4
+          "ultimate"
+          5
         ];
+        default = "ultimate";
+        description = ''
+          The amount of trust you have in the key ownership and the care the
+          owner puts into signing other keys. The available levels are
+          <variablelist>
+            <varlistentry>
+              <term><literal>unknown</literal> or <literal>1</literal></term>
+              <listitem><para>I don't know or won't say.</para></listitem>
+            </varlistentry>
+            <varlistentry>
+              <term><literal>never</literal> or <literal>2</literal></term>
+              <listitem><para>I do NOT trust.</para></listitem>
+            </varlistentry>
+            <varlistentry>
+              <term><literal>marginal</literal> or <literal>3</literal></term>
+              <listitem><para>I trust marginally.</para></listitem>
+            </varlistentry>
+            <varlistentry>
+              <term><literal>full</literal> or <literal>4</literal></term>
+              <listitem><para>I trust fully.</para></listitem>
+            </varlistentry>
+            <varlistentry>
+              <term><literal>ultimate</literal> or <literal>5</literal></term>
+              <listitem><para>I trust ultimately.</para></listitem>
+            </varlistentry>
+          </variablelist>
+          </para><para>
+          See <link xlink:href="https://www.gnupg.org/gph/en/manual/x334.html"/>
+          for more.
+        '';
       };
-    })
-  ]);
+
+      signing-key-slot = mkOption {
+        type = types.either (types.ints.between 1 4) (types.ints.between 101 132);
+        description = ''
+          The slot to use for signing requests.
+        '';
+      };
+
+      signing-key-public = mkOption {
+        type = types.nullOr types.str;
+        default = null;
+        description = ''
+          The public key for signing.
+        '';
+      };
+
+      signing-key-trust = mkOption {
+        type = types.enum [
+          "unknown"
+          1
+          "never"
+          2
+          "marginal"
+          3
+          "full"
+          4
+          "ultimate"
+          5
+        ];
+        default = "ultimate";
+        description = ''
+          The amount of trust you have in the key ownership and the care the
+          owner puts into signing other keys. The available levels are
+          <variablelist>
+            <varlistentry>
+              <term><literal>unknown</literal> or <literal>1</literal></term>
+              <listitem><para>I don't know or won't say.</para></listitem>
+            </varlistentry>
+            <varlistentry>
+              <term><literal>never</literal> or <literal>2</literal></term>
+              <listitem><para>I do NOT trust.</para></listitem>
+            </varlistentry>
+            <varlistentry>
+              <term><literal>marginal</literal> or <literal>3</literal></term>
+              <listitem><para>I trust marginally.</para></listitem>
+            </varlistentry>
+            <varlistentry>
+              <term><literal>full</literal> or <literal>4</literal></term>
+              <listitem><para>I trust fully.</para></listitem>
+            </varlistentry>
+            <varlistentry>
+              <term><literal>ultimate</literal> or <literal>5</literal></term>
+              <listitem><para>I trust ultimately.</para></listitem>
+            </varlistentry>
+          </variablelist>
+          </para><para>
+          See <link xlink:href="https://www.gnupg.org/gph/en/manual/x334.html"/>
+          for more.
+        '';
+      };
+    };
+  };
+
+  config = mkIf cfg.enable {
+    soxincfg.programs.ssh = {
+      enableSSHAgent = mkDefault cfg.ssh-support.enable;
+    };
+  };
 }

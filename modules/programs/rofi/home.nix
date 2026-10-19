@@ -1,15 +1,29 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 
 let
-  inherit (lib) mkIf singleton;
+  inherit (lib)
+    mkEnableOption
+    mkIf
+    optionals
+    ;
 
   cfg = config.soxincfg.programs.rofi;
 in
 {
-  config = mkIf cfg.enable { programs.rofi.plugins = singleton pkgs.rofi-emoji; };
+  imports = [ ./home-config.nix ];
+
+  options.soxincfg.programs.rofi = {
+    enable = mkEnableOption "programs.rofi";
+  };
+
+  config = mkIf cfg.enable {
+    soxin.programs.rofi = {
+      enable = true;
+      i3.enable = true;
+    };
+  };
 }

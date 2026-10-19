@@ -24,10 +24,10 @@ let
 in
 {
   imports = [
-    soxincfg.nixosModules.profiles.myself
-    soxincfg.nixosModules.profiles.personal
-    soxincfg.nixosModules.profiles.neovim.full
-    soxincfg.nixosModules.profiles.workstation.darwin.local
+    soxincfg.darwinModules.profiles.myself
+    soxincfg.darwinModules.profiles.personal
+    soxincfg.darwinModules.profiles.neovim.full
+    soxincfg.darwinModules.profiles.workstation.darwin.local
   ];
 
   # Personal machine: its stories live in maktab.

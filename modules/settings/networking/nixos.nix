@@ -1,0 +1,1 @@
+{ imports = [ ./nextdns/nixos.nix ]; }

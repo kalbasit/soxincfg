@@ -1,0 +1,35 @@
+{
+  lib,
+  soxincfg,
+  ...
+}:
+
+let
+  inherit (lib) optionals;
+in
+{
+  imports = [
+    soxincfg.darwinModules.profiles.neovim.full
+  ];
+
+  config = {
+    soxin = {
+      programs = {
+        less.enable = true;
+      };
+    };
+
+    soxincfg = {
+      programs = {
+        fzf.enable = true;
+        git.enable = true;
+        pet.enable = true;
+        ssh.enable = true;
+        starship.enable = true;
+        maktab.enable = true;
+        tmux.enable = true;
+        zsh.enable = true;
+      };
+    };
+  };
+}

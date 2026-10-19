@@ -1,36 +1,13 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ lib, ... }:
 
 let
-  inherit (lib) mkIf;
-
-  inherit (pkgs.stdenv.hostPlatform) isDarwin;
-
-  homePath = config.home.homeDirectory;
-  sopsFile = ./credentials-config.json.sops;
-
-  cfg = config.soxincfg.programs.dbeaver;
+  inherit (lib) mkEnableOption optionals;
 in
 {
-  config = mkIf cfg.enable {
-    home.packages = [ pkgs.dbeaver-bin ];
+  imports =
+    [ ./home-config.nix ];
 
-    sops.secrets = mkIf isDarwin {
-      credentials-config-json = {
-        inherit sopsFile;
-        format = "binary";
-        path = "${homePath}/.local/share/DBeaverData/workspace6/General/.dbeaver/credentials-config.json";
-      };
-
-      data-sources-json = {
-        inherit sopsFile;
-        format = "binary";
-        path = "${homePath}/.local/share/DBeaverData/workspace6/General/.dbeaver/data-sources.json";
-      };
-    };
+  options.soxincfg.programs.dbeaver = {
+    enable = mkEnableOption "programs.dbeaver";
   };
 }

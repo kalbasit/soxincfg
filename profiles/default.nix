@@ -1,1 +1,2 @@
-builtins.mapAttrs (_: import) (import ./list.nix)
+# The NixOS profiles (see kind.nix for the other kinds).
+import ./kind.nix "nixos"

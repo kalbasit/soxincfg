@@ -1,6 +1,8 @@
+{ lib, ... }:
+
+let
+  inherit (lib) optionals;
+in
 {
-  services.tailscale = {
-    enable = true;
-    extraSetFlags = [ "--advertise-exit-node" ];
-  };
+  imports = [ ./nixos-config.nix ];
 }

@@ -2,7 +2,7 @@
 
 {
   imports = [
-    soxincfg.nixosModules.profiles.code
+    soxincfg.homeModules.profiles.code
   ];
 
   home.stateVersion = "25.05";

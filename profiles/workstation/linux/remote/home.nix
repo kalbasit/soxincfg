@@ -1,57 +1,36 @@
 {
-  config,
-  pkgs,
+  lib,
+  soxincfg,
   ...
 }:
 
+let
+  inherit (lib) optionals;
+in
 {
   imports = [
-    ../../common/home-kubernetes-client.nix
-  ];
+    soxincfg.homeModules.profiles.neovim.full
+  ]
+  ++ [ ./home-config.nix ];
 
   config = {
-    # programs
-    programs.bat.enable = true;
-    programs.direnv.enable = true;
-
-    # files
-    home.file = {
-      ".npmrc".text = "prefix=${config.home.homeDirectory}/.filesystem";
+    soxin = {
+      programs = {
+        less.enable = true;
+      };
     };
 
-    home.packages = with pkgs; [
-      _2048-in-terminal
-      amazon-ecr-credential-helper
-      awscli2
-      binutils # for strings
-      bitwarden-cli
-      colordiff
-      devbox
-      dnsutils # for dig
-      docker-credential-gcr
-      duf # du replacement on steroids
-      esptool
-      file
-      fx # JSON viewer
-      gdb
-      gh # GitHub command line client
-      gist
-      gnugrep
-      hexyl # hex viewer with nice colors
-      imagemagick # for convert
-      inetutils # for telnet
-      jq
-      mbuffer # memory buffer within pipeline
-      mercurial
-      nix-index
-      nixpkgs-review
-      nix-zsh-completions
-      pv # generic progress of data through a pipeline
-      scrcpy # mirror Android device via USB
-      screen # needed to open up terminal devices
-      sqlitebrowser # graphical sqlite3 client
-      unzip
-      yq-go
-    ];
+    soxincfg = {
+      programs = {
+        fzf.enable = true;
+        git.enable = true;
+        pet.enable = true;
+        ssh.enable = true;
+        starship.enable = true;
+        maktab.enable = true;
+        tmux.enable = true;
+        zsh.enable = true;
+      };
+    };
   };
 }

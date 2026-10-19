@@ -1,36 +1,20 @@
-{ config, lib, ... }:
+# TODO(high): Surfingkeys must be composed of two files, the main one and the colemak bindings.
+{
+  lib,
+  ...
+}:
 
 let
-  inherit (lib) mkIf optional;
-
-  cfg = config.soxincfg.programs.chromium;
+  inherit (lib)
+    mkEnableOption
+    optionals
+    ;
 in
 {
-  config = mkIf cfg.enable {
-    programs.chromium = {
-      enable = true;
+  imports =
+    [ ./nixos-config.nix ];
 
-      extensions = [
-        "nngceckbapebfimnlniiiahkandclblb" # BitWarden
-        "kbfnbcaeplbcioakkpcpgfkobkghlhen" # Grammarly
-        "gcbommkclmclpchllfjekcdonpmejbdp" # HTTPS Everywhere
-        "gbmdgpbipfallnflgajpaliibnhdgobh" # JSON Viewer
-        "neebplgakaahbhdphmkckjjcegoiijjo" # Keepa
-        "ognfafcpbkogffpmmdglhbjboeojlefj" # Keybase
-        "pneldbfhblmldbhmkolclpkijgnjcmng" # PR Monitor
-        "hlepfoohegkhhmjieoechaddaejaokhf" # Refined GitHub
-        "pogpjdbfdfnmlegpbhdmlebognmbamko" # Refined GitLab
-        "jgpmhnmjbhgkhpbgelalfpplebgfjmbf" # Smile Always
-        "jldhpllghnbhlbpcmnajkpdmadaolakh" # Todoist
-        "djflhoibgkdhkhhcedjiklpkjnoahfmg" # User-Agent Switcher for Chrome
-        "fpnmgdkabkmnadcjpehmlllkndpkmiak" # Wayback Machine
-        "cjpalhdlnbpafiamejdnhcphjbkeiagm" # uBlock Origin
-      ]
-      ++ optional cfg.surfingkeys.enable "gfbliohnnapiefjpjlpjnehglfpaknnc";
-
-      extraOpts = {
-        BasicAuthOverHttpEnabled = false;
-      };
-    };
-  };
+  options.soxincfg.programs.chromium.enable = mkEnableOption "Install and configure Chromium";
+  options.soxincfg.programs.chromium.surfingkeys.enable =
+    mkEnableOption "Install and configure Surfingkeys";
 }

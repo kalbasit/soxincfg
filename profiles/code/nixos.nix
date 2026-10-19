@@ -1,25 +1,56 @@
 {
-  config,
-  pkgs,
+  lib,
+  soxincfg,
   ...
 }:
 
 let
-  homePath = config.soxincfg.settings.users.user.home;
-  owner = config.soxincfg.settings.users.user.name;
-  sopsFile = ./home.sops.yaml;
+  inherit (lib) optionals;
 in
 {
+  imports = [
+    soxincfg.nixosModules.profiles.myself
+    soxincfg.nixosModules.profiles.neovim.full
+  ]
+  ++ [ ./nixos-config.nix ]
+ ;
+
   config = {
-    environment.systemPackages = [ pkgs.python3 ];
-    services = {
-      tailscale.enable = true;
+    soxin = {
+      programs = {
+        keybase = {
+          enable = true;
+          enableFs = true;
+        };
+        less.enable = true;
+      };
+
+      services = {
+        openssh.enable = true;
+      };
+
+      virtualisation = {
+        docker.enable = true;
+      };
     };
 
-    sops.secrets = {
-      _ssh_id_ed25519 = {
-        inherit owner sopsFile;
-        path = "${homePath}/.ssh/id_ed25519";
+    soxincfg = {
+      programs = {
+        claude-code.enable = true;
+        codex.enable = true;
+        fzf.enable = true;
+        git.enable = true;
+        pet.enable = true;
+        ssh.enable = true;
+        starship.enable = true;
+        maktab.enable = true;
+        tmux.enable = true;
+        zsh.enable = true;
+      };
+
+      settings = {
+        nix.distributed-builds.enable = true;
+        networking.nextdns.enable = true;
       };
     };
   };

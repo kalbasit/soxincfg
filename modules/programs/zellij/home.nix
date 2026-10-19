@@ -1,23 +1,10 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ lib, ... }:
 
 let
-  inherit (lib) mkIf;
-
-  cfg = config.soxincfg.programs.zellij;
+  inherit (lib) mkEnableOption optionals;
 in
 {
-  config = mkIf cfg.enable {
-    programs.zellij = {
-      enable = true;
+  imports = [ ./home-config.nix ];
 
-      settings = {
-        theme = "catppuccin-macchiato";
-      };
-    };
-  };
+  options.soxincfg.programs.zellij.enable = mkEnableOption "zellij";
 }

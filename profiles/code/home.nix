@@ -1,63 +1,57 @@
 {
-  config,
-  pkgs,
+  lib,
+  soxincfg,
   ...
 }:
 
+let
+  inherit (lib) optionals;
+in
 {
   imports = [
-    ../workstation/common/home-kubernetes-client.nix
-  ];
+    soxincfg.homeModules.profiles.myself
+    soxincfg.homeModules.profiles.neovim.full
+  ]
+ 
+  ++ [ ./home-config.nix ];
 
-  # programs
-  programs.bat.enable = true;
-  programs.direnv.enable = true;
+  config = {
+    soxin = {
+      programs = {
+        keybase = {
+          enable = true;
+          enableFs = true;
+        };
+        less.enable = true;
+      };
 
-  # files
-  home.file = {
-    ".npmrc".text = "prefix=${config.home.homeDirectory}/.filesystem";
+      services = {
+        openssh.enable = true;
+      };
 
-    ".ssh/id_ed25519.pub".text = ''
-      ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJOPr+wfQrKk7xhPzaWRkaJQ7b7n1w4ivBeqDbkCTtR5 wnasreddine@pve-wnasreddine-code-01
-    '';
+      virtualisation = {
+        docker.enable = true;
+      };
+    };
+
+    soxincfg = {
+      programs = {
+        claude-code.enable = true;
+        codex.enable = true;
+        fzf.enable = true;
+        git.enable = true;
+        pet.enable = true;
+        ssh.enable = true;
+        starship.enable = true;
+        maktab.enable = true;
+        tmux.enable = true;
+        zsh.enable = true;
+      };
+
+      settings = {
+        nix.distributed-builds.enable = true;
+        networking.nextdns.enable = true;
+      };
+    };
   };
-
-  home.packages = [
-    pkgs.amazon-ecr-credential-helper
-    pkgs.awscli2
-    pkgs.binutils # for strings
-    pkgs.bitwarden-cli
-    pkgs.colordiff
-    pkgs.dnsutils # for dig
-    pkgs.docker-credential-gcr
-    pkgs.file
-    pkgs.flyctl
-    pkgs.gdb
-    pkgs.gh # GitHub command line client
-    pkgs.ghostty.terminfo # Ghostty terminal info
-    pkgs.git-spice
-    pkgs.gnugrep
-    pkgs.gnupg
-    pkgs.hexyl # hex viewer with nice colors
-    pkgs.htop
-    pkgs.imagemagick # for convert
-    pkgs.inetutils # for telnet
-    pkgs.jq
-    pkgs.killall
-    pkgs.minio-client
-    pkgs.nil # Nix language server
-    pkgs.nix-index
-    pkgs.nix-zsh-completions
-    pkgs.nixd
-    pkgs.nixfmt
-    pkgs.psmisc
-    pkgs.skopeo # inspect docker images
-    pkgs.talosctl
-    pkgs.tree
-    pkgs.turso-cli
-    pkgs.unzip
-    pkgs.watch
-    pkgs.wget
-    pkgs.yq-go
-  ];
 }
