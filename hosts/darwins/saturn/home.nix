@@ -11,10 +11,10 @@ let
 in
 {
   imports = [
-    soxincfg.nixosModules.profiles.myself
-    soxincfg.nixosModules.profiles.personal
-    soxincfg.nixosModules.profiles.neovim.full
-    soxincfg.nixosModules.profiles.workstation.darwin.local
+    soxincfg.homeModules.profiles.myself
+    soxincfg.homeModules.profiles.personal
+    soxincfg.homeModules.profiles.neovim.full
+    soxincfg.homeModules.profiles.workstation.darwin.local
   ];
 
   home.stateVersion = "24.11";

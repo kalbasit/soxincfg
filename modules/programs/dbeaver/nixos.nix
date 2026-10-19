@@ -1,28 +1,13 @@
-{ config, lib, ... }:
+{ lib, ... }:
 
 let
-  inherit (lib) mkIf;
-
-  homePath = config.soxincfg.settings.users.user.home;
-  owner = config.soxincfg.settings.users.user.name;
-  sopsFile = ./credentials-config.json.sops;
-
-  cfg = config.soxincfg.programs.dbeaver;
+  inherit (lib) mkEnableOption optionals;
 in
 {
-  config = mkIf cfg.enable {
-    sops.secrets = {
-      credentials-config-json = {
-        inherit sopsFile owner;
-        format = "binary";
-        path = "${homePath}/.local/share/DBeaverData/workspace6/General/.dbeaver/credentials-config.json";
-      };
+  imports =
+    [ ./nixos-config.nix ];
 
-      data-sources-json = {
-        inherit sopsFile owner;
-        format = "binary";
-        path = "${homePath}/.local/share/DBeaverData/workspace6/General/.dbeaver/data-sources.json";
-      };
-    };
+  options.soxincfg.programs.dbeaver = {
+    enable = mkEnableOption "programs.dbeaver";
   };
 }

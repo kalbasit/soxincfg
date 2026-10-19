@@ -3,7 +3,7 @@
 
 {
   imports = [
-    soxincfg.nixosModules.profiles.wsl-gaming
+    soxincfg.homeModules.profiles.wsl-gaming
   ];
 
   # This machine joins the Nazir fleet. It is a WSL instance on a desktop

@@ -1,19 +1,52 @@
 {
-  environment.homeBinInPath = true;
+  lib,
+  soxincfg,
+  ...
+}:
 
-  services = {
-    qemuGuest.enable = true;
+let
+  inherit (lib) optionals;
+in
+{
+  imports = [
+    soxincfg.nixosModules.profiles.neovim.full
+  ]
+  ++ [ ./nixos-config.nix ]
+ ;
 
-    # Feed the kernel some entropy
-    haveged.enable = true;
+  config = {
+    soxin = {
+      programs = {
+        keybase.enable = true;
+        less.enable = true;
+      };
 
-    desktopManager.gnome.enable = true;
+      services = {
+        openssh.enable = true;
+      };
 
-    displayManager.gdm.enable = true;
+      virtualisation = {
+        docker.enable = true;
+      };
+    };
 
-    xserver.enable = true;
+    soxincfg = {
+      programs = {
+        fzf.enable = true;
+        git.enable = true;
+        pet.enable = true;
+        ssh.enable = true;
+        starship.enable = true;
+        maktab.enable = true;
+        termite.enable = true;
+        tmux.enable = true;
+        zsh.enable = true;
+      };
+
+      settings = {
+        fonts.enable = true;
+        gtk.enable = true;
+      };
+    };
   };
-
-  # Enable dconf required by most guis
-  programs.dconf.enable = true;
 }

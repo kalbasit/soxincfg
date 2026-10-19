@@ -1,236 +1,109 @@
 {
-  config,
-  pkgs,
   lib,
+  soxincfg,
   ...
 }:
 
+let
+  inherit (lib) optionals;
+in
 {
-  config = {
-    environment.systemPackages = [
-      pkgs.keka
-      pkgs.iina
-    ];
+  imports = [
+    soxincfg.darwinModules.profiles.neovim.full
+    soxincfg.darwinModules.profiles.workstation.common
+  ]
+  ++ [ ./darwin-config.nix ]
+ ;
 
-    homebrew = {
-      enable = true;
-
-      brews = [ ];
-
-      casks = [
-        "secretive" # SSH keys in the Secure Enclave
-        "alfred" # spotlight replacement
-        "arc" # Arc Browser
-        "charles"
-        "dbeaver-community" # Database GUI
-        "displaylink" # software to drive the USB-C hub
-        "font-0xproto-nerd-font" # Nerd font
-        "istat-menus"
-        "keepingyouawake"
-        "meetingbar"
-        "postman" # API
-      ];
+  soxin = {
+    programs = {
+      less.enable = true;
     };
 
-    system = {
-      defaults = {
-        dock = {
-          # Enable highlight hover effect for the grid view of a stack (Dock)
-          mouse-over-hilite-stack = lib.mkDefault true;
+    virtualisation = {
+      docker.enable = true;
+    };
+  };
 
-          # Set the icon size of Dock items to 36 pixels
-          tilesize = lib.mkDefault 36;
+  soxincfg = {
+    hardware = {
+      onlykey = {
+        enable = true;
 
-          # Change minimize/maximize window effect
-          mineffect = lib.mkDefault "scale";
+        ssh-support.enable = true;
 
-          # Minimize windows into their application’s icon
-          minimize-to-application = lib.mkDefault true;
+        gnupg-support = {
+          enable = true;
 
-          # Enable spring loading for all Dock items
-          enable-spring-load-actions-on-all-items = lib.mkDefault true;
+          default-key = "kalbasit@pm.me";
 
-          # Show indicator lights for open applications in the Dock
-          show-process-indicators = lib.mkDefault true;
+          decryption-key-public = ''
+            -----BEGIN PGP PUBLIC KEY BLOCK-----
 
-          # Don’t animate opening applications from the Dock
-          launchanim = lib.mkDefault false;
+            mDMEYcAFjRYJKwYBBAHaRw8BAQdAc8wiHhA63ylmi83Ee/qRaQQGUJlTongyPmZz
+            CiNse++0JldhZWwgTmFzcmVkZGluZSA8d2FlbEBrZWVwdHJ1Y2tpbi5jb20+iJYE
+            ExYIAD4WIQSMZ6Ant8rDmMiIIFeOvZXcFHdVogUCYcAGBAIbAwUJcMgSAAULCQgH
+            AgYVCgkICwIEFgIDAQIeAQIXgAAKCRCOvZXcFHdVoiqLAQCmSz+RSySWE94gTM3M
+            rXCGQoaxKlI1HcUSGNz+A2jIsgD/Uw4e3UWxu78ROFUl2+8ktcxYUp05F/r8jdR1
+            8V3cLwy0K1dhZWwgTmFzcmVkZGluZSA8d2FlbC5uYXNyZWRkaW5lQGdtYWlsLmNv
+            bT6IlgQTFggAPhYhBIxnoCe3ysOYyIggV469ldwUd1WiBQJhwAWNAhsDBQlwyBIA
+            BQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEI69ldwUd1WinnQA/RSwspJK38HD
+            SHzxzK3GQGTgBn48/Z3TXjtFfvELdgGQAQDTvdUKqptO3Dc8yY150c/xMrDZt+/s
+            4Xf87E5g7KL6CLQgV2FlbCBOYXNyZWRkaW5lIDxrYWxiYXNpdEBwbS5tZT6IlgQT
+            FggAPhYhBIxnoCe3ysOYyIggV469ldwUd1WiBQJhwAXaAhsDBQlwyBIABQsJCAcC
+            BhUKCQgLAgQWAgMBAh4BAheAAAoJEI69ldwUd1WiEW4A/3EG071ul1kFV1cDJd5J
+            6U0Yycbe+4z4oJdnEQWOEC9JAQCHlAUJT8jsxdJsFgbq7deyNvmUrALFwh8MoXV6
+            pX39ArQlV2FlbCBOYXNyZWRkaW5lIDx3YWVsQG5hc3JlZGRpbmUuY29tPoiWBBMW
+            CAA+FiEEjGegJ7fKw5jIiCBXjr2V3BR3VaIFAmHABfUCGwMFCXDIEgAFCwkIBwIG
+            FQoJCAsCBBYCAwECHgECF4AACgkQjr2V3BR3VaJqOwD+Oomz/lpVdDd2mK+el2Jn
+            2h4f8qvOeGR1ZIudSdO22UgA/RqF9L91848JKhFOU5h/Ra5r2667R/Yw4R11EhVf
+            fTEKtB5XYWVsIE5hc3JlZGRpbmUgPG1lQGthbGJhcy5pdD6IlgQTFggAPhYhBIxn
+            oCe3ysOYyIggV469ldwUd1WiBQJhwAYsAhsDBQlwyBIABQsJCAcCBhUKCQgLAgQW
+            AgMBAh4BAheAAAoJEI69ldwUd1Wij64A/20VmcipGdugNeX9+FfwNhJc2eAhtbTA
+            to0Mv4bGIwmlAQC7GKuXBlZFZBTC6YWK74yHL+Q24I+WpjkJqP0Ws2RzA7QdV2Fl
+            bCBOYXNyZWRkaW5lIDxtZUB5bC5jb2Rlcz6IlgQTFggAPhYhBIxnoCe3ysOYyIgg
+            V469ldwUd1WiBQJhwAY5AhsDBQlwyBIABQsJCAcCBhUKCQgLAgQWAgMBAh4BAheA
+            AAoJEI69ldwUd1WiPesA/0ltEdlFYsgBlond2/9DOFzJbZMpptE6hUkgQDKkfzK5
+            AQD6cGm2vepyhRUSbhi/3IOU964ZDBIU4ca6Qn/cS6YhAbg4BGHABY0SCisGAQQB
+            l1UBBQEBB0CJBE4hQa+D4ByAWV5SmQdJ5eEg1OE84c4FPOZ38uGBAgMBCAeIfgQY
+            FggAJhYhBIxnoCe3ysOYyIggV469ldwUd1WiBQJhwAWNAhsMBQlwyBIAAAoJEI69
+            ldwUd1WivCMA+QE5L/tBDmQPeRjziccWGTaVx2IL586VBFhJoFHe/0wNAQC3so45
+            pmbSq/gNkA/X7zdwtT4aVMbFzOR2nZ28X/gnCw==
+            =IvCC
+            -----END PGP PUBLIC KEY BLOCK-----
+          '';
+          decryption-key-trust = "ultimate";
 
-          # Speed up Mission Control animations
-          expose-animation-duration = lib.mkDefault 0.1;
-
-          # Don’t group windows by application in Mission Control
-          # (i.e. use the old Exposé behavior instead)
-          expose-group-apps = lib.mkDefault false;
-
-          # Don’t show Dashboard as a Space
-          dashboard-in-overlay = lib.mkDefault true;
-
-          # Don’t automatically rearrange Spaces based on most recent use
-          mru-spaces = lib.mkDefault false;
-
-          # Remove the auto-hiding Dock delay
-          autohide-delay = lib.mkDefault 0.0;
-          # Remove the animation when hiding/showing the Dock
-          autohide-time-modifier = lib.mkDefault 0.0;
-
-          # Automatically hide and show the Dock
-          autohide = lib.mkDefault true;
-
-          # Make Dock icons of hidden applications translucent
-          showhidden = lib.mkDefault true;
-
-          # Don’t show recent applications in Dock
-          show-recents = lib.mkDefault false;
-
-          # disable all hot corners
-          wvous-bl-corner = lib.mkDefault 1;
-          wvous-br-corner = lib.mkDefault 1;
-          wvous-tl-corner = lib.mkDefault 1;
-          wvous-tr-corner = lib.mkDefault 1;
-        };
-
-        finder = {
-          # Finder: allow quitting via ⌘ + Q; doing so will also hide desktop icons
-          QuitMenuItem = lib.mkDefault true;
-
-          # Display full POSIX path as Finder window title
-          _FXShowPosixPathInTitle = lib.mkDefault true;
-
-          # Disable the warning when changing a file extension
-          FXEnableExtensionChangeWarning = lib.mkDefault false;
-
-          # Do not show any items on the Desktop
-          ShowExternalHardDrivesOnDesktop = lib.mkDefault false;
-          ShowHardDrivesOnDesktop = lib.mkDefault false;
-          ShowRemovableMediaOnDesktop = lib.mkDefault false;
-          ShowMountedServersOnDesktop = lib.mkDefault false;
-
-          # Show path breadcrumbs on path bar
-          ShowPathbar = lib.mkDefault true;
-
-          # Show status bar at the bottom of finder windows
-          ShowStatusBar = lib.mkDefault true;
-
-          # Keep folders on top when sorting by name
-          _FXSortFoldersFirst = lib.mkDefault true;
-
-          # Default the current search scope to current folder not this mac
-          FXDefaultSearchScope = lib.mkDefault "SCcf";
-        };
-
-        # Disable the “Are you sure you want to open this application?” dialog
-        LaunchServices.LSQuarantine = lib.mkDefault false;
-
-        # Show the clock in 24 hours format
-        menuExtraClock.Show24Hour = lib.mkDefault true;
-
-        NSGlobalDomain = {
-          # Enable “natural” (Lion-style) scrolling (mths.be/macos disables it)
-          "com.apple.swipescrolldirection" = lib.mkDefault true;
-
-          # Set sidebar icon size to medium
-          NSTableViewDefaultSizeMode = lib.mkDefault 2;
-
-          # Force clock to be 24-hours
-          AppleICUForce24HourTime = lib.mkDefault true;
-
-          # Always show scrollbars
-          AppleShowScrollBars = lib.mkDefault "Always";
-
-          # Metric everywhere
-          AppleMeasurementUnits = lib.mkDefault "Centimeters";
-          AppleMetricUnits = lib.mkDefault 1;
-          AppleTemperatureUnit = lib.mkDefault "Celsius";
-
-          # Disable the over-the-top focus ring animation
-          NSUseAnimatedFocusRing = lib.mkDefault false;
-
-          # Increase window resize speed for Cocoa applications
-          NSWindowResizeTime = lib.mkDefault 1.0e-3;
-
-          # Expand save panel by default
-          NSNavPanelExpandedStateForSaveMode = lib.mkDefault true;
-          NSNavPanelExpandedStateForSaveMode2 = lib.mkDefault true;
-
-          # Expand print panel by default
-          PMPrintingExpandedStateForPrint = lib.mkDefault true;
-          PMPrintingExpandedStateForPrint2 = lib.mkDefault true;
-
-          # Save to disk (not to iCloud) by default
-          NSDocumentSaveNewDocumentsToCloud = lib.mkDefault false;
-
-          # Display ASCII control characters using caret notation in standard text views
-          # Try e.g. `cd /tmp; unidecode "\x{0000}" > cc.txt; open -e cc.txt`
-          NSTextShowsControlCharacters = lib.mkDefault true;
-
-          # Disable automatic termination of inactive apps
-          NSDisableAutomaticTermination = lib.mkDefault true;
-
-          # Override the keyboard repeat rate to something more sensible.
-          KeyRepeat = lib.mkDefault 2;
-          InitialKeyRepeat = lib.mkDefault 15;
-
-          # Disable automatic capitalization as it’s annoying when typing code
-          NSAutomaticCapitalizationEnabled = lib.mkDefault false;
-
-          # Disable smart dashes as they’re annoying when typing code
-          NSAutomaticDashSubstitutionEnabled = lib.mkDefault false;
-
-          # Disable automatic period substitution as it’s annoying when typing code
-          NSAutomaticPeriodSubstitutionEnabled = lib.mkDefault false;
-
-          # Disable smart quotes as they’re annoying when typing code
-          NSAutomaticQuoteSubstitutionEnabled = lib.mkDefault false;
-
-          # Disable auto-correct
-          NSAutomaticSpellingCorrectionEnabled = lib.mkDefault false;
-
-          # Enable subpixel font rendering on non-Apple LCDs
-          # Reference: https://github.com/kevinSuttle/macOS-Defaults/issues/17#issuecomment-266633501
-          AppleFontSmoothing = lib.mkDefault 1;
-
-          # Enable full keyboard access for all controls
-          # (e.g. enable Tab in modal dialogs)
-          AppleKeyboardUIMode = lib.mkDefault 3;
-
-          # Disable press-and-hold for keys in favor of key repeat
-          ApplePressAndHoldEnabled = lib.mkDefault false;
-
-          # Finder: show all filename extensions
-          AppleShowAllExtensions = lib.mkDefault true;
-
-          # Enable spring loading for directories
-          "com.apple.springing.enabled" = lib.mkDefault true;
-
-          # Remove the spring loading delay for directories
-          "com.apple.springing.delay" = lib.mkDefault 0.0;
-        };
-
-        screencapture.location = lib.mkDefault "${config.users.users.wnasreddine.home}/Pictures/Screenshots";
-
-        trackpad = {
-          # Trackpad: enable tap to click
-          Clicking = lib.mkDefault true;
-
-          # Trackpad: enable three-finger drag
-          TrackpadThreeFingerDrag = lib.mkDefault true;
-
-          # Trackpad: enable right click on the bottom right of the trackpad
-          TrackpadRightClick = lib.mkDefault true;
-        };
-
-        WindowManager = {
-          # Hide all items from Desktop
-          StandardHideDesktopIcons = lib.mkDefault true;
+          decryption-key-slot = 101;
+          signing-key-slot = 102;
         };
       };
+    };
 
-      keyboard = {
-        # Remap CapsLock to Control
-        enableKeyMapping = lib.mkDefault true;
-        remapCapsLockToControl = lib.mkDefault true;
-      };
+    programs = {
+      # android.enable = true;
+      # brave.enable = true;
+      # chromium = { enable = true; surfingkeys.enable = true; };
+      claude-code.enable = true;
+      codex.enable = true;
+      fzf.enable = true;
+      git.enable = true;
+      iterm2.enable = true;
+      pet.enable = true;
+      ssh.enable = true;
+      starship.enable = true;
+      tmux.enable = true;
+      zsh.enable = true;
+    };
+
+    services = {
+      ssh-agent-mux.enable = true;
+      aerospace.enable = true;
+    };
+
+    settings = {
+      fonts.enable = true;
+      nix.distributed-builds.enable = true;
     };
   };
 }

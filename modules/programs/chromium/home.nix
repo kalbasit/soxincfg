@@ -1,27 +1,20 @@
+# TODO(high): Surfingkeys must be composed of two files, the main one and the colemak bindings.
 {
-  config,
   lib,
-  pkgs,
   ...
 }:
 
 let
-  inherit (lib) mkIf mkMerge;
-
-  inherit (pkgs) chromium;
-
-  cfg = config.soxincfg.programs.chromium;
+  inherit (lib)
+    mkEnableOption
+    optionals
+    ;
 in
 {
-  config = mkIf cfg.enable (mkMerge [
-    { home.packages = [ chromium ]; }
+  imports =
+    [ ./home-config.nix ];
 
-    (mkIf cfg.surfingkeys.enable {
-      home.file.".surfingkeys.js".text = builtins.readFile (
-        pkgs.replaceVars ./surfingkeys.js {
-          home_dir = "${config.home.homeDirectory}";
-        }
-      );
-    })
-  ]);
+  options.soxincfg.programs.chromium.enable = mkEnableOption "Install and configure Chromium";
+  options.soxincfg.programs.chromium.surfingkeys.enable =
+    mkEnableOption "Install and configure Surfingkeys";
 }

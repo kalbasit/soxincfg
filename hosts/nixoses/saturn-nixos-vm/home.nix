@@ -4,9 +4,9 @@
 { pkgs, ... }:
 {
   imports = [
-    soxincfg.nixosModules.profiles.myself
-    soxincfg.nixosModules.profiles.miniserver.qemu-vm-guest
-    soxincfg.nixosModules.profiles.server
+    soxincfg.homeModules.profiles.myself
+    soxincfg.homeModules.profiles.miniserver.qemu-vm-guest
+    soxincfg.homeModules.profiles.server
   ];
 
   soxincfg.programs.claude-code.enable = true;

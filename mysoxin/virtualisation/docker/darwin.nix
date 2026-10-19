@@ -1,10 +1,23 @@
-{ config, lib, ... }:
+{
+  lib,
+  ...
+}:
 
 let
-  inherit (lib) mkIf singleton;
-
-  cfg = config.soxin.virtualisation.docker;
+  inherit (lib) mkEnableOption optionals recursiveUpdate;
 in
 {
-  config = mkIf cfg.enable { homebrew.casks = singleton "docker-desktop"; };
+  imports =
+    [ ./darwin-config.nix ];
+
+  options = {
+    soxin.virtualisation.docker = {
+      enable = mkEnableOption "Enable docker.";
+
+      addAdminUsersToGroup = recursiveUpdate (mkEnableOption ''
+        Whether to add admin users declared in soxincfg.settings.users to the `docker`
+        group.
+      '') { default = true; };
+    };
+  };
 }

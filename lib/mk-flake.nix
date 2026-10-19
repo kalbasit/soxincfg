@@ -132,18 +132,30 @@ let
     sops-nix.overlays.default
   ];
 
-  nixosModules = {
-    profiles = import ../profiles;
-    soxin = import ../mysoxin/soxin.nix; # TODO: Get rid of this!
-    soxincfg = import ../modules;
-  };
+  # soxincfg's module library for one kind ("nixos", "darwin", "home"):
+  # `soxincfg` (all of modules/), `soxin` (all of mysoxin/), `profiles` (the
+  # profile tree) and every module of modules/ and mysoxin/ by its name.
+  modulesOf =
+    kind:
+    let
+      pick = module: if builtins.isAttrs module then module.${kind} else module;
+    in
+    nixpkgs.lib.mapAttrs (_: pick) (import ../mysoxin/list.nix)
+    // nixpkgs.lib.mapAttrs (_: pick) (import ../modules/list.nix)
+    // {
+      profiles = import ../profiles/kind.nix kind;
+      soxin = import ../mysoxin/kind.nix kind;
+      soxincfg = import ../modules/kind.nix kind;
+    };
+
+  nixosModules = modulesOf "nixos";
 
   nixosModule = nixosModules.soxincfg;
 
   # Modules every configuration of a kind ("nixos", "darwin", "home") gets.
   globalModules = kind: [
     (import ../modules/kind.nix kind)
-    nixosModules.profiles.core
+    (import ../profiles/kind.nix kind).core
 
     # import mysoxin
     # TODO: Get rid of this!
@@ -375,12 +387,14 @@ let
     ];
   };
 in
-# flake-parts types `nixosModules` as modules, but soxincfg's modules read
-# `soxincfg.nixosModules.profiles.<name>` as a tree of modules, so the tree is
-# put back as it is.
+# flake-parts types `nixosModules` (and Clan `darwinModules`) as modules, but
+# soxincfg's modules read `soxincfg.<kind>Modules.profiles.<name>` as a tree of
+# modules, so the library is put back as it is.
 outputs
 // {
   nixosModules = outputs.nixosModules // nixosModules;
+  darwinModules = outputs.darwinModules // modulesOf "darwin";
+  homeModules = modulesOf "home";
   inherit nixosModule;
   vars = recursiveUpdate (import ../vars inputs) vars;
 }
