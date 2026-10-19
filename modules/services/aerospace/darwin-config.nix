@@ -7,6 +7,100 @@
 
 let
   cfg = config.soxincfg.services.aerospace;
+
+  # The story manager's binary. swm and maktab share the commands used here.
+  storyManagerBin =
+    {
+      swm = "swm";
+      maktab = "maktab";
+    }
+    .${cfg.storyManager};
+
+  # The i3 dynamic workspaces, on AeroSpace: pick a workspace among the
+  # existing ones and the stories, shown as profile@story, or type a new
+  # name to create it. Run as `aerospace-story go|move|summon|rename`.
+  storySwitcher = pkgs.writeShellApplication {
+    name = "aerospace-story";
+    runtimeInputs = [
+      config.services.aerospace.package
+      pkgs.coreutils
+      pkgs.gawk
+      pkgs.gnused
+    ];
+    text = ''
+      action="''${1:-}"
+      case "$action" in
+      go) prompt="Go to workspace" ;;
+      move) prompt="Move window to workspace" ;;
+      summon) prompt="Summon workspace" ;;
+      rename) prompt="Rename workspace to" ;;
+      *)
+        echo "usage: aerospace-story go|move|summon|rename" >&2
+        exit 64
+        ;;
+      esac
+
+      # AeroSpace runs this with launchd's PATH, so look for the story
+      # manager where home-manager and nix-darwin install it.
+      PATH="$PATH:/etc/profiles/per-user/$(id -un)/bin:$HOME/.nix-profile/bin:/run/current-system/sw/bin"
+
+      candidates() {
+        aerospace list-workspaces --all
+        if command -v ${storyManagerBin} >/dev/null; then
+          ${storyManagerBin} story list | sed 's|^|${cfg.storyProfile}@|'
+        fi
+      }
+
+      # -m returns the typed text when it matches nothing, which is how a
+      # new workspace gets its name. Escape prints nothing.
+      workspace="$(candidates | awk 'NF && !seen[$0]++' | ${config.homebrew.prefix}/bin/choose -m -e -p "$prompt" || true)"
+      [[ -n "$workspace" ]] || exit 0
+
+      # A story's workspace that has no window yet gets a browser and a
+      # terminal. Both land on the focused workspace, this one. The shell
+      # reads ZSH_PROFILE and the story from the workspace name, then opens
+      # the story's tmux workspace.
+      open_story() {
+        [[ "$workspace" == *@* ]] || return 0
+        [[ "$(aerospace list-windows --workspace "$workspace" --count)" -eq 0 ]] || return 0
+
+        /usr/bin/open -na "Google Chrome" --args --new-window || true
+
+        /usr/bin/osascript - "${storyManagerBin} workspace open $(printf %q "''${workspace#*@}")" <<'APPLESCRIPT' || true
+      on run argv
+        tell application "iTerm"
+          set newWindow to (create window with default profile)
+          tell current session of newWindow to write text (item 1 of argv)
+        end tell
+      end run
+      APPLESCRIPT
+      }
+
+      case "$action" in
+      go)
+        aerospace workspace "$workspace"
+        open_story
+        ;;
+      move)
+        aerospace move-node-to-workspace --focus-follows-window "$workspace"
+        ;;
+      summon)
+        aerospace summon-workspace "$workspace"
+        open_story
+        ;;
+      rename)
+        # AeroSpace cannot rename a workspace: move its windows instead. The
+        # old one goes away once empty, unless it is persistent.
+        current="$(aerospace list-workspaces --focused)"
+        [[ "$workspace" != "$current" ]] || exit 0
+        for id in $(aerospace list-windows --workspace "$current" --format '%{window-id}'); do
+          aerospace move-node-to-workspace --window-id "$id" "$workspace"
+        done
+        aerospace workspace "$workspace"
+        ;;
+      esac
+    '';
+  };
 in
 {
   config = lib.mkIf cfg.enable {
@@ -165,6 +259,12 @@ in
             alt-shift-u = "move-node-to-workspace 18";
             alt-shift-y = "move-node-to-workspace 19";
             alt-shift-semicolon = "move-node-to-workspace 20";
+
+            # Story workspaces, picked with choose-gui. See storySwitcher above.
+            alt-space = "exec-and-forget ${lib.getExe storySwitcher} go";
+            alt-shift-space = "exec-and-forget ${lib.getExe storySwitcher} move";
+            alt-ctrl-space = "exec-and-forget ${lib.getExe storySwitcher} summon";
+            alt-ctrl-shift-space = "exec-and-forget ${lib.getExe storySwitcher} rename";
 
             # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
             alt-tab = "workspace-back-and-forth";

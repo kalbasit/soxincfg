@@ -115,6 +115,12 @@ let
           home_path = "$HOME";
           jq_bin = "${getBin jq}/bin/jq";
           less_bin = "${getBin less}/bin/less";
+          story_env =
+            {
+              swm = "SWM_STORY";
+              maktab = "MAKTAB_STORY";
+            }
+            .${config.soxincfg.services.aerospace.storyManager};
         }
       ))
 

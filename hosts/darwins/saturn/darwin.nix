@@ -30,6 +30,9 @@ in
     soxincfg.darwinModules.profiles.workstation.darwin.local
   ];
 
+  # Personal machine: its stories live in maktab.
+  soxincfg.services.aerospace.storyManager = "maktab";
+
   homebrew = {
     brews = [
       "ffmpeg" # Used by Audacity to open AAC files

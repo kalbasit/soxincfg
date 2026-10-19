@@ -17,6 +17,9 @@ in
     soxincfg.homeModules.profiles.workstation.darwin.local
   ];
 
+  # Personal machine: its stories live in maktab.
+  soxincfg.services.aerospace.storyManager = "maktab";
+
   home.stateVersion = "24.11";
 
   # Configure Nushell that can be used as a login shell.
