@@ -370,6 +370,8 @@ let
                 buildInputs = [
                   pkgs.nixfmt-rfc-style
                   pkgs.nix-output-monitor
+                  # Clan's CLI, from the clan-core Soxin builds the fleet with.
+                  inputs.soxin.inputs.clan-core.packages.${system}.clan-cli
                 ];
               };
 
