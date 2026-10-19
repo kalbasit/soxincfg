@@ -77,9 +77,9 @@ in
     # add all plugins installed by themes
     { soxin.programs.neovim.plugins = cfg.theme.plugins; }
 
-    ({ })
+    { }
 
-    ({
+    {
       # TODO: I wish home-manager had a defaultEditor as well!
       home.sessionVariables = {
         EDITOR = "nvim";
@@ -109,6 +109,6 @@ in
         "withPython3"
         "withRuby"
       ] (name: true));
-    })
+    }
   ]);
 }

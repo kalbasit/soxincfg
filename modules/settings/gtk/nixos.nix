@@ -17,8 +17,8 @@ in
   };
 
   config = mkIf cfg.enable (mkMerge [
-    ({ services.dbus.packages = [ pkgs.dconf ]; })
+    { services.dbus.packages = [ pkgs.dconf ]; }
 
-    ({ })
+    { }
   ]);
 }

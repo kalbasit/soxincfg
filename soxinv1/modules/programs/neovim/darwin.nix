@@ -77,8 +77,8 @@ in
     # add all plugins installed by themes
     { soxin.programs.neovim.plugins = cfg.theme.plugins; }
 
-    ({ })
+    { }
 
-    ({ })
+    { }
   ]);
 }

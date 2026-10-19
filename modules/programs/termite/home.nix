@@ -19,8 +19,8 @@ in
   config = mkIf cfg.enable (mkMerge [
     { soxin.programs.termite.enable = true; }
 
-    ({
+    {
       programs.termite.font = "0xProto Nerd Font 12";
-    })
+    }
   ]);
 }

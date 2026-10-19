@@ -20,7 +20,7 @@ in
   };
 
   config = mkIf cfg.enable (mkMerge [
-    ({
+    {
       services.openssh = {
         enable = true;
         settings.PasswordAuthentication = false;
@@ -28,6 +28,6 @@ in
           StreamLocalBindUnlink yes
         '';
       };
-    })
+    }
   ]);
 }

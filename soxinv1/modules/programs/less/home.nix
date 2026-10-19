@@ -62,7 +62,7 @@ in
   };
 
   config = mkIf cfg.enable (mkMerge [
-    ({
+    {
       home.file.".less".source =
         let
           less-key = pkgs.writeText "less-key" (
@@ -77,6 +77,6 @@ in
         pkgs.runCommand "less-config" { preferLocalBuild = true; } ''
           ${pkgs.less}/bin/lesskey -o $out ${less-key}
         '';
-    })
+    }
   ]);
 }

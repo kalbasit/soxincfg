@@ -154,7 +154,7 @@ in
   config = mkIf cfg.enable (mkMerge [
     { soxin.programs.zsh.enable = true; }
 
-    (optionalAttrs (true || false) {
+    (optionalAttrs true {
       programs.zsh.shellAliases = with pkgs; {
         g = "git";
 
@@ -197,15 +197,15 @@ in
       };
     })
 
-    ({ })
+    { }
 
-    ({
+    {
       programs.zsh = {
         histSize = 1000000000;
         inherit ohMyZsh;
       };
-    })
+    }
 
-    ({ })
+    { }
   ]);
 }

@@ -178,9 +178,9 @@ in
 
     # turn off sensibleOnTop
     # TODO: Remove this after 24.11 because it's now defaults to false
-    ({ programs.tmux.sensibleOnTop = false; })
+    { programs.tmux.sensibleOnTop = false; }
 
-    (optionalAttrs (false || true) {
+    (optionalAttrs true {
       programs.tmux = {
         clock24 = true;
         customPaneNavigationAndResize = keyboardLayout != "colemak";

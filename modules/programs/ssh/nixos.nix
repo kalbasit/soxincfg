@@ -146,7 +146,7 @@ in
   };
 
   config = mkIf cfg.enable (mkMerge [
-    (optionalAttrs (true || false) {
+    (optionalAttrs true {
       programs.ssh = {
         extraConfig = ''
           PubkeyAuthentication yes
@@ -169,7 +169,7 @@ in
       };
     })
 
-    ({
+    {
       programs.ssh = {
         inherit (cfg)
           ciphers
@@ -183,8 +183,8 @@ in
       };
 
       services.gnome.gcr-ssh-agent = mkIf cfg.enableSSHAgent { enable = lib.mkForce false; };
-    })
+    }
 
-    ({ })
+    { }
   ]);
 }

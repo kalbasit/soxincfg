@@ -148,17 +148,19 @@ in
   };
 
   config = mkIf cfg.enable (mkMerge [
-    ({ })
+    { }
 
-    ({
-      home.sessionVariables.BROWSER = "${cfg.package}/bin/rbrowser";
+    {
+      home = {
+        sessionVariables.BROWSER = "${cfg.package}/bin/rbrowser";
 
-      home.packages = [ cfg.package ];
+        packages = [ cfg.package ];
 
-      home.file = mkIf (cfg.setMimeList) {
-        ".local/share/applications/mimeapps.list".text = mimeList;
-        ".config/mimeapps.list".text = mimeList;
+        file = mkIf cfg.setMimeList {
+          ".local/share/applications/mimeapps.list".text = mimeList;
+          ".config/mimeapps.list".text = mimeList;
+        };
       };
-    })
+    }
   ]);
 }

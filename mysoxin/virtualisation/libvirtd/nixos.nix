@@ -21,7 +21,7 @@ in
   };
 
   config = mkIf cfg.enable (mkMerge [
-    ({
+    {
       virtualisation.libvirtd = {
         enable = true;
         qemu = {
@@ -40,6 +40,6 @@ in
         virt-manager
         spice-gtk
       ];
-    })
+    }
   ]);
 }

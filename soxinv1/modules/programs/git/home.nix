@@ -14,10 +14,7 @@ let
     ;
 in
 {
-  imports =
-    [ ]
-
-    ++ [ ./home-config.nix ];
+  imports = [ ./home-config.nix ];
 
   options = {
     soxin.programs.git = {

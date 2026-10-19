@@ -17,14 +17,14 @@ in
   };
 
   config = mkIf cfg.enable (mkMerge [
-    ({
+    {
       programs.zsh.shellInit = mkAfter ''
         if [ -z "$INSIDE_EMACS" ]; then
           eval "$(${pkgs.starship}/bin/starship init zsh)"
         fi
       '';
-    })
+    }
 
-    ({ })
+    { }
   ]);
 }

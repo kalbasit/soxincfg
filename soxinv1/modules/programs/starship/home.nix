@@ -17,13 +17,13 @@ in
   };
 
   config = mkIf cfg.enable (mkMerge [
-    ({ })
+    { }
 
-    ({
+    {
       programs.starship = {
         enable = true;
         enableZshIntegration = config.soxin.programs.zsh.enable;
       };
-    })
+    }
   ]);
 }

@@ -25,7 +25,7 @@ in
   };
 
   config = mkIf cfg.enable (mkMerge [
-    ({
+    {
       fonts = {
         inherit packages;
 
@@ -34,8 +34,8 @@ in
         fontDir.enable = true;
         fontconfig.enable = true;
       };
-    })
+    }
 
-    ({ })
+    { }
   ]);
 }

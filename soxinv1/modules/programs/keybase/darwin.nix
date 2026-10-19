@@ -27,7 +27,7 @@ in
   };
 
   config = mkIf cfg.enable (mkMerge [
-    (optionalAttrs (false || false) {
+    (optionalAttrs false {
       services.keybase.enable = true;
       services.kbfs.enable = cfg.enableFs;
     })

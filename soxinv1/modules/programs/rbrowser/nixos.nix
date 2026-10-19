@@ -148,12 +148,12 @@ in
   };
 
   config = mkIf cfg.enable (mkMerge [
-    ({
+    {
       environment.variables.BROWSER = "${cfg.package}/bin/rbrowser";
 
       environment.systemPackages = [ cfg.package ];
-    })
+    }
 
-    ({ })
+    { }
   ]);
 }

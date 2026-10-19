@@ -76,7 +76,7 @@ in
   };
 
   config = mkIf cfg.enable (mkMerge [
-    ({
+    {
       systemd.user.timers."lowbatt" = {
         Unit = {
           Description = "check battery level";
@@ -103,6 +103,6 @@ in
           ExecStart = "${script}/bin/lowbatt";
         };
       };
-    })
+    }
   ]);
 }

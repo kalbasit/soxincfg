@@ -4,10 +4,7 @@ let
   inherit (lib) optionals;
 in
 {
-  imports =
-    [ ]
-   
-    ++ [ ./home-config.nix ];
+  imports = [ ./home-config.nix ];
 
   # configure the keyboard
   soxincfg.settings.keyboard.enable = true;

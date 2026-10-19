@@ -146,7 +146,7 @@ in
   };
 
   config = mkIf cfg.enable (mkMerge [
-    (optionalAttrs (false || true) {
+    (optionalAttrs true {
       programs.ssh = {
         extraConfig = ''
           PubkeyAuthentication yes
@@ -169,9 +169,9 @@ in
       };
     })
 
-    ({ })
+    { }
 
-    ({
+    {
       home.file.".ssh/rc" = {
         executable = true;
 
@@ -223,6 +223,6 @@ in
           AddKeysToAgent=${cfg.addKeysToAgent}
         '';
       };
-    })
+    }
   ]);
 }

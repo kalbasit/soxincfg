@@ -222,7 +222,7 @@ in
   };
 
   config = mkIf cfg.enable (mkMerge [
-    ({
+    {
       services.polybar = recursiveUpdate (import ./polybar.lib.nix { inherit config pkgs lib; }) {
         enable = true;
       };
@@ -230,6 +230,6 @@ in
       programs.autorandr.hooks.postswitch.restart-polybar = ''
         systemctl --no-block --user restart polybar.service
       '';
-    })
+    }
   ]);
 }

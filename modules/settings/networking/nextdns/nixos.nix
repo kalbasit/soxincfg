@@ -19,7 +19,7 @@ in
   };
 
   config = mkIf cfg.enable (mkMerge [
-    ({
+    {
       networking.networkmanager.dns = "systemd-resolved";
 
       # Set my own nextdns endpoints.
@@ -35,6 +35,6 @@ in
 
         settings.Resolve.DNSOverTLS = true;
       };
-    })
+    }
   ]);
 }

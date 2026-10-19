@@ -21,6 +21,6 @@ in
   config = mkIf cfg.enable (mkMerge [
     { soxin.services.xserver.windowManager.i3.enable = true; }
 
-    ({ })
+    { }
   ]);
 }

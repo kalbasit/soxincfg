@@ -4,8 +4,5 @@ let
   inherit (lib) optionals;
 in
 {
-  imports =
-    [ ]
-    ++ [ ./darwin-config.nix ]
-   ;
+  imports = [ ./darwin-config.nix ];
 }
