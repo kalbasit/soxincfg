@@ -737,11 +737,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792370469,
-        "narHash": "sha256-wD+RwqpMfv71IMqJVyKNPFDkahd5VJrATTQrRniosu8=",
+        "lastModified": 1792374131,
+        "narHash": "sha256-hH6t/SlAszNWKjZgmhz3PAbdvHLX9AF6Foo4zDz094E=",
         "ref": "user/wnasreddine/soxin-v2-clan",
-        "rev": "d678ec87f442016fcc69016eff062895c54b91c0",
-        "revCount": 128,
+        "rev": "0b5abc89e59347913baf4ec5522521d7f78a03ee",
+        "revCount": 129,
         "type": "git",
         "url": "file:///Users/wnasreddine/code/stories/soxin-v2/github.com/SoxinOS/soxin-clan"
       },
