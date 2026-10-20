@@ -3486,7 +3486,7 @@ in
       	<key>findMode_iTerm</key>
       	<integer>0</integer>
       ${lib.optionalString (cfg.urlHandlerCommand != null) ''
-        <key>urlHandlerCommand</key>
+        <key>UrlHandlerCommand</key>
         <string>${lib.escapeXML cfg.urlHandlerCommand}</string>
       ''}
       </dict>
