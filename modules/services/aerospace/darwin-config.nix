@@ -60,6 +60,9 @@ let
       # terminal. Both land on the focused workspace, this one. The shell
       # reads ZSH_PROFILE and the story from the workspace name, then opens
       # the story's tmux workspace.
+      # The terminal uses the Story profile (home-config.nix), whose
+      # Cmd-clicked links open in this workspace's Chrome window, or the
+      # default profile while that one is missing.
       open_story() {
         [[ "$workspace" == *@* ]] || return 0
         [[ "$(aerospace list-windows --workspace "$workspace" --count)" -eq 0 ]] || return 0
@@ -69,7 +72,11 @@ let
         /usr/bin/osascript - "${storyManagerBin} workspace open $(printf %q "''${workspace#*@}")" <<'APPLESCRIPT' || true
       on run argv
         tell application "iTerm"
-          set newWindow to (create window with default profile)
+          try
+            set newWindow to (create window with profile "Story")
+          on error
+            set newWindow to (create window with default profile)
+          end try
           tell current session of newWindow to write text (item 1 of argv)
         end tell
       end run

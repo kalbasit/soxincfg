@@ -3485,6 +3485,10 @@ in
       	<false/>
       	<key>findMode_iTerm</key>
       	<integer>0</integer>
+      ${lib.optionalString (cfg.urlHandlerCommand != null) ''
+        <key>UrlHandlerCommand</key>
+        <string>${lib.escapeXML cfg.urlHandlerCommand}</string>
+      ''}
       </dict>
       </plist>
     '';
