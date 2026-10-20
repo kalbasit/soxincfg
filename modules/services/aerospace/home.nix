@@ -1,3 +1,6 @@
 {
-  imports = [ ./options.nix ];
+  imports = [
+    ./options.nix
+    ./home-config.nix
+  ];
 }
