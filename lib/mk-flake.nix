@@ -96,6 +96,18 @@ let
             direnv = super.direnv.overrideAttrs (_: {
               doCheck = !super.stdenv.hostPlatform.isDarwin;
             });
+
+            # glances is not cached for aarch64-linux and its tests fail when
+            # built on the aarch64 VM: psutil reports no physical cores inside
+            # the build sandbox, and the XML-RPC tests time out under load.
+            glances =
+              if super.stdenv.hostPlatform.isAarch64 && super.stdenv.hostPlatform.isLinux then
+                super.glances.overridePythonAttrs (oa: {
+                  disabledTests = (oa.disabledTests or [ ]) ++ [ "test_phys_core_returns_int" ];
+                  disabledTestPaths = (oa.disabledTestPaths or [ ]) ++ [ "tests/test_xmlrpc.py" ];
+                })
+              else
+                super.glances;
           })
         ]
         # v1 (flake-utils-plus) put its own overlay last on every channel.
