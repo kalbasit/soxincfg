@@ -79,18 +79,6 @@ in
       in
       lib.mkForce [
         {
-          hostName = "hercules.bigeye-bushi.ts.net";
-          maxJobs = 15;
-          sshKey = "${keyStore}/hercules.key";
-          sshUser = "builder";
-          system = "x86_64-linux";
-          supportedFeatures = [
-            "big-parallel"
-            "kvm"
-            "nixos-test"
-          ];
-        }
-        {
           hostName = "192.168.64.7";
           maxJobs = 4;
           sshKey = "${keyStore}/saturn-nixos-vm.key";
