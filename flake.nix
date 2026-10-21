@@ -77,7 +77,13 @@
       ];
     in
     {
-      lib = { inherit mkFlake; };
+      lib = {
+        inherit mkFlake;
+
+        # The library Soxin v1's modules (`<kind>Modules.soxinv1`) take as
+        # their `soxinLib` argument.
+        soxinLib = import ./soxinv1/lib inputs;
+      };
     }
     // (mkFlake {
       home-managers = { };

@@ -180,8 +180,10 @@ let
   profilesOf = kind: import ../profiles/kind.nix kind // profiles kind;
 
   # soxincfg's module library for one kind ("nixos", "darwin", "home"):
-  # `soxincfg` (all of modules/), `soxin` (all of mysoxin/), `profiles` (the
-  # profile tree) and every module of modules/ and mysoxin/ by its name.
+  # `soxincfg` (all of modules/), `soxin` (all of mysoxin/), `soxinv1` (the
+  # copy of Soxin v1's modules in soxinv1/, which take `lib.soxinLib` as their
+  # `soxinLib` argument), `profiles` (the profile tree) and every module of
+  # modules/ and mysoxin/ by its name.
   modulesOf =
     kind:
     nixpkgs.lib.mapAttrs (_: pick kind) (import ../mysoxin/list.nix)
@@ -190,6 +192,7 @@ let
       profiles = profilesOf kind;
       soxin = import ../mysoxin/kind.nix kind;
       soxincfg = soxincfgModuleOf kind;
+      soxinv1 = import ../soxinv1/modules/kind.nix kind;
     };
 
   nixosModules = modulesOf "nixos";
