@@ -404,9 +404,12 @@ let
                 buildInputs = [
                   pkgs.nixfmt-rfc-style
                   pkgs.nix-output-monitor
-                  # Clan's CLI, from the clan-core Soxin builds the fleet with.
-                  soxin.inputs.clan-core.packages.${system}.clan-cli
-                ];
+                ]
+                # Clan's CLI, from the clan-core Soxin builds the fleet with,
+                # on the systems clan-core builds it for.
+                ++ nixpkgs.lib.optional (
+                  soxin.inputs.clan-core.packages ? ${system}
+                ) soxin.inputs.clan-core.packages.${system}.clan-cli;
               };
 
               formatter = pkgs.nixfmt-rfc-style;
