@@ -107,16 +107,23 @@ let
         fi
       '')
 
-      (builtins.readFile (
-        replaceVars ./init-extra.zsh {
-          bat_bin = "${getBin bat}/bin/bat";
-          fortune_bin = "${getBin fortune}/bin/fortune";
-          fzf_bin = "${getBin fzf}/bin/fzf-tmux";
-          home_path = "$HOME";
-          jq_bin = "${getBin jq}/bin/jq";
-          less_bin = "${getBin less}/bin/less";
-        }
-      ))
+      (
+        let
+          vars = {
+            bat_bin = "${getBin bat}/bin/bat";
+            fortune_bin = "${getBin fortune}/bin/fortune";
+            fzf_bin = "${getBin fzf}/bin/fzf-tmux";
+            home_path = "$HOME";
+            jq_bin = "${getBin jq}/bin/jq";
+            less_bin = "${getBin less}/bin/less";
+          };
+        in
+        # Substituted during evaluation, without a build, so a configuration of
+        # one platform still evaluates on another.
+        builtins.replaceStrings (map (name: "@${name}@") (
+          builtins.attrNames vars
+        )) (builtins.attrValues vars) (builtins.readFile ./init-extra.zsh)
+      )
 
       # TODO: Move this to pet once there is a way to put stuff at the bottom
       (optionalString config.programs.pet.enable ''

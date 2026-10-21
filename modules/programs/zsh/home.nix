@@ -107,17 +107,24 @@ let
         fi
       '')
 
-      (builtins.readFile (
-        replaceVars cfg.initExtraFile {
-          bat_bin = "${getBin bat}/bin/bat";
-          fortune_bin = "${getBin fortune}/bin/fortune";
-          fzf_bin = "${getBin fzf}/bin/fzf-tmux";
-          home_path = "$HOME";
-          jq_bin = "${getBin jq}/bin/jq";
-          less_bin = "${getBin less}/bin/less";
-          story_env = config.soxincfg.services.aerospace.storyEnv;
-        }
-      ))
+      (
+        let
+          vars = {
+            bat_bin = "${getBin bat}/bin/bat";
+            fortune_bin = "${getBin fortune}/bin/fortune";
+            fzf_bin = "${getBin fzf}/bin/fzf-tmux";
+            home_path = "$HOME";
+            jq_bin = "${getBin jq}/bin/jq";
+            less_bin = "${getBin less}/bin/less";
+            story_env = config.soxincfg.services.aerospace.storyEnv;
+          };
+        in
+        # Substituted during evaluation, without a build, so a configuration of
+        # one platform still evaluates on another.
+        builtins.replaceStrings (map (name: "@${name}@") (
+          builtins.attrNames vars
+        )) (builtins.attrValues vars) (builtins.readFile cfg.initExtraFile)
+      )
 
       # TODO: Move this to pet once there is a way to put stuff at the bottom
       (optionalString config.programs.pet.enable ''
