@@ -12,19 +12,27 @@ in
     enable = mkEnableOption "Install and configure Aerospace";
 
     # Declared in every mode: the darwin side lists and opens stories with
-    # it, the home-manager side (zsh) picks the story variable from it.
+    # the manager, the home-manager side (zsh) reads the story variable.
     storyManager = mkOption {
-      type = types.enum [
-        "swm"
-        "maktab"
-      ];
-      default = "maktab";
+      type = types.str;
+      default = "swm";
+      example = "my-story-manager";
       description = ''
-        The workspace manager whose stories the story switcher offers and
-        opens. Both have the same `story list` and `workspace open` commands;
-        they differ in the binary and in the variable that names the story:
-        `SWM_STORY` for swm, `MAKTAB_STORY` for maktab. Set it in both the
-        nix-darwin and the home-manager configuration of a host.
+        The binary of the workspace manager whose stories the story switcher
+        offers and opens. It must have swm's `story list` and
+        `workspace open` commands. Set it in both the nix-darwin and the
+        home-manager configuration of a host.
+      '';
+    };
+
+    storyEnv = mkOption {
+      type = types.str;
+      default = "SWM_STORY";
+      example = "MY_STORY";
+      description = ''
+        The environment variable that names the current story for the
+        workspace manager of `storyManager`. Set it in both the nix-darwin
+        and the home-manager configuration of a host.
       '';
     };
 

@@ -1,13 +1,27 @@
 { lib, ... }:
 
 let
-  inherit (lib) mkEnableOption optionals;
+  inherit (lib)
+    mkEnableOption
+    mkOption
+    optionals
+    types
+    ;
 in
 {
-  imports =
-    [ ./nixos-config.nix ];
+  imports = [ ./nixos-config.nix ];
 
   options.soxincfg.programs.dbeaver = {
     enable = mkEnableOption "programs.dbeaver";
+
+    sopsFile = mkOption {
+      type = types.nullOr types.path;
+      default = null;
+      description = ''
+        The sops file (binary format) holding DBeaver's
+        `credentials-config.json` and `data-sources.json`. Without it they
+        are not installed.
+      '';
+    };
   };
 }

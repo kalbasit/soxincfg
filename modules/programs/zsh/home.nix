@@ -108,19 +108,14 @@ let
       '')
 
       (builtins.readFile (
-        replaceVars ./init-extra.zsh {
+        replaceVars cfg.initExtraFile {
           bat_bin = "${getBin bat}/bin/bat";
           fortune_bin = "${getBin fortune}/bin/fortune";
           fzf_bin = "${getBin fzf}/bin/fzf-tmux";
           home_path = "$HOME";
           jq_bin = "${getBin jq}/bin/jq";
           less_bin = "${getBin less}/bin/less";
-          story_env =
-            {
-              swm = "SWM_STORY";
-              maktab = "MAKTAB_STORY";
-            }
-            .${config.soxincfg.services.aerospace.storyManager};
+          story_env = config.soxincfg.services.aerospace.storyEnv;
         }
       ))
 
@@ -154,6 +149,16 @@ in
       enable = mkEnableOption ''
         Whether to enable zsh.
       '';
+
+      initExtraFile = mkOption {
+        type = types.path;
+        default = ./init-extra.zsh;
+        defaultText = literalExpression "./init-extra.zsh";
+        description = ''
+          The script added to the zsh init, after its `@name@` placeholders
+          are replaced (see home.nix for the names).
+        '';
+      };
     };
   };
 

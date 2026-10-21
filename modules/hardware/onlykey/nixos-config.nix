@@ -11,13 +11,13 @@ let
 
   homePath = config.soxincfg.settings.users.user.home;
   owner = config.soxincfg.settings.users.user.name;
-  sopsFile = ./secrets.sops.yaml;
+  inherit (cfg) sopsFile;
 in
 {
   config = mkIf cfg.enable (mkMerge [
     { hardware.onlykey.enable = true; }
 
-    (mkIf cfg.ssh-support.enable {
+    (mkIf (cfg.ssh-support.enable && sopsFile != null) {
       sops.secrets._ssh_id_ed25519_sk_rk = {
         inherit owner sopsFile;
         path = "${homePath}/.ssh/id_ed25519_sk_rk";

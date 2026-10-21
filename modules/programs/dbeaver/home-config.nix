@@ -11,7 +11,7 @@ let
   inherit (pkgs.stdenv.hostPlatform) isDarwin;
 
   homePath = config.home.homeDirectory;
-  sopsFile = ./credentials-config.json.sops;
+  inherit (cfg) sopsFile;
 
   cfg = config.soxincfg.programs.dbeaver;
 in
@@ -19,7 +19,7 @@ in
   config = mkIf cfg.enable {
     home.packages = [ pkgs.dbeaver-bin ];
 
-    sops.secrets = mkIf isDarwin {
+    sops.secrets = mkIf (isDarwin && sopsFile != null) {
       credentials-config-json = {
         inherit sopsFile;
         format = "binary";

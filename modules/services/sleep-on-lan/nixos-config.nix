@@ -9,11 +9,11 @@ let
   inherit (lib) mkIf;
 
   cfg = config.soxincfg.services.sleep-on-lan;
-  sopsFile = ./secrets.sops.yaml;
+  inherit (cfg) sopsFile;
 in
 {
   config = mkIf cfg.enable {
-    sops.secrets.etc_sol_json = {
+    sops.secrets.etc_sol_json = mkIf (sopsFile != null) {
       inherit sopsFile;
       path = "/etc/sol.json";
     };
