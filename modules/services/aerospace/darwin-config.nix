@@ -8,13 +8,8 @@
 let
   cfg = config.soxincfg.services.aerospace;
 
-  # The story manager's binary. swm and private-tool share the commands used here.
-  storyManagerBin =
-    {
-      swm = "swm";
-      private-tool = "private-tool";
-    }
-    .${cfg.storyManager};
+  # The story manager's binary. It has swm's commands used here.
+  storyManagerBin = cfg.storyManager;
 
   # The i3 dynamic workspaces, on AeroSpace: pick a workspace among the
   # existing ones and the stories, shown as profile@story, or type a new

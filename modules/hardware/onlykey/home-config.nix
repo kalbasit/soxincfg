@@ -43,7 +43,7 @@ let
   '';
 
   homePath = config.home.homeDirectory;
-  sopsFile = ./secrets.sops.yaml;
+  inherit (cfg) sopsFile;
 
   # How a Darwin shell finds its agent. When ssh-agent-mux runs it is the only
   # agent worth talking to, since it fronts both Secretive and the OnlyKey;
@@ -78,7 +78,7 @@ in
   config = mkIf cfg.enable (mkMerge [
     { home.packages = [ onlykey-cli ] ++ optionals isLinux [ onlykey ]; }
 
-    (mkIf isDarwin {
+    (mkIf (isDarwin && sopsFile != null) {
       sops.secrets._ssh_id_ed25519_sk_rk = {
         inherit sopsFile;
         path = "${homePath}/.ssh/id_ed25519_sk_rk";

@@ -5,12 +5,12 @@ let
 
   homePath = config.soxincfg.settings.users.user.home;
   owner = config.soxincfg.settings.users.user.name;
-  sopsFile = ./credentials-config.json.sops;
+  inherit (cfg) sopsFile;
 
   cfg = config.soxincfg.programs.dbeaver;
 in
 {
-  config = mkIf cfg.enable {
+  config = mkIf (cfg.enable && sopsFile != null) {
     sops.secrets = {
       credentials-config-json = {
         inherit sopsFile owner;

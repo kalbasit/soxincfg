@@ -18,11 +18,19 @@ let
   cfg = config.soxincfg.hardware.onlykey;
 in
 {
-  imports =
-    [ ./home-config.nix ];
+  imports = [ ./home-config.nix ];
 
   options.soxincfg.hardware.onlykey = {
     enable = mkEnableOption "hardware.onlykey";
+
+    sopsFile = mkOption {
+      type = types.nullOr types.path;
+      default = null;
+      description = ''
+        The sops file holding `_ssh_id_ed25519_sk_rk`, the OnlyKey's
+        resident SSH key handle. Without it the handle is not installed.
+      '';
+    };
 
     ssh-support = {
       enable = mkEnableOption "Whether to enable SSH support with Onlykey.";
