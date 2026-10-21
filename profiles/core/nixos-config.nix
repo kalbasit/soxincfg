@@ -15,15 +15,6 @@
     settings = {
       # enable the Nix sandbox
       sandbox = true;
-
-      substituters = [
-        # add my home cache to the list of substituters
-        "https://host.invalid"
-      ];
-
-      trusted-public-keys = [
-        "host.tailnet.invalid:EYvKWn44YJquaYg2qPevn53ckpSvQmEPSrFoTj5KVdk="
-      ];
     };
 
     # setup NIX_PATH to allow users to access the nixpkgs that built the system

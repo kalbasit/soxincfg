@@ -59,28 +59,14 @@
         sops-nix.follows = "sops-nix";
       };
     };
-
-    # The private-tool monorepo: the private-tool host agent (private-tool-agent) that machines
-    # running fleet work install, private-tool (the
-    # workspace manager, with its plugins) and private-tool (what workers report
-    # with). Not the control plane, which runs elsewhere; the MCP servers are
-    # wired by whichever configuration runs the assistant.
-    #
-    # Over ssh: the repository is private and lives on the forge's own host,
-    # so there is no anonymous shorthand that could fetch it.
-    #
-    # No `follows` on nixpkgs: everything taken from it builds against the
-    # nixpkgs private-tool's own flake locks, which is the build private-tool tests.
-    private-tool.url = "git+ssh://git@host.invalid/private-tool/private-tool.git";
   };
 
+  # soxincfg defines no machines: a fleet's own flake calls `lib.mkFlake`
+  # with its hosts (see lib/mk-flake.nix). This flake builds an empty fleet,
+  # for its checks, development shell, formatter and packages.
   outputs =
     inputs:
     let
-      home-managers = import ./home-managers inputs;
-
-      hosts = import ./hosts inputs;
-
       mkFlake = import ./lib/mk-flake.nix inputs;
 
       supportedSystems = [
@@ -94,10 +80,8 @@
       lib = { inherit mkFlake; };
     }
     // (mkFlake {
-      inherit
-        home-managers
-        hosts
-        supportedSystems
-        ;
+      home-managers = { };
+      hosts = { };
+      inherit supportedSystems;
     });
 }

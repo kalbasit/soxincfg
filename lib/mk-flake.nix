@@ -1,15 +1,28 @@
 # soxincfg's flake on Soxin v2 (Soxin's layer on Clan).
 #
-# The interface is unchanged: `mkFlake { hosts, home-managers,
-# supportedSystems, vars }` takes hosts in v1's shape (mode, system,
-# channelName, modules, specialArgs), so the private flake keeps calling it
-# as it did. A host's v1 `deploy` (deploy-rs) is ignored: Soxin v2 machines
-# deploy with Clan, and none of them sets a targetHost yet.
+# soxincfg defines no machines of its own: a fleet's flake calls
+# `soxincfg.lib.mkFlake { hosts, home-managers, supportedSystems, vars }`,
+# which takes hosts in v1's shape (mode, system, channelName, modules,
+# specialArgs). A host's v1 `deploy` (deploy-rs) is ignored: Soxin v2
+# machines deploy with Clan.
+#
+# What the calling flake adds, all optional:
+#
+# - `inputs`: its own flake inputs, `self` among them. They are laid over
+#   soxincfg's: `self` is then the calling flake (the `soxincfg` special
+#   argument, the configuration revision, the Nix registry), and its other
+#   inputs reach the modules through the `inputs` special argument.
+# - `overlays`: overlays applied to the `nixpkgs` channel after soxincfg's.
+# - `modules`: modules in modules/list.nix's shape (a path, or an attribute
+#   set of its nixos, darwin and home modules, by name). They join
+#   soxincfg's modules, in list.nix's order, on every configuration.
+# - `profiles`: a function of the kind ("nixos", "darwin", "home") to more
+#   profiles, laid over the profile tree (`<kind>Modules.profiles`).
 #
 # Soxin v1's modules are copied into soxinv1/ (the `soxinLib` argument is
 # their library), and every module is split per kind, without `mode`;
 # `hostType` still names the host's operating system.
-inputs@{
+soxincfgInputs@{
   flake-utils-plus,
   nixos-hardware,
   nixos-wsl,
@@ -17,18 +30,32 @@ inputs@{
   nixpkgs-unstable,
   nur,
   pre-commit-hooks,
-  self,
   sops-nix,
   soxin,
   ...
 }:
+
+{
+  home-managers,
+  hosts,
+  supportedSystems,
+  vars ? { },
+  inputs ? { },
+  overlays ? [ ],
+  modules ? { },
+  profiles ? _: { },
+}:
 let
+  # The calling flake's inputs over soxincfg's own.
+  allInputs = soxincfgInputs // inputs;
+
+  inherit (allInputs) self;
+
   inherit (nixpkgs.lib)
     filterAttrs
     mapAttrs
     mapAttrsToList
     optionalAttrs
-    recursiveUpdate
     removeAttrs
     unique
     ;
@@ -72,17 +99,6 @@ let
               worktrunk
               ;
 
-            # From private-tool: the host agent only of private-tool (its flake also builds the
-            # control plane and its image, and neither belongs on a machine that
-            # merely runs work); private-tool with its plugins; and private-tool, the CLI
-            # workers report with. private-tool-mcp is taken by whichever configuration
-            # runs the assistant.
-            inherit (inputs.private-tool.packages.${super.stdenv.hostPlatform.system})
-              private-tool
-              private-tool-full
-              private-tool-agent
-              ;
-
             # Pinned ahead of nixpkgs-unstable: the API refuses Claude Code
             # releases it no longer supports, and bumping the whole channel for
             # it is not always wanted. The manifest is Anthropic's release
@@ -110,6 +126,8 @@ let
                 super.glances;
           })
         ]
+        # The calling flake's overlays.
+        ++ overlays
         # v1 (flake-utils-plus) put its own overlay last on every channel.
         ++ [ flake-utils-plus.overlay ];
     };
@@ -138,7 +156,7 @@ let
   sharedOverlays = [
     (_: _: {
       __dontExport = true;
-      srcs = filterAttrs (_: value: !value ? outputs) inputs;
+      srcs = filterAttrs (_: value: !value ? outputs) allInputs;
     })
     (_: prev: { soxin = import ../soxinv1/pkgs prev; })
     nur.overlays.default
@@ -146,20 +164,32 @@ let
     sops-nix.overlays.default
   ];
 
+  # The module of one kind ("nixos", "darwin", "home") of a list.nix entry.
+  pick = kind: module: if builtins.isAttrs module then module.${kind} else module;
+
+  # soxincfg's modules and the calling flake's, by name. A module is imported
+  # in the order of its name, as modules/kind.nix does.
+  moduleList = import ../modules/list.nix // modules;
+
+  # All of moduleList for one kind, as modules/kind.nix is all of modules/.
+  soxincfgModuleOf = kind: {
+    imports = map (pick kind) (builtins.attrValues moduleList);
+  };
+
+  # The profile tree of one kind, with the calling flake's profiles.
+  profilesOf = kind: import ../profiles/kind.nix kind // profiles kind;
+
   # soxincfg's module library for one kind ("nixos", "darwin", "home"):
   # `soxincfg` (all of modules/), `soxin` (all of mysoxin/), `profiles` (the
   # profile tree) and every module of modules/ and mysoxin/ by its name.
   modulesOf =
     kind:
-    let
-      pick = module: if builtins.isAttrs module then module.${kind} else module;
-    in
-    nixpkgs.lib.mapAttrs (_: pick) (import ../mysoxin/list.nix)
-    // nixpkgs.lib.mapAttrs (_: pick) (import ../modules/list.nix)
+    nixpkgs.lib.mapAttrs (_: pick kind) (import ../mysoxin/list.nix)
+    // nixpkgs.lib.mapAttrs (_: pick kind) moduleList
     // {
-      profiles = import ../profiles/kind.nix kind;
+      profiles = profilesOf kind;
       soxin = import ../mysoxin/kind.nix kind;
-      soxincfg = import ../modules/kind.nix kind;
+      soxincfg = soxincfgModuleOf kind;
     };
 
   nixosModules = modulesOf "nixos";
@@ -168,8 +198,8 @@ let
 
   # Modules every configuration of a kind ("nixos", "darwin", "home") gets.
   globalModules = kind: [
-    (import ../modules/kind.nix kind)
-    (import ../profiles/kind.nix kind).core
+    (soxincfgModuleOf kind)
+    (profilesOf kind).core
 
     # import mysoxin
     # TODO: Get rid of this!
@@ -280,17 +310,9 @@ let
       { hostType = builtins.head types; }
     else
       throw "soxincfg: the ${kind} hosts do not agree on hostType";
-in
 
-{
-  home-managers,
-  hosts,
-  supportedSystems,
-  vars ? { },
-}:
-let
   outputs = soxin.lib.mkFleet {
-    inherit inputs;
+    inputs = allInputs;
     systems = supportedSystems;
 
     inherit channels channelsConfig sharedOverlays;
@@ -323,9 +345,9 @@ let
     # (copied into soxinv1/).
     specialArgs = {
       global = {
-        inherit (inputs) home-manager;
+        inherit (allInputs) home-manager;
         soxincfg = self;
-        soxinLib = import ../soxinv1/lib inputs;
+        soxinLib = import ../soxinv1/lib allInputs;
       };
       nixos = {
         inherit nixos-hardware nixos-wsl;
@@ -349,7 +371,7 @@ let
         { lib, ... }:
         {
           # soxincfg names its nix-darwin input `darwin`.
-          fleet.inputs.nix-darwin = inputs.darwin;
+          fleet.inputs.nix-darwin = allInputs.darwin;
 
           # soxincfg places the modules of Soxin's library itself, where the
           # modules they replace were.
@@ -383,7 +405,7 @@ let
                   pkgs.nixfmt-rfc-style
                   pkgs.nix-output-monitor
                   # Clan's CLI, from the clan-core Soxin builds the fleet with.
-                  inputs.soxin.inputs.clan-core.packages.${system}.clan-cli
+                  soxin.inputs.clan-core.packages.${system}.clan-cli
                 ];
               };
 
@@ -406,5 +428,5 @@ outputs
   darwinModules = outputs.darwinModules // modulesOf "darwin";
   homeModules = modulesOf "home";
   inherit nixosModule;
-  vars = recursiveUpdate (import ../vars inputs) vars;
+  inherit vars;
 }
