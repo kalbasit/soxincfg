@@ -7,8 +7,7 @@ let
   inherit (lib) mkEnableOption optionals recursiveUpdate;
 in
 {
-  imports =
-    [ ./nixos-config.nix ];
+  imports = [ ./nixos-config.nix ];
 
   options = {
     soxin.virtualisation.docker = {

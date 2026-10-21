@@ -7,8 +7,7 @@ let
   inherit (lib) mkEnableOption optionals recursiveUpdate;
 in
 {
-  imports =
-    [ ./darwin-config.nix ];
+  imports = [ ./darwin-config.nix ];
 
   options = {
     soxin.virtualisation.docker = {

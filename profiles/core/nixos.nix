@@ -4,10 +4,9 @@ let
   inherit (lib) optionals;
 in
 {
-  imports =
-    [ ./nixos-config.nix ]
-   
-   ;
+  imports = [ ./nixos-config.nix ]
+
+  ;
 
   # configure the keyboard
   soxincfg.settings.keyboard.enable = true;

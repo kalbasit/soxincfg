@@ -11,8 +11,7 @@ let
     ;
 in
 {
-  imports =
-    [ ./home-config.nix ];
+  imports = [ ./home-config.nix ];
 
   options.soxincfg.programs.chromium.enable = mkEnableOption "Install and configure Chromium";
   options.soxincfg.programs.chromium.surfingkeys.enable =
