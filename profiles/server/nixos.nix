@@ -17,8 +17,7 @@ in
   imports = [
     soxincfg.nixosModules.profiles.neovim.full
   ]
-  ++ [ ./nixos-config.nix ]
- ;
+  ++ [ ./nixos-config.nix ];
 
   config = {
     soxin = {

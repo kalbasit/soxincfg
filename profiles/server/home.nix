@@ -17,7 +17,7 @@ in
   imports = [
     soxincfg.homeModules.profiles.neovim.full
   ]
- 
+
   ++ [ ./home-config.nix ];
 
   config = {
