@@ -17,7 +17,7 @@ in
     { home.packages = [ chromium ]; }
 
     (mkIf cfg.surfingkeys.enable {
-      home.file.".surfingkeys.js".text = (
+      home.file.".surfingkeys.js".text =
         let
           vars = {
             home_dir = "${config.home.homeDirectory}";
@@ -27,8 +27,7 @@ in
         # one platform still evaluates on another.
         builtins.replaceStrings (map (name: "@${name}@") (
           builtins.attrNames vars
-        )) (builtins.attrValues vars) (builtins.readFile ./surfingkeys.js)
-      );
+        )) (builtins.attrValues vars) (builtins.readFile ./surfingkeys.js);
     })
   ]);
 }

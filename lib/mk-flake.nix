@@ -32,6 +32,7 @@ soxincfgInputs@{
   pre-commit-hooks,
   sops-nix,
   soxin,
+  treefmt-nix,
   ...
 }:
 
@@ -391,21 +392,36 @@ let
           perSystem =
             { pkgs, system, ... }:
             let
+              # The one formatter of the flake (soxincfg's, or the calling
+              # fleet's): nixfmt, through treefmt. `nix fmt` and the
+              # pre-commit hook run the same wrapper, so they agree on every
+              # file.
+              treefmt = treefmt-nix.lib.evalModule pkgs {
+                projectRootFile = "flake.nix";
+                programs.nixfmt.enable = true;
+              };
+
               pre-commit-check = pre-commit-hooks.lib.${system}.run {
-                src = ../.;
+                src = self;
                 hooks = {
                   statix.enable = true;
-                  nixfmt-rfc-style.enable = true;
+                  treefmt = {
+                    enable = true;
+                    packageOverrides.treefmt = treefmt.config.build.wrapper;
+                  };
                 };
               };
             in
             {
-              checks = { inherit pre-commit-check; };
+              checks = {
+                inherit pre-commit-check;
+                formatting = treefmt.config.build.check self;
+              };
 
               devShells.default = pkgs.mkShell {
                 inherit (pre-commit-check) shellHook;
                 buildInputs = [
-                  pkgs.nixfmt-rfc-style
+                  treefmt.config.build.wrapper
                   pkgs.nix-output-monitor
                 ]
                 # Clan's CLI, from the clan-core Soxin builds the fleet with,
@@ -415,7 +431,7 @@ let
                 ) soxin.inputs.clan-core.packages.${system}.clan-cli;
               };
 
-              formatter = pkgs.nixfmt-rfc-style;
+              formatter = treefmt.config.build.wrapper;
 
               # these packages construct themselves if and only if the system is supported.
               packages = import ../pkgs pkgs;
