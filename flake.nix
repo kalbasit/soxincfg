@@ -37,18 +37,6 @@
       # inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    pre-commit-hooks = {
-      inputs.nixpkgs.follows = "nixpkgs";
-      url = "github:cachix/pre-commit-hooks.nix";
-    };
-
-    # The formatter: `nix fmt` and the pre-commit hook both run its treefmt
-    # (nixfmt), so they format the same files the same way.
-    treefmt-nix = {
-      inputs.nixpkgs.follows = "nixpkgs";
-      url = "github:numtide/treefmt-nix";
-    };
-
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs = {

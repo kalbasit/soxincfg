@@ -22,7 +22,10 @@
           "sops-nix"
         ],
         "systems": "systems_4",
-        "treefmt-nix": "treefmt-nix"
+        "treefmt-nix": [
+          "soxin",
+          "treefmt-nix"
+        ]
       },
       "locked": {
         "lastModified": 1792143782,
@@ -311,6 +314,28 @@
         "owner": "gytis-ivaskevicius",
         "ref": "v1.5.1",
         "repo": "flake-utils-plus",
+        "type": "github"
+      }
+    },
+    "git-hooks": {
+      "inputs": {
+        "flake-compat": "flake-compat_4",
+        "nixpkgs": [
+          "soxin",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1791909798,
+        "narHash": "sha256-VAhpCOmrun/KXimYfR8NM88bciKCui7CqHHhThSzgag=",
+        "owner": "cachix",
+        "repo": "git-hooks.nix",
+        "rev": "1ba1dbfe28738c9a71c266be6efa5b89e75491a9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "cachix",
+        "repo": "git-hooks.nix",
         "type": "github"
       }
     },
@@ -603,27 +628,6 @@
         "type": "github"
       }
     },
-    "pre-commit-hooks_2": {
-      "inputs": {
-        "flake-compat": "flake-compat_4",
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1787424939,
-        "narHash": "sha256-O2tBn84NNuHrnqNVxx/XqsXwfYvS1YwBh+7CBnbCYsk=",
-        "owner": "cachix",
-        "repo": "pre-commit-hooks.nix",
-        "rev": "809414f0cdadf82cf11b06c2b29ba9b3168b3297",
-        "type": "github"
-      },
-      "original": {
-        "owner": "cachix",
-        "repo": "pre-commit-hooks.nix",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "darwin": "darwin",
@@ -636,10 +640,8 @@
         "nixpkgs-unstable": "nixpkgs-unstable",
         "nixvim": "nixvim",
         "nur": "nur",
-        "pre-commit-hooks": "pre-commit-hooks_2",
         "sops-nix": "sops-nix",
-        "soxin": "soxin",
-        "treefmt-nix": "treefmt-nix_2"
+        "soxin": "soxin"
       }
     },
     "sops-nix": {
@@ -666,6 +668,7 @@
       "inputs": {
         "clan-core": "clan-core",
         "flake-parts": "flake-parts_4",
+        "git-hooks": "git-hooks",
         "home-manager": [
           "home-manager"
         ],
@@ -677,14 +680,15 @@
         ],
         "sops-nix": [
           "sops-nix"
-        ]
+        ],
+        "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1792374131,
-        "narHash": "sha256-hH6t/SlAszNWKjZgmhz3PAbdvHLX9AF6Foo4zDz094E=",
+        "lastModified": 1792626314,
+        "narHash": "sha256-BT3ZA4jsfSqE3hrJDEluTPRSvJjN+e8f7RMQJBeXs1E=",
         "owner": "SoxinOS",
         "repo": "soxin",
-        "rev": "0b5abc89e59347913baf4ec5522521d7f78a03ee",
+        "rev": "a3e387d855adbc2851e683210f3508e5b0a5f8a6",
         "type": "github"
       },
       "original": {
@@ -759,27 +763,6 @@
       "inputs": {
         "nixpkgs": [
           "soxin",
-          "clan-core",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1791885023,
-        "narHash": "sha256-C3alQ2MEt0zVrUSho5NUDo3jmhbff72++bfwoqT9Omo=",
-        "owner": "numtide",
-        "repo": "treefmt-nix",
-        "rev": "0d6d739a833ba9a9c93034862e4a7b061a062a1c",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "treefmt-nix",
-        "type": "github"
-      }
-    },
-    "treefmt-nix_2": {
-      "inputs": {
-        "nixpkgs": [
           "nixpkgs"
         ]
       },
