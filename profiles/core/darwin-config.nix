@@ -13,15 +13,6 @@
       # enable the Nix sandbox
       # TODO: Re-enable the sandbox once https://github.com/NixOS/nix/issues/4119 is resolved.
       # sandbox = true;
-
-      substituters = [
-        # add my home cache to the list of substituters
-        "https://ncps.nasreddine.com"
-      ];
-
-      trusted-public-keys = [
-        "ncps.bigeye-bushi.ts.net:EYvKWn44YJquaYg2qPevn53ckpSvQmEPSrFoTj5KVdk="
-      ];
     };
 
     # setup NIX_PATH to allow users to access the nixpkgs that built the system

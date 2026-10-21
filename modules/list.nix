@@ -29,16 +29,6 @@
     darwin = ./programs/chromium/darwin.nix;
     home = ./programs/chromium/home.nix;
   };
-  claude-code = {
-    nixos = ./programs/claude-code/nixos.nix;
-    darwin = ./programs/claude-code/darwin.nix;
-    home = ./programs/claude-code/home.nix;
-  };
-  codex = {
-    nixos = ./programs/codex/nixos.nix;
-    darwin = ./programs/codex/darwin.nix;
-    home = ./programs/codex/home.nix;
-  };
   dbeaver = {
     nixos = ./programs/dbeaver/nixos.nix;
     darwin = ./programs/dbeaver/darwin.nix;
@@ -58,16 +48,6 @@
     nixos = ./programs/iterm2/nixos.nix;
     darwin = ./programs/iterm2/darwin.nix;
     home = ./programs/iterm2/home.nix;
-  };
-  maktab = {
-    nixos = ./programs/maktab/nixos.nix;
-    darwin = ./programs/maktab/darwin.nix;
-    home = ./programs/maktab/home.nix;
-  };
-  nazir = {
-    nixos = ./programs/nazir/nixos.nix;
-    darwin = ./programs/nazir/darwin.nix;
-    home = ./programs/nazir/home.nix;
   };
   neovim = {
     nixos = ./programs/neovim/nixos.nix;
@@ -108,11 +88,6 @@
     nixos = ./programs/vscode/nixos.nix;
     darwin = ./programs/vscode/darwin.nix;
     home = ./programs/vscode/home.nix;
-  };
-  weechat = {
-    nixos = ./programs/weechat/nixos.nix;
-    darwin = ./programs/weechat/darwin.nix;
-    home = ./programs/weechat/home.nix;
   };
   wezterm = {
     nixos = ./programs/wezterm/nixos.nix;
@@ -156,11 +131,6 @@
     darwin = ./services/iscsid/options.nix;
     home = ./services/iscsid/options.nix;
   };
-  nextcloud = {
-    nixos = ./services/nextcloud/nixos.nix;
-    darwin = ./services/nextcloud/darwin.nix;
-    home = ./services/nextcloud/home.nix;
-  };
   sleep-on-lan = {
     nixos = ./services/sleep-on-lan/nixos.nix;
     darwin = ./services/sleep-on-lan/darwin.nix;
@@ -187,16 +157,6 @@
     nixos = ./settings/keyboard/nixos.nix;
     darwin = ./settings/keyboard/darwin.nix;
     home = ./settings/keyboard/home.nix;
-  };
-  networking = {
-    nixos = ./settings/networking/nixos.nix;
-    darwin = ./settings/networking/darwin.nix;
-    home = ./settings/networking/home.nix;
-  };
-  nix = {
-    nixos = ./settings/nix/nixos.nix;
-    darwin = ./settings/nix/darwin.nix;
-    home = ./settings/nix/home.nix;
   };
   users = {
     nixos = ./settings/users/nixos.nix;

@@ -641,8 +641,8 @@ if [[ -z "${ZSH_PROFILE}" || -z "${SWM_STORY}" ]]; then
 	fi
 fi
 
-# AeroSpace names a story's workspace profile@story as well, but swm and maktab
-# stories are flat names now: the story is what follows the @.
+# AeroSpace names a story's workspace profile@story as well, but the story
+# manager's stories are flat names now: the story is what follows the @.
 if [[ -z "${ZSH_PROFILE}" || -z "${@story_env@}" ]]; then
 	if [[ "$OSTYPE" = darwin* ]] && have aerospace; then
 		active_workspace="$(aerospace list-workspaces --focused 2>/dev/null)"

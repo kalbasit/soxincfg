@@ -150,16 +150,6 @@ let
   };
 in
 {
-  imports = [
-    (import ../../agent/skills {
-      inherit (cfg) enable;
-
-      addSkill = name: body: {
-        home.file.".gemini/antigravity/global_workflows/${name}.md".text = body;
-      };
-    })
-  ];
-
   config = lib.mkIf cfg.enable {
     programs.vscode = {
       enable = true;
