@@ -23,8 +23,6 @@ in
 
         enable = true;
         lfs.enable = true;
-        userName = "Wael Nasreddine";
-        userEmail = "wael.nasreddine@gmail.com";
       };
     }
 
