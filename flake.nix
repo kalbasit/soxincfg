@@ -2,6 +2,13 @@
   description = "SoxinCFG by Wael";
 
   inputs = {
+    # Claude Code, packaged from Anthropic's release binaries and updated
+    # within hours of each release, ahead of nixpkgs.
+    claude-code-nix = {
+      url = "github:sadjow/claude-code-nix";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+
     deploy-rs.url = "github:serokell/deploy-rs";
     flake-utils-plus.url = "github:gytis-ivaskevicius/flake-utils-plus/v1.5.1";
     nixos-hardware.url = "github:NixOS/nixos-hardware";

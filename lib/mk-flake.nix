@@ -23,6 +23,7 @@
 # their library), and every module is split per kind, without `mode`;
 # `hostType` still names the host's operating system.
 soxincfgInputs@{
+  claude-code-nix,
   flake-utils-plus,
   nixos-hardware,
   nixos-wsl,
@@ -97,13 +98,10 @@ let
               worktrunk
               ;
 
-            # Pinned ahead of nixpkgs-unstable: the API refuses Claude Code
-            # releases it no longer supports, and bumping the whole channel for
-            # it is not always wanted. The manifest is Anthropic's release
-            # manifest for the version; drop the override once unstable catches up.
-            claude-code = channels.nixpkgs-unstable.claude-code.override {
-              manifest = super.lib.importJSON ./claude-code-manifest.json;
-            };
+            # From claude-code-nix rather than nixpkgs: the API refuses Claude
+            # Code releases it no longer supports, and nixpkgs lags behind
+            # them. Bump with `nix flake update claude-code-nix`.
+            inherit (claude-code-nix.packages.${super.stdenv.hostPlatform.system}) claude-code;
 
             # direnv tests are failing on aarch64-darwin
             # https://github.com/NixOS/nixpkgs/issues/507531
