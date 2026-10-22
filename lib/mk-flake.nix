@@ -29,7 +29,6 @@ soxincfgInputs@{
   nixpkgs,
   nixpkgs-unstable,
   nur,
-  pre-commit-hooks,
   sops-nix,
   soxin,
   ...
@@ -56,7 +55,6 @@ let
     mapAttrs
     mapAttrsToList
     optionalAttrs
-    removeAttrs
     unique
     ;
 
@@ -284,7 +282,7 @@ let
       throw "soxincfg: host `${name}` has mode `${host.mode}`, which is neither NixOS nor nix-darwin";
 
   # A v1 host as a Soxin host.
-  hostOf = kind: name: host: {
+  hostOf = kind: _name: host: {
     inherit kind;
     inherit (host) system;
     channel = host.channelName or "nixpkgs";
@@ -322,7 +320,7 @@ let
 
     hosts =
       mapAttrs (name: host: hostOf (kindOf name host) name host) hosts
-      // mapAttrs (name: host: {
+      // mapAttrs (_name: host: {
         kind = "home-manager";
         inherit (host) system;
         channel = host.channelName or "nixpkgs";
@@ -389,23 +387,18 @@ let
           flake.clan.meta.name = "soxincfg";
 
           perSystem =
-            { pkgs, system, ... }:
-            let
-              pre-commit-check = pre-commit-hooks.lib.${system}.run {
-                src = ../.;
-                hooks = {
-                  statix.enable = true;
-                  nixfmt-rfc-style.enable = true;
-                };
-              };
-            in
             {
-              checks = { inherit pre-commit-check; };
-
+              config,
+              pkgs,
+              system,
+              ...
+            }:
+            {
               devShells.default = pkgs.mkShell {
-                inherit (pre-commit-check) shellHook;
+                # The pre-commit hook and the formatter, from Soxin's formatter
+                # piece (imported below).
+                inputsFrom = [ config.pre-commit.devShell ];
                 buildInputs = [
-                  pkgs.nixfmt-rfc-style
                   pkgs.nix-output-monitor
                 ]
                 # Clan's CLI, from the clan-core Soxin builds the fleet with,
@@ -415,13 +408,15 @@ let
                 ) soxin.inputs.clan-core.packages.${system}.clan-cli;
               };
 
-              formatter = pkgs.nixfmt-rfc-style;
-
               # these packages construct themselves if and only if the system is supported.
               packages = import ../pkgs pkgs;
             };
         }
       )
+
+      # `nix fmt` and the pre-commit hook on one treefmt (deadnix, statix and
+      # nixfmt), over the calling flake's own files: Soxin's, not a copy.
+      soxin.flakeModules.formatter
     ];
   };
 in

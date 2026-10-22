@@ -12,38 +12,6 @@ let
 
   # copied from home-manager
   # TODO: Move this to NixOS instead!
-  pluginName = p: if types.package.check p then p.pname else p.plugin.pname;
-  configPlugins = {
-    assertions = [
-      (
-        let
-          hasBadPluginName = p: !(hasPrefix "tmuxplugin" (pluginName p));
-          badPlugins = filter hasBadPluginName cfg.plugins;
-        in
-        {
-          assertion = badPlugins == [ ];
-          message =
-            "Invalid tmux plugin (not prefixed with \"tmuxplugins\"): "
-            + concatMapStringsSep ", " pluginName badPlugins;
-        }
-      )
-    ];
-
-    programs.tmux.extraConfig = ''
-      # ============================================= #
-      # Load plugins with NixOS                       #
-      # --------------------------------------------- #
-      ${
-        (concatMapStringsSep "\n\n" (p: ''
-          # ${pluginName p}
-          # ---------------------
-          ${p.extraConfig or ""}
-          run-shell ${if types.package.check p then p.rtp else p.plugin.rtp}
-        '') cfg.plugins)
-      }
-      # ============================================= #
-    '';
-  };
 in
 {
   options = {

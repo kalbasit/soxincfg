@@ -10,11 +10,7 @@ let
     mkEnableOption
     mkIf
     mkMerge
-    optionalAttrs
-    singleton
     ;
-
-  inherit (pkgs) replaceVars wezterm;
 
   cfg = config.soxincfg.programs.wezterm;
 in

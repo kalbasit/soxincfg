@@ -37,11 +37,6 @@
       # inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    pre-commit-hooks = {
-      inputs.nixpkgs.follows = "nixpkgs";
-      url = "github:cachix/pre-commit-hooks.nix";
-    };
-
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs = {

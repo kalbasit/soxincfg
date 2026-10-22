@@ -59,32 +59,6 @@ let
         };
       };
     };
-
-  mimeTypes = [
-    "application/pdf"
-    "application/x-extension-htm"
-    "application/x-extension-html"
-    "application/x-extension-shtml"
-    "application/x-extension-xht"
-    "application/x-extension-xhtml"
-    "application/xhtml+xml"
-    "text/html"
-    "x-scheme-handler/about"
-    "x-scheme-handler/chrome"
-    "x-scheme-handler/ftp"
-    "x-scheme-handler/http"
-    "x-scheme-handler/https"
-    "x-scheme-handler/irc"
-    "x-scheme-handler/ircs"
-    "x-scheme-handler/mailto"
-    "x-scheme-handler/unknown"
-    "x-scheme-handler/webcal"
-  ];
-  rbrowserMimeList = concatStringsSep "\n" (map (mimeType: "${mimeType}=rbrowser.desktop") mimeTypes);
-  mimeList = ''
-    [Default Applications]
-    ${rbrowserMimeList}
-  '';
 in
 {
   options = {

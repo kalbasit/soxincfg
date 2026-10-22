@@ -1,8 +1,8 @@
-{ nixpkgs, ... }@inputs:
+{ nixpkgs, ... }:
 
 let
   inherit (nixpkgs) lib;
-  inherit (lib) mkEnableOption mkOption types;
+  inherit (lib) mkOption types;
 in
 rec {
   programmingLanguages = types.submodule (

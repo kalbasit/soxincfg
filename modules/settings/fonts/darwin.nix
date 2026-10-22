@@ -8,13 +8,6 @@
 with lib;
 let
   cfg = config.soxincfg.settings.fonts;
-  packages = with pkgs; [
-    material-design-icons
-    font-awesome
-
-    nerd-fonts._0xproto
-    nerd-fonts.symbols-only
-  ];
 in
 {
   # TODO: find a nice way of selecting a default font.
