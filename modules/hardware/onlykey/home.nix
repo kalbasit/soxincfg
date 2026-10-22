@@ -10,8 +10,6 @@ let
     mkEnableOption
     mkIf
     mkOption
-    optionalAttrs
-    optionals
     types
     ;
 

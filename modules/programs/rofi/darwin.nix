@@ -8,7 +8,6 @@ let
   inherit (lib)
     mkEnableOption
     mkIf
-    optionals
     ;
 
   cfg = config.soxincfg.programs.rofi;

@@ -1,8 +1,6 @@
 { nixpkgs, home-manager, ... }:
 
 let
-  inherit (nixpkgs) lib;
-  inherit (lib) mkEnableOption mkOption types;
 
   hmModuleEval =
     let

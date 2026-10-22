@@ -4,11 +4,6 @@
   ...
 }:
 
-let
-  inherit (lib)
-    optionals
-    ;
-in
 {
   imports = [
     soxincfg.homeModules.profiles.neovim.mini

@@ -6,7 +6,6 @@ let
   inherit (nixpkgs) lib;
   inherit (lib)
     mkDefault
-    mkEnableOption
     mkOption
     types
     ;

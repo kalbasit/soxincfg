@@ -9,7 +9,6 @@ let
     literalExpression
     mkEnableOption
     mkOption
-    optionals
     types
     ;
 in

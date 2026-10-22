@@ -4,7 +4,7 @@
 }:
 
 let
-  inherit (lib) mkEnableOption optionals recursiveUpdate;
+  inherit (lib) mkEnableOption recursiveUpdate;
 in
 {
   imports = [ ./darwin-config.nix ];

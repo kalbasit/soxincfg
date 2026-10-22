@@ -4,11 +4,6 @@
   ...
 }:
 
-let
-  inherit (lib)
-    optionals
-    ;
-in
 {
   imports = [
     soxincfg.darwinModules.profiles.neovim.mini

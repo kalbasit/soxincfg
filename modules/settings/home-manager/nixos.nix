@@ -5,7 +5,5 @@
   ...
 }:
 
-let
-  inherit (lib) mkIf optionalAttrs;
-in
-{ }
+{
+}

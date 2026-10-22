@@ -12,28 +12,6 @@ with lib;
 let
   cfg = config.soxin.programs.less;
 
-  keyboardLayout = cfg.keyboardLayout.console.keyMap;
-
-  colemakKeybindings = ''
-    #command
-    n left-scroll
-    e forw-line
-    i back-line
-    o right-scroll
-    k repeat-search
-    K reverse-search
-  '';
-
-  bepoKeybindings = ''
-    #command
-    t left-scroll
-    s forw-line
-    r back-line
-    n right-scroll
-    ' repeat-search
-    ? reverse-search
-  '';
-
 in
 {
   options.soxin.programs.less = soxinLib.mkSoxinModule {

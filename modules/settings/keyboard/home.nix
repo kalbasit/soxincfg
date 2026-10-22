@@ -19,12 +19,6 @@ let
       keyMap = "colemak";
     };
   };
-
-  usLayout = {
-    x11 = {
-      layout = "us";
-    };
-  };
 in
 {
   options = {

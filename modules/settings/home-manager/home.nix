@@ -6,7 +6,7 @@
 }:
 
 let
-  inherit (lib) mkIf optionalAttrs;
+  inherit (lib) mkIf;
 in
 {
   home.activation.sops-nix-post = mkIf (config.sops.secrets != { }) (

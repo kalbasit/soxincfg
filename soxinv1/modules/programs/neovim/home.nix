@@ -102,13 +102,13 @@ in
         "viAlias"
         "vimAlias"
         "vimdiffAlias"
-      ] (name: true))
+      ] (_name: true))
       # Add support for NodeJS, Python 2 and 3 as well as Ruby
       // (genAttrs [
         "withNodeJs"
         "withPython3"
         "withRuby"
-      ] (name: true));
+      ] (_name: true));
     }
   ]);
 }

@@ -10,7 +10,6 @@ let
     mkEnableOption
     mkIf
     mkMerge
-    optionalAttrs
     singleton
     ;
 

@@ -1,7 +1,7 @@
 { lib, ... }:
 
 let
-  inherit (lib) mkEnableOption optionals;
+  inherit (lib) mkEnableOption;
 in
 {
   imports = [ ./home-config.nix ];

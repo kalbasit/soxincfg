@@ -4,15 +4,6 @@
   ...
 }:
 
-let
-  inherit (lib)
-    mkDefault
-    mkEnableOption
-    mkIf
-    optionalAttrs
-    optionals
-    ;
-in
 {
   imports = [
     soxincfg.nixosModules.profiles.neovim.full

@@ -5,9 +5,6 @@
   ...
 }:
 
-let
-  inherit (lib) singleton;
-in
 {
   environment.homeBinInPath = true;
 

@@ -7,7 +7,6 @@ let
   inherit (lib)
     mkEnableOption
     mkOption
-    optionals
     types
     ;
 in
