@@ -188,7 +188,6 @@ in
         historyLimit = 10000;
         keyMode = "vi";
         secureSocket = pkgs.stdenv.isLinux;
-        shortcut = "t";
 
         terminal =
           if pkgs.stdenv.isLinux then
