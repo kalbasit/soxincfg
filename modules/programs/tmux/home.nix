@@ -158,7 +158,7 @@ in
             setenv -gu __HM_ZSH_SESS_VARS_SOURCED
 
             # Last active window
-            bind C-t last-window
+            bind C-b last-window
             bind C-r switch-client -l
             # bind C-n next-window
             bind C-n switch-client -p
