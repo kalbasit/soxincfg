@@ -53,11 +53,13 @@ let
       # The stories, most recently active first, then the other workspaces.
       # A workspace with windows is marked open, a story shows its age. swm
       # prints its lists on stderr, and lines with spaces are its errors;
-      # maktab prints its list alone on stdout.
+      # maktab prints its list alone on stdout. A list that takes longer than
+      # 5 seconds, such as one over a stale ssh connection, is dropped and
+      # the picker shows the workspaces alone.
       candidates() {
         local stories=""
         if command -v ${storyListBin} >/dev/null; then
-          stories="$(${storyList}${stderrRedirect} || true)"
+          stories="$(timeout 5 ${storyList}${stderrRedirect} || true)"
         fi
         awk -F '\t' \
           -v now="$(date +%s)" \
@@ -106,6 +108,12 @@ let
         [[ "$workspace" == *@* ]] || return 0
         [[ "$(aerospace list-windows --workspace "$workspace" --count)" -eq 0 ]] || return 0
 
+        local -A before=()
+        local id
+        for id in $(aerospace list-windows --all --format '%{window-id}'); do
+          before[$id]=1
+        done
+
         local url=""
         ${lib.optionalString (cfg.storyUrl != null) ''
           url="$(${cfg.storyUrl} "''${workspace#*@}" || true)"
@@ -124,6 +132,24 @@ let
         end tell
       end run
       APPLESCRIPT
+
+        # Launching can focus the app's window on another workspace first,
+        # and AeroSpace follows it there, where the new windows then land.
+        # Bring the browser's and the terminal's new windows back, waiting
+        # up to 10 seconds for both, then go to the story's workspace.
+        local app ws found
+        for _ in $(seq 50); do
+          found=0
+          while IFS='|' read -r id app ws; do
+            [[ -z "''${before[$id]:-}" ]] || continue
+            [[ "$app" == com.google.Chrome || "$app" == com.googlecode.iterm2 ]] || continue
+            found=$((found + 1))
+            [[ "$ws" == "$workspace" ]] || aerospace move-node-to-workspace --window-id "$id" "$workspace"
+          done < <(aerospace list-windows --all --format '%{window-id}|%{app-bundle-id}|%{workspace}')
+          ((found < 2)) || break
+          sleep 0.2
+        done
+        aerospace workspace "$workspace"
       }
 
       case "$action" in
