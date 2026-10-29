@@ -11,6 +11,8 @@ let
   # The story manager's binary. It has swm's commands used here.
   storyManagerBin = cfg.storyManager;
 
+  storyList = if cfg.storyList != null then cfg.storyList else "${storyManagerBin} story list";
+
   # The i3 dynamic workspaces, on AeroSpace: pick a workspace among the
   # existing ones and the stories, shown as profile@story, or type a new
   # name to create it. Run as `aerospace-story go|move|summon|rename`.
@@ -39,22 +41,55 @@ let
       # manager where home-manager and nix-darwin install it.
       PATH="$PATH:/etc/profiles/per-user/$(id -un)/bin:$HOME/.nix-profile/bin:/run/current-system/sw/bin"
 
+      # The stories, most recently active first, then the other workspaces.
+      # A workspace with windows is marked open, a story shows its age. The
+      # story manager prints its lists on stderr, and lines with spaces are
+      # its errors.
       candidates() {
-        aerospace list-workspaces --all
+        local stories=""
         if command -v ${storyManagerBin} >/dev/null; then
-          ${storyManagerBin} story list | sed 's|^|${cfg.storyProfile}@|'
+          stories="$(${storyList} 2>&1 || true)"
         fi
+        awk -F '\t' \
+          -v now="$(date +%s)" \
+          -v profile=${lib.escapeShellArg cfg.storyProfile} \
+          -v open="$(aerospace list-windows --all --format '%{workspace}')" \
+          -v all="$(aerospace list-workspaces --all)" '
+          function age(t, d) {
+            d = now - t
+            if (d < 60) return "now"
+            if (d < 3600) return int(d / 60) "m ago"
+            if (d < 86400) return int(d / 3600) "h ago"
+            return int(d / 86400) "d ago"
+          }
+          function line(ws, t, note) {
+            note = (ws in isopen) ? "● open" : ""
+            if (t ~ /^[0-9]+$/) note = note (note ? " · " : "") age(t)
+            print ws (note ? "  " note : "")
+          }
+          BEGIN {
+            n = split(open, o, "\n")
+            for (i = 1; i <= n; i++) if (o[i] != "") isopen[o[i]] = 1
+          }
+          NF && $1 !~ /[[:space:]]/ && !seen[profile "@" $1]++ { line(profile "@" $1, $2) }
+          END {
+            n = split(all, a, "\n")
+            for (i = 1; i <= n; i++) if (a[i] != "" && !seen[a[i]]++) line(a[i])
+          }
+        ' <<<"$stories"
       }
 
       # -m returns the typed text when it matches nothing, which is how a
-      # new workspace gets its name. Escape prints nothing.
-      workspace="$(candidates | awk 'NF && !seen[$0]++' | ${config.homebrew.prefix}/bin/choose -m -e -p "$prompt" || true)"
+      # new workspace gets its name. Escape prints nothing. The notes follow
+      # two spaces, which a workspace name never holds.
+      workspace="$(candidates | ${config.homebrew.prefix}/bin/choose -m -e -p "$prompt" || true)"
+      workspace="''${workspace%%  *}"
       [[ -n "$workspace" ]] || exit 0
 
-      # A story's workspace that has no window yet gets a browser and a
-      # terminal. Both land on the focused workspace, this one. The shell
-      # reads ZSH_PROFILE and the story from the workspace name, then opens
-      # the story's tmux workspace.
+      # A story's workspace that has no window yet gets a browser, on the
+      # story's URL when storyUrl has one, and a terminal. Both land on the
+      # focused workspace, this one. The shell reads ZSH_PROFILE and the
+      # story from the workspace name, then opens the story's tmux workspace.
       # The terminal uses the Story profile (home-config.nix), whose
       # Cmd-clicked links open in this workspace's Chrome window, or the
       # default profile while that one is missing.
@@ -62,7 +97,11 @@ let
         [[ "$workspace" == *@* ]] || return 0
         [[ "$(aerospace list-windows --workspace "$workspace" --count)" -eq 0 ]] || return 0
 
-        /usr/bin/open -na "Google Chrome" --args --new-window || true
+        local url=""
+        ${lib.optionalString (cfg.storyUrl != null) ''
+          url="$(${cfg.storyUrl} "''${workspace#*@}" || true)"
+        ''}
+        /usr/bin/open -na "Google Chrome" --args --new-window ''${url:+"$url"} || true
 
         /usr/bin/osascript - "${storyManagerBin} workspace open $(printf %q "''${workspace#*@}")" <<'APPLESCRIPT' || true
       on run argv
@@ -154,11 +193,7 @@ in
         # even when they are invisible.
         # This config version is only available since 'config-version = 2'
         # Fallback value (if you omit the key): persistent-workspaces = []
-        persistent-workspaces = [
-          "1"
-          "2"
-          "3"
-        ];
+        persistent-workspaces = [ ];
 
         # A callback that runs every time binding mode changes
         # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes

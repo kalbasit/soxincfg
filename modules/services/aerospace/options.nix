@@ -25,6 +25,29 @@ in
       '';
     };
 
+    storyList = mkOption {
+      type = types.nullOr types.str;
+      default = null;
+      example = "my-story-manager-recent";
+      description = ''
+        The command that lists the stories the switcher offers, one per line,
+        most recently active first. A line can follow the story with a tab and
+        the Unix time of its last activity, which the switcher shows as an
+        age. Null lists them with `storyManager story list`, without times.
+      '';
+    };
+
+    storyUrl = mkOption {
+      type = types.nullOr types.str;
+      default = null;
+      example = "my-story-url";
+      description = ''
+        The command, run with a story's name, that prints the URL the browser
+        of a new story workspace opens, such as the story's ticket. Printing
+        nothing opens an empty window. Null always opens an empty window.
+      '';
+    };
+
     storyEnv = mkOption {
       type = types.str;
       default = "SWM_STORY";
