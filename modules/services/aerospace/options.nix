@@ -34,6 +34,9 @@ in
         most recently active first. A line can follow the story with a tab and
         the Unix time of its last activity, which the switcher shows as an
         age. Null lists them with `storyManager story list`, without times.
+        A command whose binary is `maktab` is read from stdout alone; any
+        other is read from stdout and stderr, and lines with spaces are
+        skipped as its errors, as swm prints them.
       '';
     };
 
