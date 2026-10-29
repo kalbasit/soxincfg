@@ -13,6 +13,15 @@ let
 
   storyList = if cfg.storyList != null then cfg.storyList else "${storyManagerBin} story list";
 
+  # The binary the list runs, which `command -v` must find.
+  storyListBin = builtins.head (lib.splitString " " storyList);
+
+  # maktab prints its list on stdout and its errors on stderr; swm prints
+  # both on stderr, its errors as lines with spaces.
+  storyListIsMaktab = baseNameOf storyListBin == "maktab";
+  stderrRedirect = lib.optionalString (!storyListIsMaktab) " 2>&1";
+  errorFilter = lib.optionalString (!storyListIsMaktab) " && $1 !~ /[[:space:]]/";
+
   # The i3 dynamic workspaces, on AeroSpace: pick a workspace among the
   # existing ones and the stories, shown as profile@story, or type a new
   # name to create it. Run as `aerospace-story go|move|summon|rename`.
@@ -42,13 +51,13 @@ let
       PATH="$PATH:/etc/profiles/per-user/$(id -un)/bin:$HOME/.nix-profile/bin:/run/current-system/sw/bin"
 
       # The stories, most recently active first, then the other workspaces.
-      # A workspace with windows is marked open, a story shows its age. The
-      # story manager prints its lists on stderr, and lines with spaces are
-      # its errors.
+      # A workspace with windows is marked open, a story shows its age. swm
+      # prints its lists on stderr, and lines with spaces are its errors;
+      # maktab prints its list alone on stdout.
       candidates() {
         local stories=""
-        if command -v ${storyManagerBin} >/dev/null; then
-          stories="$(${storyList} 2>&1 || true)"
+        if command -v ${storyListBin} >/dev/null; then
+          stories="$(${storyList}${stderrRedirect} || true)"
         fi
         awk -F '\t' \
           -v now="$(date +%s)" \
@@ -71,7 +80,7 @@ let
             n = split(open, o, "\n")
             for (i = 1; i <= n; i++) if (o[i] != "") isopen[o[i]] = 1
           }
-          NF && $1 !~ /[[:space:]]/ && !seen[profile "@" $1]++ { line(profile "@" $1, $2) }
+          NF${errorFilter} && !seen[profile "@" $1]++ { line(profile "@" $1, $2) }
           END {
             n = split(all, a, "\n")
             for (i = 1; i <= n; i++) if (a[i] != "" && !seen[a[i]]++) line(a[i])
