@@ -29,7 +29,9 @@ let
       restored="$state/restored"
       mkdir -p "$state"
 
-      server() { /usr/bin/pgrep -x AeroSpace | head -n 1; }
+      # AeroSpace runs the restore and the save on a workspace change as its
+      # children, and pgrep skips its own ancestors without -a.
+      server() { /usr/bin/pgrep -a -x AeroSpace | head -n 1; }
 
       case "''${1:-}" in
       save)
