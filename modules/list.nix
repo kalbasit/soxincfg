@@ -54,6 +54,16 @@
     darwin = ./programs/iterm2/darwin.nix;
     home = ./programs/iterm2/home.nix;
   };
+  kubernetes-client = {
+    nixos = ./programs/kubernetes-client/options.nix;
+    darwin = ./programs/kubernetes-client/options.nix;
+    home = ./programs/kubernetes-client/home.nix;
+  };
+  mosh = {
+    nixos = ./programs/mosh/options.nix;
+    darwin = ./programs/mosh/options.nix;
+    home = ./programs/mosh/home.nix;
+  };
   neovim = {
     nixos = ./programs/neovim/nixos.nix;
     darwin = ./programs/neovim/darwin.nix;
@@ -177,6 +187,11 @@
     nixos = ./settings/keyboard/nixos.nix;
     darwin = ./settings/keyboard/darwin.nix;
     home = ./settings/keyboard/home.nix;
+  };
+  macos-defaults = {
+    nixos = ./settings/macos-defaults/options.nix;
+    darwin = ./settings/macos-defaults/darwin.nix;
+    home = ./settings/macos-defaults/home.nix;
   };
   users = {
     nixos = ./settings/users/nixos.nix;
