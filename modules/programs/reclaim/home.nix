@@ -24,7 +24,9 @@ let
       pkgs.jq
       cfg.storyManager.package
       pkgs.tmux
-    ];
+    ]
+    # No /proc there: lsof finds the processes working inside a story.
+    ++ lib.optional pkgs.stdenv.hostPlatform.isDarwin pkgs.lsof;
     runtimeEnv.RECLAIM_STORY_MANAGER = cfg.storyManager.name;
     text = builtins.readFile ./reclaim.sh;
   };

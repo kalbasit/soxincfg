@@ -18,9 +18,9 @@ Steps (all run by default, in this order):
 
 A story is done when, for each of its worktrees (including nested ones such as
 .claude/worktrees), there are no uncommitted changes and HEAD is either already in the
-default branch or is the head of a merged/closed PR for its branch. Story dirs $SM no
-longer tracks are checked the same way. Stories with an attached tmux client or a
-process working inside them (other than idle shells and daemons) are skipped.
+default branch or is the head of a merged/closed GitHub PR for its branch. Story dirs
+$SM no longer tracks are checked the same way. Stories with an attached tmux client or
+a process working inside them (other than idle shells and daemons) are skipped.
 
 Options:
   -n, --dry-run  show what would be done without changing anything
@@ -81,16 +81,27 @@ confirm() {
 
 sm_config() { "$SM" config get "$1" 2>&1 | tail -n 1; }
 
+IS_DARWIN=0
+[[ $(uname -s) == Darwin ]] && IS_DARWIN=1
+
 CODE_ROOT=${CODE_PATH:-$(sm_config code_root)}
 DEFAULT_STORY=$(sm_config default_story)
 [[ -d $CODE_ROOT ]] || { echo "$SM code root '$CODE_ROOT' is not a directory" >&2; exit 1; }
 STORIES_DIR="$CODE_ROOT/stories"
-STORY_JSON_DIR=${RECLAIM_STORY_JSON_DIR:-"${XDG_DATA_HOME:-$HOME/.local/share}/$SM/stories"}
-TMUX_SOCKET_DIR="${XDG_RUNTIME_DIR:-/tmp}/$SM/tmux"
+
+# $SM keeps its tmux sockets in adrg/xdg's runtime dir, which falls back to
+# ~/Library/Application Support on macOS and /run/user/UID on Linux.
+if [[ -n ${XDG_RUNTIME_DIR:-} ]]; then
+  TMUX_SOCKET_DIR="$XDG_RUNTIME_DIR/$SM/tmux"
+elif ((IS_DARWIN)); then
+  TMUX_SOCKET_DIR="$HOME/Library/Application Support/$SM/tmux"
+else
+  TMUX_SOCKET_DIR="/run/user/$(id -u)/$SM/tmux"
+fi
 
 if [[ -n ${BAZEL_OUTPUT_USER_ROOT:-} ]]; then
   BAZEL_ROOT=$BAZEL_OUTPUT_USER_ROOT
-elif [[ $(uname -s) == Darwin ]]; then
+elif ((IS_DARWIN)); then
   BAZEL_ROOT="/private/var/tmp/_bazel_$USER"
 else
   BAZEL_ROOT="$HOME/.cache/bazel/_bazel_$USER"
@@ -135,6 +146,8 @@ worktree_done() {
   fi
   branch=$(git -C "$wt" symbolic-ref --short -q HEAD) || { REASON="detached HEAD with unmerged commits"; return 1; }
   slug=$(repo_slug "$wt") || { REASON="no origin remote"; return 1; }
+  # Only GitHub PRs can be looked up; a squash-merged branch elsewhere is kept.
+  [[ $slug == github.com/* ]] || { REASON="unmerged commits; no PR lookup outside GitHub ($slug)"; return 1; }
   prs=$(gh pr list -R "$slug" --head "$branch" --state all --json number,state,headRefOid 2>/dev/null) || {
     REASON="unmerged commits; PR lookup on $slug failed"
     return 1
@@ -160,26 +173,50 @@ story_worktrees() {
     sort -rn | cut -d' ' -f2-
 }
 
+# Every process's working directory, as "pid<TAB>ppid<TAB>comm<TAB>cwd": from
+# /proc on Linux, from lsof and ps where there is no /proc (macOS).
+proc_cwds() {
+  local cwd pid
+  if [[ -d /proc/self ]]; then
+    for cwd in /proc/[0-9]*/cwd; do
+      pid=${cwd#/proc/}
+      pid=${pid%/cwd}
+      cwd=$(readlink "$cwd" 2>/dev/null) || continue
+      printf '%s\t%s\t%s\t%s\n' "$pid" \
+        "$(awk '/^PPid:/ { print $2 }' "/proc/$pid/status" 2>/dev/null)" \
+        "$(<"/proc/$pid/comm")" "$cwd"
+    done 2>/dev/null
+  elif command -v lsof >/dev/null; then
+    awk -F'\t' -v OFS='\t' '
+      NR == FNR { ppid[$1] = $2; next }
+      /^p/ { pid = substr($0, 2) }
+      /^c/ { comm = substr($0, 2) }
+      /^n/ { print pid, ppid[pid], comm, substr($0, 2) }
+    ' <(ps -A -o pid=,ppid= | awk -v OFS='\t' '{ print $1, $2 }') \
+      <(lsof -nP +c 0 -d cwd -Fpcn 2>/dev/null)
+  fi
+}
+
 story_busy() {
-  local name=$1 dir=$2 sock="$TMUX_SOCKET_DIR/$1.sock" pid cwd comm ppid
+  local name=$1 dir=$2 sock="$TMUX_SOCKET_DIR/$1.sock" real pid ppid comm cwd
   if [[ -S $sock ]] && [[ -n $(tmux -S "$sock" list-clients 2>/dev/null) ]]; then
     REASON="tmux client attached"
     return 0
   fi
-  [[ $PWD == "$dir" || $PWD == "$dir"/* ]] && { REASON="current directory"; return 0; }
-  [[ -d /proc ]] || return 1
-  for cwd in /proc/[0-9]*/cwd; do
-    pid=${cwd#/proc/}
-    pid=${pid%/cwd}
-    cwd=$(readlink "$cwd" 2>/dev/null) || continue
-    [[ $cwd == "$dir" || $cwd == "$dir"/* ]] || continue
-    comm=$(<"/proc/$pid/comm")
-    ppid=$(awk '/^PPid:/ { print $2 }' "/proc/$pid/status" 2>/dev/null)
+  real=$(realpath "$dir" 2>/dev/null) || real=$dir
+  [[ $PWD == "$dir" || $PWD == "$dir"/* || $PWD == "$real" || $PWD == "$real"/* ]] && {
+    REASON="current directory"
+    return 0
+  }
+  while IFS=$'\t' read -r pid ppid comm cwd; do
+    [[ $cwd == "$dir" || $cwd == "$dir"/* || $cwd == "$real" || $cwd == "$real"/* ]] || continue
+    comm=${comm#-}
+    comm=${comm##*/}
     [[ $ppid == 1 || $comm == java || $comm == bazel* ]] && continue
     [[ $comm == zsh || $comm == bash || $comm == sh || $comm == fish ]] && continue
     REASON="in use by $comm (pid $pid)"
     return 0
-  done
+  done < <(proc_cwds)
   return 1
 }
 
@@ -236,22 +273,21 @@ prune_stories() {
   done
   confirm "Remove ${#done_stories[@]} done stories?" || return
 
-  local json repo branch branches
+  local tracked repo branch branches
   for name in "${done_stories[@]}"; do
     dir="$STORIES_DIR/$name"
-    json="$STORY_JSON_DIR/$name.json"
-    [[ -f $json ]] || json=
+    # The worktrees $SM records for the story; it removes those itself.
+    tracked=$("$SM" story show --json "$name" 2>/dev/null) || tracked=
     branches=()
     while IFS= read -r wt; do
       repo=$(main_repo "$wt") || continue
       branch=$(git -C "$wt" symbolic-ref --short -q HEAD) && branches+=("$repo $branch")
-      if [[ -n $json ]] && jq -e --arg p "${wt#"$dir"/}" \
-        'any(.projects[]; ([.host] + .segments | join("/")) == $p)' "$json" >/dev/null; then
+      if [[ -n $tracked ]] && jq -e --arg p "$wt" 'any(.projects[]; .worktree_path == $p)' <<<"$tracked" >/dev/null; then
         continue
       fi
       run git -C "$repo" worktree remove --force "$wt"
     done < <(story_worktrees "$dir")
-    [[ -n $json ]] && run "$SM" story remove --force "$name"
+    [[ -n $tracked ]] && run "$SM" story remove --force "$name"
     for branch in "${branches[@]}"; do
       run git -C "${branch%% *}" branch -D "${branch#* }"
     done
@@ -332,7 +368,7 @@ prune_terraform() {
 
 avail() {
   df --output=target "$HOME" "$CODE_ROOT" "$BAZEL_ROOT" 2>/dev/null | tail -n +2 | sort -u |
-    xargs -r df --output=avail -B1 | awk 'NR > 1 { s += $1 } END { print s }'
+    xargs -r -d '\n' df --output=avail -B1 | awk 'NR > 1 { s += $1 } END { print s + 0 }'
 }
 
 ((DRY_RUN)) && echo "Dry run: nothing will be changed."
