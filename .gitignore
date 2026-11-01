@@ -11,3 +11,7 @@
 /.claude/settings.local.json
 /.claude/worktrees/
 /.container-use/environment.json
+
+# Python bytecode
+__pycache__/
+*.pyc
