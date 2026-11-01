@@ -1,0 +1,6 @@
+{
+  "name": "sparse-worktrees",
+  "version": "1.0.0",
+  "description": "Worktrees of large repos (listed in ~/.config/sparse-worktree/config.json) are created as cone sparse checkouts, and missing-path errors widen the cone automatically.",
+  "author": { "name": "Wael Nasreddine" }
+}

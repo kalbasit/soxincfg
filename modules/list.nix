@@ -29,6 +29,11 @@
     darwin = ./programs/chromium/darwin.nix;
     home = ./programs/chromium/home.nix;
   };
+  claude-workflow = {
+    nixos = ./programs/claude-workflow/options.nix;
+    darwin = ./programs/claude-workflow/options.nix;
+    home = ./programs/claude-workflow/home.nix;
+  };
   dbeaver = {
     nixos = ./programs/dbeaver/nixos.nix;
     darwin = ./programs/dbeaver/darwin.nix;
@@ -59,10 +64,20 @@
     darwin = ./programs/pet/darwin.nix;
     home = ./programs/pet/home.nix;
   };
+  reclaim = {
+    nixos = ./programs/reclaim/options.nix;
+    darwin = ./programs/reclaim/options.nix;
+    home = ./programs/reclaim/home.nix;
+  };
   rofi = {
     nixos = ./programs/rofi/nixos.nix;
     darwin = ./programs/rofi/darwin.nix;
     home = ./programs/rofi/home.nix;
+  };
+  sparse-worktree = {
+    nixos = ./programs/sparse-worktree/options.nix;
+    darwin = ./programs/sparse-worktree/options.nix;
+    home = ./programs/sparse-worktree/home.nix;
   };
   ssh = {
     nixos = ./programs/ssh/nixos.nix;
@@ -73,6 +88,11 @@
     nixos = ./programs/starship/nixos.nix;
     darwin = ./programs/starship/darwin.nix;
     home = ./programs/starship/home.nix;
+  };
+  swm = {
+    nixos = ./programs/swm/options.nix;
+    darwin = ./programs/swm/options.nix;
+    home = ./programs/swm/home.nix;
   };
   termite = {
     nixos = ./programs/termite/nixos.nix;
