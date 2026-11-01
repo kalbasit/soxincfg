@@ -15,10 +15,13 @@ in
       ];
     };
 
-    system.activationScripts.userDefaults.text = ''
-      echo Configuring iTerm2
-      defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
-      defaults write com.googlecode.iterm2 PrefsCustomFolder -string ${config.users.users.wnasreddine.home}/.config/iterm2
-    '';
+    # Point iTerm2 at the preferences home-manager writes to ~/.config/iterm2.
+    # nix-darwin writes CustomUserPreferences as the primary user; a
+    # `defaults write` in an activation script runs as root and lands in
+    # root's domain, which iTerm2 never reads.
+    system.defaults.CustomUserPreferences."com.googlecode.iterm2" = {
+      LoadPrefsFromCustomFolder = true;
+      PrefsCustomFolder = "${config.users.users.${config.system.primaryUser}.home}/.config/iterm2";
+    };
   };
 }
