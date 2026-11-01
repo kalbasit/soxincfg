@@ -71,5 +71,7 @@ in
         reads ZSH_PROFILE and the story from.
       '';
     };
+
+    restoreLayout = mkEnableOption "restoring windows to their workspaces after AeroSpace restarts";
   };
 }
